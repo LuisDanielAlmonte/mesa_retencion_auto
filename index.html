@@ -324,7 +324,7 @@
         </div>
         <div class="pgrid" id="grid-dp"></div>
       </div>
-      <div class="footnote anim fade">Crecimiento neto = cartera del mes siguiente − cartera del mes (emisiones − cancelaciones) · Tendencia: recta ajustada a ene–sep, llevada hasta diciembre.</div>
+      <div class="footnote anim fade">Ene–sep real · Oct–dic rellenado con la tendencia de ene–sep (recta ajustada) de cada plan.</div>
     </section>
 
     <!-- ================= Slide 3: Seguro de Ley ================= -->
@@ -343,7 +343,7 @@
         </div>
         <div class="pgrid" id="grid-sl"></div>
       </div>
-      <div class="footnote anim fade">Crecimiento neto = cartera del mes siguiente − cartera del mes (emisiones − cancelaciones) · Tendencia: recta ajustada a ene–sep, llevada hasta diciembre.</div>
+      <div class="footnote anim fade">Ene–sep real · Oct–dic rellenado con la tendencia de ene–sep (recta ajustada) de cada plan.</div>
     </section>
 
     <!-- ================= Slide 4: Métricas de gestión ================= -->
@@ -597,58 +597,62 @@
   // cada uno con su tendencia punteada hasta diciembre.
   function comboChart(svg, p) {
     const [, , W, H] = svg.getAttribute("viewBox").split(" ").map(Number);
-    const L = 8, R = 8, T = 30, B = 30, GAP = 34;
+    const L = 40, R = 8, T = 30, B = 30, GAP = 40;
     const n = REAL;
     const x = i => L + (W - L - R) * (i + 0.5) / 12;
     const colW = (W - L - R) / 12, bw = colW * 0.42;
     const churnH = (H - T - B - GAP) * 0.42;
     const cTop = T, cBot = T + churnH, gTop = cBot + GAP, gBot = H - B;
-    const fitC = MONTHS.map((_, i) => p.fitChurn(i + 1)), fitG = MONTHS.map((_, i) => p.fitGrowth(i + 1));
+    // Real ene–sep + oct–dic rellenados con la tendencia
+    const churn = p.churn.concat([10, 11, 12].map(p.fitChurn));
+    const growth = p.growth.concat([10, 11, 12].map(p.fitGrowth));
     // Escalas
-    const cv = p.churn.concat(fitC, OBJETIVO);
-    const cLo = Math.min(...cv) - 0.25, cHi = Math.max(...cv) + 0.25;
+    const cv = churn.concat(OBJETIVO);
+    const cLo = Math.min(...cv) - 0.2, cHi = Math.max(...cv) + 0.2;
     const yc = v => cBot - (cBot - cTop) * (v - cLo) / (cHi - cLo);
-    const gv = p.growth.concat(fitG, 0);
-    const gLo = Math.min(...gv), gHi = Math.max(...gv);
-    const gPad = (gHi - gLo) * 0.18;
-    const yg = v => gBot - (gBot - gTop) * (v - (gLo - (gLo < 0 ? gPad : 0))) / (gHi + gPad - (gLo - (gLo < 0 ? gPad : 0)));
+    const gLo = Math.min(0, ...growth), gHi = Math.max(0, ...growth);
+    const gPad = (gHi - gLo) * 0.16;
+    // con valores negativos se deja al menos 24 px bajo la barra para su número
+    const k = 24 / (gBot - gTop);
+    const g0 = gLo < 0 ? Math.min(gLo - gPad, (gLo - k * (gHi + gPad)) / (1 - k)) : 0;
+    const yg = v => gBot - (gBot - gTop) * (v - g0) / (gHi + gPad - g0);
     const id = p.id + "x";
     let s = sweepClip(id, L, W, H);
+    s += `<defs><pattern id="${id}-h" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#eaf3fb"/><rect width="3" height="8" fill="#c9def0"/></pattern></defs>`;
     // Zona de tendencia
     const px = (x(n - 1) + x(n)) / 2;
     s += `<rect x="${px}" y="4" width="${W - R - px}" height="${H - B - 4}" fill="${C.blue}" opacity=".05" rx="10"/>`;
     MONTHS.forEach((m, i) => s += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle" font-size="15" fill="${i >= n ? C.blue : C.muted}" font-weight="${i >= n ? 600 : 400}">${m.slice(0, 3)}</text>`);
-    // Rótulos de banda
-    s += `<text x="${px + 14}" y="${cTop - 8}" font-size="13" font-weight="700" letter-spacing="2" fill="${C.navy}">CHURN</text>`;
-    s += `<text x="${px + 14}" y="${gTop - 8}" font-size="13" font-weight="700" letter-spacing="2" fill="${C.cyan}">CRECIMIENTO</text>`;
+    // Rótulos de banda (verticales, a la izquierda)
+    const vlab = (yy, txt, col) => `<text transform="translate(16,${yy}) rotate(-90)" text-anchor="middle" font-size="12.5" font-weight="700" letter-spacing="2" fill="${col}">${txt}</text>`;
+    s += vlab((cTop + cBot) / 2, "CHURN", C.navy) + vlab((gTop + gBot) / 2, "CRECIMIENTO", C.cyan);
     // Objetivo de churn
-    s += `<g class="fadein"><line x1="${L}" x2="${W - R}" y1="${yc(OBJETIVO)}" y2="${yc(OBJETIVO)}" stroke="${C.orange}" stroke-width="2" stroke-dasharray="8 6"/>` + `</g>`;
-    // Barras de crecimiento
+    s += `<line class="fadein" x1="${L}" x2="${W - R}" y1="${yc(OBJETIVO)}" y2="${yc(OBJETIVO)}" stroke="${C.orange}" stroke-width="2" stroke-dasharray="8 6"/>`;
+    // Barras de crecimiento (reales y de tendencia)
     s += `<line x1="${L}" x2="${W - R}" y1="${yg(0)}" y2="${yg(0)}" stroke="${C.line}" stroke-width="2"/>`;
-    p.growth.forEach((v, i) => {
-      const neg = v < 0, top = neg ? yg(0) : yg(v), h = Math.max(Math.abs(yg(v) - yg(0)), 1.5);
-      const d = (0.1 + i * 0.07).toFixed(2);
-      s += `<rect class="grow${neg ? " neg" : ""}" style="animation-delay:${d}s" x="${x(i) - bw / 2}" y="${top}" width="${bw}" height="${h}" rx="5" fill="${neg ? C.alert : C.cyan}" opacity=".9"><title>${MONTHS[i]}: ${nf(v)} certificados</title></rect>`;
-      s += `<text class="pop" style="animation-delay:${(0.45 + i * 0.07).toFixed(2)}s" x="${x(i)}" y="${neg ? yg(v) + 18 : yg(v) - 7}" text-anchor="middle" font-size="15" font-weight="600" fill="${neg ? C.alert : C.ink}">${v > 0 ? "+" : ""}${nf(v)}</text>`;
+    growth.forEach((v, i) => {
+      const t = i >= n, neg = v < 0;
+      const top = neg ? yg(0) : yg(v), h = Math.max(Math.abs(yg(v) - yg(0)), 2);
+      const d = (0.1 + i * 0.08).toFixed(2);
+      const fill = t ? `url(#${id}-h)` : (neg ? C.alert : C.cyan);
+      const stroke = t ? ` stroke="${neg ? C.alert : C.blue}" stroke-width="2" stroke-dasharray="5 4"` : "";
+      const v0 = Math.round(v);
+      s += `<rect class="grow${neg ? " neg" : ""}" style="animation-delay:${d}s" x="${x(i) - bw / 2}" y="${top}" width="${bw}" height="${h}" rx="5" fill="${fill}"${stroke}><title>${MONTHS[i]}${t ? " (tendencia)" : ""}: ${nf(v0)} certificados</title></rect>`;
+      s += `<text class="pop" style="animation-delay:${(0.4 + i * 0.08).toFixed(2)}s" x="${x(i)}" y="${neg ? yg(v) + 19 : yg(v) - 8}" text-anchor="middle" font-size="16" font-weight="${t ? 700 : 600}" font-style="${t ? "italic" : "normal"}" fill="${neg ? C.alert : (t ? C.blue : C.ink)}">${v0 > 0 ? "+" : ""}${nf(v0)}</text>`;
     });
-    // Líneas: churn real + tendencias
-    const cp = p.churn.map((v, i) => [x(i), yc(v)]);
+    // Línea de churn: sólida real, punteada en tendencia
+    const cp = churn.map((v, i) => [x(i), yc(v)]);
     s += `<g clip-path="url(#${id}-clip)">`;
-    s += `<path d="${path(MONTHS.map((_, i) => [x(i), yg(fitG[i])]))}" fill="none" stroke="${C.blue}" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/>`;
-    s += `<path d="${path(MONTHS.map((_, i) => [x(i), yc(fitC[i])]))}" fill="none" stroke="${C.navy}" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round" opacity=".75"/>`;
-    s += `<path d="${path(cp)}" fill="none" stroke="${C.navy}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+    s += `<path d="${path(cp.slice(0, n))}" fill="none" stroke="${C.navy}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+    s += `<path d="${path(cp.slice(n - 1))}" fill="none" stroke="${C.blue}" stroke-width="3.5" stroke-dasharray="2 8" stroke-linecap="round"/>`;
     s += `</g>`;
-    p.churn.forEach((v, i) => {
-      const over = v > OBJETIVO;
-      const dip = v < (p.churn[i - 1] ?? Infinity) && v < (p.churn[i + 1] ?? Infinity);
-      s += `<g class="pop" style="animation-delay:${delayAt(cp[i][0], L, W)}s"><circle cx="${cp[i][0]}" cy="${cp[i][1]}" r="5" fill="#fff" stroke="${over ? C.alert : C.navy}" stroke-width="3"><title>${MONTHS[i]}: ${pct(v)}</title></circle>` +
-           `<text x="${cp[i][0]}" y="${dip ? cp[i][1] + 22 : cp[i][1] - 11}" text-anchor="middle" font-size="14.5" font-weight="600" fill="${over ? C.alert : C.navy}" paint-order="stroke" stroke="#fff" stroke-width="4">${pct(v)}</text></g>`;
+    churn.forEach((v, i) => {
+      const t = i >= n, over = v > OBJETIVO;
+      const dip = v < (churn[i - 1] ?? Infinity) && v < (churn[i + 1] ?? Infinity);
+      const col = over ? C.alert : (t ? C.blue : C.navy);
+      s += `<g class="pop" style="animation-delay:${delayAt(cp[i][0], L, W)}s"><circle cx="${cp[i][0]}" cy="${cp[i][1]}" r="5.5" fill="#fff" stroke="${col}" stroke-width="3"><title>${MONTHS[i]}${t ? " (tendencia)" : ""}: ${pct(v)}</title></circle>` +
+           `<text x="${cp[i][0]}" y="${dip ? cp[i][1] + 22 : cp[i][1] - 11}" text-anchor="middle" font-size="15" font-weight="${t ? 700 : 600}" font-style="${t ? "italic" : "normal"}" fill="${col}" paint-order="stroke" stroke="#fff" stroke-width="4">${pct(v)}</text></g>`;
     });
-    // Cierre de la tendencia en diciembre
-    const endTag = (yy, txt, col) => `<g class="pop" style="animation-delay:${(SWEEP * 0.9).toFixed(2)}s"><circle cx="${x(11)}" cy="${yy}" r="6.5" fill="#fff" stroke="${col}" stroke-width="3.5"/>` +
-      `<text x="${x(11)}" y="${yy - 13}" text-anchor="middle" font-size="16" font-weight="700" font-style="italic" fill="${col}" paint-order="stroke" stroke="#fff" stroke-width="5">${txt}</text></g>`;
-    s += endTag(yc(fitC[11]), pct(fitC[11]), fitC[11] > OBJETIVO ? C.alert : C.navy);
-    s += endTag(yg(fitG[11]), (fitG[11] > 0 ? "+" : "") + nf(fitG[11]), C.blue);
     svg.innerHTML = s;
   }
 
@@ -658,11 +662,10 @@
     const grid = document.getElementById("grid-" + group);
     grid.style.gridTemplateRows = `auto repeat(${plans.length}, 1fr)`;
     let h = `<div class="colh anim fade"><div class="legend">
-        <span><i class="bar"></i>Crecimiento neto del mes (certificados)</span>
-        <span class="tg"><i></i>Tendencia crecimiento</span>
+        <span><i class="bar"></i>Crecimiento del mes (certificados)</span>
         <span class="ch"><i></i>Churn</span>
-        <span class="tc"><i></i>Tendencia churn</span>
-        <span class="o"><i></i>Objetivo</span></div></div>`;
+        <span><i class="bar" style="background:repeating-linear-gradient(45deg,#c9def0 0 3px,#eaf3fb 3px 6px);outline:2px dashed var(--blue);outline-offset:-2px"></i>Oct–dic: tendencia</span>
+        <span class="o"><i></i>Objetivo 2.54%</span></div></div>`;
     plans.forEach(p => {
       const gDown = p.fitGrowth.slope < 0, cUp = p.fitChurn.slope > 0;
       h += `<div class="pname anim"><div class="n">${p.name}</div><div class="c">${p.cov}</div>
