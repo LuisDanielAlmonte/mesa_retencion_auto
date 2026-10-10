@@ -194,16 +194,6 @@
   /* ---------- Slide 3: métricas de gestión ---------- */
   .mslide h1 { font-size: 58px; }
   .metric-head .legend { font-size: 14px; gap: 16px; white-space: nowrap; }
-  .rcard { flex: 1; border-radius: 20px; padding: 28px 30px; color: #fff; background: linear-gradient(160deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; gap: 10px; position: relative; overflow: hidden; }
-  .rcard::after { content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(0,180,230,.25); }
-  .rcard h3 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
-  .rcard .var { position: relative; z-index: 1; padding: 14px 0; border-top: 1px solid rgba(255,255,255,.16); }
-  .rcard .var .k { font-size: 17px; color: rgba(255,255,255,.75); }
-  .rcard .var .r { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-size: 22px; font-variant-numeric: tabular-nums; margin-top: 4px; }
-  .rcard .var .r b { font-size: 30px; }
-  .rcard .var .r span { margin-left: auto; font-size: 15px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
-  .rcard .var .r span.up { background: rgba(255,138,61,.22); color: #ffb37a; }
-  .rcard .var .r span.down { background: rgba(111,224,166,.18); color: #6fe0a6; }
   .note p.sm { font-size: 18px; line-height: 1.4; }
   .s3-grid { margin-top: 18px; flex: 1; display: grid; grid-template-columns: 1fr 380px; gap: 30px; min-height: 0; }
   .metric { position: relative; }
@@ -225,6 +215,8 @@
   .metric tbody td.an { color: var(--muted); }
   .metric tbody tr.ov th, .metric tbody tr.ov td { font-weight: 600; color: var(--blue); background: var(--row-hl); }
   .sep-hl { position: absolute; right: -6px; top: 44px; bottom: -6px; width: calc((100% - 185px) / 8 + 12px); border: 3px solid var(--alert); border-radius: 16px; pointer-events: none; box-shadow: 0 0 0 6px rgba(232, 89, 12, .1); }
+  .s3-side.fill .kpi { flex: 1; }
+  .s3-side.fill .kpi .v { font-size: 72px; }
   .s3-side { display: flex; flex-direction: column; gap: 18px; min-height: 0; }
   .note { flex: 1; border-radius: 20px; padding: 26px 30px; color: #fff; position: relative; overflow: hidden; background: linear-gradient(160deg, var(--blue), var(--navy)); display: flex; flex-direction: column; gap: 18px; }
   .note::after { content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(0,180,230,.25); }
@@ -808,10 +800,7 @@
     const pb = Math.round((cSep - m.objective) * 100);
     const third = m.note
       ? `<div class="note anim from-right" data-step="2"><h3>¿Qué pasó en septiembre?</h3>${m.note}</div>`
-      : `<div class="rcard anim from-right" data-step="2"><h3>Customer churn · agosto → septiembre</h3>${m.series.map(k => {
-          const [a, b] = [m.cust[k].pct[6], m.cust[k].pct[7]], d = Math.round((b - a) * 100);
-          return `<div class="var"><div class="k">${k}</div><div class="r">${pct(a)} → <b>${pct(b)}</b><span class="${d > 0 ? "up" : "down"}">${d > 0 ? "▲ +" : d < 0 ? "▼ −" : ""}${Math.abs(d)} pb</span></div></div>`;
-        }).join("")}</div>`;
+      : "";
     return `
     <section class="slide mslide" aria-label="Métricas Gestión · ${m.brand}">
       <div class="deco tl1"></div><div class="deco tl2"></div>
@@ -841,7 +830,7 @@
               <div class="sep-hl anim zoom" data-step="2"></div>
             </div>
           </div>
-          <div class="s3-side">
+          <div class="s3-side${m.note ? "" : " fill"}">
             <div class="kpi anim from-right" data-step="0">
               <h3>Customer churn · Sep 2026</h3>
               <div class="v blue" data-count="${cSep}" data-dec="2" data-suffix="%">${pct(cSep)}</div>
