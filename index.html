@@ -194,14 +194,16 @@
   /* ---------- Slide 3: métricas de gestión ---------- */
   .mslide h1 { font-size: 58px; }
   .metric-head .legend { font-size: 14px; gap: 16px; white-space: nowrap; }
-  .retain { margin-top: 12px; display: inline-flex; align-items: center; gap: 12px; font-size: 21px; color: var(--blue); }
-  .retain::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 5px rgba(18,184,134,.18); }
-  .retain b { color: #0c8a63; }
   .rcard { flex: 1; border-radius: 20px; padding: 28px 30px; color: #fff; background: linear-gradient(160deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; gap: 10px; position: relative; overflow: hidden; }
   .rcard::after { content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(0,180,230,.25); }
   .rcard h3 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
-  .rcard .v { font-size: 96px; font-weight: 700; line-height: 1; color: #6fe0a6; }
-  .rcard p { margin: 0; font-size: 20px; font-weight: 300; line-height: 1.35; position: relative; z-index: 1; }
+  .rcard .var { position: relative; z-index: 1; padding: 14px 0; border-top: 1px solid rgba(255,255,255,.16); }
+  .rcard .var .k { font-size: 17px; color: rgba(255,255,255,.75); }
+  .rcard .var .r { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; font-size: 22px; font-variant-numeric: tabular-nums; margin-top: 4px; }
+  .rcard .var .r b { font-size: 30px; }
+  .rcard .var .r span { margin-left: auto; font-size: 15px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+  .rcard .var .r span.up { background: rgba(255,138,61,.22); color: #ffb37a; }
+  .rcard .var .r span.down { background: rgba(111,224,166,.18); color: #6fe0a6; }
   .note p.sm { font-size: 18px; line-height: 1.4; }
   .s3-grid { margin-top: 18px; flex: 1; display: grid; grid-template-columns: 1fr 380px; gap: 30px; min-height: 0; }
   .metric { position: relative; }
@@ -453,7 +455,7 @@
   const strs = t => t.trim().split(/\s+/);
   // Por serie: pct (gráfico), an = anuladas y ca = cartera (tabla, tal cual el reporte)
   const METRICS = [
-    { brand: "Mi Auto", retain: 97, retainTxt: "de los certificados en cartera de Auto", objective: 2.54,
+    { brand: "Mi Auto", objective: 2.54,
       series: ["Overall", "Individual", "Flotilla"],
       cust: {
         Overall:    { pct: nums("2.72 3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("14,486 18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("44,380 48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
@@ -467,7 +469,7 @@
       },
       note: `<p class="sm">El churn de Auto se vio impactado por la cancelación de <b>145 certificados</b> de las flotillas de <b>Banco Caribe</b> y <b>Motor Crédito</b>, equivalentes al <b>7%</b> de las cancelaciones del ramo.</p>
              <p class="sm">Además, las cancelaciones de Agentes aumentaron de manera generalizada un <b>62%</b> (+254 certificados), lideradas por <b>Nicole Arias</b> (25 certificados; churn de 21.93%) y <b>Rubelina Mercedes</b> (24 certificados; churn de 16.44%), entre otros.</p>` },
-    { brand: "Mi Auto Flotilla", retain: 98, retainTxt: "de los certificados de Flotilla", objective: 3.07,
+    { brand: "Mi Auto Flotilla", objective: 3.07,
       series: ["Flotilla Overall", "100% Humano + Líder", "Minoritario"],
       cust: {
         "Flotilla Overall":    { pct: nums("2.67 2.99 2.77 2.50 2.19 2.15 2.64 2.25"), an: strs("4,065 4,863 4,246 1,028 926 312 392 335"), ca: strs("12,669 13,534 12,739 13,706 14,076 14,482 14,827 14,887") },
@@ -479,7 +481,7 @@
         "100% Humano + Líder": { pct: nums("0.53 0.85 1.18 0.63 0.44 0.44 0.71 0.80"), an: strs("23.18 45.38 64.6 10.1 7.3 2.5 4.1 4.7"), ca: strs("357.44 434.11 442.4 517.1 552.5 568.5 578.7 587.9") },
         "Minoritario":         { pct: nums("0.57 0.37 0.27 0.00 0.00 0.00 0.00 0.05"), an: strs("2.54 0.51 0.3 0.0 0 0 0 0.01"),        ca: strs("11.89 14.49 8.5 7.07 7.4 7.6 9.4 9.6") },
       } },
-    { brand: "Mi Auto Emisión – Renovación", retain: 97, retainTxt: "de las Renovaciones", objective: 2.54,
+    { brand: "Mi Auto Emisión – Renovación", objective: 2.54,
       series: ["Overall", "Emisión", "Renovación"],
       cust: {
         Overall:      { pct: nums("2.71 3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("14,486 18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("44,380 48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
@@ -491,7 +493,7 @@
         "Emisión":    { pct: nums("0.87 0.91 0.89 0.90 0.80 0.87 0.89 1.10"), an: strs("79.5 68.6 63.7 24.7 24.6 9.3 9.2 11.5"),      ca: strs("761.0 635.5 602.0 911.2 1,028.1 1,072.4 1,041.2 1,046.8") },
         "Renovación": { pct: nums("3.22 2.98 2.40 2.10 2.37 2.47 2.70 3.50"), an: strs("159.6 318.2 317.2 74.0 85.8 30.4 34.9 45.9"),   ca: strs("441.1 880.6 1,097.8 1,176.2 1,205.0 1,230.8 1,291.9 1,311.4") },
       } },
-    { brand: "Mi Auto Ley – DP", retain: 97, retainTxt: "de los certificados de Ley", objective: 2.54,
+    { brand: "Mi Auto Ley – DP", objective: 2.54,
       series: ["Overall", "Ley", "Daños propios"],
       cust: {
         Overall:         { pct: nums("2.71 3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("14,486 18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("44,389 48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
@@ -780,7 +782,10 @@
     const pb = Math.round((cSep - m.objective) * 100);
     const third = m.note
       ? `<div class="note anim from-right" data-step="2"><h3>¿Qué pasó en septiembre?</h3>${m.note}</div>`
-      : `<div class="rcard anim from-right" data-step="2"><h3>Retención · septiembre 2026</h3><div class="v" data-count="${m.retain}" data-dec="0" data-suffix="%">${m.retain}%</div><p>${m.retainTxt}</p></div>`;
+      : `<div class="rcard anim from-right" data-step="2"><h3>Customer churn · agosto → septiembre</h3>${m.series.map(k => {
+          const [a, b] = [m.cust[k].pct[6], m.cust[k].pct[7]], d = Math.round((b - a) * 100);
+          return `<div class="var"><div class="k">${k}</div><div class="r">${pct(a)} → <b>${pct(b)}</b><span class="${d > 0 ? "up" : "down"}">${d > 0 ? "▲ +" : d < 0 ? "▼ −" : ""}${Math.abs(d)} pb</span></div></div>`;
+        }).join("")}</div>`;
     return `
     <section class="slide mslide" aria-label="Métricas Gestión · ${m.brand}">
       <div class="deco tl1"></div><div class="deco tl2"></div>
@@ -791,7 +796,6 @@
           <div class="anim">
             <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto</span>
             <h1>Métricas Gestión <span class="brand">· ${m.brand}</span></h1>
-            <div class="retain">En septiembre, hemos logrado retener al&nbsp;<b>${m.retain}%</b>&nbsp;${m.retainTxt}.</div>
           </div>
         </div>
         <div class="s3-grid">
@@ -799,14 +803,14 @@
             <div class="metric anim" data-step="0">
               <div class="metric-head"><h2>Tasa de abandono de clientes <span>· Customer Churn · Certificados</span></h2>${legend(true)}</div>
               <span class="unit">Cant. certificados</span>
-              <svg data-chart="${id}-cust" viewBox="0 0 1330 205" role="img" aria-label="Customer churn por segmento"></svg>
+              <svg data-chart="${id}-cust" viewBox="0 0 1330 240" role="img" aria-label="Customer churn por segmento"></svg>
               <div class="table-wrap"><table>${segTable(m, "cust")}</table></div>
               <div class="sep-hl anim zoom" data-step="2"></div>
             </div>
             <div class="metric anim" data-step="1">
               <div class="metric-head"><h2>Tasa de abandono de ingreso <span>· Revenue Churn · Monto</span></h2>${legend(false)}</div>
               <span class="unit">Monto RD$MM</span>
-              <svg data-chart="${id}-rev" viewBox="0 0 1330 140" role="img" aria-label="Revenue churn por segmento"></svg>
+              <svg data-chart="${id}-rev" viewBox="0 0 1330 170" role="img" aria-label="Revenue churn por segmento"></svg>
               <div class="table-wrap"><table>${segTable(m, "rev")}</table></div>
               <div class="sep-hl anim zoom" data-step="2"></div>
             </div>
