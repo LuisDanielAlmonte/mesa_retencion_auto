@@ -192,26 +192,37 @@
   @keyframes grow { from { transform: scaleY(0); } to { transform: none; } }
 
   /* ---------- Slide 3: métricas de gestión ---------- */
-  .s3-grid { margin-top: 22px; flex: 1; display: grid; grid-template-columns: 1fr 380px; gap: 30px; min-height: 0; }
+  .mslide h1 { font-size: 58px; }
+  .metric-head .legend { font-size: 14px; gap: 16px; white-space: nowrap; }
+  .retain { margin-top: 12px; display: inline-flex; align-items: center; gap: 12px; font-size: 21px; color: var(--blue); }
+  .retain::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 5px rgba(18,184,134,.18); }
+  .retain b { color: #0c8a63; }
+  .rcard { flex: 1; border-radius: 20px; padding: 28px 30px; color: #fff; background: linear-gradient(160deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; gap: 10px; position: relative; overflow: hidden; }
+  .rcard::after { content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(0,180,230,.25); }
+  .rcard h3 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
+  .rcard .v { font-size: 96px; font-weight: 700; line-height: 1; color: #6fe0a6; }
+  .rcard p { margin: 0; font-size: 20px; font-weight: 300; line-height: 1.35; position: relative; z-index: 1; }
+  .note p.sm { font-size: 18px; line-height: 1.4; }
+  .s3-grid { margin-top: 18px; flex: 1; display: grid; grid-template-columns: 1fr 380px; gap: 30px; min-height: 0; }
   .metric { position: relative; }
   .metric + .metric { margin-top: 16px; }
   .metric-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-  .metric h2 { margin: 0; font-size: 26px; font-weight: 600; color: var(--navy); }
+  .metric h2 { margin: 0; white-space: nowrap; font-size: 23px; font-weight: 600; color: var(--navy); }
   .metric h2 span { color: var(--muted); font-weight: 400; }
   .metric .unit { position: absolute; left: 0; top: 56px; font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
   .metric svg { display: block; width: 100%; height: auto; margin-top: 4px; }
   .metric table { table-layout: fixed; }
-  .metric col.lbl { width: 130px; }
+  .metric col.lbl { width: 185px; }
   .metric thead th { font-size: 17px; padding: 8px 2px; }
-  .metric thead tr.per th { background: var(--blue); font-weight: 600; font-size: 18px; border-left: 2px solid #fff; }
+  .metric thead tr.per th { background: var(--blue); font-weight: 600; font-size: 16px; padding-left: 0; padding-right: 0; border-left: 2px solid #fff; }
   .metric thead tr.sub th { font-size: 15px; padding: 6px 2px; border-left: 1px solid rgba(255,255,255,.35); }
   .metric thead th.corner { padding-left: 18px; font-size: 12px; }
-  .metric tbody th { font-size: 17px; padding: 8px 18px; }
+  .metric tbody th { font-size: 17px; padding: 8px 14px; }
   .metric tbody td { font-size: 17px; padding: 8px 2px; }
   .metric tbody td.g { border-left: 1px solid var(--line); }
   .metric tbody td.an { color: var(--muted); }
   .metric tbody tr.ov th, .metric tbody tr.ov td { font-weight: 600; color: var(--blue); background: var(--row-hl); }
-  .sep-hl { position: absolute; right: -6px; top: 44px; bottom: -6px; width: calc((100% - 130px) / 8 + 12px); border: 3px solid var(--alert); border-radius: 16px; pointer-events: none; box-shadow: 0 0 0 6px rgba(232, 89, 12, .1); }
+  .sep-hl { position: absolute; right: -6px; top: 44px; bottom: -6px; width: calc((100% - 185px) / 8 + 12px); border: 3px solid var(--alert); border-radius: 16px; pointer-events: none; box-shadow: 0 0 0 6px rgba(232, 89, 12, .1); }
   .s3-side { display: flex; flex-direction: column; gap: 18px; min-height: 0; }
   .note { flex: 1; border-radius: 20px; padding: 26px 30px; color: #fff; position: relative; overflow: hidden; background: linear-gradient(160deg, var(--blue), var(--navy)); display: flex; flex-direction: column; gap: 18px; }
   .note::after { content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(0,180,230,.25); }
@@ -359,85 +370,6 @@
       </div>
     </section>
 
-    <!-- ================= Slide 4: Métricas de gestión ================= -->
-    <section class="slide" aria-label="Métricas Gestión · Mi Auto">
-      <div class="deco tl1"></div><div class="deco tl2"></div>
-      <div class="deco br1"></div><div class="deco br2"></div>
-      <div class="deco band"></div>
-
-      <div class="content">
-        <div class="head">
-          <div class="anim">
-            <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto</span>
-            <h1>Métricas Gestión <span class="brand">· Mi Auto</span></h1>
-          </div>
-          <div class="section-tag anim from-right"><span class="num">4</span>Customer &amp; Revenue Churn</div>
-        </div>
-
-        <div class="s3-grid">
-          <div>
-            <div class="metric anim" data-step="0">
-              <div class="metric-head">
-                <h2>Tasa de abandono de clientes <span>· Customer Churn · Certificados</span></h2>
-                <div class="legend">
-                  <span class="ind"><i></i>Individual</span>
-                  <span class="ov"><i></i>Overall</span>
-                  <span class="flo"><i></i>Flotilla</span>
-                  <span class="obj"><i></i>Objetivo</span>
-                </div>
-              </div>
-              <span class="unit">Cant. certificados</span>
-              <svg data-chart="cust" viewBox="0 0 1330 230" role="img" aria-label="Customer churn por segmento"></svg>
-              <div class="table-wrap"><table id="t-cust"></table></div>
-              <div class="sep-hl anim zoom" data-step="2"></div>
-            </div>
-
-            <div class="metric anim" data-step="1">
-              <div class="metric-head">
-                <h2>Tasa de abandono de ingreso <span>· Revenue Churn · Monto</span></h2>
-                <div class="legend">
-                  <span class="ind"><i></i>Individual</span>
-                  <span class="ov"><i></i>Overall</span>
-                  <span class="flo"><i></i>Flotilla</span>
-                </div>
-              </div>
-              <span class="unit">Monto RD$MM</span>
-              <svg data-chart="rev" viewBox="0 0 1330 150" role="img" aria-label="Revenue churn por segmento"></svg>
-              <div class="table-wrap"><table id="t-rev"></table></div>
-              <div class="sep-hl anim zoom" data-step="2"></div>
-            </div>
-          </div>
-
-          <div class="s3-side">
-            <div class="kpi anim from-right" data-step="0">
-              <h3>Customer churn · Sep 2026</h3>
-              <div class="v blue" data-count="2.74" data-dec="2" data-suffix="%">2.74%</div>
-              <div><span class="pill bad">+20 pb sobre objetivo (2.54%)</span></div>
-            </div>
-            <div class="kpi anim from-right" data-step="1">
-              <h3>Revenue churn · Sep 2026</h3>
-              <div class="v cyan" data-count="2.09" data-dec="2" data-suffix="%">2.09%</div>
-              <div class="s">Individual 2.67% · Flotilla 0.39%</div>
-            </div>
-            <div class="note anim from-right" data-step="2">
-              <h3>¿Qué pasó en septiembre?</h3>
-              <p>El churn se vio impactado por la cancelación de <b>144 certificados</b> de flotillas de dos clientes:</p>
-              <div class="clients"><span>Banco Caribe</span><span>Motor Crédito SA</span></div>
-              <div class="chips">
-                <div class="chip"><div class="v" data-count="144" data-dec="0">144</div><div class="l">Certificados cancelados</div></div>
-                <div class="chip"><div class="v" data-count="7" data-dec="0" data-suffix="%">7%</div><div class="l">De las cancelaciones del ramo</div></div>
-              </div>
-              <div class="without">
-                <div class="l">Sin este evento, el customer churn overall de septiembre habría sido</div>
-                <div class="v" data-count="2.54" data-dec="2" data-suffix="%">2.54%</div>
-                <div class="tag">En línea con el objetivo</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </div>
 </div>
 
@@ -512,23 +444,66 @@
 
   /* =================== Datos · Métricas de gestión =================== */
   const PERIODS = ["2023","2024","2025","Q1 2026","Q2 2026","Julio 2026","Agosto 2026","Septiembre 2026"];
-  const SEG = [
-    { key: "Overall",    color: C.blue, width: 4 },
-    { key: "Individual", color: C.cyan, width: 3.5 },
-    { key: "Flotilla",   color: C.gray, width: 3.5 },
+  const SERIES_STYLE = [                       // [0] = Overall
+    { color: C.blue, width: 4, text: C.blue, weight: 700 },
+    { color: C.cyan, width: 3.5, text: C.cyan, weight: 500 },
+    { color: C.gray, width: 3.5, text: C.muted, weight: 500 },
   ];
-  const cust = {
-    d: 0,
-    Overall:    { an: [14486,18310,16555,4372,4455,1754,1796,1952], ca: [44380,48895,51898,62067,66207,68844,70242,71122], pct: [2.72,3.12,2.67,2.35,2.24,2.55,2.56,2.74] },
-    Individual: { an: [10421,13447,12309,3344,3529,1442,1404,1672], ca: [31711,35361,39159,48361,52131,54362,55415,56235], pct: [2.73,3.17,2.63,2.30,2.24,2.65,2.53,2.97] },
-    Flotilla:   { an: [4065,4863,4246,1028,926,312,392,280],        ca: [12669,13534,12739,13706,14076,14482,14827,14887], pct: [2.68,2.99,2.77,2.50,2.19,2.15,2.64,1.88] },
-  };
-  const rev = {
-    d: 1,
-    Overall:    { an: [239.1,386.9,381.0,98.7,110.4,39.7,44.1,49.3], ca: [1172.2,1516.1,1699.8,2087.4,2233.1,2303.2,2333.2,2358.3], pct: [1.67,2.12,1.88,1.57,1.65,1.73,1.89,2.09] },
-    Individual: { an: [213.4,341.0,316.0,88.6,103.1,37.2,40.0,47.0],  ca: [802.8,1067.5,1248.9,1563.2,1673.1,1727.1,1744.9,1760.7], pct: [2.18,2.65,2.12,1.89,2.06,2.16,2.29,2.67] },
-    Flotilla:   { an: [25.7,45.9,64.9,10.1,7.3,2.5,4.1,2.3],          ca: [369.3,448.6,450.8,524.2,559.9,576.1,588.2,597.5], pct: [0.57,0.85,1.18,0.63,0.44,0.44,0.71,0.39] },
-  };
+  const nums = t => t.trim().split(/\s+/).map(Number);
+  const strs = t => t.trim().split(/\s+/);
+  // Por serie: pct (gráfico), an = anuladas y ca = cartera (tabla, tal cual el reporte)
+  const METRICS = [
+    { brand: "Mi Auto", retain: 97, retainTxt: "de los certificados en cartera de Auto", objective: 2.54,
+      series: ["Overall", "Individual", "Flotilla"],
+      cust: {
+        Overall:    { pct: nums("2.72 3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("14,486 18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("44,380 48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
+        Individual: { pct: nums("2.73 3.17 2.63 2.30 2.24 2.65 2.53 3.36"), an: strs("10,421 13,447 12,309 3,344 3,529 1,442 1,404 1,890"), ca: strs("31,711 35,361 39,159 48,361 52,131 54,362 55,415 56,235") },
+        Flotilla:   { pct: nums("2.68 2.99 2.77 2.50 2.19 2.15 2.64 2.25"), an: strs("4,065 4,863 4,246 1,028 926 312 392 335"),          ca: strs("12,669 13,534 12,739 13,706 14,076 14,482 14,827 14,887") },
+      },
+      rev: {
+        Overall:    { pct: nums("1.67 2.12 1.88 1.57 1.65 1.73 1.89 2.44"), an: strs("239.1 386.9 381.0 98.7 110.4 39.7 44.1 57.4"), ca: strs("1,172.2 1,516.1 1,699.8 2,087.4 2,233.1 2,303.2 2,333.2 2,358.3") },
+        Individual: { pct: nums("2.18 2.65 2.12 1.89 2.06 2.16 2.29 2.99"), an: strs("213.4 341.0 316.0 88.6 103.1 37.2 40.0 52.7"), ca: strs("802.8 1,067.5 1,248.9 1,563.2 1,673.1 1,727.1 1,744.9 1,760.7") },
+        Flotilla:   { pct: nums("0.57 0.85 1.18 0.63 0.44 0.44 0.71 0.80"), an: strs("25.7 45.9 64.9 10.1 7.3 2.5 4.1 4.7"),         ca: strs("369.3 448.6 450.8 524.2 559.9 576.1 588.2 597.5") },
+      },
+      note: `<p class="sm">El churn de Auto se vio impactado por la cancelación de <b>145 certificados</b> de las flotillas de <b>Banco Caribe</b> y <b>Motor Crédito</b>, equivalentes al <b>7%</b> de las cancelaciones del ramo.</p>
+             <p class="sm">Además, las cancelaciones de Agentes aumentaron de manera generalizada un <b>62%</b> (+254 certificados), lideradas por <b>Nicole Arias</b> (25 certificados; churn de 21.93%) y <b>Rubelina Mercedes</b> (24 certificados; churn de 16.44%), entre otros.</p>` },
+    { brand: "Mi Auto Flotilla", retain: 98, retainTxt: "de los certificados de Flotilla", objective: 3.07,
+      series: ["Flotilla Overall", "100% Humano + Líder", "Minoritario"],
+      cust: {
+        "Flotilla Overall":    { pct: nums("2.67 2.99 2.77 2.50 2.19 2.15 2.64 2.25"), an: strs("4,065 4,863 4,246 1,028 926 312 392 335"), ca: strs("12,669 13,534 12,739 13,706 14,076 14,482 14,827 14,887") },
+        "100% Humano + Líder": { pct: nums("2.58 2.89 2.65 2.66 2.35 2.31 2.84 2.38"), an: strs("3,426 4,076 3,701 1,022 926 312 392 330"), ca: strs("11,042 11,726 11,670 12,771 13,129 13,533 13,792 13,852") },
+        "Minoritario":         { pct: nums("4.32 4.45 4.12 0.32 0.00 0.00 0.00 0.48"), an: strs("639 787 545 6 0 0 0 5"),                  ca: strs("1,627 1,807 1,070 935 947 949 1,035 1,035") },
+      },
+      rev: {
+        "Flotilla Overall":    { pct: nums("0.75 0.86 1.19 0.64 0.44 0.44 0.72 0.81"), an: strs("25.72 45.89 64.9 10.1 7.3 2.5 4.1 4.7"), ca: strs("369.33 448.59 451.0 524.2 559.9 576.1 588.2 597.5") },
+        "100% Humano + Líder": { pct: nums("0.53 0.85 1.18 0.63 0.44 0.44 0.71 0.80"), an: strs("23.18 45.38 64.6 10.1 7.3 2.5 4.1 4.7"), ca: strs("357.44 434.11 442.4 517.1 552.5 568.5 578.7 587.9") },
+        "Minoritario":         { pct: nums("0.57 0.37 0.27 0.00 0.00 0.00 0.00 0.05"), an: strs("2.54 0.51 0.3 0.0 0 0 0 0.01"),        ca: strs("11.89 14.49 8.5 7.07 7.4 7.6 9.4 9.6") },
+      } },
+    { brand: "Mi Auto Emisión – Renovación", retain: 97, retainTxt: "de las Renovaciones", objective: 2.54,
+      series: ["Overall", "Emisión", "Renovación"],
+      cust: {
+        Overall:      { pct: nums("2.71 3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("14,486 18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("44,380 48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
+        "Emisión":    { pct: nums("1.99 1.56 1.48 1.49 1.44 1.65 1.59 2.22"), an: strs("6,402 3,462 3,048 1,163 1,255 496 472 661"),          ca: strs("27,116 19,223 17,209 25,870 28,950 30,016 29,645 29,840") },
+        "Renovación": { pct: nums("3.92 4.17 3.24 2.95 2.86 3.24 3.26 3.79"), an: strs("8,084 14,848 13,507 3,209 3,200 1,258 1,324 1,564"),  ca: strs("17,264 29,672 34,689 36,196 37,257 38,828 40,597 41,282") },
+      },
+      rev: {
+        Overall:      { pct: nums("1.67 2.12 1.88 1.57 1.65 1.73 1.89 2.44"), an: strs("239.1 386.8 381.0 98.7 110.4 39.7 44.1 57.4"), ca: strs("1,172.2 1,516.1 1,699.8 2,087.4 2,233.1 2,303.2 2,333.2 2,358.3") },
+        "Emisión":    { pct: nums("0.87 0.91 0.89 0.90 0.80 0.87 0.89 1.10"), an: strs("79.5 68.6 63.7 24.7 24.6 9.3 9.2 11.5"),      ca: strs("761.0 635.5 602.0 911.2 1,028.1 1,072.4 1,041.2 1,046.8") },
+        "Renovación": { pct: nums("3.22 2.98 2.40 2.10 2.37 2.47 2.70 3.50"), an: strs("159.6 318.2 317.2 74.0 85.8 30.4 34.9 45.9"),   ca: strs("441.1 880.6 1,097.8 1,176.2 1,205.0 1,230.8 1,291.9 1,311.4") },
+      } },
+    { brand: "Mi Auto Ley – DP", retain: 97, retainTxt: "de los certificados de Ley", objective: 2.54,
+      series: ["Overall", "Ley", "Daños propios"],
+      cust: {
+        Overall:         { pct: nums("2.71 3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("14,486 18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("44,389 48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
+        Ley:             { pct: nums("2.81 3.33 2.84 2.36 1.95 2.50 2.22 2.99"), an: strs("7,707 9,647 8,685 2,214 1,963 875 872 1,089"),       ca: strs("22,732 24,159 25,608 31,138 33,433 35,051 35,861 36,378") },
+        "Daños propios": { pct: nums("2.60 2.92 2.50 2.33 2.53 2.60 2.59 3.27"), an: strs("6,779 8,663 7,870 2,158 2,492 879 924 1,136"),       ca: strs("21,648 24,735 26,291 30,929 32,774 33,793 34,381 34,744") },
+      },
+      rev: {
+        Overall:         { pct: nums("1.67 2.13 1.88 1.57 1.65 1.75 1.89 2.44"), an: strs("239.1 386.9 381.0 98.7 110.4 39.7 44.1 57.4"), ca: strs("1,172.2 1,516.1 1,699.8 2,087.4 2,233.1 2,303.2 2,333.2 2,358.3") },
+        Ley:             { pct: nums("2.35 2.92 2.31 1.89 1.59 1.98 2.22 2.36"), an: strs("51.0 72.9 62.3 14.9 13.1 5.5 6.34 6.7"),      ca: strs("179.6 208.4 225.3 262.2 273.7 282.0 285.3 287.1") },
+        "Daños propios": { pct: nums("1.55 1.99 1.82 1.53 1.66 1.69 1.85 2.45"), an: strs("188.1 313.9 318.7 83.8 97.3 34.2 37.8 50.7"),  ca: strs("992.6 1,307.7 1,474.5 1,825.2 1,959.4 2,021.2 2,047.9 2,071.1") },
+      } },
+  ];
 
   /* =================== Utilidades de gráficos =================== */
   const SWEEP = 1.4;
@@ -729,24 +704,30 @@
     }
   }
 
-  /* =================== Slide 3: métricas de gestión =================== */
-  function renderSegTable(id, ds) {
+  /* =================== Slides de métricas de gestión =================== */
+  function segTable(m, kind) {
+    const ds = m[kind];
     let h = '<colgroup><col class="lbl">' + "<col>".repeat(16) + "</colgroup>";
     h += '<thead><tr class="per"><th class="corner"></th>' + PERIODS.map(p => `<th colspan="2">${p}</th>`).join("") + "</tr>";
     h += '<tr class="sub"><th class="corner">Segmento</th>' + PERIODS.map(() => "<th>Anuladas</th><th>Cartera</th>").join("") + "</tr></thead><tbody>";
-    SEG.forEach((s, ri) => {
-      const r = ds[s.key];
-      h += `<tr class="${s.key === "Overall" ? "ov" : ""}" style="--r:${ri}"><th scope="row">${s.key}</th>` +
-        r.an.map((v, i) => `<td class="g an">${nf(v, ds.d)}</td><td>${nf(r.ca[i], ds.d)}</td>`).join("") + "</tr>";
+    m.series.forEach((key, ri) => {
+      const r = ds[key];
+      h += `<tr class="${ri === 0 ? "ov" : ""}" style="--r:${ri}"><th scope="row">${key}</th>` +
+        r.an.map((v, i) => `<td class="g an">${v}</td><td>${r.ca[i]}</td>`).join("") + "</tr>";
     });
-    document.getElementById(id).innerHTML = h + "</tbody>";
+    return h + "</tbody>";
   }
 
-  function chartSeg(svg, id, ds, min, max, objective, H) {
-    const W = 1330, L = 130, T = 44, B = 30;
+  function chartSeg(svg, id, m, kind, objective) {
+    const ds = m[kind];
+    const [, , W, H] = svg.getAttribute("viewBox").split(" ").map(Number);
+    const L = 191, T = 40, B = 26;
+    const all = m.series.flatMap(k => ds[k].pct).concat(objective ?? []);
+    const min = Math.min(...all) - 0.25, max = Math.max(...all) + 0.2;
     const colW = (W - L) / PERIODS.length;
     const x = i => L + colW * (i + 0.5);
     const y = v => T + (H - T - B) * (1 - (v - min) / (max - min));
+    const SEG = m.series.map((key, i) => ({ key, ...SERIES_STYLE[i] }));
     let s = sweepClip(id, L, W, H);
     for (let i = 1; i < PERIODS.length; i++) s += `<line x1="${L + colW * i}" x2="${L + colW * i}" y1="${T - 10}" y2="${H}" stroke="${C.line}" stroke-dasharray="2 4"/>`;
     if (objective) {
@@ -785,18 +766,77 @@
       });
       ranked.forEach(r => {
         s += `<g class="pop" style="animation-delay:${d}s"><circle cx="${x(i)}" cy="${r.py}" r="5" fill="#fff" stroke="${r.color}" stroke-width="3"><title>${r.key} · ${p}: ${r.v.toFixed(2)}%</title></circle>` +
-             `<text x="${x(i)}" y="${r.ly}" text-anchor="middle" font-size="14.5" font-weight="${r.key === "Overall" ? 700 : 500}" fill="${r.key === "Flotilla" ? C.muted : r.color}" paint-order="stroke" stroke="#fff" stroke-width="4">${r.v.toFixed(2)}%</text></g>`;
+             `<text x="${x(i)}" y="${r.ly}" text-anchor="middle" font-size="14.5" font-weight="${r.weight}" fill="${r.text}" paint-order="stroke" stroke="#fff" stroke-width="4">${r.v.toFixed(2)}%</text></g>`;
       });
     });
     svg.innerHTML = s;
   }
 
+  function metricSlide(m, idx) {
+    const id = "m" + idx;
+    const legend = (withObj) => `<div class="legend">${m.series.map((k, i) =>
+      `<span><i style="border-color:${SERIES_STYLE[i].color}"></i>${k}</span>`).join("")}${withObj ? '<span class="obj"><i></i>Objetivo</span>' : ""}</div>`;
+    const cSep = m.cust[m.series[0]].pct[7], rSep = m.rev[m.series[0]].pct[7];
+    const pb = Math.round((cSep - m.objective) * 100);
+    const third = m.note
+      ? `<div class="note anim from-right" data-step="2"><h3>¿Qué pasó en septiembre?</h3>${m.note}</div>`
+      : `<div class="rcard anim from-right" data-step="2"><h3>Retención · septiembre 2026</h3><div class="v" data-count="${m.retain}" data-dec="0" data-suffix="%">${m.retain}%</div><p>${m.retainTxt}</p></div>`;
+    return `
+    <section class="slide mslide" aria-label="Métricas Gestión · ${m.brand}">
+      <div class="deco tl1"></div><div class="deco tl2"></div>
+      <div class="deco br1"></div><div class="deco br2"></div>
+      <div class="deco band"></div>
+      <div class="content">
+        <div class="head">
+          <div class="anim">
+            <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto</span>
+            <h1>Métricas Gestión <span class="brand">· ${m.brand}</span></h1>
+            <div class="retain">En septiembre, hemos logrado retener al&nbsp;<b>${m.retain}%</b>&nbsp;${m.retainTxt}.</div>
+          </div>
+        </div>
+        <div class="s3-grid">
+          <div>
+            <div class="metric anim" data-step="0">
+              <div class="metric-head"><h2>Tasa de abandono de clientes <span>· Customer Churn · Certificados</span></h2>${legend(true)}</div>
+              <span class="unit">Cant. certificados</span>
+              <svg data-chart="${id}-cust" viewBox="0 0 1330 205" role="img" aria-label="Customer churn por segmento"></svg>
+              <div class="table-wrap"><table>${segTable(m, "cust")}</table></div>
+              <div class="sep-hl anim zoom" data-step="2"></div>
+            </div>
+            <div class="metric anim" data-step="1">
+              <div class="metric-head"><h2>Tasa de abandono de ingreso <span>· Revenue Churn · Monto</span></h2>${legend(false)}</div>
+              <span class="unit">Monto RD$MM</span>
+              <svg data-chart="${id}-rev" viewBox="0 0 1330 140" role="img" aria-label="Revenue churn por segmento"></svg>
+              <div class="table-wrap"><table>${segTable(m, "rev")}</table></div>
+              <div class="sep-hl anim zoom" data-step="2"></div>
+            </div>
+          </div>
+          <div class="s3-side">
+            <div class="kpi anim from-right" data-step="0">
+              <h3>Customer churn · Sep 2026</h3>
+              <div class="v blue" data-count="${cSep}" data-dec="2" data-suffix="%">${pct(cSep)}</div>
+              <div><span class="pill ${pb > 0 ? "bad" : ""}">${pb > 0 ? "+" : "−"}${Math.abs(pb)} pb ${pb > 0 ? "sobre" : "bajo"} objetivo (${pct(m.objective)})</span></div>
+            </div>
+            <div class="kpi anim from-right" data-step="1">
+              <h3>Revenue churn · Sep 2026</h3>
+              <div class="v cyan" data-count="${rSep}" data-dec="2" data-suffix="%">${pct(rSep)}</div>
+              <div class="s">${m.series.slice(1).map(k => `${k} ${pct(m.rev[k].pct[7])}`).join(" · ")}</div>
+            </div>
+            ${third}
+          </div>
+        </div>
+      </div>
+    </section>`;
+  }
+
   /* =================== Registro de gráficos =================== */
   const CHARTS = {
     main:      svg => chartMain(svg),
-    cust:      svg => chartSeg(svg, "cust", cust, 1.85, 3.2, OBJETIVO, 230),
-    rev:       svg => chartSeg(svg, "rev", rev, 0.3, 2.75, null, 150),
   };
+  METRICS.forEach((m, i) => {
+    CHARTS[`m${i}-cust`] = svg => chartSeg(svg, `m${i}c`, m, "cust", m.objective);
+    CHARTS[`m${i}-rev`] = svg => chartSeg(svg, `m${i}r`, m, "rev", null);
+  });
   PLANS.forEach(p => {
     CHARTS[p.id] = svg => comboChart(svg, p);
   });
@@ -831,8 +871,7 @@
   }
   renderPlanStages("dp");
   renderPlanStages("sl");
-  renderSegTable("t-cust", cust);
-  renderSegTable("t-rev", rev);
+  document.getElementById("deck").insertAdjacentHTML("beforeend", METRICS.map(metricSlide).join(""));
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
 
   /* =================== Motor de presentación =================== */
