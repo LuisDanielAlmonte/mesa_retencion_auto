@@ -139,38 +139,35 @@
   .bottom { margin-top: 26px; flex: 1; display: grid; grid-template-columns: 1fr 360px; gap: 26px; min-height: 0; }
   .kpis { display: grid; grid-template-rows: 1.2fr 1fr 1fr; gap: 16px; min-height: 0; }
 
-  /* ---------- Slide 2: planes ---------- */
-  .tabs { margin-top: 24px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
-  .tab {
-    all: unset; cursor: pointer; border-radius: 16px; padding: 12px 18px; border: 1px solid var(--line); background: #fff;
-    display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 10px;
-    transition: background .4s ease, color .4s ease, box-shadow .4s ease, transform .4s var(--ease);
-  }
-  .tab .g { grid-column: 1 / -1; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-  .tab .n { font-size: 22px; font-weight: 700; color: var(--navy); }
-  .tab .c { font-size: 20px; font-weight: 700; color: var(--blue); font-variant-numeric: tabular-nums; }
-  .tab .c.over { color: var(--alert); }
-  .tab.on { background: linear-gradient(140deg, var(--blue), var(--navy)); border-color: transparent; box-shadow: 0 16px 30px -18px rgba(11,47,91,.7); transform: translateY(-3px); }
-  .tab.on .g { color: rgba(255,255,255,.65); } .tab.on .n { color: #fff; } .tab.on .c { color: #fff; } .tab.on .c.over { color: #ffb37a; }
+  /* ---------- Portada ---------- */
+  .cover { background: linear-gradient(125deg, var(--navy) 0%, var(--blue) 55%, var(--cyan) 100%); color: #fff; }
+  .cover .stripe { position: absolute; width: 1400px; height: 150px; transform: rotate(-38deg); transition: transform 1.4s var(--ease); }
+  .cover .s1 { left: -620px; top: 0; background: rgba(255,255,255,.08); }
+  .cover .s2 { left: -520px; top: 300px; height: 56px; background: rgba(0,180,230,.5); }
+  .cover .s3 { right: -640px; bottom: 80px; background: rgba(255,255,255,.07); }
+  .cover .s4 { right: -540px; bottom: -110px; height: 90px; background: rgba(255,169,77,.9); }
+  .cover:not(.active) .s1, .cover:not(.active) .s2 { transform: rotate(-38deg) translateX(-600px); }
+  .cover:not(.active) .s3, .cover:not(.active) .s4 { transform: rotate(-38deg) translateX(600px); }
+  .cover-inner { position: absolute; left: 190px; top: 50%; transform: translateY(-50%); }
+  .cover .kicker { display: flex; align-items: center; gap: 16px; font-size: 24px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.8); }
+  .cover .kicker::before { content: ""; width: 64px; height: 4px; border-radius: 2px; background: var(--orange); }
+  .cover h1.ct { margin: 28px 0 0; font-size: 150px; line-height: .95; letter-spacing: -.03em; color: #fff; }
+  .cover h1.ct span { color: var(--orange); }
+  .cover .date { margin-top: 48px; display: inline-flex; gap: 14px; font-size: 42px; font-weight: 300; padding: 14px 34px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); }
+  .cover .date b { font-weight: 700; }
 
-  .plan-body { margin-top: 22px; flex: 1; display: grid; grid-template-columns: 330px 1fr; gap: 24px; min-height: 0; }
-  .pstats { display: flex; flex-direction: column; gap: 12px; }
-  .pstat { flex: 1; border: 1px solid var(--line); border-radius: 16px; padding: 12px 22px; display: flex; flex-direction: column; justify-content: center; }
-  .pstat .l { font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-  .pstat .v { font-size: 38px; font-weight: 700; line-height: 1.1; color: var(--navy); font-variant-numeric: tabular-nums; }
-  .pstat .s { font-size: 15px; color: var(--muted); }
-  .pstat.main { background: linear-gradient(150deg, var(--blue), var(--navy)); border: 0; }
-  .pstat.main .l, .pstat.main .s { color: rgba(255,255,255,.75); } .pstat.main .v { color: #fff; }
-  .pstat .v.good { color: #0c8a63; }
-  .pcharts { display: grid; grid-template-rows: repeat(3, 1fr); gap: 14px; min-height: 0; }
-  .pchart { border: 1px solid var(--line); border-radius: 16px; padding: 12px 20px 2px; display: flex; flex-direction: column; min-height: 0; }
-  .pchart .ph { display: flex; justify-content: space-between; align-items: baseline; }
-  .pchart .ph .t { font-size: 18px; font-weight: 700; color: var(--navy); }
-  .pchart .ph .t span { font-weight: 400; color: var(--muted); font-size: 15px; margin-left: 8px; }
-  .pchart .ph .tr { font-size: 15px; font-weight: 600; padding: 3px 12px; border-radius: 999px; background: var(--cyan-soft); color: var(--blue); }
-  .pchart .ph .tr.bad { background: #fff0e6; color: var(--alert); }
-  .pchart .ph .tr.good { background: #e6f8f1; color: #0c8a63; }
-  .pchart svg { flex: 1; width: 100%; min-height: 0; display: block; }
+  /* ---------- Slides por grupo de planes ---------- */
+  .pgrid { margin-top: 24px; flex: 1; display: grid; grid-template-columns: 300px 1fr 1fr; gap: 16px 24px; min-height: 0; }
+  .pgrid .colh { display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .pgrid .colh .legend { font-size: 14px; letter-spacing: 0; text-transform: none; font-weight: 400; gap: 16px; }
+  .pname { border-radius: 18px; padding: 22px 26px; color: #fff; background: linear-gradient(150deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; }
+  .pname .n { font-size: 32px; font-weight: 700; line-height: 1.1; }
+  .pname .c { font-size: 17px; color: rgba(255,255,255,.72); margin-top: 6px; }
+  .pcard { position: relative; border: 1px solid var(--line); border-radius: 18px; padding: 12px 16px 2px; display: flex; flex-direction: column; min-height: 0; background: #fff; }
+  .pcard svg { flex: 1; width: 100%; min-height: 0; display: block; }
+  .badge { position: absolute; top: 12px; right: 16px; font-size: 15px; font-weight: 600; padding: 4px 12px; border-radius: 999px; }
+  .badge.good { background: #e6f8f1; color: #0c8a63; }
+  .badge.bad { background: #fff0e6; color: var(--alert); }
 
   /* ---------- Slide 3: métricas de gestión ---------- */
   .s3-grid { margin-top: 22px; flex: 1; display: grid; grid-template-columns: 1fr 380px; gap: 30px; min-height: 0; }
@@ -243,6 +240,16 @@
   <div class="deck" id="deck">
     <div class="progress" id="progress"></div>
 
+    <!-- ================= Portada ================= -->
+    <section class="slide cover" aria-label="Mesa de Retención Auto · Octubre 2026">
+      <div class="stripe s1"></div><div class="stripe s2"></div><div class="stripe s3"></div><div class="stripe s4"></div>
+      <div class="cover-inner">
+        <div class="kicker anim">Mi Auto</div>
+        <h1 class="ct anim">Mesa de Retención<br><span>Auto</span></h1>
+        <div class="date anim">Octubre <b>2026</b></div>
+      </div>
+    </section>
+
     <!-- ================= Slide 1: Proyección · Certificados ================= -->
     <section class="slide" aria-label="Proyección de Churn 2026 · Mi Auto — Certificados">
       <div class="deco tl1"></div><div class="deco tl2"></div>
@@ -293,8 +300,8 @@
       <div class="footnote anim fade">Churn = cancelaciones ÷ cartera del mes · Churn 2026 = promedio de los churn mensuales · Tendencia: recta ajustada a ene–sep; emisiones oct–dic = promedio 2026.</div>
     </section>
 
-    <!-- ================= Slide 2: Tendencia por plan ================= -->
-    <section class="slide" id="plan-slide" data-steps="4" aria-label="Tendencia por plan · Mi Auto">
+    <!-- ================= Slide 2: Daños Propios ================= -->
+    <section class="slide" aria-label="Daños Propios · Tendencia por plan">
       <div class="deco tl1"></div><div class="deco tl2"></div>
       <div class="deco br1"></div><div class="deco br2"></div>
       <div class="deco band"></div>
@@ -302,41 +309,36 @@
       <div class="content">
         <div class="head">
           <div class="anim">
-            <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto · Certificados</span>
-            <h1>Tendencia por plan <span class="brand">· Mi Auto</span></h1>
+            <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto · Vehículos de motor</span>
+            <h1>Daños Propios <span class="brand">· Mi Auto</span></h1>
           </div>
-          <div class="section-tag anim from-right"><span class="num">2</span>Planes</div>
+          <div class="section-tag anim from-right"><span class="num">2</span>Tendencia por plan</div>
         </div>
-
-        <div class="tabs anim" id="tabs"></div>
-
-        <div class="plan-body">
-          <div class="pstats anim">
-            <div class="pstat"><div class="l">Cartera octubre</div><div class="v" id="ps-cart">—</div><div class="s" id="ps-cart-s"></div></div>
-            <div class="pstat"><div class="l">Crecimiento ene → oct</div><div class="v good" id="ps-grow">—</div><div class="s" id="ps-grow-s"></div></div>
-            <div class="pstat"><div class="l">Cancelaciones ene–sep</div><div class="v" id="ps-canc">—</div><div class="s" id="ps-canc-s"></div></div>
-            <div class="pstat main"><div class="l">Churn 2026 · ene–sep</div><div class="v" id="ps-churn">—</div><div class="s" id="ps-churn-s"></div></div>
-          </div>
-          <div class="pcharts anim">
-            <div class="pchart">
-              <div class="ph"><div class="t">Cartera <span>certificados al inicio de cada mes</span></div><div class="tr" id="tr-cart"></div></div>
-              <svg data-chart="p-cart" viewBox="0 0 1300 200" role="img" aria-label="Cartera del plan y su tendencia"></svg>
-            </div>
-            <div class="pchart">
-              <div class="ph"><div class="t">Cancelaciones <span>certificados cancelados en el mes</span></div><div class="tr" id="tr-canc"></div></div>
-              <svg data-chart="p-canc" viewBox="0 0 1300 200" role="img" aria-label="Cancelaciones del plan y su tendencia"></svg>
-            </div>
-            <div class="pchart">
-              <div class="ph"><div class="t">Churn <span>cancelaciones ÷ cartera</span></div><div class="tr" id="tr-churn"></div></div>
-              <svg data-chart="p-churn" viewBox="0 0 1300 200" role="img" aria-label="Churn del plan contra objetivo y su tendencia"></svg>
-            </div>
-          </div>
-        </div>
+        <div class="pgrid" id="grid-dp"></div>
       </div>
-      <div class="footnote anim fade">Línea sólida = real · punteada = tendencia (recta ajustada a los meses reales) · cancelaciones de tendencia = churn × cartera de tendencia · → o clic para pasar al siguiente plan.</div>
+      <div class="footnote anim fade">Línea sólida = real 2026 · línea punteada = tendencia (recta ajustada a los meses reales) llevada hasta diciembre.</div>
     </section>
 
-    <!-- ================= Slide 3: Métricas de gestión ================= -->
+    <!-- ================= Slide 3: Seguro de Ley ================= -->
+    <section class="slide" aria-label="Seguro de Ley · Tendencia por plan">
+      <div class="deco tl1"></div><div class="deco tl2"></div>
+      <div class="deco br1"></div><div class="deco br2"></div>
+      <div class="deco band"></div>
+
+      <div class="content">
+        <div class="head">
+          <div class="anim">
+            <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto · Vehículos de motor</span>
+            <h1>Seguro de Ley <span class="brand">· Mi Auto</span></h1>
+          </div>
+          <div class="section-tag anim from-right"><span class="num">3</span>Tendencia por plan</div>
+        </div>
+        <div class="pgrid" id="grid-sl"></div>
+      </div>
+      <div class="footnote anim fade">Línea sólida = real 2026 · línea punteada = tendencia (recta ajustada a los meses reales) llevada hasta diciembre.</div>
+    </section>
+
+    <!-- ================= Slide 4: Métricas de gestión ================= -->
     <section class="slide" aria-label="Métricas Gestión · Mi Auto">
       <div class="deco tl1"></div><div class="deco tl2"></div>
       <div class="deco br1"></div><div class="deco br2"></div>
@@ -348,7 +350,7 @@
             <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto</span>
             <h1>Métricas Gestión <span class="brand">· Mi Auto</span></h1>
           </div>
-          <div class="section-tag anim from-right"><span class="num">3</span>Customer &amp; Revenue Churn</div>
+          <div class="section-tag anim from-right"><span class="num">4</span>Customer &amp; Revenue Churn</div>
         </div>
 
         <div class="s3-grid">
@@ -469,34 +471,23 @@
   /* =================== Datos · Planes =================== */
   // cartera: ene–oct (oct = inicio del mes, real) · cancel: ene–sep (meses cerrados)
   const PLANS = [
-    { name: "Mi Auto Flex",    group: "Daños propios · Pérdida total",
+    { name: "Mi Auto Flex",    cov: "Todo riesgo pérdida total",  group: "dp",
       cartera: [1148,1175,1214,1253,1294,1242,1308,1352,1426,1478], cancel: [28,31,30,21,18,25,34,28,47] },
-    { name: "Mi Auto Full",    group: "Daños propios · Con deducible",
+    { name: "Mi Auto Full",    cov: "Todo riesgo con deducible",  group: "dp",
       cartera: [26905,27622,28134,28749,29128,29706,30084,30588,30849,30846], cancel: [623,659,676,822,616,830,794,843,1009] },
-    { name: "Mi Auto Premier", group: "Daños propios · Cero deducible",
+    { name: "Mi Auto Premier", cov: "Todo riesgo cero deducible", group: "dp",
       cartera: [2157,2186,2246,2271,2310,2370,2401,2441,2469,2512], cancel: [42,26,43,45,35,80,51,53,80] },
-    { name: "Mi Auto Básico",  group: "Seguro de ley",
+    { name: "Mi Auto Básico",  cov: "Seguro de ley",              group: "sl",
       cartera: [29381,30501,30967,31456,32028,32768,33331,33964,34325,34795], cancel: [626,722,854,636,543,760,857,856,1021] },
-    { name: "Mi Moto Básico",  group: "Seguro de ley",
+    { name: "Mi Moto Básico",  cov: "Seguro de ley",              group: "sl",
       cartera: [699,858,1007,1154,1347,1546,1720,1897,2053,2150], cancel: [5,3,4,4,7,13,18,16,68] },
   ];
-  const CANC_YTD = sum(total.cancel);
-  PLANS.forEach(p => {
-    p.churn = p.cancel.map((c, i) => c / p.cartera[i] * 100);
-    p.ytd = avg(p.churn);
-    const fc = linreg(p.cartera), fr = linreg(p.churn);
-    p.cartSlope = fc.slope; p.churnSlope = fr.slope;
-    p.cartProj = [11, 12].map(fc);                                   // nov–dic
-    p.churnProj = [10, 11, 12].map(fr);                              // oct–dic
-    const cartFor = [p.cartera[9], ...p.cartProj];                   // oct real + nov–dic tendencia
-    p.cancProj = p.churnProj.map((r, j) => r / 100 * cartFor[j]);
-    p.close = (sum(p.churn) + sum(p.churnProj)) / 12;
-    p.share = p.cartera[9] / CARTERA_OCT * 100;
-    p.shareCancel = sum(p.cancel) / CANC_YTD * 100;
-    p.growth = p.cartera[9] - p.cartera[0];
-    p.growthPct = (p.cartera[9] / p.cartera[0] - 1) * 100;
+  PLANS.forEach((p, i) => {
+    p.id = "p" + i;
+    p.churn = p.cancel.map((c, k) => c / p.cartera[k] * 100);
+    p.fitCart = linreg(p.cartera);     // ene–oct
+    p.fitChurn = linreg(p.churn);      // ene–sep
   });
-  let planIdx = 0;
 
   /* =================== Datos · Métricas de gestión =================== */
   const PERIODS = ["2023","2024","2025","Q1 2026","Q2 2026","Julio 2026","Agosto 2026","Septiembre 2026"];
@@ -592,82 +583,63 @@
     svg.innerHTML = s;
   }
 
-  /* =================== Slide 2: planes =================== */
-  function renderTabs() {
-    document.getElementById("tabs").innerHTML = PLANS.map((p, i) =>
-      `<button class="tab" data-i="${i}"><span class="g">${p.group}</span><span class="n">${p.name}</span><span class="c${p.ytd > OBJETIVO ? " over" : ""}">${pct(p.ytd)}</span></button>`).join("");
-    document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", e => {
-      e.stopPropagation();
-      go(slides.indexOf(document.getElementById("plan-slide")), +t.dataset.i);
-    }));
-  }
-
-  // Línea real (sólida) + tendencia punteada hasta diciembre
-  function lineTrend(svg, id, real, trend, fmt, objective) {
-    const W = 1300, H = 200, L = 24, R = 24, T = 30, B = 26;
-    const all = real.concat(trend, objective ?? []);
+  /* =================== Slides por grupo de planes =================== */
+  // Línea real (sólida) + recta de tendencia punteada de enero a diciembre; solo se rotulan los extremos
+  function miniTrend(svg, id, real, fit, fmt, objective) {
+    const [, , W, H] = svg.getAttribute("viewBox").split(" ").map(Number);
+    const L = 14, R = 14, T = 44, B = 26;
+    const n = real.length;
+    const fitted = MONTHS.map((_, i) => fit(i + 1));
+    const all = real.concat(fitted, objective ?? []);
     let lo = Math.min(...all), hi = Math.max(...all);
-    const pad = (hi - lo) * 0.2 || 1;
+    const pad = (hi - lo) * 0.16 || 1;
     lo -= pad; hi += pad;
     const x = i => L + (W - L - R) * (i + 0.5) / 12;
     const y = v => T + (H - T - B) * (1 - (v - lo) / (hi - lo));
-    const n = real.length, seq = real.concat(trend);
     let s = sweepClip(id, L, W, H);
     const px = (x(n - 1) + x(n)) / 2;
-    s += `<rect x="${px}" y="4" width="${W - R - px + 10}" height="${H - B - 2}" fill="${C.blue}" opacity=".05" rx="8"/>`;
-    MONTHS.forEach((m, i) => s += `<text x="${x(i)}" y="${H - 4}" text-anchor="middle" font-size="15" fill="${i >= n ? C.blue : C.muted}" font-weight="${i >= n ? 600 : 400}">${m.slice(0, 3)}</text>`);
+    s += `<rect x="${px}" y="${T - 8}" width="${W - px}" height="${H - T - B + 8}" fill="${C.blue}" opacity=".05" rx="8"/>`;
+    MONTHS.forEach((m, i) => s += `<text x="${x(i)}" y="${H - 6}" text-anchor="middle" font-size="14" fill="${i >= n ? C.blue : C.muted}">${m.slice(0, 3)}</text>`);
     if (objective) {
       s += `<g class="fadein"><line x1="${L}" x2="${W - R}" y1="${y(objective)}" y2="${y(objective)}" stroke="${C.orange}" stroke-width="2" stroke-dasharray="8 6"/>` +
-           `<text x="${L}" y="${y(objective) - 6}" font-size="13" font-weight="700" fill="${C.orange}" paint-order="stroke" stroke="#fff" stroke-width="4">Objetivo ${pct(objective)}</text></g>`;
+           `<text x="${L}" y="${y(objective) - 7}" font-size="13" font-weight="700" fill="${C.orange}" paint-order="stroke" stroke="#fff" stroke-width="4">Objetivo ${pct(objective)}</text></g>`;
     }
-    const pts = seq.map((v, i) => [x(i), y(v)]);
-    const rp = pts.slice(0, n);
-    s += `<defs><linearGradient id="${id}-g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${C.cyan}" stop-opacity=".22"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></linearGradient></defs>`;
+    const pts = real.map((v, i) => [x(i), y(v)]);
+    const fpts = fitted.map((v, i) => [x(i), y(v)]);
+    s += `<defs><linearGradient id="${id}-g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${C.cyan}" stop-opacity=".2"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></linearGradient></defs>`;
     s += `<g clip-path="url(#${id}-clip)">`;
-    s += `<path d="M${rp[0][0]},${H - B} ${rp.map(p => "L" + p.join(",")).join(" ")} L${rp[n - 1][0]},${H - B} Z" fill="url(#${id}-g)"/>`;
-    s += `<path d="${path(rp)}" fill="none" stroke="${C.cyan}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>`;
-    s += `<path d="${path(pts.slice(n - 1))}" fill="none" stroke="${C.blue}" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round"/>`;
+    s += `<path d="M${pts[0][0]},${H - B} ${pts.map(p => "L" + p.join(",")).join(" ")} L${pts[n - 1][0]},${H - B} Z" fill="url(#${id}-g)"/>`;
+    s += `<path d="${path(pts)}" fill="none" stroke="${C.cyan}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+    s += `<path d="${path(fpts)}" fill="none" stroke="${C.blue}" stroke-width="3.5" stroke-dasharray="2 8" stroke-linecap="round"/>`;
     s += `</g>`;
-    seq.forEach((v, i) => {
-      const p = pts[i], isT = i >= n;
-      const over = objective && v > objective;
-      const col = over ? C.alert : (isT ? C.blue : C.cyan);
-      const dip = v < (seq[i - 1] ?? Infinity) && v < (seq[i + 1] ?? Infinity);
-      s += `<g class="pop" style="animation-delay:${delayAt(p[0], L, W)}s"><circle cx="${p[0]}" cy="${p[1]}" r="5.5" fill="#fff" stroke="${col}" stroke-width="3"><title>${MONTHS[i]}${isT ? " (tendencia)" : ""}: ${fmt(v)}</title></circle>` +
-           `<text x="${p[0]}" y="${dip ? p[1] + 24 : p[1] - 12}" text-anchor="middle" font-size="15.5" font-weight="${isT ? 700 : 600}" font-style="${isT ? "italic" : "normal"}" fill="${over ? C.alert : (isT ? C.blue : C.ink)}" paint-order="stroke" stroke="#fff" stroke-width="4">${fmt(v)}</text></g>`;
-    });
+    pts.forEach((p, i) => s += `<circle class="pop" style="animation-delay:${delayAt(p[0], L, W)}s" cx="${p[0]}" cy="${p[1]}" r="4" fill="#fff" stroke="${C.cyan}" stroke-width="2.5"><title>${MONTHS[i]}: ${fmt(real[i])}</title></circle>`);
+    // Rótulos: último dato real y cierre de la tendencia en diciembre
+    const tag = (p, txt, col, d, above) =>
+      `<g class="pop" style="animation-delay:${d}s"><circle cx="${p[0]}" cy="${p[1]}" r="6.5" fill="#fff" stroke="${col}" stroke-width="3.5"/>` +
+      `<text x="${p[0]}" y="${above ? p[1] - 14 : p[1] + 28}" text-anchor="middle" font-size="17" font-weight="700" fill="${col}" paint-order="stroke" stroke="#fff" stroke-width="5">${txt}</text></g>`;
+    const last = pts[n - 1], dec = fpts[11];
+    const lastAbove = real[n - 1] >= fitted[n - 1];
+    s += tag(last, fmt(real[n - 1]), objective && real[n - 1] > objective ? C.alert : C.ink, delayAt(last[0], L, W), lastAbove);
+    s += tag(dec, fmt(fitted[11]), objective && fitted[11] > objective ? C.alert : C.blue, (SWEEP * 0.9).toFixed(2), !lastAbove || dec[1] > last[1]);
     svg.innerHTML = s;
   }
 
-  function setPlanText(p) {
-    const html = (id, v) => document.getElementById(id).innerHTML = v;
-    const num = (id, val, dec, pre = "", suf = "") => {
-      const el = document.getElementById(id);
-      Object.assign(el.dataset, { count: val, dec, prefix: pre, suffix: suf });
-      el.textContent = pre + nf(+val, dec) + suf;
-    };
-    num("ps-cart", p.cartera[9], 0);
-    html("ps-cart-s", `${p.share.toFixed(1)}% de la cartera de Mi Auto`);
-    num("ps-grow", p.growth, 0, "+");
-    html("ps-grow-s", `+${p.growthPct.toFixed(0)}% en el año`);
-    num("ps-canc", sum(p.cancel), 0);
-    html("ps-canc-s", `${p.shareCancel.toFixed(1)}% de las cancelaciones de Mi Auto`);
-    num("ps-churn", p.ytd.toFixed(2), 2, "", "%");
-    html("ps-churn-s", `${p.ytd > OBJETIVO ? "Sobre" : "Bajo"} el objetivo · cierre con tendencia <b style="color:${p.close > OBJETIVO ? "#ffb37a" : "#6fe0a6"}">${pct(p.close)}</b>`);
-    const pill = (id, txt, cls) => { const el = document.getElementById(id); el.textContent = txt; el.className = "tr " + cls; };
-    pill("tr-cart", `Tendencia: ${p.cartSlope >= 0 ? "+" : "−"}${nf(Math.abs(p.cartSlope))} certificados por mes`, p.cartSlope >= 0 ? "good" : "bad");
-    pill("tr-canc", `Tendencia: ~${nf(p.cancProj[0])} → ${nf(p.cancProj[2])} al mes en oct–dic`, p.churnSlope > 0 ? "bad" : "good");
-    pill("tr-churn", `Tendencia ${p.churnSlope >= 0 ? "+" : "−"}${Math.abs(p.churnSlope).toFixed(2)} pp por mes · cierre ${pct(p.close)}`, p.close > OBJETIVO ? "bad" : "good");
-    document.querySelectorAll(".tab").forEach((t, i) => t.classList.toggle("on", i === planIdx));
-  }
-
-  function showPlan(i, animate) {
-    planIdx = i;
-    setPlanText(PLANS[i]);
-    if (animate) {
-      document.querySelectorAll("#plan-slide svg[data-chart]").forEach(drawChart);
-      document.querySelectorAll("#plan-slide .pstat .v").forEach(countUp);
-    }
+  function renderPlanGrid(group) {
+    const plans = PLANS.filter(p => p.group === group);
+    const H = plans.length === 3 ? 214 : 340;
+    const grid = document.getElementById("grid-" + group);
+    grid.style.gridTemplateRows = `auto repeat(${plans.length}, 1fr)`;
+    const lg = obj => `<div class="legend"><span class="r"><i></i>Real</span><span class="p"><i></i>Tendencia</span>${obj ? '<span class="o"><i></i>Objetivo</span>' : ""}</div>`;
+    let h = `<div></div><div class="colh anim fade">Crecimiento de cartera ${lg(false)}</div><div class="colh anim fade">Churn ${lg(true)}</div>`;
+    plans.forEach(p => {
+      const up = p.fitCart.slope >= 0, worse = p.fitChurn.slope > 0;
+      h += `<div class="pname anim"><div class="n">${p.name}</div><div class="c">${p.cov}</div></div>`;
+      h += `<div class="pcard anim"><span class="badge ${up ? "good" : "bad"}">${up ? "↗ Crece" : "↘ Decrece"}</span>` +
+           `<svg data-chart="${p.id}-cart" viewBox="0 0 700 ${H}" role="img" aria-label="Cartera de ${p.name} y su tendencia"></svg></div>`;
+      h += `<div class="pcard anim"><span class="badge ${worse ? "bad" : "good"}">${worse ? "↗ Sube" : "↘ Baja"}</span>` +
+           `<svg data-chart="${p.id}-churn" viewBox="0 0 700 ${H}" role="img" aria-label="Churn de ${p.name} y su tendencia"></svg></div>`;
+    });
+    grid.innerHTML = h;
   }
 
   /* =================== Slide 3: métricas de gestión =================== */
@@ -735,12 +707,13 @@
   /* =================== Registro de gráficos =================== */
   const CHARTS = {
     main:      svg => chartMain(svg),
-    "p-cart":  svg => { const p = PLANS[planIdx]; lineTrend(svg, "pcart", p.cartera, p.cartProj, v => nf(v)); },
-    "p-canc":  svg => { const p = PLANS[planIdx]; lineTrend(svg, "pcanc", p.cancel, p.cancProj, v => nf(v)); },
-    "p-churn": svg => { const p = PLANS[planIdx]; lineTrend(svg, "pchurn", p.churn, p.churnProj, v => pct(v), OBJETIVO); },
     cust:      svg => chartSeg(svg, "cust", cust, 1.85, 3.2, OBJETIVO, 230),
     rev:       svg => chartSeg(svg, "rev", rev, 0.3, 2.75, null, 150),
   };
+  PLANS.forEach(p => {
+    CHARTS[p.id + "-cart"] = svg => miniTrend(svg, p.id + "c", p.cartera, p.fitCart, v => nf(v));
+    CHARTS[p.id + "-churn"] = svg => miniTrend(svg, p.id + "r", p.churn, p.fitChurn, v => pct(v), OBJETIVO);
+  });
   function drawChart(svg) {
     CHARTS[svg.dataset.chart](svg);
     svg.querySelectorAll("animate").forEach(a => a.beginElement());
@@ -770,8 +743,8 @@
     pill.textContent = `${Math.abs(pb)} pb ${pb > 0 ? "sobre" : "bajo"} objetivo`;
     if (pb <= 0) pill.className = "pill";
   }
-  renderTabs();
-  showPlan(0, false);
+  renderPlanGrid("dp");
+  renderPlanGrid("sl");
   renderSegTable("t-cust", cust);
   renderSegTable("t-rev", rev);
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
@@ -833,7 +806,6 @@
     n = Math.min(Math.max(n, 0), slides.length - 1);
     st = Math.min(Math.max(st, 0), stepsOf(slides[n]));
     const changed = n !== cur;
-    const stepChanged = !changed && st !== step;
     if (changed) {
       slides.forEach((s, i) => {
         s.classList.toggle("active", i === n);
@@ -842,8 +814,6 @@
       });
     }
     cur = n; step = st;
-    // En el slide de planes cada paso es un plan
-    if (slides[n].id === "plan-slide") showPlan(st, stepChanged);
     build(slides[n], st, changed);
     count.textContent = `${cur + 1} / ${slides.length}`;
     progress.style.width = ((cur + (step + 1) / (stepsOf(slides[cur]) + 1)) / slides.length * 100) + "%";
