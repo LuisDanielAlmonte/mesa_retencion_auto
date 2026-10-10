@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mesa de Retención Auto</title>
-<meta name="description" content="Mesa de Retención de Auto — Proyección de churn 2026 del producto Mi Auto.">
+<meta name="description" content="Mesa de Retención de Auto — Proyección de churn 2026 y métricas de gestión del producto Mi Auto.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,11 +16,13 @@
     --navy: #0b2f5b;
     --orange: #ffa94d;
     --alert: #e8590c;
+    --gray: #9aa5b1;
     --ink: #1c2b3a;
     --muted: #6b7c8f;
     --line: #e4ebf2;
     --row-hl: #e6f4fb;
     --stage-bg: #0a1522;
+    --ease: cubic-bezier(.2, .8, .2, 1);
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; height: 100%; overflow: hidden; }
@@ -35,25 +37,47 @@
   .viewport { position: fixed; inset: 0; }
   .deck {
     width: 1920px; height: 1080px; position: absolute; left: 50%; top: 50%;
-    transform-origin: center center;
+    transform-origin: center center; overflow: hidden; background: #fff;
     box-shadow: 0 30px 80px rgba(0,0,0,.5);
   }
   .slide {
-    position: absolute; inset: 0; overflow: hidden;
-    background: #fff;
-    opacity: 0; visibility: hidden; transition: opacity .35s ease;
+    position: absolute; inset: 0; overflow: hidden; background: #fff;
+    opacity: 0; visibility: hidden; transform: translateX(90px);
+    transition: opacity .6s ease, transform .8s var(--ease), visibility 0s .8s;
   }
-  .slide.active { opacity: 1; visibility: visible; }
+  .slide.before { transform: translateX(-90px); }
+  .slide.active { opacity: 1; visibility: visible; transform: none; transition: opacity .6s ease .1s, transform .8s var(--ease) .1s, visibility 0s; }
+
+  .progress { position: absolute; top: 0; left: 0; height: 5px; background: linear-gradient(90deg, var(--cyan), var(--blue)); z-index: 5; transition: width .7s var(--ease); }
+
+  /* Animación de entrada de elementos (se activa por paso) */
+  .anim { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .8s var(--ease); }
+  .anim.in { opacity: 1; transform: none; transition-delay: var(--d, 0s); }
+  .anim.fade { transform: none; }
+  .anim.zoom { transform: scale(.94); }
+  .anim.zoom.in { transform: none; }
+  .anim.from-right { transform: translateX(40px); }
+  .anim.from-right.in { transform: none; }
+
+  .in tbody tr { animation: rowIn .55s var(--ease) both; animation-delay: calc(var(--r, 0) * 70ms + var(--d, 0s) + .15s); }
+  @keyframes rowIn { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
+
+  svg .pop { opacity: 0; animation: pop .45s var(--ease) forwards; transform-box: fill-box; transform-origin: center; }
+  @keyframes pop { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: none; } }
+  svg .fadein { opacity: 0; animation: fadein .6s ease forwards; }
+  @keyframes fadein { to { opacity: 1; } }
 
   /* Decoración de marca */
-  .deco { position: absolute; pointer-events: none; }
+  .deco { position: absolute; pointer-events: none; transition: transform 1.1s var(--ease); }
   .deco.tl1 { top: -120px; left: -260px; width: 620px; height: 120px; background: var(--cyan); transform: rotate(-38deg); }
   .deco.tl2 { top: -10px; left: -300px; width: 620px; height: 70px; background: var(--blue); transform: rotate(-38deg); }
   .deco.br1 { bottom: -40px; right: -200px; width: 640px; height: 130px; background: var(--cyan); transform: rotate(-38deg); }
   .deco.br2 { bottom: 40px; right: -260px; width: 560px; height: 60px; background: var(--blue); transform: rotate(-38deg); }
+  .slide:not(.active) .deco.tl1, .slide:not(.active) .deco.tl2 { transform: rotate(-38deg) translateX(-220px); }
+  .slide:not(.active) .deco.br1, .slide:not(.active) .deco.br2 { transform: rotate(-38deg) translateX(260px); }
   .deco.band { left: 0; right: 0; bottom: 0; height: 14px; background: linear-gradient(90deg, var(--navy), var(--blue) 45%, var(--cyan)); }
 
-  .content { position: absolute; inset: 56px 110px 50px 110px; display: flex; flex-direction: column; }
+  .content { position: absolute; inset: 52px 110px 46px 110px; display: flex; flex-direction: column; }
 
   /* Encabezado */
   .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
@@ -64,16 +88,14 @@
   .eyebrow .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
   h1 { margin: 8px 0 0; font-size: 66px; font-weight: 700; line-height: 1; letter-spacing: -.02em; color: var(--cyan); }
   h1 .brand { color: var(--orange); }
-  .section-tag {
-    display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 500; color: var(--navy);
-  }
+  .section-tag { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 500; color: var(--navy); }
   .section-tag .num {
     width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center;
     background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #fff; font-weight: 700; font-size: 24px;
   }
 
-  /* Tabla */
-  .table-wrap { margin-top: 34px; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: 0 18px 40px -26px rgba(11,47,91,.45); }
+  /* Tablas */
+  .table-wrap { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: 0 18px 40px -26px rgba(11,47,91,.45); background: #fff; }
   table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
   thead th { background: var(--cyan); color: #fff; font-weight: 500; font-size: 21px; padding: 14px 6px; text-align: center; white-space: nowrap; }
   thead th.proj { background: var(--blue); }
@@ -87,7 +109,7 @@
   tbody tr.hl th, tbody tr.hl td { background: var(--row-hl); font-weight: 600; color: var(--blue); }
   td.over { color: var(--alert) !important; }
 
-  /* Fila inferior */
+  /* Slide 1: fila inferior */
   .bottom { margin-top: 26px; flex: 1; display: grid; grid-template-columns: 1fr 360px; gap: 26px; min-height: 0; }
   .chart-box { border: 1px solid var(--line); border-radius: 18px; padding: 20px 24px 6px; display: flex; flex-direction: column; min-height: 0; }
   .chart-box h3, .kpi h3 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
@@ -98,18 +120,71 @@
   .legend .r i { border-color: var(--cyan); }
   .legend .p i { border-color: var(--blue); border-top-style: dotted; }
   .legend .o i { border-color: var(--orange); border-top-style: dashed; }
+  .legend .ind i { border-color: var(--cyan); }
+  .legend .ov i { border-color: var(--blue); }
+  .legend .flo i { border-color: var(--gray); }
+  .legend .obj i { border-color: #e03131; border-top-style: dashed; }
   .chart-box svg { flex: 1; width: 100%; min-height: 0; display: block; }
 
   .kpis { display: grid; grid-template-rows: 1.25fr 1fr 1fr; gap: 16px; min-height: 0; }
-  .kpi { border-radius: 18px; padding: 18px 26px; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--line); }
-  .kpi .v { font-size: 50px; font-weight: 700; line-height: 1.05; margin-top: 4px; }
+  .kpi { border-radius: 18px; padding: 18px 26px; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--line); background: #fff; }
+  .kpi .v { font-size: 50px; font-weight: 700; line-height: 1.05; margin-top: 4px; font-variant-numeric: tabular-nums; }
   .kpi .s { font-size: 16px; color: var(--muted); margin-top: 4px; }
   .kpi.main { background: linear-gradient(150deg, var(--blue), var(--navy)); border: 0; color: #fff; }
   .kpi.main h3 { color: rgba(255,255,255,.7); }
   .kpi.main .v { font-size: 66px; }
   .pill { display: inline-block; margin-top: 8px; align-self: flex-start; font-size: 15px; font-weight: 600; padding: 4px 12px; border-radius: 999px; background: rgba(111,224,166,.18); color: #6fe0a6; }
+  .pill.bad { background: #fff0e6; color: var(--alert); }
   .kpi .v.orange { color: var(--orange); }
   .kpi .v.blue { color: var(--blue); }
+  .kpi .v.cyan { color: var(--cyan); }
+
+  /* Slide 2 */
+  .s2-grid { margin-top: 22px; flex: 1; display: grid; grid-template-columns: 1fr 380px; gap: 30px; min-height: 0; }
+  .metric { position: relative; }
+  .metric + .metric { margin-top: 16px; }
+  .metric-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+  .metric h2 { margin: 0; font-size: 26px; font-weight: 600; color: var(--navy); }
+  .metric h2 span { color: var(--muted); font-weight: 400; }
+  .metric .unit { position: absolute; left: 0; top: 56px; font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .metric svg { display: block; width: 100%; height: auto; margin-top: 4px; }
+  .metric table { table-layout: fixed; }
+  .metric col.lbl { width: 130px; }
+  .metric thead th { font-size: 17px; padding: 8px 2px; }
+  .metric thead tr.per th { background: var(--blue); font-weight: 600; font-size: 18px; border-left: 2px solid #fff; }
+  .metric thead tr.sub th { font-size: 15px; padding: 6px 2px; border-left: 1px solid rgba(255,255,255,.35); }
+  .metric thead th.corner { padding-left: 18px; font-size: 12px; }
+  .metric tbody th { font-size: 17px; padding: 8px 18px; }
+  .metric tbody td { font-size: 17px; padding: 8px 2px; }
+  .metric tbody td.g { border-left: 1px solid var(--line); }
+  .metric tbody td.an { color: var(--muted); }
+  .metric tbody tr.ov th, .metric tbody tr.ov td { font-weight: 600; color: var(--blue); background: var(--row-hl); }
+  .sep-hl {
+    position: absolute; right: -6px; top: 44px; bottom: -6px; width: calc((100% - 130px) / 8 + 12px);
+    border: 3px solid var(--alert); border-radius: 16px; pointer-events: none;
+    box-shadow: 0 0 0 6px rgba(232, 89, 12, .1);
+  }
+  .side-col { display: flex; flex-direction: column; gap: 18px; min-height: 0; }
+  .note {
+    flex: 1; border-radius: 20px; padding: 26px 30px; color: #fff; position: relative; overflow: hidden;
+    background: linear-gradient(160deg, var(--blue), var(--navy));
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .note::after { content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(0,180,230,.25); }
+  .note h3 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
+  .note p { margin: 0; font-size: 22px; line-height: 1.4; font-weight: 300; position: relative; z-index: 1; }
+  .note p b { font-weight: 600; color: #fff; }
+  .note .chips { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .note .chip { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); border-radius: 14px; padding: 14px 16px; }
+  .note .chip .v { font-size: 38px; font-weight: 700; line-height: 1; color: #fff; }
+  .note .chip .l { font-size: 14px; color: rgba(255,255,255,.75); margin-top: 6px; }
+  .note .clients { display: flex; gap: 10px; flex-wrap: wrap; }
+  .note .clients span { font-size: 15px; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: rgba(255,169,77,.18); color: var(--orange); }
+  .note .without { position: relative; z-index: 1; border-top: 1px solid rgba(255,255,255,.18); padding-top: 18px; }
+  .note .without .l { font-size: 16px; color: rgba(255,255,255,.8); line-height: 1.35; }
+  .note .without .v { font-size: 54px; font-weight: 700; color: #6fe0a6; line-height: 1.1; margin-top: 6px; }
+  .note .without .tag { font-size: 14px; font-weight: 600; color: #6fe0a6; letter-spacing: .06em; text-transform: uppercase; }
+  .footnote { position: absolute; left: 110px; bottom: 22px; font-size: 13px; color: var(--muted); }
 
   /* ---------- Controles ---------- */
   .controls {
@@ -128,13 +203,19 @@
   .controls .count { min-width: 52px; text-align: center; font-variant-numeric: tabular-nums; }
   @media (hover: none) { .controls { opacity: 1; } }
 
+  @media (prefers-reduced-motion: reduce) {
+    .slide, .anim, .deco, .progress { transition: none !important; }
+    .in tbody tr, svg .pop, svg .fadein { animation: none !important; opacity: 1; }
+  }
+
   @media print {
     @page { size: 1920px 1080px; margin: 0; }
     html, body { overflow: visible; height: auto; background: #fff; }
-    .viewport { position: static; display: block; }
-    .deck { position: static; transform: none !important; box-shadow: none; height: auto; }
-    .slide { position: relative; opacity: 1; visibility: visible; width: 1920px; height: 1080px; break-after: page; }
-    .controls { display: none; }
+    .viewport { position: static; }
+    .deck { position: static; transform: none !important; box-shadow: none; height: auto; overflow: visible; }
+    .slide { position: relative; opacity: 1; visibility: visible; transform: none; width: 1920px; height: 1080px; break-after: page; }
+    .anim { opacity: 1 !important; transform: none !important; }
+    .controls, .progress { display: none; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 </style>
@@ -143,8 +224,9 @@
 
 <div class="viewport">
   <div class="deck" id="deck">
+    <div class="progress" id="progress"></div>
 
-    <!-- ================= Slide 1: Certificados ================= -->
+    <!-- ================= Slide 1: Proyección · Certificados ================= -->
     <section class="slide" aria-label="Proyección de Churn 2026 · Mi Auto — Certificados">
       <div class="deco tl1"></div><div class="deco tl2"></div>
       <div class="deco br1"></div><div class="deco br2"></div>
@@ -152,17 +234,17 @@
 
       <div class="content">
         <div class="head">
-          <div>
+          <div class="anim">
             <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto</span>
             <h1>Proyección de Churn 2026 <span class="brand">· Mi Auto</span></h1>
           </div>
-          <div class="section-tag"><span class="num">1</span>Certificados</div>
+          <div class="section-tag anim from-right"><span class="num">1</span>Certificados</div>
         </div>
 
-        <div class="table-wrap"><table id="t-cert"></table></div>
+        <div class="table-wrap anim" style="margin-top:34px"><table id="t-cert"></table></div>
 
         <div class="bottom">
-          <div class="chart-box">
+          <div class="chart-box anim">
             <div class="chart-head">
               <h3>Churn mensual vs. objetivo</h3>
               <div class="legend">
@@ -171,26 +253,108 @@
                 <span class="o"><i></i>Objetivo</span>
               </div>
             </div>
-            <svg id="c-cert" viewBox="0 0 1300 330" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Churn mensual de certificados contra objetivo de 2.54%"></svg>
+            <svg data-chart="cert" viewBox="0 0 1300 330" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Churn mensual de certificados contra objetivo de 2.54%"></svg>
           </div>
           <div class="kpis">
-            <div class="kpi main">
+            <div class="kpi main anim from-right">
               <h3>Churn 2026</h3>
-              <div class="v">2.38%</div>
+              <div class="v" data-count="2.38" data-dec="2" data-suffix="%">2.38%</div>
               <span class="pill">16 pb bajo objetivo</span>
             </div>
-            <div class="kpi">
+            <div class="kpi anim from-right">
               <h3>Objetivo</h3>
-              <div class="v orange">2.54%</div>
+              <div class="v orange" data-count="2.54" data-dec="2" data-suffix="%">2.54%</div>
             </div>
-            <div class="kpi">
+            <div class="kpi anim from-right">
               <h3>Cartera a diciembre</h3>
-              <div class="v blue">73,630</div>
+              <div class="v blue" data-count="73630" data-dec="0">73,630</div>
               <div class="s">Certificados proyectados</div>
             </div>
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- ================= Slide 2: Métricas de gestión ================= -->
+    <section class="slide" aria-label="Métricas Gestión · Mi Auto">
+      <div class="deco tl1"></div><div class="deco tl2"></div>
+      <div class="deco br1"></div><div class="deco br2"></div>
+      <div class="deco band"></div>
+
+      <div class="content">
+        <div class="head">
+          <div class="anim">
+            <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto</span>
+            <h1>Métricas Gestión <span class="brand">· Mi Auto</span></h1>
+          </div>
+          <div class="section-tag anim from-right"><span class="num">2</span>Customer &amp; Revenue Churn</div>
+        </div>
+
+        <div class="s2-grid">
+          <div>
+            <!-- Paso 0: Customer churn -->
+            <div class="metric anim" data-step="0">
+              <div class="metric-head">
+                <h2>Tasa de abandono de clientes <span>· Customer Churn · Certificados</span></h2>
+                <div class="legend">
+                  <span class="ind"><i></i>Individual</span>
+                  <span class="ov"><i></i>Overall</span>
+                  <span class="flo"><i></i>Flotilla</span>
+                  <span class="obj"><i></i>Objetivo</span>
+                </div>
+              </div>
+              <span class="unit">Cant. certificados</span>
+              <svg data-chart="cust" viewBox="0 0 1330 230" role="img" aria-label="Customer churn por segmento"></svg>
+              <div class="table-wrap"><table id="t-cust"></table></div>
+              <div class="sep-hl anim zoom" data-step="2"></div>
+            </div>
+
+            <!-- Paso 1: Revenue churn -->
+            <div class="metric anim" data-step="1">
+              <div class="metric-head">
+                <h2>Tasa de abandono de ingreso <span>· Revenue Churn · Monto</span></h2>
+                <div class="legend">
+                  <span class="ind"><i></i>Individual</span>
+                  <span class="ov"><i></i>Overall</span>
+                  <span class="flo"><i></i>Flotilla</span>
+                </div>
+              </div>
+              <span class="unit">Monto RD$MM</span>
+              <svg data-chart="rev" viewBox="0 0 1330 150" role="img" aria-label="Revenue churn por segmento"></svg>
+              <div class="table-wrap"><table id="t-rev"></table></div>
+              <div class="sep-hl anim zoom" data-step="2"></div>
+            </div>
+          </div>
+
+          <div class="side-col">
+            <div class="kpi anim from-right" data-step="0">
+              <h3>Customer churn · Sep 2026</h3>
+              <div class="v blue" data-count="2.74" data-dec="2" data-suffix="%">2.74%</div>
+              <span class="pill bad">+20 pb sobre objetivo (2.54%)</span>
+            </div>
+            <div class="kpi anim from-right" data-step="1">
+              <h3>Revenue churn · Sep 2026</h3>
+              <div class="v cyan" data-count="2.09" data-dec="2" data-suffix="%">2.09%</div>
+              <div class="s">Individual 2.67% · Flotilla 0.39%</div>
+            </div>
+            <div class="note anim from-right" data-step="2">
+              <h3>¿Qué pasó en septiembre?</h3>
+              <p>El churn se vio impactado por la cancelación de <b>144 certificados</b> de flotillas de dos clientes:</p>
+              <div class="clients"><span>Banco Caribe</span><span>Motor Crédito SA</span></div>
+              <div class="chips">
+                <div class="chip"><div class="v" data-count="144" data-dec="0">144</div><div class="l">Certificados cancelados</div></div>
+                <div class="chip"><div class="v" data-count="7" data-dec="0" data-suffix="%">7%</div><div class="l">De las cancelaciones del ramo</div></div>
+              </div>
+              <div class="without">
+                <div class="l">Sin este evento, el customer churn overall de septiembre habría sido</div>
+                <div class="v" data-count="2.54" data-dec="2" data-suffix="%">2.54%</div>
+                <div class="tag">En línea con el objetivo</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footnote anim fade">Años y trimestres: churn mensual promedio del período.</div>
     </section>
 
   </div>
@@ -204,97 +368,257 @@
 </nav>
 
 <script>
-  /* ---------- Datos ---------- */
+  const C = { cyan: "#00b4e6", blue: "#0067b1", navy: "#0b2f5b", orange: "#ffa94d", alert: "#e8590c", red: "#e03131", gray: "#9aa5b1", line: "#e4ebf2", muted: "#6b7c8f", ink: "#1c2b3a" };
+  const nf = (v, d = 0) => v.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+
+  /* =================== Datos · Slide 1 =================== */
   const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
   const REAL = 9; // ene–sep real; oct–dic proyección
   const OBJETIVO = 2.54;
   const cert = [
-    { label: "Cartera",                   fmt: "int", data: [60290,62342,63568,64883,66107,67632,68844,70242,71122,71609,72619,73630] },
-    { label: "Emisiones / Inclusiones",   fmt: "int", data: [3376,2667,2922,2752,2744,2920,3152,2676,2439,2792,2793,2793] },
-    { label: "Churn",                     fmt: "pct", hl: true, data: [2.20,2.31,2.53,2.36,1.84,2.53,2.55,2.56,2.74,2.49,2.45,2.42] },
-    { label: "Cancelaciones",             fmt: "int", data: [1324,1441,1607,1528,1219,1708,1754,1796,1952,1782,1782,1782] },
-    { label: "Crecimiento de la Cartera", fmt: "int", data: [2052,1226,1315,1224,1525,1212,1398,880,487,1010,1011,1011] },
+    { label: "Cartera",                   d: 0, data: [60290,62342,63568,64883,66107,67632,68844,70242,71122,71609,72619,73630] },
+    { label: "Emisiones / Inclusiones",   d: 0, data: [3376,2667,2922,2752,2744,2920,3152,2676,2439,2792,2793,2793] },
+    { label: "Churn",                     pct: true, hl: true, data: [2.20,2.31,2.53,2.36,1.84,2.53,2.55,2.56,2.74,2.49,2.45,2.42] },
+    { label: "Cancelaciones",             d: 0, data: [1324,1441,1607,1528,1219,1708,1754,1796,1952,1782,1782,1782] },
+    { label: "Crecimiento de la Cartera", d: 0, data: [2052,1226,1315,1224,1525,1212,1398,880,487,1010,1011,1011] },
   ];
-  const fmt = {
-    int: v => v.toLocaleString("en-US"),
-    pct: v => v.toFixed(2) + "%",
+
+  /* =================== Datos · Slide 2 =================== */
+  const PERIODS = ["2023","2024","2025","Q1 2026","Q2 2026","Julio 2026","Agosto 2026","Septiembre 2026"];
+  const SEG = [
+    { key: "Overall",    color: C.blue, width: 4 },
+    { key: "Individual", color: C.cyan, width: 3.5 },
+    { key: "Flotilla",   color: C.gray, width: 3.5 },
+  ];
+  const cust = {
+    d: 0,
+    Overall:    { an: [14486,18310,16555,4372,4455,1754,1796,1952], ca: [44380,48895,51898,62067,66207,68844,70242,71122], pct: [2.72,3.12,2.67,2.35,2.24,2.55,2.56,2.74] },
+    Individual: { an: [10421,13447,12309,3344,3529,1442,1404,1672], ca: [31711,35361,39159,48361,52131,54362,55415,56235], pct: [2.73,3.17,2.63,2.30,2.24,2.65,2.53,2.97] },
+    Flotilla:   { an: [4065,4863,4246,1028,926,312,392,280],        ca: [12669,13534,12739,13706,14076,14482,14827,14887], pct: [2.68,2.99,2.77,2.50,2.19,2.15,2.64,1.88] },
+  };
+  const rev = {
+    d: 1,
+    Overall:    { an: [239.1,386.9,381.0,98.7,110.4,39.7,44.1,49.3], ca: [1172.2,1516.1,1699.8,2087.4,2233.1,2303.2,2333.2,2358.3], pct: [1.67,2.12,1.88,1.57,1.65,1.73,1.89,2.09] },
+    Individual: { an: [213.4,341.0,316.0,88.6,103.1,37.2,40.0,47.0],  ca: [802.8,1067.5,1248.9,1563.2,1673.1,1727.1,1744.9,1760.7], pct: [2.18,2.65,2.12,1.89,2.06,2.16,2.29,2.67] },
+    Flotilla:   { an: [25.7,45.9,64.9,10.1,7.3,2.5,4.1,2.3],          ca: [369.3,448.6,450.8,524.2,559.9,576.1,588.2,597.5], pct: [0.57,0.85,1.18,0.63,0.44,0.44,0.71,0.39] },
   };
 
-  /* ---------- Tabla ---------- */
-  function renderTable(id, rows, objective) {
+  /* =================== Tablas =================== */
+  function renderCertTable() {
     let h = '<thead><tr class="phase"><th class="corner"></th>' +
             `<th class="real" colspan="${REAL}">REAL</th><th class="proj" colspan="${12 - REAL}">PROYECCIÓN</th></tr>` +
             '<tr><th class="corner">Concepto</th>' +
             MONTHS.map((m, i) => `<th class="${i >= REAL ? "proj" : ""}">${m}</th>`).join("") + "</tr></thead><tbody>";
-    rows.forEach(r => {
-      h += `<tr class="${r.hl ? "hl" : ""}"><th scope="row">${r.label}</th>` +
+    cert.forEach((r, ri) => {
+      h += `<tr class="${r.hl ? "hl" : ""}" style="--r:${ri}"><th scope="row">${r.label}</th>` +
         r.data.map((v, i) => {
-          const cls = [i >= REAL ? "proj" : "", r.hl && objective && v > objective ? "over" : ""].join(" ").trim();
-          return `<td class="${cls}">${fmt[r.fmt](v)}</td>`;
+          const cls = [i >= REAL ? "proj" : "", r.hl && v > OBJETIVO ? "over" : ""].join(" ").trim();
+          return `<td class="${cls}">${r.pct ? v.toFixed(2) + "%" : nf(v, r.d)}</td>`;
         }).join("") + "</tr>";
+    });
+    document.getElementById("t-cert").innerHTML = h + "</tbody>";
+  }
+
+  function renderSegTable(id, ds) {
+    let h = '<colgroup><col class="lbl">' + "<col>".repeat(16) + "</colgroup>";
+    h += '<thead><tr class="per"><th class="corner"></th>' + PERIODS.map(p => `<th colspan="2">${p}</th>`).join("") + "</tr>";
+    h += '<tr class="sub"><th class="corner">Segmento</th>' + PERIODS.map(() => "<th>Anuladas</th><th>Cartera</th>").join("") + "</tr></thead><tbody>";
+    SEG.forEach((s, ri) => {
+      const r = ds[s.key];
+      h += `<tr class="${s.key === "Overall" ? "ov" : ""}" style="--r:${ri}"><th scope="row">${s.key}</th>` +
+        r.an.map((v, i) => `<td class="g an">${nf(v, ds.d)}</td><td>${nf(r.ca[i], ds.d)}</td>`).join("") + "</tr>";
     });
     document.getElementById(id).innerHTML = h + "</tbody>";
   }
 
-  /* ---------- Gráfico ---------- */
-  function renderChart(id, values, objective) {
-    const C = { cyan: "#00b4e6", blue: "#0067b1", orange: "#ffa94d", alert: "#e8590c", line: "#e4ebf2", muted: "#6b7c8f", ink: "#1c2b3a" };
+  /* =================== Gráficos =================== */
+  // Cada gráfico se dibuja al entrar en escena: la línea se revela de izquierda a derecha
+  // y puntos/etiquetas aparecen al paso del barrido.
+  const SWEEP = 1.4;
+  function sweepClip(id, x0, W, H) {
+    return `<defs><clipPath id="${id}-clip"><rect x="0" y="-20" width="${x0}" height="${H + 40}">` +
+           `<animate attributeName="width" from="${x0}" to="${W}" dur="${SWEEP}s" fill="freeze" begin="indefinite" calcMode="spline" keySplines=".4 0 .2 1" keyTimes="0;1"/></rect></clipPath></defs>`;
+  }
+  const delayAt = (px, x0, W) => (0.1 + SWEEP * (px - x0) / (W - x0)).toFixed(2);
+  const path = pts => pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
+
+  function chartCert(svg) {
+    const values = cert[2].data, objective = OBJETIVO;
     const W = 1300, H = 330, L = 56, R = 14, T = 22, B = 34;
-    const all = values.concat(objective || []);
-    const min = Math.floor((Math.min(...all) - 0.2) * 2) / 2;
-    const max = Math.ceil((Math.max(...all) + 0.15) * 2) / 2;
+    const min = 1.5, max = 3.0;
     const x = i => L + (W - L - R) * (i + 0.5) / 12;
     const y = v => T + (H - T - B) * (1 - (v - min) / (max - min));
-    let s = "";
+    let s = sweepClip("cert", L, W, H);
     for (let v = min; v <= max + 1e-9; v += 0.5) {
       s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="${C.line}"/>`;
       s += `<text x="${L - 10}" y="${y(v) + 5}" text-anchor="end" font-size="15" fill="${C.muted}">${v.toFixed(1)}%</text>`;
     }
     const px = (x(REAL - 1) + x(REAL)) / 2;
-    s += `<rect x="${px}" y="${T}" width="${W - R - px}" height="${H - T - B}" fill="${C.blue}" opacity=".06" rx="8"/>`;
-    s += `<text x="${(px + W - R) / 2}" y="${H - B - 10}" text-anchor="middle" font-size="13" font-weight="700" letter-spacing="3" fill="${C.blue}" opacity=".7">PROYECCIÓN</text>`;
+    s += `<g class="fadein" style="animation-delay:${delayAt(px, L, W)}s"><rect x="${px}" y="${T}" width="${W - R - px}" height="${H - T - B}" fill="${C.blue}" opacity=".06" rx="8"/>`;
+    s += `<text x="${(px + W - R) / 2}" y="${H - B - 10}" text-anchor="middle" font-size="13" font-weight="700" letter-spacing="3" fill="${C.blue}" opacity=".7">PROYECCIÓN</text></g>`;
     MONTHS.forEach((m, i) => s += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle" font-size="16" fill="${C.muted}">${m.slice(0, 3)}</text>`);
-    if (objective) {
-      s += `<line x1="${L}" x2="${W - R}" y1="${y(objective)}" y2="${y(objective)}" stroke="${C.orange}" stroke-width="2.5" stroke-dasharray="9 7"/>`;
-    }
+    s += `<line class="fadein" x1="${L}" x2="${W - R}" y1="${y(objective)}" y2="${y(objective)}" stroke="${C.orange}" stroke-width="2.5" stroke-dasharray="9 7"/>`;
     const pts = values.map((v, i) => [x(i), y(v)]);
-    s += `<defs><linearGradient id="${id}-g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${C.cyan}" stop-opacity=".25"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></linearGradient></defs>`;
-    s += `<path d="M${pts[0][0]},${y(min)} ${pts.map(p => "L" + p.join(",")).join(" ")} L${pts[11][0]},${y(min)} Z" fill="url(#${id}-g)"/>`;
-    const path = a => a.map((p, i) => (i ? "L" : "M") + p.join(",")).join(" ");
+    s += `<defs><linearGradient id="cert-g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${C.cyan}" stop-opacity=".25"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></linearGradient></defs>`;
+    s += `<g clip-path="url(#cert-clip)">`;
+    s += `<path d="M${pts[0][0]},${y(min)} ${pts.map(p => "L" + p.join(",")).join(" ")} L${pts[11][0]},${y(min)} Z" fill="url(#cert-g)"/>`;
     s += `<path d="${path(pts.slice(0, REAL))}" fill="none" stroke="${C.cyan}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>`;
     s += `<path d="${path(pts.slice(REAL - 1))}" fill="none" stroke="${C.blue}" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round"/>`;
+    s += `</g>`;
     pts.forEach((p, i) => {
-      const over = objective && values[i] > objective;
+      const over = values[i] > objective;
       const col = over ? C.alert : (i >= REAL ? C.blue : C.cyan);
-      s += `<circle cx="${p[0]}" cy="${p[1]}" r="6.5" fill="#fff" stroke="${col}" stroke-width="3.5"><title>${MONTHS[i]}: ${values[i].toFixed(2)}%</title></circle>`;
       const dip = values[i] < (values[i - 1] ?? Infinity) && values[i] < (values[i + 1] ?? Infinity);
-      s += `<text x="${p[0]}" y="${dip ? p[1] + 30 : p[1] - 16}" text-anchor="middle" font-size="16" font-weight="600" fill="${over ? C.alert : C.ink}">${values[i].toFixed(2)}%</text>`;
+      s += `<g class="pop" style="animation-delay:${delayAt(p[0], L, W)}s">` +
+           `<circle cx="${p[0]}" cy="${p[1]}" r="6.5" fill="#fff" stroke="${col}" stroke-width="3.5"><title>${MONTHS[i]}: ${values[i].toFixed(2)}%</title></circle>` +
+           `<text x="${p[0]}" y="${dip ? p[1] + 30 : p[1] - 16}" text-anchor="middle" font-size="16" font-weight="600" fill="${over ? C.alert : C.ink}">${values[i].toFixed(2)}%</text></g>`;
     });
-    document.getElementById(id).innerHTML = s;
+    svg.innerHTML = s;
   }
 
-  renderTable("t-cert", cert, OBJETIVO);
-  renderChart("c-cert", cert[2].data, OBJETIVO);
+  function chartSeg(svg, id, ds, min, max, objective, H) {
+    const W = 1330, L = 130, T = 44, B = 30;
+    const colW = (W - L) / PERIODS.length;
+    const x = i => L + colW * (i + 0.5);
+    const y = v => T + (H - T - B) * (1 - (v - min) / (max - min));
+    let s = sweepClip(id, L, W, H);
+    // separadores de período, alineados con la tabla
+    for (let i = 1; i < PERIODS.length; i++) s += `<line x1="${L + colW * i}" x2="${L + colW * i}" y1="${T - 10}" y2="${H}" stroke="${C.line}" stroke-dasharray="2 4"/>`;
+    if (objective) {
+      s += `<g class="fadein"><line x1="${L}" x2="${W - 4}" y1="${y(objective)}" y2="${y(objective)}" stroke="${C.red}" stroke-width="1.5" stroke-dasharray="6 5" opacity=".8"/>` +
+           `<text x="${L - 10}" y="${y(objective) + 5}" text-anchor="end" font-size="15" font-weight="600" fill="${C.red}">Obj. ${objective.toFixed(2)}%</text></g>`;
+    }
+    s += `<g clip-path="url(#${id}-clip)">`;
+    [...SEG].reverse().forEach(sg => {
+      const pts = ds[sg.key].pct.map((v, i) => [x(i), y(v)]);
+      s += `<path d="${path(pts)}" fill="none" stroke="${sg.color}" stroke-width="${sg.width}" stroke-linejoin="round" stroke-linecap="round"/>`;
+    });
+    s += `</g>`;
+    // Etiquetas: la serie más alta arriba, la más baja abajo y la del medio hacia el lado con más espacio;
+    // si dos etiquetas del mismo lado chocan, se apilan.
+    PERIODS.forEach((p, i) => {
+      const ranked = SEG.map(sg => ({ ...sg, v: ds[sg.key].pct[i], py: y(ds[sg.key].pct[i]) })).sort((a, b) => b.v - a.v);
+      const d = delayAt(x(i), L, W);
+      const n = ranked.length;
+      ranked.forEach((r, k) => {
+        if (k === 0) r.side = "up";
+        else if (k === n - 1) r.side = "down";
+        else {
+          const up = r.py - ranked[k - 1].py, down = ranked[k + 1].py - r.py;
+          r.side = up > down || down < 34 ? "up" : "down";
+        }
+      });
+      const ups = ranked.filter(r => r.side === "up");            // de arriba hacia abajo
+      const downs = ranked.filter(r => r.side === "down");
+      for (let k = ups.length - 1; k >= 0; k--) {
+        ups[k].ly = ups[k].py - 11;
+        if (k < ups.length - 1) ups[k].ly = Math.min(ups[k].ly, ups[k + 1].ly - 17);
+      }
+      downs.forEach((r, k) => {
+        r.ly = r.py + 22;
+        if (k > 0) r.ly = Math.max(r.ly, downs[k - 1].ly + 17);
+      });
+      ranked.forEach(r => {
+        s += `<g class="pop" style="animation-delay:${d}s"><circle cx="${x(i)}" cy="${r.py}" r="5" fill="#fff" stroke="${r.color}" stroke-width="3"><title>${r.key} · ${p}: ${r.v.toFixed(2)}%</title></circle>` +
+             `<text x="${x(i)}" y="${r.ly}" text-anchor="middle" font-size="14.5" font-weight="${r.key === "Overall" ? 700 : 500}" fill="${r.key === "Flotilla" ? C.muted : r.color}" paint-order="stroke" stroke="#fff" stroke-width="4">${r.v.toFixed(2)}%</text></g>`;
+      });
+    });
+    svg.innerHTML = s;
+  }
 
-  /* ---------- Motor de presentación ---------- */
+  const CHARTS = {
+    cert: svg => chartCert(svg),
+    cust: svg => chartSeg(svg, "cust", cust, 1.85, 3.2, OBJETIVO, 230),
+    rev:  svg => chartSeg(svg, "rev", rev, 0.3, 2.75, null, 150),
+  };
+  function drawChart(svg) {
+    CHARTS[svg.dataset.chart](svg);
+    svg.querySelectorAll("animate").forEach(a => a.beginElement());
+  }
+
+  /* =================== Contadores =================== */
+  function countUp(el) {
+    const to = parseFloat(el.dataset.count), dec = +el.dataset.dec || 0, suf = el.dataset.suffix || "";
+    const t0 = performance.now(), dur = 1100;
+    const tick = t => {
+      const k = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = nf(to * e, dec) + suf;
+      if (k < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  renderCertTable();
+  renderSegTable("t-cust", cust);
+  renderSegTable("t-rev", rev);
+
+  /* =================== Motor de presentación =================== */
   const deck = document.getElementById("deck");
   const slides = [...deck.querySelectorAll(".slide")];
   const count = document.getElementById("count");
+  const progress = document.getElementById("progress");
   const prev = document.getElementById("prev"), next = document.getElementById("next");
-  let cur = Math.min(Math.max((parseInt(location.hash.slice(1), 10) || 1) - 1, 0), slides.length - 1);
+  const stepsOf = s => Math.max(0, ...[...s.querySelectorAll("[data-step]")].map(e => +e.dataset.step));
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let cur = -1, step = 0;
 
   function fit() {
     const k = Math.min(innerWidth / 1920, innerHeight / 1080);
     deck.style.transform = `translate(-50%, -50%) scale(${k})`;
   }
-  function show(n) {
-    cur = Math.min(Math.max(n, 0), slides.length - 1);
-    slides.forEach((s, i) => s.classList.toggle("active", i === cur));
+
+  // Muestra/oculta los elementos del slide según el paso, con entrada escalonada
+  function build(slide, st, fresh) {
+    let order = 0;
+    slide.querySelectorAll(".anim").forEach(el => {
+      const es = +(el.dataset.step || 0);
+      const show = es <= st;
+      const was = el.classList.contains("in");
+      if (show && !was) {
+        const base = fresh ? 0.25 : 0;
+        el.style.setProperty("--d", (base + order++ * 0.12).toFixed(2) + "s");
+        el.classList.add("in");
+        const delay = reduced ? 0 : (base + (order - 1) * 0.12) * 1000;
+        setTimeout(() => {
+          if (!el.classList.contains("in")) return;
+          (el.matches("svg[data-chart]") ? [el] : el.querySelectorAll("svg[data-chart]")).forEach(svg => {
+            if (svg.closest(".anim") === el) drawChart(svg);
+          });
+          el.querySelectorAll("[data-count]").forEach(c => { if (c.closest(".anim") === el) countUp(c); });
+        }, delay + 150);
+      } else if (!show && was) {
+        el.classList.remove("in");
+        el.style.removeProperty("--d");
+      }
+    });
+  }
+  function reset(slide) {
+    slide.querySelectorAll(".anim.in").forEach(el => { el.classList.remove("in"); el.style.removeProperty("--d"); });
+  }
+
+  function go(n, st = 0) {
+    n = Math.min(Math.max(n, 0), slides.length - 1);
+    st = Math.min(Math.max(st, 0), stepsOf(slides[n]));
+    const changed = n !== cur;
+    if (changed) {
+      slides.forEach((s, i) => {
+        s.classList.toggle("active", i === n);
+        s.classList.toggle("before", i < n);
+        if (i !== n) setTimeout(() => { if (!s.classList.contains("active")) reset(s); }, 800);
+      });
+    }
+    cur = n; step = st;
+    build(slides[n], st, changed);
     count.textContent = `${cur + 1} / ${slides.length}`;
-    prev.disabled = cur === 0;
-    next.disabled = cur === slides.length - 1;
+    const total = slides.length;
+    progress.style.width = ((cur + (step + 1) / (stepsOf(slides[cur]) + 1)) / total * 100) + "%";
+    prev.disabled = cur === 0 && step === 0;
+    next.disabled = cur === total - 1 && step === stepsOf(slides[cur]);
     history.replaceState(null, "", "#" + (cur + 1));
   }
+  const forward = () => step < stepsOf(slides[cur]) ? go(cur, step + 1) : go(cur + 1, 0);
+  const back = () => step > 0 ? go(cur, step - 1) : (cur > 0 && go(cur - 1, stepsOf(slides[cur - 1])));
+
   function toggleFs() {
     if (document.fullscreenElement) document.exitFullscreen();
     else document.documentElement.requestFullscreen?.();
@@ -302,28 +626,34 @@
 
   addEventListener("resize", fit);
   addEventListener("keydown", e => {
-    if (["ArrowRight", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); show(cur + 1); }
-    else if (["ArrowLeft", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); show(cur - 1); }
-    else if (e.key === "Home") show(0);
-    else if (e.key === "End") show(slides.length - 1);
+    if (["ArrowRight", "ArrowDown", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); forward(); }
+    else if (["ArrowLeft", "ArrowUp", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); back(); }
+    else if (e.key === "Home") go(0);
+    else if (e.key === "End") go(slides.length - 1, 99);
     else if (e.key.toLowerCase() === "f") toggleFs();
   });
-  prev.onclick = () => show(cur - 1);
-  next.onclick = () => show(cur + 1);
+  prev.onclick = back;
+  next.onclick = forward;
   document.getElementById("fs").onclick = toggleFs;
+  // Clic en el slide avanza (como en PowerPoint)
+  deck.addEventListener("click", forward);
 
-  // Deslizar en pantallas táctiles
   let tx = null;
   addEventListener("touchstart", e => tx = e.touches[0].clientX, { passive: true });
   addEventListener("touchend", e => {
     if (tx === null) return;
     const dx = e.changedTouches[0].clientX - tx;
-    if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 50) dx < 0 ? forward() : back();
     tx = null;
   });
 
+  addEventListener("beforeprint", () => slides.forEach(s => {
+    build(s, 99, false);
+    s.querySelectorAll("svg[data-chart]").forEach(drawChart);
+  }));
+
   fit();
-  show(cur);
+  go((parseInt(location.hash.slice(1), 10) || 1) - 1, 0);
 </script>
 </body>
 </html>
