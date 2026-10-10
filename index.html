@@ -89,7 +89,6 @@
   h1 .brand { color: var(--orange); }
   .section-tag { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 500; color: var(--navy); }
   .section-tag .num { width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #fff; font-weight: 700; font-size: 24px; }
-  .footnote { position: absolute; left: 110px; bottom: 22px; font-size: 13px; color: var(--muted); }
 
   /* Tablas */
   .table-wrap { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: 0 18px 40px -26px rgba(11,47,91,.45); background: #fff; }
@@ -157,21 +156,35 @@
   .cover .date b { font-weight: 700; }
 
   /* ---------- Slides por grupo de planes ---------- */
-  .pgrid { margin-top: 22px; flex: 1; display: grid; grid-template-columns: 290px 1fr; gap: 16px 22px; min-height: 0; }
-  .pgrid .colh { grid-column: 2; display: flex; align-items: center; justify-content: flex-end; }
-  .pgrid .legend { font-size: 15px; gap: 22px; }
+  .stepper { margin-top: 22px; display: flex; align-items: center; gap: 0; }
+  .stepper .st { all: unset; cursor: pointer; display: flex; align-items: center; gap: 12px; padding: 10px 20px 10px 10px; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--muted); font-size: 20px; font-weight: 600; transition: background .5s ease, color .5s ease, border-color .5s ease, box-shadow .5s ease; white-space: nowrap; }
+  .stepper .st .k { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--cyan-soft); color: var(--blue); font-weight: 700; font-size: 17px; transition: background .5s ease, color .5s ease; }
+  .stepper .st.done { color: var(--navy); }
+  .stepper .st.done .k { background: var(--cyan); color: #fff; }
+  .stepper .st.on { background: linear-gradient(140deg, var(--blue), var(--navy)); border-color: transparent; color: #fff; box-shadow: 0 14px 28px -16px rgba(11,47,91,.7); }
+  .stepper .st.on .k { background: #fff; color: var(--blue); }
+  .stepper .bar { flex: 1; height: 4px; margin: 0 14px; border-radius: 2px; background: var(--line); position: relative; overflow: hidden; }
+  .stepper .bar::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--cyan), var(--blue)); transform: scaleX(0); transform-origin: left; transition: transform .7s var(--ease); }
+  .stepper .bar.fill::after { transform: none; }
+  .stepper .legend { margin-left: 28px; font-size: 14px; gap: 16px; white-space: nowrap; }
+  .stage { position: relative; margin-top: 22px; flex: 1; min-height: 0; }
+  .pstage { position: absolute; inset: 0; display: grid; grid-template-columns: 340px 1fr; gap: 24px; opacity: 0; transform: translateX(120px); pointer-events: none; transition: opacity .55s ease, transform .8s var(--ease); }
+  .pstage.past { transform: translateX(-120px); }
+  .pstage.on { opacity: 1; transform: none; pointer-events: auto; transition-delay: .12s; }
+  .pstage .pname { transform: translateY(18px); transition: transform .8s var(--ease) .2s; }
+  .pstage.on .pname { transform: none; }
   .legend i.bar { width: 14px; height: 14px; border: 0; border-radius: 3px; background: var(--cyan); }
   .legend .ch i { border-color: var(--navy); border-top-width: 4px; }
-  .legend .tg i { border-color: var(--blue); border-top-style: dotted; }
-  .legend .tc i { border-color: var(--navy); border-top-style: dotted; }
-  .pname { border-radius: 18px; padding: 20px 24px; color: #fff; background: linear-gradient(150deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; gap: 4px; }
-  .pname .n { font-size: 30px; font-weight: 700; line-height: 1.1; }
-  .pname .c { font-size: 16px; color: rgba(255,255,255,.72); }
-  .pname .cart { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 8px; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.18); }
-  .pname .cart .l { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.65); line-height: 1.25; }
-  .pname .cart .v { font-size: 26px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .pname { border-radius: 22px; padding: 34px 32px; color: #fff; background: linear-gradient(160deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+  .pname::after { content: ""; position: absolute; right: -80px; top: -80px; width: 240px; height: 240px; border-radius: 50%; background: rgba(0,180,230,.22); }
+  .pname .g { font-size: 14px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); }
+  .pname .n { font-size: 46px; font-weight: 700; line-height: 1.05; margin-top: 8px; }
+  .pname .c { font-size: 19px; color: rgba(255,255,255,.75); margin-top: 6px; }
+  .pname .cart { margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,.2); display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 1; }
+  .pname .cart .l { font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.65); }
+  .pname .cart .v { font-size: 52px; font-weight: 700; line-height: 1.05; font-variant-numeric: tabular-nums; }
   .pname .cart .fin .v { color: #7fdcff; }
-  .pname .cart .arrow { font-size: 22px; color: rgba(255,255,255,.5); padding-bottom: 2px; }
+  .pname .cart .arrow { font-size: 30px; color: rgba(255,255,255,.45); line-height: 1; }
   .pcard { position: relative; border: 1px solid var(--line); border-radius: 18px; padding: 8px 14px 0; display: flex; flex-direction: column; min-height: 0; background: #fff; box-shadow: 0 14px 30px -26px rgba(11,47,91,.5); }
   .pcard svg { flex: 1; width: 100%; min-height: 0; display: block; }
   svg .grow { transform-box: fill-box; transform-origin: bottom; animation: grow .8s var(--ease) both; }
@@ -306,7 +319,6 @@
           </div>
         </div>
       </div>
-      <div class="footnote anim fade">Churn = cancelaciones ÷ cartera del mes · Churn 2026 = promedio de los churn mensuales · Tendencia: recta ajustada a ene–sep; emisiones oct–dic = promedio 2026.</div>
     </section>
 
     <!-- ================= Slide 2: Daños Propios ================= -->
@@ -323,9 +335,9 @@
           </div>
           <div class="section-tag anim from-right"><span class="num">2</span>Tendencia por plan</div>
         </div>
-        <div class="pgrid" id="grid-dp"></div>
+        <div class="stepper anim" id="step-dp"></div>
+        <div class="stage anim" id="stage-dp"></div>
       </div>
-      <div class="footnote anim fade">Ene–sep real · Oct–dic rellenado con la tendencia de ene–sep (recta ajustada) de cada plan.</div>
     </section>
 
     <!-- ================= Slide 3: Seguro de Ley ================= -->
@@ -342,9 +354,9 @@
           </div>
           <div class="section-tag anim from-right"><span class="num">3</span>Tendencia por plan</div>
         </div>
-        <div class="pgrid" id="grid-sl"></div>
+        <div class="stepper anim" id="step-sl"></div>
+        <div class="stage anim" id="stage-sl"></div>
       </div>
-      <div class="footnote anim fade">Ene–sep real · Oct–dic rellenado con la tendencia de ene–sep (recta ajustada) de cada plan.</div>
     </section>
 
     <!-- ================= Slide 4: Métricas de gestión ================= -->
@@ -424,7 +436,6 @@
           </div>
         </div>
       </div>
-      <div class="footnote anim fade">Años y trimestres: churn mensual promedio del período.</div>
     </section>
 
   </div>
@@ -623,7 +634,7 @@
     // Zona de tendencia
     const px = (x(n - 1) + x(n)) / 2;
     s += `<rect x="${px}" y="4" width="${W - R - px}" height="${H - B - 4}" fill="${C.blue}" opacity=".05" rx="10"/>`;
-    s += `<text x="${(px + W - R) / 2}" y="24" text-anchor="middle" font-size="13" font-weight="700" letter-spacing="3" fill="${C.blue}" opacity=".75">PROYECCIÓN SEGÚN TENDENCIA</text>`;
+    s += `<text x="${(px + W - R) / 2}" y="24" text-anchor="middle" font-size="13" font-weight="700" letter-spacing="2" fill="${C.blue}" opacity=".75">PROYECCIÓN</text>`;
     MONTHS.forEach((m, i) => s += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle" font-size="15" fill="${i >= n ? C.blue : C.muted}" font-weight="${i >= n ? 600 : 400}">${m.slice(0, 3)}</text>`);
     // Rótulos de banda (verticales, a la izquierda)
     const vlab = (yy, txt, col) => `<text transform="translate(16,${yy}) rotate(-90)" text-anchor="middle" font-size="12.5" font-weight="700" letter-spacing="2" fill="${col}">${txt}</text>`;
@@ -658,28 +669,64 @@
     svg.innerHTML = s;
   }
 
-  function renderPlanGrid(group) {
+  const GROUP_NAME = { dp: "Daños propios", sl: "Seguro de ley" };
+  // Un plan por paso: barra de pasos arriba y el plan activo a lo grande
+  function renderPlanStages(group) {
     const plans = PLANS.filter(p => p.group === group);
-    const H = plans.length === 3 ? 245 : 385;
-    const grid = document.getElementById("grid-" + group);
-    grid.style.gridTemplateRows = `auto repeat(${plans.length}, 1fr)`;
-    let h = `<div class="colh anim fade"><div class="legend">
-        <span><i class="bar"></i>Crecimiento del mes (certificados)</span>
+    const slide = document.getElementById("stage-" + group).closest(".slide");
+    slide.dataset.steps = plans.length - 1;
+    slide.dataset.stage = group;
+    let st = "";
+    plans.forEach((p, i) => {
+      if (i) st += `<div class="bar"></div>`;
+      st += `<button class="st" data-i="${i}"><span class="k">${i + 1}</span>${p.name}</button>`;
+    });
+    st += `<div class="legend">
+        <span><i class="bar"></i>Crecimiento del mes</span>
         <span class="ch"><i></i>Churn</span>
-        <span><i class="bar" style="background:#cfe6f5"></i>Oct–dic: proyección según tendencia</span>
-        <span class="o"><i style="border-top-width:2px"></i>Objetivo churn 2.54%</span></div></div>`;
+        <span><i class="bar" style="background:#cfe6f5"></i>Oct–dic proyectado</span>
+        <span class="o"><i style="border-top-width:2px"></i>Objetivo 2.54%</span></div>`;
+    document.getElementById("step-" + group).innerHTML = st;
+    let h = "";
     plans.forEach(p => {
       // Cartera final esperada = cartera de octubre + crecimiento proyectado oct–dic (los mismos valores de las barras)
       const fin = p.cartera[9] + [10, 11, 12].reduce((a, m) => a + Math.round(p.fitGrowth(m)), 0);
-      h += `<div class="pname anim"><div class="n">${p.name}</div><div class="c">${p.cov}</div>
-        <div class="cart">
-          <div><div class="l">Cartera inicial<br>ene 2026</div><div class="v" data-count="${p.cartera[0]}" data-dec="0">${nf(p.cartera[0])}</div></div>
-          <div class="arrow">→</div>
-          <div class="fin"><div class="l">Final esperada<br>dic 2026</div><div class="v" data-count="${fin}" data-dec="0">${nf(fin)}</div></div>
-        </div></div>`;
-      h += `<div class="pcard anim"><svg data-chart="${p.id}" viewBox="0 0 1380 ${H}" role="img" aria-label="Crecimiento mensual y churn de ${p.name} con su tendencia"></svg></div>`;
+      h += `<div class="pstage">
+        <div class="pname"><div class="g">${GROUP_NAME[group]}</div><div class="n">${p.name}</div><div class="c">${p.cov}</div>
+          <div class="cart">
+            <div><div class="l">Cartera inicial · ene 2026</div><div class="v" data-count="${p.cartera[0]}" data-dec="0">${nf(p.cartera[0])}</div></div>
+            <div class="arrow">↓</div>
+            <div class="fin"><div class="l">Final esperada · dic 2026</div><div class="v" data-count="${fin}" data-dec="0">${nf(fin)}</div></div>
+          </div></div>
+        <div class="pcard"><svg data-chart="${p.id}" viewBox="0 0 1100 600" role="img" aria-label="Crecimiento mensual y churn de ${p.name} con su proyección"></svg></div>
+      </div>`;
     });
-    grid.innerHTML = h;
+    document.getElementById("stage-" + group).innerHTML = h;
+    document.querySelectorAll(`#step-${group} .st`).forEach(b => b.addEventListener("click", e => {
+      e.stopPropagation();
+      go(slides.indexOf(slide), +b.dataset.i);
+    }));
+  }
+
+  // Activa el plan del paso actual; al cambiar de paso redibuja su gráfico y cifras
+  function setStage(slide, st, animate) {
+    const group = slide.dataset.stage;
+    document.querySelectorAll(`#stage-${group} .pstage`).forEach((el, i) => {
+      el.classList.toggle("on", i === st);
+      el.classList.toggle("past", i < st);
+    });
+    document.querySelectorAll(`#step-${group} .st`).forEach((el, i) => {
+      el.classList.toggle("on", i === st);
+      el.classList.toggle("done", i < st);
+    });
+    document.querySelectorAll(`#step-${group} .bar`).forEach((el, i) => el.classList.toggle("fill", i < st));
+    if (animate) {
+      const active = document.querySelectorAll(`#stage-${group} .pstage`)[st];
+      setTimeout(() => {
+        active.querySelectorAll("svg[data-chart]").forEach(drawChart);
+        active.querySelectorAll("[data-count]").forEach(countUp);
+      }, reduced ? 0 : 250);
+    }
   }
 
   /* =================== Slide 3: métricas de gestión =================== */
@@ -782,8 +829,8 @@
     pill.textContent = `${Math.abs(pb)} pb ${pb > 0 ? "sobre" : "bajo"} objetivo`;
     if (pb <= 0) pill.className = "pill";
   }
-  renderPlanGrid("dp");
-  renderPlanGrid("sl");
+  renderPlanStages("dp");
+  renderPlanStages("sl");
   renderSegTable("t-cust", cust);
   renderSegTable("t-rev", rev);
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
@@ -852,7 +899,9 @@
         if (i !== n) setTimeout(() => { if (!s.classList.contains("active")) reset(s); }, 800);
       });
     }
+    const stepChanged = !changed && st !== step;
     cur = n; step = st;
+    if (slides[n].dataset.stage) setStage(slides[n], st, stepChanged);
     build(slides[n], st, changed);
     count.textContent = `${cur + 1} / ${slides.length}`;
     progress.style.width = ((cur + (step + 1) / (stepsOf(slides[cur]) + 1)) / slides.length * 100) + "%";
