@@ -167,6 +167,11 @@
   .pname { border-radius: 18px; padding: 20px 24px; color: #fff; background: linear-gradient(150deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; gap: 4px; }
   .pname .n { font-size: 30px; font-weight: 700; line-height: 1.1; }
   .pname .c { font-size: 16px; color: rgba(255,255,255,.72); }
+  .pname .cart { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 8px; margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.18); }
+  .pname .cart .l { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.65); line-height: 1.25; }
+  .pname .cart .v { font-size: 26px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .pname .cart .fin .v { color: #7fdcff; }
+  .pname .cart .arrow { font-size: 22px; color: rgba(255,255,255,.5); padding-bottom: 2px; }
   .pcard { position: relative; border: 1px solid var(--line); border-radius: 18px; padding: 8px 14px 0; display: flex; flex-direction: column; min-height: 0; background: #fff; box-shadow: 0 14px 30px -26px rgba(11,47,91,.5); }
   .pcard svg { flex: 1; width: 100%; min-height: 0; display: block; }
   svg .grow { transform-box: fill-box; transform-origin: bottom; animation: grow .8s var(--ease) both; }
@@ -664,7 +669,14 @@
         <span><i class="bar" style="background:#cfe6f5"></i>Oct–dic: proyección según tendencia</span>
         <span class="o"><i style="border-top-width:2px"></i>Objetivo churn 2.54%</span></div></div>`;
     plans.forEach(p => {
-      h += `<div class="pname anim"><div class="n">${p.name}</div><div class="c">${p.cov}</div></div>`;
+      // Cartera final esperada = cartera de octubre + crecimiento proyectado oct–dic (los mismos valores de las barras)
+      const fin = p.cartera[9] + [10, 11, 12].reduce((a, m) => a + Math.round(p.fitGrowth(m)), 0);
+      h += `<div class="pname anim"><div class="n">${p.name}</div><div class="c">${p.cov}</div>
+        <div class="cart">
+          <div><div class="l">Cartera inicial<br>ene 2026</div><div class="v" data-count="${p.cartera[0]}" data-dec="0">${nf(p.cartera[0])}</div></div>
+          <div class="arrow">→</div>
+          <div class="fin"><div class="l">Final esperada<br>dic 2026</div><div class="v" data-count="${fin}" data-dec="0">${nf(fin)}</div></div>
+        </div></div>`;
       h += `<div class="pcard anim"><svg data-chart="${p.id}" viewBox="0 0 1380 ${H}" role="img" aria-label="Crecimiento mensual y churn de ${p.name} con su tendencia"></svg></div>`;
     });
     grid.innerHTML = h;
