@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mesa de Retención Auto</title>
-<meta name="description" content="Mesa de Retención de Auto — Proyección de churn 2026 y métricas de gestión del producto Mi Auto.">
+<meta name="description" content="Mesa de Retención de Auto — Proyección de churn 2026, tendencia por plan y métricas de gestión de Mi Auto.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -16,6 +16,8 @@
     --navy: #0b2f5b;
     --orange: #ffa94d;
     --alert: #e8590c;
+    --red: #e03131;
+    --good: #12b886;
     --gray: #9aa5b1;
     --ink: #1c2b3a;
     --muted: #6b7c8f;
@@ -50,7 +52,7 @@
 
   .progress { position: absolute; top: 0; left: 0; height: 5px; background: linear-gradient(90deg, var(--cyan), var(--blue)); z-index: 5; transition: width .7s var(--ease); }
 
-  /* Animación de entrada de elementos (se activa por paso) */
+  /* Entrada de elementos por paso */
   .anim { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .8s var(--ease); }
   .anim.in { opacity: 1; transform: none; transition-delay: var(--d, 0s); }
   .anim.fade { transform: none; }
@@ -81,18 +83,13 @@
 
   /* Encabezado */
   .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-size: 17px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--blue);
-  }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); }
   .eyebrow .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
   h1 { margin: 8px 0 0; font-size: 66px; font-weight: 700; line-height: 1; letter-spacing: -.02em; color: var(--cyan); }
   h1 .brand { color: var(--orange); }
   .section-tag { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 500; color: var(--navy); }
-  .section-tag .num {
-    width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center;
-    background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #fff; font-weight: 700; font-size: 24px;
-  }
+  .section-tag .num { width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #fff; font-weight: 700; font-size: 24px; }
+  .footnote { position: absolute; left: 110px; bottom: 22px; font-size: 13px; color: var(--muted); }
 
   /* Tablas */
   .table-wrap { border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: 0 18px 40px -26px rgba(11,47,91,.45); background: #fff; }
@@ -106,14 +103,15 @@
   tbody th { text-align: left; font-weight: 500; font-size: 21px; padding: 13px 26px; white-space: nowrap; border-top: 1px solid var(--line); }
   tbody td { text-align: center; padding: 13px 6px; font-size: 21px; border-top: 1px solid var(--line); }
   tbody td.proj { background: rgba(0,103,177,.05); font-style: italic; }
+  tbody td.proj.realv { font-style: normal; }
   tbody tr.hl th, tbody tr.hl td { background: var(--row-hl); font-weight: 600; color: var(--blue); }
   td.over { color: var(--alert) !important; }
 
-  /* Slide 1: fila inferior */
-  .bottom { margin-top: 26px; flex: 1; display: grid; grid-template-columns: 1fr 360px; gap: 26px; min-height: 0; }
-  .chart-box { border: 1px solid var(--line); border-radius: 18px; padding: 20px 24px 6px; display: flex; flex-direction: column; min-height: 0; }
+  /* Gráficos y leyendas */
+  .chart-box { border: 1px solid var(--line); border-radius: 18px; padding: 20px 24px 6px; display: flex; flex-direction: column; min-height: 0; background: #fff; }
   .chart-box h3, .kpi h3 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
   .chart-box .chart-head { display: flex; justify-content: space-between; align-items: center; }
+  .chart-box svg { flex: 1; width: 100%; min-height: 0; display: block; }
   .legend { display: flex; gap: 22px; font-size: 16px; color: var(--muted); }
   .legend span { display: inline-flex; align-items: center; gap: 8px; }
   .legend i { width: 22px; height: 0; border-top: 3px solid; display: inline-block; }
@@ -123,24 +121,59 @@
   .legend .ind i { border-color: var(--cyan); }
   .legend .ov i { border-color: var(--blue); }
   .legend .flo i { border-color: var(--gray); }
-  .legend .obj i { border-color: #e03131; border-top-style: dashed; }
-  .chart-box svg { flex: 1; width: 100%; min-height: 0; display: block; }
+  .legend .obj i { border-color: var(--red); border-top-style: dashed; }
 
-  .kpis { display: grid; grid-template-rows: 1.25fr 1fr 1fr; gap: 16px; min-height: 0; }
+  /* KPI */
   .kpi { border-radius: 18px; padding: 18px 26px; display: flex; flex-direction: column; justify-content: center; border: 1px solid var(--line); background: #fff; }
   .kpi .v { font-size: 50px; font-weight: 700; line-height: 1.05; margin-top: 4px; font-variant-numeric: tabular-nums; }
   .kpi .s { font-size: 16px; color: var(--muted); margin-top: 4px; }
   .kpi.main { background: linear-gradient(150deg, var(--blue), var(--navy)); border: 0; color: #fff; }
   .kpi.main h3 { color: rgba(255,255,255,.7); }
-  .kpi.main .v { font-size: 66px; }
+  .kpi.main .v { font-size: 62px; }
   .pill { display: inline-block; margin-top: 8px; align-self: flex-start; font-size: 15px; font-weight: 600; padding: 4px 12px; border-radius: 999px; background: rgba(111,224,166,.18); color: #6fe0a6; }
   .pill.bad { background: #fff0e6; color: var(--alert); }
-  .kpi .v.orange { color: var(--orange); }
-  .kpi .v.blue { color: var(--blue); }
-  .kpi .v.cyan { color: var(--cyan); }
+  .kpi:not(.main) .pill:not(.bad) { background: #e6f8f1; color: #0c8a63; }
+  .v.orange { color: var(--orange); } .v.blue { color: var(--blue); } .v.cyan { color: var(--cyan); } .v.alert { color: var(--alert); }
 
-  /* Slide 2 */
-  .s2-grid { margin-top: 22px; flex: 1; display: grid; grid-template-columns: 1fr 380px; gap: 30px; min-height: 0; }
+  /* ---------- Slide 1 ---------- */
+  .bottom { margin-top: 26px; flex: 1; display: grid; grid-template-columns: 1fr 360px; gap: 26px; min-height: 0; }
+  .kpis { display: grid; grid-template-rows: 1.2fr 1fr 1fr; gap: 16px; min-height: 0; }
+
+  /* ---------- Slide 2: planes ---------- */
+  .tabs { margin-top: 24px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .tab {
+    all: unset; cursor: pointer; border-radius: 16px; padding: 12px 18px; border: 1px solid var(--line); background: #fff;
+    display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 10px;
+    transition: background .4s ease, color .4s ease, box-shadow .4s ease, transform .4s var(--ease);
+  }
+  .tab .g { grid-column: 1 / -1; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .tab .n { font-size: 22px; font-weight: 700; color: var(--navy); }
+  .tab .c { font-size: 20px; font-weight: 700; color: var(--blue); font-variant-numeric: tabular-nums; }
+  .tab .c.over { color: var(--alert); }
+  .tab.on { background: linear-gradient(140deg, var(--blue), var(--navy)); border-color: transparent; box-shadow: 0 16px 30px -18px rgba(11,47,91,.7); transform: translateY(-3px); }
+  .tab.on .g { color: rgba(255,255,255,.65); } .tab.on .n { color: #fff; } .tab.on .c { color: #fff; } .tab.on .c.over { color: #ffb37a; }
+
+  .plan-body { margin-top: 22px; flex: 1; display: grid; grid-template-columns: 330px 1fr; gap: 24px; min-height: 0; }
+  .pstats { display: flex; flex-direction: column; gap: 12px; }
+  .pstat { flex: 1; border: 1px solid var(--line); border-radius: 16px; padding: 12px 22px; display: flex; flex-direction: column; justify-content: center; }
+  .pstat .l { font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .pstat .v { font-size: 38px; font-weight: 700; line-height: 1.1; color: var(--navy); font-variant-numeric: tabular-nums; }
+  .pstat .s { font-size: 15px; color: var(--muted); }
+  .pstat.main { background: linear-gradient(150deg, var(--blue), var(--navy)); border: 0; }
+  .pstat.main .l, .pstat.main .s { color: rgba(255,255,255,.75); } .pstat.main .v { color: #fff; }
+  .pstat .v.good { color: #0c8a63; }
+  .pcharts { display: grid; grid-template-rows: repeat(3, 1fr); gap: 14px; min-height: 0; }
+  .pchart { border: 1px solid var(--line); border-radius: 16px; padding: 12px 20px 2px; display: flex; flex-direction: column; min-height: 0; }
+  .pchart .ph { display: flex; justify-content: space-between; align-items: baseline; }
+  .pchart .ph .t { font-size: 18px; font-weight: 700; color: var(--navy); }
+  .pchart .ph .t span { font-weight: 400; color: var(--muted); font-size: 15px; margin-left: 8px; }
+  .pchart .ph .tr { font-size: 15px; font-weight: 600; padding: 3px 12px; border-radius: 999px; background: var(--cyan-soft); color: var(--blue); }
+  .pchart .ph .tr.bad { background: #fff0e6; color: var(--alert); }
+  .pchart .ph .tr.good { background: #e6f8f1; color: #0c8a63; }
+  .pchart svg { flex: 1; width: 100%; min-height: 0; display: block; }
+
+  /* ---------- Slide 3: métricas de gestión ---------- */
+  .s3-grid { margin-top: 22px; flex: 1; display: grid; grid-template-columns: 1fr 380px; gap: 30px; min-height: 0; }
   .metric { position: relative; }
   .metric + .metric { margin-top: 16px; }
   .metric-head { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
@@ -159,17 +192,9 @@
   .metric tbody td.g { border-left: 1px solid var(--line); }
   .metric tbody td.an { color: var(--muted); }
   .metric tbody tr.ov th, .metric tbody tr.ov td { font-weight: 600; color: var(--blue); background: var(--row-hl); }
-  .sep-hl {
-    position: absolute; right: -6px; top: 44px; bottom: -6px; width: calc((100% - 130px) / 8 + 12px);
-    border: 3px solid var(--alert); border-radius: 16px; pointer-events: none;
-    box-shadow: 0 0 0 6px rgba(232, 89, 12, .1);
-  }
-  .side-col { display: flex; flex-direction: column; gap: 18px; min-height: 0; }
-  .note {
-    flex: 1; border-radius: 20px; padding: 26px 30px; color: #fff; position: relative; overflow: hidden;
-    background: linear-gradient(160deg, var(--blue), var(--navy));
-    display: flex; flex-direction: column; gap: 18px;
-  }
+  .sep-hl { position: absolute; right: -6px; top: 44px; bottom: -6px; width: calc((100% - 130px) / 8 + 12px); border: 3px solid var(--alert); border-radius: 16px; pointer-events: none; box-shadow: 0 0 0 6px rgba(232, 89, 12, .1); }
+  .s3-side { display: flex; flex-direction: column; gap: 18px; min-height: 0; }
+  .note { flex: 1; border-radius: 20px; padding: 26px 30px; color: #fff; position: relative; overflow: hidden; background: linear-gradient(160deg, var(--blue), var(--navy)); display: flex; flex-direction: column; gap: 18px; }
   .note::after { content: ""; position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%; background: rgba(0,180,230,.25); }
   .note h3 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
   .note p { margin: 0; font-size: 22px; line-height: 1.4; font-weight: 300; position: relative; z-index: 1; }
@@ -184,27 +209,18 @@
   .note .without .l { font-size: 16px; color: rgba(255,255,255,.8); line-height: 1.35; }
   .note .without .v { font-size: 54px; font-weight: 700; color: #6fe0a6; line-height: 1.1; margin-top: 6px; }
   .note .without .tag { font-size: 14px; font-weight: 600; color: #6fe0a6; letter-spacing: .06em; text-transform: uppercase; }
-  .footnote { position: absolute; left: 110px; bottom: 22px; font-size: 13px; color: var(--muted); }
 
   /* ---------- Controles ---------- */
-  .controls {
-    position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
-    display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px;
-    background: rgba(11,47,91,.82); color: #fff; backdrop-filter: blur(6px);
-    font-size: 14px; opacity: 0; transition: opacity .25s; z-index: 10;
-  }
+  .controls { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(11,47,91,.82); color: #fff; backdrop-filter: blur(6px); font-size: 14px; opacity: 0; transition: opacity .25s; z-index: 10; }
   body:hover .controls, .controls:focus-within { opacity: 1; }
-  .controls button {
-    all: unset; cursor: pointer; width: 34px; height: 34px; border-radius: 50%;
-    display: grid; place-items: center; font-size: 18px;
-  }
+  .controls button { all: unset; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; }
   .controls button:hover { background: rgba(255,255,255,.15); }
   .controls button:disabled { opacity: .35; cursor: default; }
   .controls .count { min-width: 52px; text-align: center; font-variant-numeric: tabular-nums; }
   @media (hover: none) { .controls { opacity: 1; } }
 
   @media (prefers-reduced-motion: reduce) {
-    .slide, .anim, .deco, .progress { transition: none !important; }
+    .slide, .anim, .deco, .progress, .tab { transition: none !important; }
     .in tbody tr, svg .pop, svg .fadein { animation: none !important; opacity: 1; }
   }
 
@@ -215,6 +231,7 @@
     .deck { position: static; transform: none !important; box-shadow: none; height: auto; overflow: visible; }
     .slide { position: relative; opacity: 1; visibility: visible; transform: none; width: 1920px; height: 1080px; break-after: page; }
     .anim { opacity: 1 !important; transform: none !important; }
+    svg .pop, svg .fadein { opacity: 1; animation: none; }
     .controls, .progress { display: none; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
@@ -241,7 +258,7 @@
           <div class="section-tag anim from-right"><span class="num">1</span>Certificados</div>
         </div>
 
-        <div class="table-wrap anim" style="margin-top:34px"><table id="t-cert"></table></div>
+        <div class="table-wrap anim" style="margin-top:34px"><table id="t-main"></table></div>
 
         <div class="bottom">
           <div class="chart-box anim">
@@ -249,33 +266,77 @@
               <h3>Churn mensual vs. objetivo</h3>
               <div class="legend">
                 <span class="r"><i></i>Real</span>
-                <span class="p"><i></i>Proyección</span>
+                <span class="p anim fade" data-step="1" data-d="0"><i></i>Tendencia</span>
                 <span class="o"><i></i>Objetivo</span>
               </div>
             </div>
-            <svg data-chart="cert" viewBox="0 0 1300 330" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Churn mensual de certificados contra objetivo de 2.54%"></svg>
+            <svg data-chart="main" viewBox="0 0 1300 330" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Churn mensual de certificados contra objetivo de 2.54%"></svg>
           </div>
           <div class="kpis">
             <div class="kpi main anim from-right">
-              <h3>Churn 2026</h3>
-              <div class="v" data-count="2.38" data-dec="2" data-suffix="%">2.38%</div>
-              <span class="pill">16 pb bajo objetivo</span>
+              <h3>Churn 2026 · ene–sep</h3>
+              <div class="v" data-count="2.44" data-dec="2" data-suffix="%">2.44%</div>
+              <span class="pill">10 pb bajo objetivo</span>
             </div>
             <div class="kpi anim from-right">
               <h3>Objetivo</h3>
               <div class="v orange" data-count="2.54" data-dec="2" data-suffix="%">2.54%</div>
             </div>
-            <div class="kpi anim from-right">
-              <h3>Cartera a diciembre</h3>
-              <div class="v blue" data-count="73630" data-dec="0">73,630</div>
-              <div class="s">Certificados proyectados</div>
+            <div class="kpi anim zoom" data-step="1" style="border:2px solid var(--alert)">
+              <h3>Cierre con la tendencia</h3>
+              <div class="v alert" id="k-close">—</div>
+              <span class="pill bad" id="k-close-pill"></span>
             </div>
           </div>
         </div>
       </div>
+      <div class="footnote anim fade">Churn = cancelaciones ÷ cartera del mes · Churn 2026 = promedio de los churn mensuales · Tendencia: recta ajustada a ene–sep; emisiones oct–dic = promedio 2026.</div>
     </section>
 
-    <!-- ================= Slide 2: Métricas de gestión ================= -->
+    <!-- ================= Slide 2: Tendencia por plan ================= -->
+    <section class="slide" id="plan-slide" data-steps="4" aria-label="Tendencia por plan · Mi Auto">
+      <div class="deco tl1"></div><div class="deco tl2"></div>
+      <div class="deco br1"></div><div class="deco br2"></div>
+      <div class="deco band"></div>
+
+      <div class="content">
+        <div class="head">
+          <div class="anim">
+            <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto · Certificados</span>
+            <h1>Tendencia por plan <span class="brand">· Mi Auto</span></h1>
+          </div>
+          <div class="section-tag anim from-right"><span class="num">2</span>Planes</div>
+        </div>
+
+        <div class="tabs anim" id="tabs"></div>
+
+        <div class="plan-body">
+          <div class="pstats anim">
+            <div class="pstat"><div class="l">Cartera octubre</div><div class="v" id="ps-cart">—</div><div class="s" id="ps-cart-s"></div></div>
+            <div class="pstat"><div class="l">Crecimiento ene → oct</div><div class="v good" id="ps-grow">—</div><div class="s" id="ps-grow-s"></div></div>
+            <div class="pstat"><div class="l">Cancelaciones ene–sep</div><div class="v" id="ps-canc">—</div><div class="s" id="ps-canc-s"></div></div>
+            <div class="pstat main"><div class="l">Churn 2026 · ene–sep</div><div class="v" id="ps-churn">—</div><div class="s" id="ps-churn-s"></div></div>
+          </div>
+          <div class="pcharts anim">
+            <div class="pchart">
+              <div class="ph"><div class="t">Cartera <span>certificados al inicio de cada mes</span></div><div class="tr" id="tr-cart"></div></div>
+              <svg data-chart="p-cart" viewBox="0 0 1300 200" role="img" aria-label="Cartera del plan y su tendencia"></svg>
+            </div>
+            <div class="pchart">
+              <div class="ph"><div class="t">Cancelaciones <span>certificados cancelados en el mes</span></div><div class="tr" id="tr-canc"></div></div>
+              <svg data-chart="p-canc" viewBox="0 0 1300 200" role="img" aria-label="Cancelaciones del plan y su tendencia"></svg>
+            </div>
+            <div class="pchart">
+              <div class="ph"><div class="t">Churn <span>cancelaciones ÷ cartera</span></div><div class="tr" id="tr-churn"></div></div>
+              <svg data-chart="p-churn" viewBox="0 0 1300 200" role="img" aria-label="Churn del plan contra objetivo y su tendencia"></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footnote anim fade">Línea sólida = real · punteada = tendencia (recta ajustada a los meses reales) · cancelaciones de tendencia = churn × cartera de tendencia · → o clic para pasar al siguiente plan.</div>
+    </section>
+
+    <!-- ================= Slide 3: Métricas de gestión ================= -->
     <section class="slide" aria-label="Métricas Gestión · Mi Auto">
       <div class="deco tl1"></div><div class="deco tl2"></div>
       <div class="deco br1"></div><div class="deco br2"></div>
@@ -287,12 +348,11 @@
             <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto</span>
             <h1>Métricas Gestión <span class="brand">· Mi Auto</span></h1>
           </div>
-          <div class="section-tag anim from-right"><span class="num">2</span>Customer &amp; Revenue Churn</div>
+          <div class="section-tag anim from-right"><span class="num">3</span>Customer &amp; Revenue Churn</div>
         </div>
 
-        <div class="s2-grid">
+        <div class="s3-grid">
           <div>
-            <!-- Paso 0: Customer churn -->
             <div class="metric anim" data-step="0">
               <div class="metric-head">
                 <h2>Tasa de abandono de clientes <span>· Customer Churn · Certificados</span></h2>
@@ -309,7 +369,6 @@
               <div class="sep-hl anim zoom" data-step="2"></div>
             </div>
 
-            <!-- Paso 1: Revenue churn -->
             <div class="metric anim" data-step="1">
               <div class="metric-head">
                 <h2>Tasa de abandono de ingreso <span>· Revenue Churn · Monto</span></h2>
@@ -326,11 +385,11 @@
             </div>
           </div>
 
-          <div class="side-col">
+          <div class="s3-side">
             <div class="kpi anim from-right" data-step="0">
               <h3>Customer churn · Sep 2026</h3>
               <div class="v blue" data-count="2.74" data-dec="2" data-suffix="%">2.74%</div>
-              <span class="pill bad">+20 pb sobre objetivo (2.54%)</span>
+              <div><span class="pill bad">+20 pb sobre objetivo (2.54%)</span></div>
             </div>
             <div class="kpi anim from-right" data-step="1">
               <h3>Revenue churn · Sep 2026</h3>
@@ -368,22 +427,78 @@
 </nav>
 
 <script>
-  const C = { cyan: "#00b4e6", blue: "#0067b1", navy: "#0b2f5b", orange: "#ffa94d", alert: "#e8590c", red: "#e03131", gray: "#9aa5b1", line: "#e4ebf2", muted: "#6b7c8f", ink: "#1c2b3a" };
+  const C = { cyan: "#00b4e6", blue: "#0067b1", navy: "#0b2f5b", orange: "#ffa94d", alert: "#e8590c", red: "#e03131", good: "#12b886", gray: "#9aa5b1", line: "#e4ebf2", muted: "#6b7c8f", ink: "#1c2b3a" };
   const nf = (v, d = 0) => v.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+  const pct = (v, d = 2) => v.toFixed(d) + "%";
+  const sum = a => a.reduce((s, v) => s + v, 0);
+  const avg = a => sum(a) / a.length;
+  // Recta de mínimos cuadrados sobre los meses 1..n; devuelve f(mes) con su pendiente
+  function linreg(ys) {
+    const xs = ys.map((_, i) => i + 1), mx = avg(xs), my = avg(ys);
+    const b = sum(xs.map((x, i) => (x - mx) * (ys[i] - my))) / sum(xs.map(x => (x - mx) ** 2));
+    const f = m => my + b * (m - mx);
+    f.slope = b;
+    return f;
+  }
 
-  /* =================== Datos · Slide 1 =================== */
+  /* =================== Datos · Total certificados =================== */
   const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-  const REAL = 9; // ene–sep real; oct–dic proyección
+  const REAL = 9;                 // ene–sep cerrados
   const OBJETIVO = 2.54;
-  const cert = [
-    { label: "Cartera",                   d: 0, data: [60290,62342,63568,64883,66107,67632,68844,70242,71122,71609,72619,73630] },
-    { label: "Emisiones / Inclusiones",   d: 0, data: [3376,2667,2922,2752,2744,2920,3152,2676,2439,2792,2793,2793] },
-    { label: "Churn",                     pct: true, hl: true, data: [2.20,2.31,2.53,2.36,1.84,2.53,2.55,2.56,2.74,2.49,2.45,2.42] },
-    { label: "Cancelaciones",             d: 0, data: [1324,1441,1607,1528,1219,1708,1754,1796,1952,1782,1782,1782] },
-    { label: "Crecimiento de la Cartera", d: 0, data: [2052,1226,1315,1224,1525,1212,1398,880,487,1010,1011,1011] },
-  ];
+  const CARTERA_OCT = 71781;      // cartera al inicio de octubre (real)
+  const total = {
+    cartera:   [60290,62342,63568,64883,66107,67632,68844,70242,71122],
+    emisiones: [3376,2667,2922,2752,2744,2920,3152,2676,2884],
+    cancel:    [1324,1441,1607,1528,1219,1708,1754,1796,2225],
+  };
+  total.churn = total.cancel.map((c, i) => c / total.cartera[i] * 100);
+  const TREND = [10, 11, 12].map(linreg(total.churn));
+  const EMIS_PROM = avg(total.emisiones);
+  const proj = { cartera: [], emisiones: [], cancel: [], crec: [] };
+  {
+    let cart = CARTERA_OCT;
+    TREND.forEach(t => {
+      const canc = cart * t / 100;
+      proj.cartera.push(cart); proj.emisiones.push(EMIS_PROM); proj.cancel.push(canc); proj.crec.push(EMIS_PROM - canc);
+      cart += EMIS_PROM - canc;
+    });
+  }
+  const crecReal = total.cartera.map((c, i) => (total.cartera[i + 1] ?? CARTERA_OCT) - c);
+  const CLOSE = (sum(total.churn) + sum(TREND)) / 12;
 
-  /* =================== Datos · Slide 2 =================== */
+  /* =================== Datos · Planes =================== */
+  // cartera: ene–oct (oct = inicio del mes, real) · cancel: ene–sep (meses cerrados)
+  const PLANS = [
+    { name: "Mi Auto Flex",    group: "Daños propios · Pérdida total",
+      cartera: [1148,1175,1214,1253,1294,1242,1308,1352,1426,1478], cancel: [28,31,30,21,18,25,34,28,47] },
+    { name: "Mi Auto Full",    group: "Daños propios · Con deducible",
+      cartera: [26905,27622,28134,28749,29128,29706,30084,30588,30849,30846], cancel: [623,659,676,822,616,830,794,843,1009] },
+    { name: "Mi Auto Premier", group: "Daños propios · Cero deducible",
+      cartera: [2157,2186,2246,2271,2310,2370,2401,2441,2469,2512], cancel: [42,26,43,45,35,80,51,53,80] },
+    { name: "Mi Auto Básico",  group: "Seguro de ley",
+      cartera: [29381,30501,30967,31456,32028,32768,33331,33964,34325,34795], cancel: [626,722,854,636,543,760,857,856,1021] },
+    { name: "Mi Moto Básico",  group: "Seguro de ley",
+      cartera: [699,858,1007,1154,1347,1546,1720,1897,2053,2150], cancel: [5,3,4,4,7,13,18,16,68] },
+  ];
+  const CANC_YTD = sum(total.cancel);
+  PLANS.forEach(p => {
+    p.churn = p.cancel.map((c, i) => c / p.cartera[i] * 100);
+    p.ytd = avg(p.churn);
+    const fc = linreg(p.cartera), fr = linreg(p.churn);
+    p.cartSlope = fc.slope; p.churnSlope = fr.slope;
+    p.cartProj = [11, 12].map(fc);                                   // nov–dic
+    p.churnProj = [10, 11, 12].map(fr);                              // oct–dic
+    const cartFor = [p.cartera[9], ...p.cartProj];                   // oct real + nov–dic tendencia
+    p.cancProj = p.churnProj.map((r, j) => r / 100 * cartFor[j]);
+    p.close = (sum(p.churn) + sum(p.churnProj)) / 12;
+    p.share = p.cartera[9] / CARTERA_OCT * 100;
+    p.shareCancel = sum(p.cancel) / CANC_YTD * 100;
+    p.growth = p.cartera[9] - p.cartera[0];
+    p.growthPct = (p.cartera[9] / p.cartera[0] - 1) * 100;
+  });
+  let planIdx = 0;
+
+  /* =================== Datos · Métricas de gestión =================== */
   const PERIODS = ["2023","2024","2025","Q1 2026","Q2 2026","Julio 2026","Agosto 2026","Septiembre 2026"];
   const SEG = [
     { key: "Overall",    color: C.blue, width: 4 },
@@ -403,22 +518,159 @@
     Flotilla:   { an: [25.7,45.9,64.9,10.1,7.3,2.5,4.1,2.3],          ca: [369.3,448.6,450.8,524.2,559.9,576.1,588.2,597.5], pct: [0.57,0.85,1.18,0.63,0.44,0.44,0.71,0.39] },
   };
 
-  /* =================== Tablas =================== */
-  function renderCertTable() {
+  /* =================== Utilidades de gráficos =================== */
+  const SWEEP = 1.4;
+  function sweepClip(id, x0, W, H) {
+    return `<defs><clipPath id="${id}-clip"><rect x="0" y="-20" width="${x0}" height="${H + 40}">` +
+           `<animate attributeName="width" from="${x0}" to="${W}" dur="${SWEEP}s" fill="freeze" begin="indefinite" calcMode="spline" keySplines=".4 0 .2 1" keyTimes="0;1"/></rect></clipPath></defs>`;
+  }
+  const delayAt = (px, x0, W) => (0.1 + SWEEP * (px - x0) / (W - x0)).toFixed(2);
+  const path = pts => pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
+
+  /* =================== Slide 1 =================== */
+  function renderMainTable() {
+    const span = (txt, col) => `<span class="anim fade" data-step="1" data-d="${(0.1 + col * 0.12).toFixed(2)}">${txt}</span>`;
     let h = '<thead><tr class="phase"><th class="corner"></th>' +
-            `<th class="real" colspan="${REAL}">REAL</th><th class="proj" colspan="${12 - REAL}">PROYECCIÓN</th></tr>` +
+            `<th class="real" colspan="${REAL}">REAL</th><th class="proj" colspan="3">${span("TENDENCIA", 0)}</th></tr>` +
             '<tr><th class="corner">Concepto</th>' +
             MONTHS.map((m, i) => `<th class="${i >= REAL ? "proj" : ""}">${m}</th>`).join("") + "</tr></thead><tbody>";
-    cert.forEach((r, ri) => {
-      h += `<tr class="${r.hl ? "hl" : ""}" style="--r:${ri}"><th scope="row">${r.label}</th>` +
-        r.data.map((v, i) => {
-          const cls = [i >= REAL ? "proj" : "", r.hl && v > OBJETIVO ? "over" : ""].join(" ").trim();
-          return `<td class="${cls}">${r.pct ? v.toFixed(2) + "%" : nf(v, r.d)}</td>`;
-        }).join("") + "</tr>";
+    const rows = [
+      { label: "Cartera",                   real: total.cartera,   proj: proj.cartera,   fmt: v => nf(v) },
+      { label: "Emisiones / Inclusiones",   real: total.emisiones, proj: proj.emisiones, fmt: v => nf(v) },
+      { label: "Churn",                     real: total.churn,     proj: TREND,          fmt: v => pct(v), hl: true },
+      { label: "Cancelaciones",             real: total.cancel,    proj: proj.cancel,    fmt: v => nf(v) },
+      { label: "Crecimiento de la Cartera", real: crecReal,        proj: proj.crec,      fmt: v => nf(v) },
+    ];
+    rows.forEach((r, ri) => {
+      h += `<tr class="${r.hl ? "hl" : ""}" style="--r:${ri}"><th scope="row">${r.label}</th>`;
+      r.real.forEach(v => h += `<td class="${r.hl && v > OBJETIVO ? "over" : ""}">${r.fmt(v)}</td>`);
+      r.proj.forEach((v, j) => {
+        const isRealOct = r.label === "Cartera" && j === 0;   // la cartera de octubre ya es real
+        const over = r.hl && v > OBJETIVO ? " over" : "";
+        h += `<td class="proj${isRealOct ? " realv" : ""}${over}">${isRealOct ? r.fmt(v) : span(r.fmt(v), j)}</td>`;
+      });
+      h += "</tr>";
     });
-    document.getElementById("t-cert").innerHTML = h + "</tbody>";
+    document.getElementById("t-main").innerHTML = h + "</tbody>";
   }
 
+  function chartMain(svg) {
+    const W = 1300, H = 330, L = 56, R = 14, T = 22, B = 34;
+    const min = 1.5, max = 3.5;
+    const x = i => L + (W - L - R) * (i + 0.5) / 12;
+    const y = v => T + (H - T - B) * (1 - (v - min) / (max - min));
+    const seq = total.churn.concat(TREND);
+    let s = sweepClip("main", L, W, H);
+    for (let v = min; v <= max + 1e-9; v += 0.5) {
+      s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="${C.line}"/>`;
+      s += `<text x="${L - 10}" y="${y(v) + 5}" text-anchor="end" font-size="15" fill="${C.muted}">${v.toFixed(1)}%</text>`;
+    }
+    MONTHS.forEach((m, i) => s += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle" font-size="16" fill="${C.muted}">${m.slice(0, 3)}</text>`);
+    s += `<line class="fadein" x1="${L}" x2="${W - R}" y1="${y(OBJETIVO)}" y2="${y(OBJETIVO)}" stroke="${C.orange}" stroke-width="2.5" stroke-dasharray="9 7"/>`;
+    const pts = seq.map((v, i) => [x(i), y(v)]);
+    const real = pts.slice(0, REAL);
+    s += `<defs><linearGradient id="main-g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${C.cyan}" stop-opacity=".25"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></linearGradient></defs>`;
+    s += `<g clip-path="url(#main-clip)">`;
+    s += `<path d="M${real[0][0]},${y(min)} ${real.map(p => "L" + p.join(",")).join(" ")} L${real[REAL - 1][0]},${y(min)} Z" fill="url(#main-g)"/>`;
+    s += `<path d="${path(real)}" fill="none" stroke="${C.cyan}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>`;
+    s += `</g>`;
+    const point = (i, cls, style) => {
+      const v = seq[i], p = pts[i], over = v > OBJETIVO, isT = i >= REAL;
+      const dip = v < (seq[i - 1] ?? Infinity) && v < (seq[i + 1] ?? Infinity);
+      return `<circle${cls} ${style} cx="${p[0]}" cy="${p[1]}" r="6.5" fill="#fff" stroke="${over ? C.alert : (isT ? C.blue : C.cyan)}" stroke-width="3.5"><title>${MONTHS[i]}${isT ? " (tendencia)" : ""}: ${pct(v)}</title></circle>` +
+             `<text${cls} ${style} x="${p[0]}" y="${dip ? p[1] + 30 : p[1] - 16}" text-anchor="middle" font-size="16" font-weight="600" fill="${over ? C.alert : C.ink}">${pct(v)}</text>`;
+    };
+    for (let i = 0; i < REAL; i++) s += point(i, ' class="pop"', `style="animation-delay:${delayAt(pts[i][0], L, W)}s"`);
+    // Paso 1: tendencia
+    const px = (x(REAL - 1) + x(REAL)) / 2;
+    s += `<g class="anim fade" data-step="1" data-d="0">`;
+    s += `<rect x="${px}" y="${T}" width="${W - R - px}" height="${H - T - B}" fill="${C.blue}" opacity=".06" rx="8"/>`;
+    s += `<text x="${(px + W - R) / 2}" y="${H - B - 10}" text-anchor="middle" font-size="13" font-weight="700" letter-spacing="3" fill="${C.blue}" opacity=".7">TENDENCIA</text>`;
+    s += `<path d="${path(pts.slice(REAL - 1))}" fill="none" stroke="${C.blue}" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round"/>`;
+    for (let i = REAL; i < 12; i++) s += point(i, "", "");
+    s += `</g>`;
+    svg.innerHTML = s;
+  }
+
+  /* =================== Slide 2: planes =================== */
+  function renderTabs() {
+    document.getElementById("tabs").innerHTML = PLANS.map((p, i) =>
+      `<button class="tab" data-i="${i}"><span class="g">${p.group}</span><span class="n">${p.name}</span><span class="c${p.ytd > OBJETIVO ? " over" : ""}">${pct(p.ytd)}</span></button>`).join("");
+    document.querySelectorAll(".tab").forEach(t => t.addEventListener("click", e => {
+      e.stopPropagation();
+      go(slides.indexOf(document.getElementById("plan-slide")), +t.dataset.i);
+    }));
+  }
+
+  // Línea real (sólida) + tendencia punteada hasta diciembre
+  function lineTrend(svg, id, real, trend, fmt, objective) {
+    const W = 1300, H = 200, L = 24, R = 24, T = 30, B = 26;
+    const all = real.concat(trend, objective ?? []);
+    let lo = Math.min(...all), hi = Math.max(...all);
+    const pad = (hi - lo) * 0.2 || 1;
+    lo -= pad; hi += pad;
+    const x = i => L + (W - L - R) * (i + 0.5) / 12;
+    const y = v => T + (H - T - B) * (1 - (v - lo) / (hi - lo));
+    const n = real.length, seq = real.concat(trend);
+    let s = sweepClip(id, L, W, H);
+    const px = (x(n - 1) + x(n)) / 2;
+    s += `<rect x="${px}" y="4" width="${W - R - px + 10}" height="${H - B - 2}" fill="${C.blue}" opacity=".05" rx="8"/>`;
+    MONTHS.forEach((m, i) => s += `<text x="${x(i)}" y="${H - 4}" text-anchor="middle" font-size="15" fill="${i >= n ? C.blue : C.muted}" font-weight="${i >= n ? 600 : 400}">${m.slice(0, 3)}</text>`);
+    if (objective) {
+      s += `<g class="fadein"><line x1="${L}" x2="${W - R}" y1="${y(objective)}" y2="${y(objective)}" stroke="${C.orange}" stroke-width="2" stroke-dasharray="8 6"/>` +
+           `<text x="${L}" y="${y(objective) - 6}" font-size="13" font-weight="700" fill="${C.orange}" paint-order="stroke" stroke="#fff" stroke-width="4">Objetivo ${pct(objective)}</text></g>`;
+    }
+    const pts = seq.map((v, i) => [x(i), y(v)]);
+    const rp = pts.slice(0, n);
+    s += `<defs><linearGradient id="${id}-g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${C.cyan}" stop-opacity=".22"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></linearGradient></defs>`;
+    s += `<g clip-path="url(#${id}-clip)">`;
+    s += `<path d="M${rp[0][0]},${H - B} ${rp.map(p => "L" + p.join(",")).join(" ")} L${rp[n - 1][0]},${H - B} Z" fill="url(#${id}-g)"/>`;
+    s += `<path d="${path(rp)}" fill="none" stroke="${C.cyan}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>`;
+    s += `<path d="${path(pts.slice(n - 1))}" fill="none" stroke="${C.blue}" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round"/>`;
+    s += `</g>`;
+    seq.forEach((v, i) => {
+      const p = pts[i], isT = i >= n;
+      const over = objective && v > objective;
+      const col = over ? C.alert : (isT ? C.blue : C.cyan);
+      const dip = v < (seq[i - 1] ?? Infinity) && v < (seq[i + 1] ?? Infinity);
+      s += `<g class="pop" style="animation-delay:${delayAt(p[0], L, W)}s"><circle cx="${p[0]}" cy="${p[1]}" r="5.5" fill="#fff" stroke="${col}" stroke-width="3"><title>${MONTHS[i]}${isT ? " (tendencia)" : ""}: ${fmt(v)}</title></circle>` +
+           `<text x="${p[0]}" y="${dip ? p[1] + 24 : p[1] - 12}" text-anchor="middle" font-size="15.5" font-weight="${isT ? 700 : 600}" font-style="${isT ? "italic" : "normal"}" fill="${over ? C.alert : (isT ? C.blue : C.ink)}" paint-order="stroke" stroke="#fff" stroke-width="4">${fmt(v)}</text></g>`;
+    });
+    svg.innerHTML = s;
+  }
+
+  function setPlanText(p) {
+    const html = (id, v) => document.getElementById(id).innerHTML = v;
+    const num = (id, val, dec, pre = "", suf = "") => {
+      const el = document.getElementById(id);
+      Object.assign(el.dataset, { count: val, dec, prefix: pre, suffix: suf });
+      el.textContent = pre + nf(+val, dec) + suf;
+    };
+    num("ps-cart", p.cartera[9], 0);
+    html("ps-cart-s", `${p.share.toFixed(1)}% de la cartera de Mi Auto`);
+    num("ps-grow", p.growth, 0, "+");
+    html("ps-grow-s", `+${p.growthPct.toFixed(0)}% en el año`);
+    num("ps-canc", sum(p.cancel), 0);
+    html("ps-canc-s", `${p.shareCancel.toFixed(1)}% de las cancelaciones de Mi Auto`);
+    num("ps-churn", p.ytd.toFixed(2), 2, "", "%");
+    html("ps-churn-s", `${p.ytd > OBJETIVO ? "Sobre" : "Bajo"} el objetivo · cierre con tendencia <b style="color:${p.close > OBJETIVO ? "#ffb37a" : "#6fe0a6"}">${pct(p.close)}</b>`);
+    const pill = (id, txt, cls) => { const el = document.getElementById(id); el.textContent = txt; el.className = "tr " + cls; };
+    pill("tr-cart", `Tendencia: ${p.cartSlope >= 0 ? "+" : "−"}${nf(Math.abs(p.cartSlope))} certificados por mes`, p.cartSlope >= 0 ? "good" : "bad");
+    pill("tr-canc", `Tendencia: ~${nf(p.cancProj[0])} → ${nf(p.cancProj[2])} al mes en oct–dic`, p.churnSlope > 0 ? "bad" : "good");
+    pill("tr-churn", `Tendencia ${p.churnSlope >= 0 ? "+" : "−"}${Math.abs(p.churnSlope).toFixed(2)} pp por mes · cierre ${pct(p.close)}`, p.close > OBJETIVO ? "bad" : "good");
+    document.querySelectorAll(".tab").forEach((t, i) => t.classList.toggle("on", i === planIdx));
+  }
+
+  function showPlan(i, animate) {
+    planIdx = i;
+    setPlanText(PLANS[i]);
+    if (animate) {
+      document.querySelectorAll("#plan-slide svg[data-chart]").forEach(drawChart);
+      document.querySelectorAll("#plan-slide .pstat .v").forEach(countUp);
+    }
+  }
+
+  /* =================== Slide 3: métricas de gestión =================== */
   function renderSegTable(id, ds) {
     let h = '<colgroup><col class="lbl">' + "<col>".repeat(16) + "</colgroup>";
     h += '<thead><tr class="per"><th class="corner"></th>' + PERIODS.map(p => `<th colspan="2">${p}</th>`).join("") + "</tr>";
@@ -431,58 +683,12 @@
     document.getElementById(id).innerHTML = h + "</tbody>";
   }
 
-  /* =================== Gráficos =================== */
-  // Cada gráfico se dibuja al entrar en escena: la línea se revela de izquierda a derecha
-  // y puntos/etiquetas aparecen al paso del barrido.
-  const SWEEP = 1.4;
-  function sweepClip(id, x0, W, H) {
-    return `<defs><clipPath id="${id}-clip"><rect x="0" y="-20" width="${x0}" height="${H + 40}">` +
-           `<animate attributeName="width" from="${x0}" to="${W}" dur="${SWEEP}s" fill="freeze" begin="indefinite" calcMode="spline" keySplines=".4 0 .2 1" keyTimes="0;1"/></rect></clipPath></defs>`;
-  }
-  const delayAt = (px, x0, W) => (0.1 + SWEEP * (px - x0) / (W - x0)).toFixed(2);
-  const path = pts => pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ");
-
-  function chartCert(svg) {
-    const values = cert[2].data, objective = OBJETIVO;
-    const W = 1300, H = 330, L = 56, R = 14, T = 22, B = 34;
-    const min = 1.5, max = 3.0;
-    const x = i => L + (W - L - R) * (i + 0.5) / 12;
-    const y = v => T + (H - T - B) * (1 - (v - min) / (max - min));
-    let s = sweepClip("cert", L, W, H);
-    for (let v = min; v <= max + 1e-9; v += 0.5) {
-      s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="${C.line}"/>`;
-      s += `<text x="${L - 10}" y="${y(v) + 5}" text-anchor="end" font-size="15" fill="${C.muted}">${v.toFixed(1)}%</text>`;
-    }
-    const px = (x(REAL - 1) + x(REAL)) / 2;
-    s += `<g class="fadein" style="animation-delay:${delayAt(px, L, W)}s"><rect x="${px}" y="${T}" width="${W - R - px}" height="${H - T - B}" fill="${C.blue}" opacity=".06" rx="8"/>`;
-    s += `<text x="${(px + W - R) / 2}" y="${H - B - 10}" text-anchor="middle" font-size="13" font-weight="700" letter-spacing="3" fill="${C.blue}" opacity=".7">PROYECCIÓN</text></g>`;
-    MONTHS.forEach((m, i) => s += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle" font-size="16" fill="${C.muted}">${m.slice(0, 3)}</text>`);
-    s += `<line class="fadein" x1="${L}" x2="${W - R}" y1="${y(objective)}" y2="${y(objective)}" stroke="${C.orange}" stroke-width="2.5" stroke-dasharray="9 7"/>`;
-    const pts = values.map((v, i) => [x(i), y(v)]);
-    s += `<defs><linearGradient id="cert-g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${C.cyan}" stop-opacity=".25"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></linearGradient></defs>`;
-    s += `<g clip-path="url(#cert-clip)">`;
-    s += `<path d="M${pts[0][0]},${y(min)} ${pts.map(p => "L" + p.join(",")).join(" ")} L${pts[11][0]},${y(min)} Z" fill="url(#cert-g)"/>`;
-    s += `<path d="${path(pts.slice(0, REAL))}" fill="none" stroke="${C.cyan}" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>`;
-    s += `<path d="${path(pts.slice(REAL - 1))}" fill="none" stroke="${C.blue}" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round"/>`;
-    s += `</g>`;
-    pts.forEach((p, i) => {
-      const over = values[i] > objective;
-      const col = over ? C.alert : (i >= REAL ? C.blue : C.cyan);
-      const dip = values[i] < (values[i - 1] ?? Infinity) && values[i] < (values[i + 1] ?? Infinity);
-      s += `<g class="pop" style="animation-delay:${delayAt(p[0], L, W)}s">` +
-           `<circle cx="${p[0]}" cy="${p[1]}" r="6.5" fill="#fff" stroke="${col}" stroke-width="3.5"><title>${MONTHS[i]}: ${values[i].toFixed(2)}%</title></circle>` +
-           `<text x="${p[0]}" y="${dip ? p[1] + 30 : p[1] - 16}" text-anchor="middle" font-size="16" font-weight="600" fill="${over ? C.alert : C.ink}">${values[i].toFixed(2)}%</text></g>`;
-    });
-    svg.innerHTML = s;
-  }
-
   function chartSeg(svg, id, ds, min, max, objective, H) {
     const W = 1330, L = 130, T = 44, B = 30;
     const colW = (W - L) / PERIODS.length;
     const x = i => L + colW * (i + 0.5);
     const y = v => T + (H - T - B) * (1 - (v - min) / (max - min));
     let s = sweepClip(id, L, W, H);
-    // separadores de período, alineados con la tabla
     for (let i = 1; i < PERIODS.length; i++) s += `<line x1="${L + colW * i}" x2="${L + colW * i}" y1="${T - 10}" y2="${H}" stroke="${C.line}" stroke-dasharray="2 4"/>`;
     if (objective) {
       s += `<g class="fadein"><line x1="${L}" x2="${W - 4}" y1="${y(objective)}" y2="${y(objective)}" stroke="${C.red}" stroke-width="1.5" stroke-dasharray="6 5" opacity=".8"/>` +
@@ -508,7 +714,7 @@
           r.side = up > down || down < 34 ? "up" : "down";
         }
       });
-      const ups = ranked.filter(r => r.side === "up");            // de arriba hacia abajo
+      const ups = ranked.filter(r => r.side === "up");
       const downs = ranked.filter(r => r.side === "down");
       for (let k = ups.length - 1; k >= 0; k--) {
         ups[k].ly = ups[k].py - 11;
@@ -526,10 +732,14 @@
     svg.innerHTML = s;
   }
 
+  /* =================== Registro de gráficos =================== */
   const CHARTS = {
-    cert: svg => chartCert(svg),
-    cust: svg => chartSeg(svg, "cust", cust, 1.85, 3.2, OBJETIVO, 230),
-    rev:  svg => chartSeg(svg, "rev", rev, 0.3, 2.75, null, 150),
+    main:      svg => chartMain(svg),
+    "p-cart":  svg => { const p = PLANS[planIdx]; lineTrend(svg, "pcart", p.cartera, p.cartProj, v => nf(v)); },
+    "p-canc":  svg => { const p = PLANS[planIdx]; lineTrend(svg, "pcanc", p.cancel, p.cancProj, v => nf(v)); },
+    "p-churn": svg => { const p = PLANS[planIdx]; lineTrend(svg, "pchurn", p.churn, p.churnProj, v => pct(v), OBJETIVO); },
+    cust:      svg => chartSeg(svg, "cust", cust, 1.85, 3.2, OBJETIVO, 230),
+    rev:       svg => chartSeg(svg, "rev", rev, 0.3, 2.75, null, 150),
   };
   function drawChart(svg) {
     CHARTS[svg.dataset.chart](svg);
@@ -538,19 +748,33 @@
 
   /* =================== Contadores =================== */
   function countUp(el) {
-    const to = parseFloat(el.dataset.count), dec = +el.dataset.dec || 0, suf = el.dataset.suffix || "";
+    if (el.dataset.count == null) return;
+    const to = parseFloat(el.dataset.count), dec = +el.dataset.dec || 0, pre = el.dataset.prefix || "", suf = el.dataset.suffix || "";
     const t0 = performance.now(), dur = 1100;
     const tick = t => {
       const k = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - k, 3);
-      el.textContent = nf(to * e, dec) + suf;
+      el.textContent = pre + nf(to * e, dec) + suf;
       if (k < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
   }
 
-  renderCertTable();
+  /* =================== Render inicial =================== */
+  renderMainTable();
+  {
+    const k = document.getElementById("k-close");
+    Object.assign(k.dataset, { count: CLOSE.toFixed(2), dec: 2, suffix: "%" });
+    k.textContent = pct(CLOSE);
+    const pb = Math.round((CLOSE - OBJETIVO) * 100);
+    const pill = document.getElementById("k-close-pill");
+    pill.textContent = `${Math.abs(pb)} pb ${pb > 0 ? "sobre" : "bajo"} objetivo`;
+    if (pb <= 0) pill.className = "pill";
+  }
+  renderTabs();
+  showPlan(0, false);
   renderSegTable("t-cust", cust);
   renderSegTable("t-rev", rev);
+  document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
 
   /* =================== Motor de presentación =================== */
   const deck = document.getElementById("deck");
@@ -558,13 +782,28 @@
   const count = document.getElementById("count");
   const progress = document.getElementById("progress");
   const prev = document.getElementById("prev"), next = document.getElementById("next");
-  const stepsOf = s => Math.max(0, ...[...s.querySelectorAll("[data-step]")].map(e => +e.dataset.step));
+  // Pasos de un slide: data-steps explícito (planes) o el mayor data-step de sus elementos
+  const stepsOf = s => s.dataset.steps != null ? +s.dataset.steps : Math.max(0, ...[...s.querySelectorAll("[data-step]")].map(e => +e.dataset.step));
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let cur = -1, step = 0;
 
   function fit() {
     const k = Math.min(innerWidth / 1920, innerHeight / 1080);
     deck.style.transform = `translate(-50%, -50%) scale(${k})`;
+  }
+
+  // Al entrar un elemento: dibuja sus gráficos y anima sus cifras
+  function trigger(el, slide) {
+    el.querySelectorAll("svg[data-chart]").forEach(svg => {
+      if (svg.closest(".anim") !== el) return;
+      drawChart(svg);
+      // los elementos por paso dentro del gráfico se recrean: sincronizarlos con el paso actual
+      svg.querySelectorAll(".anim").forEach(a => {
+        a.style.setProperty("--d", "0s");
+        if (+(a.dataset.step || 0) <= step && slide === slides[cur]) requestAnimationFrame(() => a.classList.add("in"));
+      });
+    });
+    el.querySelectorAll("[data-count]").forEach(c => { if (c.closest(".anim") === el) countUp(c); });
   }
 
   // Muestra/oculta los elementos del slide según el paso, con entrada escalonada
@@ -576,16 +815,10 @@
       const was = el.classList.contains("in");
       if (show && !was) {
         const base = fresh ? 0.25 : 0;
-        el.style.setProperty("--d", (base + order++ * 0.12).toFixed(2) + "s");
+        const d = el.dataset.d != null ? base + +el.dataset.d : base + order++ * 0.12;
+        el.style.setProperty("--d", d.toFixed(2) + "s");
         el.classList.add("in");
-        const delay = reduced ? 0 : (base + (order - 1) * 0.12) * 1000;
-        setTimeout(() => {
-          if (!el.classList.contains("in")) return;
-          (el.matches("svg[data-chart]") ? [el] : el.querySelectorAll("svg[data-chart]")).forEach(svg => {
-            if (svg.closest(".anim") === el) drawChart(svg);
-          });
-          el.querySelectorAll("[data-count]").forEach(c => { if (c.closest(".anim") === el) countUp(c); });
-        }, delay + 150);
+        setTimeout(() => { if (el.classList.contains("in")) trigger(el, slide); }, reduced ? 0 : d * 1000 + 150);
       } else if (!show && was) {
         el.classList.remove("in");
         el.style.removeProperty("--d");
@@ -600,6 +833,7 @@
     n = Math.min(Math.max(n, 0), slides.length - 1);
     st = Math.min(Math.max(st, 0), stepsOf(slides[n]));
     const changed = n !== cur;
+    const stepChanged = !changed && st !== step;
     if (changed) {
       slides.forEach((s, i) => {
         s.classList.toggle("active", i === n);
@@ -608,12 +842,13 @@
       });
     }
     cur = n; step = st;
+    // En el slide de planes cada paso es un plan
+    if (slides[n].id === "plan-slide") showPlan(st, stepChanged);
     build(slides[n], st, changed);
     count.textContent = `${cur + 1} / ${slides.length}`;
-    const total = slides.length;
-    progress.style.width = ((cur + (step + 1) / (stepsOf(slides[cur]) + 1)) / total * 100) + "%";
+    progress.style.width = ((cur + (step + 1) / (stepsOf(slides[cur]) + 1)) / slides.length * 100) + "%";
     prev.disabled = cur === 0 && step === 0;
-    next.disabled = cur === total - 1 && step === stepsOf(slides[cur]);
+    next.disabled = cur === slides.length - 1 && step === stepsOf(slides[cur]);
     history.replaceState(null, "", "#" + (cur + 1));
   }
   const forward = () => step < stepsOf(slides[cur]) ? go(cur, step + 1) : go(cur + 1, 0);
@@ -635,8 +870,7 @@
   prev.onclick = back;
   next.onclick = forward;
   document.getElementById("fs").onclick = toggleFs;
-  // Clic en el slide avanza (como en PowerPoint)
-  deck.addEventListener("click", forward);
+  deck.addEventListener("click", forward);   // clic en el slide avanza, como en PowerPoint
 
   let tx = null;
   addEventListener("touchstart", e => tx = e.touches[0].clientX, { passive: true });
@@ -647,10 +881,10 @@
     tx = null;
   });
 
-  addEventListener("beforeprint", () => slides.forEach(s => {
-    build(s, 99, false);
-    s.querySelectorAll("svg[data-chart]").forEach(drawChart);
-  }));
+  addEventListener("beforeprint", () => {
+    document.querySelectorAll(".anim").forEach(el => el.classList.add("in"));
+    document.querySelectorAll("clipPath rect").forEach(r => { r.querySelector("animate")?.remove(); r.setAttribute("width", 4000); });
+  });
 
   fit();
   go((parseInt(location.hash.slice(1), 10) || 1) - 1, 0);
