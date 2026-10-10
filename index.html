@@ -157,17 +157,25 @@
   .cover .date b { font-weight: 700; }
 
   /* ---------- Slides por grupo de planes ---------- */
-  .pgrid { margin-top: 24px; flex: 1; display: grid; grid-template-columns: 300px 1fr 1fr; gap: 16px 24px; min-height: 0; }
-  .pgrid .colh { display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-  .pgrid .colh .legend { font-size: 14px; letter-spacing: 0; text-transform: none; font-weight: 400; gap: 16px; }
-  .pname { border-radius: 18px; padding: 22px 26px; color: #fff; background: linear-gradient(150deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; }
-  .pname .n { font-size: 32px; font-weight: 700; line-height: 1.1; }
-  .pname .c { font-size: 17px; color: rgba(255,255,255,.72); margin-top: 6px; }
-  .pcard { position: relative; border: 1px solid var(--line); border-radius: 18px; padding: 12px 16px 2px; display: flex; flex-direction: column; min-height: 0; background: #fff; }
+  .pgrid { margin-top: 22px; flex: 1; display: grid; grid-template-columns: 290px 1fr; gap: 16px 22px; min-height: 0; }
+  .pgrid .colh { grid-column: 2; display: flex; align-items: center; justify-content: flex-end; }
+  .pgrid .legend { font-size: 15px; gap: 22px; }
+  .legend i.bar { width: 14px; height: 14px; border: 0; border-radius: 3px; background: var(--cyan); }
+  .legend .ch i { border-color: var(--navy); border-top-width: 4px; }
+  .legend .tg i { border-color: var(--blue); border-top-style: dotted; }
+  .legend .tc i { border-color: var(--navy); border-top-style: dotted; }
+  .pname { border-radius: 18px; padding: 20px 24px; color: #fff; background: linear-gradient(150deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+  .pname .n { font-size: 30px; font-weight: 700; line-height: 1.1; }
+  .pname .c { font-size: 16px; color: rgba(255,255,255,.72); }
+  .pname .chips { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+  .pname .chip { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; padding: 7px 12px; border-radius: 12px; background: rgba(255,255,255,.1); }
+  .pname .chip b { font-size: 18px; width: 22px; text-align: center; }
+  .pname .chip.bad b { color: #ffb37a; } .pname .chip.good b { color: #6fe0a6; }
+  .pcard { position: relative; border: 1px solid var(--line); border-radius: 18px; padding: 8px 14px 0; display: flex; flex-direction: column; min-height: 0; background: #fff; box-shadow: 0 14px 30px -26px rgba(11,47,91,.5); }
   .pcard svg { flex: 1; width: 100%; min-height: 0; display: block; }
-  .badge { position: absolute; top: 12px; right: 16px; font-size: 15px; font-weight: 600; padding: 4px 12px; border-radius: 999px; }
-  .badge.good { background: #e6f8f1; color: #0c8a63; }
-  .badge.bad { background: #fff0e6; color: var(--alert); }
+  svg .grow { transform-box: fill-box; transform-origin: bottom; animation: grow .8s var(--ease) both; }
+  svg .grow.neg { transform-origin: top; }
+  @keyframes grow { from { transform: scaleY(0); } to { transform: none; } }
 
   /* ---------- Slide 3: métricas de gestión ---------- */
   .s3-grid { margin-top: 22px; flex: 1; display: grid; grid-template-columns: 1fr 380px; gap: 30px; min-height: 0; }
@@ -218,7 +226,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .slide, .anim, .deco, .progress, .tab { transition: none !important; }
-    .in tbody tr, svg .pop, svg .fadein { animation: none !important; opacity: 1; }
+    .in tbody tr, svg .pop, svg .fadein, svg .grow { animation: none !important; opacity: 1; }
   }
 
   @media print {
@@ -228,7 +236,7 @@
     .deck { position: static; transform: none !important; box-shadow: none; height: auto; overflow: visible; }
     .slide { position: relative; opacity: 1; visibility: visible; transform: none; width: 1920px; height: 1080px; break-after: page; }
     .anim { opacity: 1 !important; transform: none !important; }
-    svg .pop, svg .fadein { opacity: 1; animation: none; }
+    svg .pop, svg .fadein, svg .grow { opacity: 1; animation: none; }
     .controls, .progress { display: none; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
@@ -316,7 +324,7 @@
         </div>
         <div class="pgrid" id="grid-dp"></div>
       </div>
-      <div class="footnote anim fade">Línea sólida = real 2026 · línea punteada = tendencia (recta ajustada a los meses reales) llevada hasta diciembre.</div>
+      <div class="footnote anim fade">Crecimiento neto = cartera del mes siguiente − cartera del mes (emisiones − cancelaciones) · Tendencia: recta ajustada a ene–sep, llevada hasta diciembre.</div>
     </section>
 
     <!-- ================= Slide 3: Seguro de Ley ================= -->
@@ -335,7 +343,7 @@
         </div>
         <div class="pgrid" id="grid-sl"></div>
       </div>
-      <div class="footnote anim fade">Línea sólida = real 2026 · línea punteada = tendencia (recta ajustada a los meses reales) llevada hasta diciembre.</div>
+      <div class="footnote anim fade">Crecimiento neto = cartera del mes siguiente − cartera del mes (emisiones − cancelaciones) · Tendencia: recta ajustada a ene–sep, llevada hasta diciembre.</div>
     </section>
 
     <!-- ================= Slide 4: Métricas de gestión ================= -->
@@ -485,7 +493,8 @@
   PLANS.forEach((p, i) => {
     p.id = "p" + i;
     p.churn = p.cancel.map((c, k) => c / p.cartera[k] * 100);
-    p.fitCart = linreg(p.cartera);     // ene–oct
+    p.growth = p.cartera.slice(1).map((c, k) => c - p.cartera[k]);   // crecimiento neto ene–sep
+    p.fitGrowth = linreg(p.growth);
     p.fitChurn = linreg(p.churn);      // ene–sep
   });
 
@@ -584,60 +593,84 @@
   }
 
   /* =================== Slides por grupo de planes =================== */
-  // Línea real (sólida) + recta de tendencia punteada de enero a diciembre; solo se rotulan los extremos
-  function miniTrend(svg, id, real, fit, fmt, objective) {
+  // Un gráfico por plan: arriba la línea de churn y abajo las barras de crecimiento mensual,
+  // cada uno con su tendencia punteada hasta diciembre.
+  function comboChart(svg, p) {
     const [, , W, H] = svg.getAttribute("viewBox").split(" ").map(Number);
-    const L = 14, R = 14, T = 44, B = 26;
-    const n = real.length;
-    const fitted = MONTHS.map((_, i) => fit(i + 1));
-    const all = real.concat(fitted, objective ?? []);
-    let lo = Math.min(...all), hi = Math.max(...all);
-    const pad = (hi - lo) * 0.16 || 1;
-    lo -= pad; hi += pad;
+    const L = 8, R = 8, T = 30, B = 30, GAP = 34;
+    const n = REAL;
     const x = i => L + (W - L - R) * (i + 0.5) / 12;
-    const y = v => T + (H - T - B) * (1 - (v - lo) / (hi - lo));
+    const colW = (W - L - R) / 12, bw = colW * 0.42;
+    const churnH = (H - T - B - GAP) * 0.42;
+    const cTop = T, cBot = T + churnH, gTop = cBot + GAP, gBot = H - B;
+    const fitC = MONTHS.map((_, i) => p.fitChurn(i + 1)), fitG = MONTHS.map((_, i) => p.fitGrowth(i + 1));
+    // Escalas
+    const cv = p.churn.concat(fitC, OBJETIVO);
+    const cLo = Math.min(...cv) - 0.25, cHi = Math.max(...cv) + 0.25;
+    const yc = v => cBot - (cBot - cTop) * (v - cLo) / (cHi - cLo);
+    const gv = p.growth.concat(fitG, 0);
+    const gLo = Math.min(...gv), gHi = Math.max(...gv);
+    const gPad = (gHi - gLo) * 0.18;
+    const yg = v => gBot - (gBot - gTop) * (v - (gLo - (gLo < 0 ? gPad : 0))) / (gHi + gPad - (gLo - (gLo < 0 ? gPad : 0)));
+    const id = p.id + "x";
     let s = sweepClip(id, L, W, H);
+    // Zona de tendencia
     const px = (x(n - 1) + x(n)) / 2;
-    s += `<rect x="${px}" y="${T - 8}" width="${W - px}" height="${H - T - B + 8}" fill="${C.blue}" opacity=".05" rx="8"/>`;
-    MONTHS.forEach((m, i) => s += `<text x="${x(i)}" y="${H - 6}" text-anchor="middle" font-size="14" fill="${i >= n ? C.blue : C.muted}">${m.slice(0, 3)}</text>`);
-    if (objective) {
-      s += `<g class="fadein"><line x1="${L}" x2="${W - R}" y1="${y(objective)}" y2="${y(objective)}" stroke="${C.orange}" stroke-width="2" stroke-dasharray="8 6"/>` +
-           `<text x="${L}" y="${y(objective) - 7}" font-size="13" font-weight="700" fill="${C.orange}" paint-order="stroke" stroke="#fff" stroke-width="4">Objetivo ${pct(objective)}</text></g>`;
-    }
-    const pts = real.map((v, i) => [x(i), y(v)]);
-    const fpts = fitted.map((v, i) => [x(i), y(v)]);
-    s += `<defs><linearGradient id="${id}-g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${C.cyan}" stop-opacity=".2"/><stop offset="1" stop-color="${C.cyan}" stop-opacity="0"/></linearGradient></defs>`;
+    s += `<rect x="${px}" y="4" width="${W - R - px}" height="${H - B - 4}" fill="${C.blue}" opacity=".05" rx="10"/>`;
+    MONTHS.forEach((m, i) => s += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle" font-size="15" fill="${i >= n ? C.blue : C.muted}" font-weight="${i >= n ? 600 : 400}">${m.slice(0, 3)}</text>`);
+    // Rótulos de banda
+    s += `<text x="${px + 14}" y="${cTop - 8}" font-size="13" font-weight="700" letter-spacing="2" fill="${C.navy}">CHURN</text>`;
+    s += `<text x="${px + 14}" y="${gTop - 8}" font-size="13" font-weight="700" letter-spacing="2" fill="${C.cyan}">CRECIMIENTO</text>`;
+    // Objetivo de churn
+    s += `<g class="fadein"><line x1="${L}" x2="${W - R}" y1="${yc(OBJETIVO)}" y2="${yc(OBJETIVO)}" stroke="${C.orange}" stroke-width="2" stroke-dasharray="8 6"/>` + `</g>`;
+    // Barras de crecimiento
+    s += `<line x1="${L}" x2="${W - R}" y1="${yg(0)}" y2="${yg(0)}" stroke="${C.line}" stroke-width="2"/>`;
+    p.growth.forEach((v, i) => {
+      const neg = v < 0, top = neg ? yg(0) : yg(v), h = Math.max(Math.abs(yg(v) - yg(0)), 1.5);
+      const d = (0.1 + i * 0.07).toFixed(2);
+      s += `<rect class="grow${neg ? " neg" : ""}" style="animation-delay:${d}s" x="${x(i) - bw / 2}" y="${top}" width="${bw}" height="${h}" rx="5" fill="${neg ? C.alert : C.cyan}" opacity=".9"><title>${MONTHS[i]}: ${nf(v)} certificados</title></rect>`;
+      s += `<text class="pop" style="animation-delay:${(0.45 + i * 0.07).toFixed(2)}s" x="${x(i)}" y="${neg ? yg(v) + 18 : yg(v) - 7}" text-anchor="middle" font-size="15" font-weight="600" fill="${neg ? C.alert : C.ink}">${v > 0 ? "+" : ""}${nf(v)}</text>`;
+    });
+    // Líneas: churn real + tendencias
+    const cp = p.churn.map((v, i) => [x(i), yc(v)]);
     s += `<g clip-path="url(#${id}-clip)">`;
-    s += `<path d="M${pts[0][0]},${H - B} ${pts.map(p => "L" + p.join(",")).join(" ")} L${pts[n - 1][0]},${H - B} Z" fill="url(#${id}-g)"/>`;
-    s += `<path d="${path(pts)}" fill="none" stroke="${C.cyan}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>`;
-    s += `<path d="${path(fpts)}" fill="none" stroke="${C.blue}" stroke-width="3.5" stroke-dasharray="2 8" stroke-linecap="round"/>`;
+    s += `<path d="${path(MONTHS.map((_, i) => [x(i), yg(fitG[i])]))}" fill="none" stroke="${C.blue}" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/>`;
+    s += `<path d="${path(MONTHS.map((_, i) => [x(i), yc(fitC[i])]))}" fill="none" stroke="${C.navy}" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round" opacity=".75"/>`;
+    s += `<path d="${path(cp)}" fill="none" stroke="${C.navy}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>`;
     s += `</g>`;
-    pts.forEach((p, i) => s += `<circle class="pop" style="animation-delay:${delayAt(p[0], L, W)}s" cx="${p[0]}" cy="${p[1]}" r="4" fill="#fff" stroke="${C.cyan}" stroke-width="2.5"><title>${MONTHS[i]}: ${fmt(real[i])}</title></circle>`);
-    // Rótulos: último dato real y cierre de la tendencia en diciembre
-    const tag = (p, txt, col, d, above) =>
-      `<g class="pop" style="animation-delay:${d}s"><circle cx="${p[0]}" cy="${p[1]}" r="6.5" fill="#fff" stroke="${col}" stroke-width="3.5"/>` +
-      `<text x="${p[0]}" y="${above ? p[1] - 14 : p[1] + 28}" text-anchor="middle" font-size="17" font-weight="700" fill="${col}" paint-order="stroke" stroke="#fff" stroke-width="5">${txt}</text></g>`;
-    const last = pts[n - 1], dec = fpts[11];
-    const lastAbove = real[n - 1] >= fitted[n - 1];
-    s += tag(last, fmt(real[n - 1]), objective && real[n - 1] > objective ? C.alert : C.ink, delayAt(last[0], L, W), lastAbove);
-    s += tag(dec, fmt(fitted[11]), objective && fitted[11] > objective ? C.alert : C.blue, (SWEEP * 0.9).toFixed(2), !lastAbove || dec[1] > last[1]);
+    p.churn.forEach((v, i) => {
+      const over = v > OBJETIVO;
+      const dip = v < (p.churn[i - 1] ?? Infinity) && v < (p.churn[i + 1] ?? Infinity);
+      s += `<g class="pop" style="animation-delay:${delayAt(cp[i][0], L, W)}s"><circle cx="${cp[i][0]}" cy="${cp[i][1]}" r="5" fill="#fff" stroke="${over ? C.alert : C.navy}" stroke-width="3"><title>${MONTHS[i]}: ${pct(v)}</title></circle>` +
+           `<text x="${cp[i][0]}" y="${dip ? cp[i][1] + 22 : cp[i][1] - 11}" text-anchor="middle" font-size="14.5" font-weight="600" fill="${over ? C.alert : C.navy}" paint-order="stroke" stroke="#fff" stroke-width="4">${pct(v)}</text></g>`;
+    });
+    // Cierre de la tendencia en diciembre
+    const endTag = (yy, txt, col) => `<g class="pop" style="animation-delay:${(SWEEP * 0.9).toFixed(2)}s"><circle cx="${x(11)}" cy="${yy}" r="6.5" fill="#fff" stroke="${col}" stroke-width="3.5"/>` +
+      `<text x="${x(11)}" y="${yy - 13}" text-anchor="middle" font-size="16" font-weight="700" font-style="italic" fill="${col}" paint-order="stroke" stroke="#fff" stroke-width="5">${txt}</text></g>`;
+    s += endTag(yc(fitC[11]), pct(fitC[11]), fitC[11] > OBJETIVO ? C.alert : C.navy);
+    s += endTag(yg(fitG[11]), (fitG[11] > 0 ? "+" : "") + nf(fitG[11]), C.blue);
     svg.innerHTML = s;
   }
 
   function renderPlanGrid(group) {
     const plans = PLANS.filter(p => p.group === group);
-    const H = plans.length === 3 ? 214 : 340;
+    const H = plans.length === 3 ? 245 : 385;
     const grid = document.getElementById("grid-" + group);
     grid.style.gridTemplateRows = `auto repeat(${plans.length}, 1fr)`;
-    const lg = obj => `<div class="legend"><span class="r"><i></i>Real</span><span class="p"><i></i>Tendencia</span>${obj ? '<span class="o"><i></i>Objetivo</span>' : ""}</div>`;
-    let h = `<div></div><div class="colh anim fade">Crecimiento de cartera ${lg(false)}</div><div class="colh anim fade">Churn ${lg(true)}</div>`;
+    let h = `<div class="colh anim fade"><div class="legend">
+        <span><i class="bar"></i>Crecimiento neto del mes (certificados)</span>
+        <span class="tg"><i></i>Tendencia crecimiento</span>
+        <span class="ch"><i></i>Churn</span>
+        <span class="tc"><i></i>Tendencia churn</span>
+        <span class="o"><i></i>Objetivo</span></div></div>`;
     plans.forEach(p => {
-      const up = p.fitCart.slope >= 0, worse = p.fitChurn.slope > 0;
-      h += `<div class="pname anim"><div class="n">${p.name}</div><div class="c">${p.cov}</div></div>`;
-      h += `<div class="pcard anim"><span class="badge ${up ? "good" : "bad"}">${up ? "↗ Crece" : "↘ Decrece"}</span>` +
-           `<svg data-chart="${p.id}-cart" viewBox="0 0 700 ${H}" role="img" aria-label="Cartera de ${p.name} y su tendencia"></svg></div>`;
-      h += `<div class="pcard anim"><span class="badge ${worse ? "bad" : "good"}">${worse ? "↗ Sube" : "↘ Baja"}</span>` +
-           `<svg data-chart="${p.id}-churn" viewBox="0 0 700 ${H}" role="img" aria-label="Churn de ${p.name} y su tendencia"></svg></div>`;
+      const gDown = p.fitGrowth.slope < 0, cUp = p.fitChurn.slope > 0;
+      h += `<div class="pname anim"><div class="n">${p.name}</div><div class="c">${p.cov}</div>
+        <div class="chips">
+          <div class="chip ${gDown ? "bad" : "good"}"><b>${gDown ? "↘" : "↗"}</b>${gDown ? "Crece menos cada mes" : "Crece más cada mes"}</div>
+          <div class="chip ${cUp ? "bad" : "good"}"><b>${cUp ? "↗" : "↘"}</b>${cUp ? "Churn en aumento" : "Churn bajando"}</div>
+        </div></div>`;
+      h += `<div class="pcard anim"><svg data-chart="${p.id}" viewBox="0 0 1380 ${H}" role="img" aria-label="Crecimiento mensual y churn de ${p.name} con su tendencia"></svg></div>`;
     });
     grid.innerHTML = h;
   }
@@ -711,8 +744,7 @@
     rev:       svg => chartSeg(svg, "rev", rev, 0.3, 2.75, null, 150),
   };
   PLANS.forEach(p => {
-    CHARTS[p.id + "-cart"] = svg => miniTrend(svg, p.id + "c", p.cartera, p.fitCart, v => nf(v));
-    CHARTS[p.id + "-churn"] = svg => miniTrend(svg, p.id + "r", p.churn, p.fitChurn, v => pct(v), OBJETIVO);
+    CHARTS[p.id] = svg => comboChart(svg, p);
   });
   function drawChart(svg) {
     CHARTS[svg.dataset.chart](svg);
