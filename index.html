@@ -257,10 +257,18 @@
   .rcard { border-radius: 24px; padding: 44px 36px 38px; background: #fff; border: 1px solid var(--line); box-shadow: 0 20px 44px -30px rgba(11,47,91,.5); position: relative; overflow: hidden; }
   .rcard::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 8px; background: var(--c); }
   .rcard .ic { width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center; font-size: 30px; background: color-mix(in srgb, var(--c) 15%, #fff); color: var(--c); }
-  .rcard .v { margin-top: 28px; font-size: 110px; font-weight: 700; line-height: 1; color: var(--navy); font-variant-numeric: tabular-nums; }
+  .rcard .v { margin-top: 22px; font-size: 100px; font-weight: 700; line-height: 1; color: var(--navy); font-variant-numeric: tabular-nums; }
   .rcard .l { margin-top: 10px; font-size: 26px; font-weight: 600; color: var(--c); }
-  .rcard .p { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 18px; color: var(--muted); }
-  .rcard .p b { color: var(--ink); }
+  .rcard { padding-bottom: 0 !important; display: flex; flex-direction: column; }
+  .rcard .top { display: flex; justify-content: space-between; align-items: center; }
+  .rcard .pp { font-size: 18px; font-weight: 700; padding: 6px 14px; border-radius: 999px; background: color-mix(in srgb, var(--c) 14%, #fff); color: color-mix(in srgb, var(--c) 80%, #1c2b3a); }
+  .rcard .mm { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .rcard .mm span { display: block; font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .rcard .mm b { font-size: 30px; color: var(--navy); font-variant-numeric: tabular-nums; }
+  .rcard .crb { margin: 22px -36px 0 -28px; padding: 16px 36px 18px 36px; background: var(--blue); color: #fff; display: grid; grid-template-columns: 1fr auto; align-items: baseline; column-gap: 10px; }
+  .rcard .crb span { grid-column: 1 / -1; font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
+  .rcard .crb b { font-size: 40px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .rcard .crb em { font-style: normal; font-size: 20px; font-weight: 700; opacity: .85; }
   .rbar { margin-top: 56px; display: flex; height: 26px; border-radius: 13px; overflow: hidden; background: var(--line); }
   .rbar div { width: 0; transition: width 1.2s var(--ease) .5s; }
   .in .rbar div, .rbar.in div { width: var(--w); }
@@ -301,6 +309,37 @@
   .rt-box:has(.swap.in) .rt tbody tr.tot th, .rt-box:has(.swap.in) .rt tbody tr.tot td { background: #e3effa; }
   .sw .vc.z b { color: #c3ccd6 !important; }
   .rt-box .swap { position: absolute; }
+
+  /* Intermediarios con bajo % de pago */
+  .ib { position: relative; margin-top: 18px; flex: 1; display: grid; }
+  .ibp { grid-area: 1 / 1; display: flex; flex-direction: column; transition: opacity .5s ease, transform .6s var(--ease); }
+  .ib:has(.ib-sw.in) .ibp.a { opacity: 0; transform: translateX(-40px); pointer-events: none; }
+  .ibp.b { opacity: 0; transform: translateX(40px); pointer-events: none; }
+  .ib:has(.ib-sw.in) .ibp.b { opacity: 1; transform: none; pointer-events: auto; }
+  .ib-sw { position: absolute; }
+  .nobr .deco.br1, .nobr .deco.br2 { display: none; }
+  .ibh { display: flex; align-items: center; gap: 18px; margin-bottom: 10px; }
+  .ibh .mes { font-size: 30px; font-weight: 700; color: #fff; background: linear-gradient(135deg, var(--blue), var(--navy)); padding: 8px 22px; border-radius: 14px; }
+  .ibh .k { font-size: 19px; color: var(--muted); } .ibh .k b { color: var(--navy); font-size: 22px; }
+  .ibh .k.o b { color: var(--alert); }
+  .ibt { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .ibt th, .ibt td { border: 0; background: none; }
+  .ibt thead th { font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 8px 10px; text-align: right; border-bottom: 2px solid var(--line); }
+  .ibt thead th.l { text-align: left; }
+  .ibt tbody td { padding: 7px 10px; border-bottom: 1px solid var(--line); text-align: right; font-size: 22px; }
+  .ibt td.n { width: 50px; text-align: center; } .ibt td.n span { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: #fff0e6; color: var(--alert); font-size: 16px; font-weight: 700; }
+  .ibt td.nm { text-align: left; }
+  .ibt td.nm b { display: block; font-size: 20px; color: var(--navy); font-weight: 600; }
+  .ibt td.nm small { font-size: 15px; color: var(--muted); }
+  .ibt td.fr { white-space: nowrap; color: var(--muted); } .ibt td.fr b { color: var(--navy); }
+  .ibt td.br { width: 120px; } .ibt td.br div { height: 8px; border-radius: 4px; background: var(--line); overflow: hidden; } .ibt td.br i { display: block; height: 100%; background: var(--alert); }
+  .ibt td.pc { font-weight: 700; color: var(--alert); font-size: 26px; width: 90px; }
+  .ibt td.pe { color: var(--sinpago); font-weight: 700; color: #d9822b; }
+  .ibt td.pp { color: var(--blue); font-weight: 600; }
+  .ibt td.ca { color: var(--anul); font-weight: 600; }
+  .ibt td.z { color: #c3ccd6 !important; font-weight: 400; }
+  .ibp.b tbody tr { animation: none; }
+  .ib:has(.ib-sw.in) .ibp.b tbody tr { animation: rowIn .55s var(--ease) both; animation-delay: calc(var(--r, 0) * 60ms + .15s); }
 
   /* ---------- Controles ---------- */
   .controls { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(11,47,91,.82); color: #fff; backdrop-filter: blur(6px); font-size: 14px; opacity: 0; pointer-events: none; transform: translate(-50%, 24px); transition: opacity .3s ease, transform .4s var(--ease); z-index: 10; }
@@ -1030,7 +1069,7 @@
       <div class="content">
         <div class="head">
           <div class="anim">
-            <span class="eyebrow"><span class="dot"></span>Renovaciones Auto · Septiembre y Octubre 2026</span>
+            <span class="eyebrow"><span class="dot"></span>Renovaciones Auto · Daños Propios · Septiembre y Octubre 2026</span>
             <h1>${title}</h1>
             ${sub ? `<div class="sub">${sub}</div>` : ""}
           </div>
@@ -1040,11 +1079,14 @@
   // 1 · ¿Cómo vamos?
   function rnResumen() {
     const t = rnSum(), N = tot(t), se = rnSum(["Septiembre"]), oc = rnSum(["Octubre"]), cr = rnSum(undefined, ["Si"]);
-    const card = (c, ic, v, l, k) => `<div class="rcard anim" style="--c:${c}"><div class="ic">${ic}</div>
+    const card = (c, ic, v, l, k) => `<div class="rcard anim" style="--c:${c}">
+        <div class="top"><div class="ic">${ic}</div><span class="pp">${pc(v, N)}% del total</span></div>
         <div class="v" data-count="${v}" data-dec="0">${nf(v)}</div><div class="l">${l}</div>
-        <div class="p">${pc(v, N)}% · <b>Sep ${nf(se[k])}</b> · <b>Oct ${nf(oc[k])}</b><br><span style="color:var(--blue)">De ellos con crédito: <b style="color:var(--blue)">${nf(cr[k])}</b></span></div></div>`;
+        <div class="mm"><div><span>Septiembre</span><b>${nf(se[k])}</b></div><div><span>Octubre</span><b>${nf(oc[k])}</b></div></div>
+        <div class="crb anim" data-step="1"><span>De ellos, con crédito</span><b>${nf(cr[k])}</b>${v ? `<em>${pc(cr[k], v)}% de ${nf(v)}</em>` : ""}</div>
+      </div>`;
     return `<section class="slide rn" aria-label="Renovaciones · ¿Cómo vamos?">${rnHead("¿Cómo vamos? <span class=\"brand\">· Renovaciones</span>",
-        `De <b>${nf(N)} clientes</b> gestionados en septiembre y octubre`, "Resultado")}
+        `<b>${nf(N)} clientes de Daños Propios</b> a los que se les revisó la propuesta comercial · septiembre y octubre`, "Resultado")}
         <div class="rsum-wrap"><div class="rsum">
           ${card("var(--pago)", "✓", t[1], "Pagaron", 1)}
           ${card("var(--sinpago)", "⏳", t[2], "Siguen sin pagar", 2)}
@@ -1101,7 +1143,61 @@
     </section>`;
   }
 
-  document.getElementById("deck").insertAdjacentHTML("beforeend", METRICS.map(metricSlide).join("") + rnResumen() + rnMesSlide("Septiembre") + rnMesSlide("Octubre"));
+
+  /* =================== Intermediarios con bajo % de pago =================== */
+  // [intermediario, director, gerente, pagaron, total, pendientes de pago, pago parcial, canceladas]
+  const IB = {
+    Septiembre: [
+      ["DEL ORBE ASESORES DE SEGUROS, S.R.L.", "Antolin Alejandro Alcantara Fernandez", "Luisa Virginia Marmolejos Gonzalez", 1, 12, 11, 0, 0],
+      ["Elías Michelen Jiménez", "Laura Arias", "Mariel Medina", 1, 9, 6, 0, 2],
+      ["GABRIEL ANTONIO ESPINAL RODRIGUEZ", "Luis Carreno", "Ozzi Betance", 1, 8, 6, 1, 0],
+      ["KM SEGUROS & ASESORES, S.R.L.", "Rosalynn Ceballos", "Arlin Feliu", 1, 7, 4, 1, 1],
+      ["ROBINSON LEONARDO PAULINO", "Luis Carreno", "Zuleidy Diaz", 1, 7, 6, 0, 0],
+      ["DAVID CORNELIO", "Rosalynn Ceballos", "Wander Cedano", 2, 11, 2, 6, 1],
+      ["FEDERICO RAFAEL FERNANDEZ DIAZ", "Antolin Alejandro Alcantara Fernandez", "Julia Patricia Noboa Gañan", 2, 9, 4, 1, 2],
+      ["TOLEDANO ASESORES, S.R.L", "Laura Arias", "Anyaury Stephany Valdez Rochet", 3, 12, 7, 0, 2],
+      ["GUIMANFER CORREDORES SRL", "Laura Arias", "Mariel Medina", 4, 14, 10, 0, 0],
+      ["MAX,CORREDORES DE SEGUROS, SRL", "Antolin Alejandro Alcantara Fernandez", "Luisa Virginia Marmolejos Gonzalez y otros", 8, 24, 11, 3, 2],
+    ],
+    Octubre: [
+      ["ROS & ASOCIADOS, S.R.L.", "Antolin Alejandro Alcantara Fernandez", "Julia Patricia Noboa Gañan", 0, 23, 21, 1, 1],
+      ["EULER ENMANUEL VELOZ MORILLO", "Luis Carreno", "Zuleidy Diaz", 0, 18, 18, 0, 0],
+      ["TOLEDANO ASESORES, S.R.L", "Laura Arias", "Anyaury Stephany Valdez Rochet", 0, 18, 18, 0, 0],
+      ["CORREDOM, S.R.L.", "Luis Carreno", "Juan Carlos Fermin", 0, 18, 18, 0, 0],
+      ["ZUMARRAGA SEGUROS & CONSULTORIA, S.R.L", "Laura Arias", "Laura Marcelle Perez Miguel", 0, 14, 13, 1, 0],
+      ["SANALIA & ASOCIADOS, S.R.L", "Laura Arias", "Carolina Gitte", 0, 14, 13, 1, 0],
+      ["VB - QUALITY CORREDORES DE SEGUROS, S.R.L.", "Laura Arias", "Maria V. Peña", 0, 14, 14, 0, 0],
+      ["FANNY MARIA WEHBE SURIEL", "Luis Carreno", "Sandra Jiminian", 0, 11, 11, 0, 0],
+      ["SANTA ARAUJO MEJIA", "Laura Arias", "Carlina Vanderhorst", 0, 11, 11, 0, 0],
+      ["KENDY FRANCISCO CALDERON SOSA", "Luis Carreno", "Susana Soto", 0, 11, 11, 0, 0],
+    ],
+  };
+  function ibPanel(mes, cls) {
+    const rows = IB[mes], sum = k => rows.reduce((a, r) => a + r[k], 0);
+    const v = (x, c) => `<td class="${x ? c : c + " z"}">${nf(x)}</td>`;
+    return `<div class="ibp ${cls}">
+        <div class="ibh"><span class="mes">${mes}</span>
+          <span class="k"><b>${rows.length}</b> intermediarios</span><span class="k">·</span>
+          <span class="k"><b>${nf(sum(3))}</b> de <b>${nf(sum(4))}</b> pagaron (${Math.round(sum(3) / sum(4) * 100)}%)</span><span class="k">·</span>
+          <span class="k o"><b>${nf(sum(5))}</b> pendientes de pago</span></div>
+        <table class="ibt">
+          <thead><tr><th></th><th class="l">Intermediario · Director · Gerente</th><th>Pagaron / Total</th><th></th><th>%</th><th>Pendientes de pago</th><th>Pago parcial</th><th>Canceladas</th></tr></thead>
+          <tbody>${rows.map((r, i) => { const p = r[3] / r[4] * 100; return `<tr style="--r:${i}">
+            <td class="n"><span>${i + 1}</span></td>
+            <td class="nm"><b>${r[0]}</b><small>Dir. ${r[1]} · Ger. ${r[2]}</small></td>
+            <td class="fr"><b>${r[3]}</b> / ${r[4]}</td><td class="br"><div><i style="width:${p}%"></i></div></td>
+            <td class="pc">${Math.round(p)}%</td>${v(r[5], "pe")}${v(r[6], "pp")}${v(r[7], "ca")}</tr>`; }).join("")}</tbody>
+        </table>
+      </div>`;
+  }
+  function ibSlide() {
+    return `<section class="slide rn nobr" aria-label="Intermediarios con bajo porcentaje de pago">${rnHead("Intermediarios con bajo % de pago",
+        "Renovaciones · Daños Propios · individual · sin siniestros", "Seguimiento")}
+        <div class="ib anim">${ibPanel("Septiembre", "a")}${ibPanel("Octubre", "b")}<i class="ib-sw anim" data-step="1"></i></div>
+      </div>
+    </section>`;
+  }
+  document.getElementById("deck").insertAdjacentHTML("beforeend", METRICS.map(metricSlide).join("") + rnResumen() + rnMesSlide("Septiembre") + rnMesSlide("Octubre") + ibSlide());
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
 
   /* =================== Motor de presentación =================== */
