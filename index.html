@@ -1075,9 +1075,10 @@
     const ints = ["CS", "AG", "DI"];
     const body = ints.map((i, k) => {
       const a = addv(RN[mes][i].No, RN[mes][i].Si), c = RN[mes][i].Si;
-      return `<tr style="--r:${k}"><th>${i === "CS" ? "Corredores de Seguros" : RN_INT[i]}</th>${cols.map(col => cell(a[col.k], c[col.k])).join("")}${cell(tot(a), tot(c), "tt")}</tr>`;
+      const pr = (v, t) => t ? Math.round(v / t * 100) : null;
+      return `<tr style="--r:${k}"><th>${i === "CS" ? "Corredores de Seguros" : RN_INT[i]}</th>${cols.map(col => cell(a[col.k], c[col.k], "", pr(a[col.k], tot(a)), pr(c[col.k], tot(c)))).join("")}${cell(tot(a), tot(c), "tt", pr(tot(a), tot(all)), pr(tot(c), tot(cr)))}</tr>`;
     }).join("") + `<tr class="tot" style="--r:3"><th>Total</th>${cols.map(col => cell(all[col.k], cr[col.k], "",
-        Math.round(all[col.k] / tot(all) * 100), Math.round(cr[col.k] / tot(cr) * 100))).join("")}${cell(tot(all), tot(cr), "tt")}</tr>`;
+        Math.round(all[col.k] / tot(all) * 100), Math.round(cr[col.k] / tot(cr) * 100))).join("")}${cell(tot(all), tot(cr), "tt", 100, 100)}</tr>`;
     return `<section class="slide rn" aria-label="Renovaciones · ${mes}">${rnHead(`${mes} <span class="brand">· Renovaciones</span>`,
         `<b>${nf(tot(all))} clientes</b> · ${nf(tot(cr))} aplicaron para el crédito`, "Detalle")}
         <div class="rt-wrap">
