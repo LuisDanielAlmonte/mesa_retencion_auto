@@ -264,29 +264,34 @@
   .rbar { margin-top: 56px; display: flex; height: 26px; border-radius: 13px; overflow: hidden; background: var(--line); }
   .rbar div { width: 0; transition: width 1.2s var(--ease) .5s; }
   .in .rbar div, .rbar.in div { width: var(--w); }
-  /* Tabla limpia por mes */
-  .rt-wrap { margin-top: 30px; flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 30px; }
+  /* Tabla por mes: total general y, de ellos, con crédito */
+  .rt-wrap { margin-top: 18px; flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 26px; }
+  .dist { display: grid; grid-template-columns: 250px 1fr; row-gap: 12px; column-gap: 20px; align-items: center; }
+  .dist .dl { font-size: 18px; font-weight: 600; color: var(--navy); line-height: 1.15; }
+  .dist .dl small { display: block; font-size: 14px; font-weight: 400; color: var(--muted); }
+  .dist .dl.cr { color: var(--blue); }
+  .dbar { display: flex; height: 46px; border-radius: 12px; overflow: hidden; background: var(--line); }
+  .dbar div { width: 0; display: flex; align-items: center; padding: 0 12px; gap: 8px; color: #fff; font-size: 17px; font-weight: 700; white-space: nowrap; overflow: hidden; transition: width 1.1s var(--ease); transition-delay: calc(var(--k) * .1s + .25s); }
+  .in .dbar div { width: var(--w); }
+  .dbar div small { font-weight: 500; opacity: .9; font-size: 14px; }
+  .dbar .pago { background: var(--pago); } .dbar .sinpago { background: var(--sinpago); color: #5a2d00; }
+  .dbar .pend { background: var(--pend); } .dbar .anul { background: var(--anul); }
   .rt { width: 100%; border-collapse: separate; border-spacing: 0; font-variant-numeric: tabular-nums; }
   .rt th, .rt td { border: 0; }
-  .rt thead tr.g th { padding: 14px 10px; font-size: 24px; font-weight: 700; color: var(--navy); background: none; text-align: center; border-bottom: 5px solid var(--c); }
-  .rt thead tr.g th.blank { border: 0; }
-  .rt thead tr.g th.tt { border-bottom-color: var(--navy); }
-  .rt thead tr.s th { padding: 12px 10px; font-size: 16px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; background: none; color: var(--muted); text-align: center; }
-  .rt thead tr.s th.si { color: var(--blue); }
-  .rt tbody th { text-align: left; font-size: 26px; font-weight: 600; color: var(--navy); padding: 22px 16px 22px 0; white-space: nowrap; border-bottom: 1px solid var(--line); }
-  .rt tbody td { text-align: center; font-size: 34px; font-weight: 500; color: #4a5866; padding: 22px 10px; border-bottom: 1px solid var(--line); }
-  .rt tbody td.si { color: var(--blue); font-weight: 700; }
-  .rt tbody td.gap { border-left: 2px solid var(--line); }
-  .rt tbody td.tt { font-weight: 700; color: var(--navy); border-left: 2px solid var(--line); background: #f6f8fb; }
-  .rt tbody td.zero { color: #c3ccd6; }
-  .rt tbody tr.tot th, .rt tbody tr.tot td { font-weight: 700; color: var(--navy); background: var(--cyan-soft); border-bottom: 0; }
-  .rt tbody tr.tot td.si { color: var(--blue); }
-  .rt tbody tr.pc th, .rt tbody tr.pc td { font-size: 24px; color: var(--muted); padding: 16px 10px; border-bottom: 0; }
-  .rt tbody tr.pc th { font-size: 20px; padding-left: 0; }
-  .rt tbody tr.pc td.si { color: var(--blue); }
-  .rt tbody tr.pc td.hi { color: var(--navy); font-weight: 700; }
-  .rt tbody tr.pc td.si.hi { color: var(--blue); }
-  .rt-leg { margin-top: 26px; display: flex; gap: 28px; font-size: 17px; color: var(--muted); }
+  .rt thead th { padding: 10px 10px 12px; font-size: 22px; font-weight: 700; color: var(--navy); background: none; text-align: center; border-bottom: 5px solid var(--c); }
+  .rt thead th.blank { border: 0; }
+  .rt thead th.tt { border-bottom-color: var(--navy); }
+  .rt tbody th { text-align: left; font-size: 23px; font-weight: 600; color: var(--navy); padding: 12px 16px 12px 0; white-space: nowrap; border-bottom: 1px solid var(--line); }
+  .rt tbody td { text-align: center; padding: 10px 10px; border-bottom: 1px solid var(--line); border-left: 2px solid var(--line); line-height: 1.1; }
+  .rt tbody td b { display: block; font-size: 34px; font-weight: 700; color: var(--navy); }
+  .rt tbody td small { display: block; font-size: 16px; font-weight: 600; color: var(--blue); margin-top: 3px; }
+  .rt tbody td small.z { color: #c3ccd6; font-weight: 500; }
+  .rt tbody td.tt { background: #f6f8fb; }
+  .rt tbody tr.tot th, .rt tbody tr.tot td { background: var(--cyan-soft); border-bottom: 0; }
+  .rt tbody tr.pc th, .rt tbody tr.pc td { border-bottom: 0; padding-top: 12px; }
+  .rt tbody tr.pc th { font-size: 18px; color: var(--muted); font-weight: 600; }
+  .rt tbody tr.pc td b { font-size: 26px; color: var(--muted); }
+  .rt-leg { display: flex; gap: 28px; font-size: 16px; color: var(--muted); }
   .rt-leg b { color: var(--blue); }
 
   /* ---------- Controles ---------- */
@@ -1026,10 +1031,10 @@
 
   // 1 · ¿Cómo vamos?
   function rnResumen() {
-    const t = rnSum(), N = tot(t), se = rnSum(["Septiembre"]), oc = rnSum(["Octubre"]);
+    const t = rnSum(), N = tot(t), se = rnSum(["Septiembre"]), oc = rnSum(["Octubre"]), cr = rnSum(undefined, ["Si"]);
     const card = (c, ic, v, l, k) => `<div class="rcard anim" style="--c:${c}"><div class="ic">${ic}</div>
         <div class="v" data-count="${v}" data-dec="0">${nf(v)}</div><div class="l">${l}</div>
-        <div class="p">${pc(v, N)}% · <b>Sep ${nf(se[k])}</b> · <b>Oct ${nf(oc[k])}</b></div></div>`;
+        <div class="p">${pc(v, N)}% · <b>Sep ${nf(se[k])}</b> · <b>Oct ${nf(oc[k])}</b><br><span style="color:var(--blue)">De ellos con crédito: <b style="color:var(--blue)">${nf(cr[k])}</b></span></div></div>`;
     return `<section class="slide rn" aria-label="Renovaciones · ¿Cómo vamos?">${rnHead("¿Cómo vamos? <span class=\"brand\">· Renovaciones</span>",
         `De <b>${nf(N)} clientes</b> gestionados en septiembre y octubre`, "Resultado")}
         <div class="rsum-wrap"><div class="rsum">
@@ -1043,35 +1048,38 @@
     </section>`;
   }
 
-  // Tabla del mes: filas = intermediario, columnas = estatus (sin crédito │ con crédito)
+  // Slide del mes: distribución (todos vs con crédito) + tabla intermediario × estatus.
+  // Cada celda: total general y, debajo, cuántos de ellos recibieron el crédito (un subconjunto, no un grupo opuesto).
   function rnMesSlide(mes) {
+    const all = addv(rnSum([mes], ["No"]), rnSum([mes], ["Si"])), cr = rnSum([mes], ["Si"]);
     const cols = [
-      { k: 1, lb: "Con pago", c: "var(--pago)" },
-      { k: 2, lb: "Sin pago", c: "var(--sinpago)" },
-      { k: 3, lb: "Pendiente de renovar", c: "var(--pend)" },
-      { k: 0, lb: "Anulada", c: "var(--anul)" },
-    ].filter(c => tot(rnSum([mes], ["No", "Si"]).slice(c.k, c.k + 1)) > 0 || rnSum([mes])[c.k] > 0);
-    const cell = (v, cls) => `<td class="${cls}${v ? "" : " zero"}">${nf(v)}</td>`;
-    const row = (lb, no, si, cls, step) => `<tr class="${cls} anim" data-step="${step}"><th>${lb}</th>${cols.map(c =>
-      cell(no[c.k], "gap") + cell(si[c.k], "si")).join("")}<td class="tt">${nf(tot(no) + tot(si))}</td></tr>`;
+      { k: 1, lb: "Con pago", c: "var(--pago)", cls: "pago" },
+      { k: 2, lb: "Sin pago", c: "var(--sinpago)", cls: "sinpago" },
+      { k: 3, lb: "Pendiente de renovar", c: "var(--pend)", cls: "pend" },
+      { k: 0, lb: "Anulada", c: "var(--anul)", cls: "anul" },
+    ].filter(c => all[c.k] > 0);
+    const dbar = v => { const n = tot(v); return `<div class="dbar">${cols.map((c, k) => {
+      const w = v[c.k] / n * 100; return v[c.k] ? `<div class="${c.cls}" style="--w:${w}%;--k:${k}">${w >= 7 ? `${(w).toFixed(0)}% <small>${nf(v[c.k])}</small>` : ""}</div>` : ""; }).join("")}</div>`; };
+    const cell = (a, c, cls = "") => `<td class="${cls}"><b>${nf(a)}</b>${c ? `<small>${nf(c)} con crédito</small>` : `<small class="z">— con crédito</small>`}</td>`;
+    const row = (lb, a, c, cls, step) => `<tr class="${cls} anim" data-step="${step}"><th>${lb}</th>${cols.map(col => cell(a[col.k], c[col.k])).join("")}${cell(tot(a), tot(c), "tt")}</tr>`;
     const ints = ["CS", "AG", "DI"];
-    const no = rnSum([mes], ["No"]), si = rnSum([mes], ["Si"]);
-    const pct = (v, t, hi) => `<td class="${hi}">${(v / t * 100).toFixed(0)}%</td>`;
-    const body = ints.map((i, k) => row(RN_INT[i] === "Corredores" ? "Corredores de Seguros" : RN_INT[i], RN[mes][i].No, RN[mes][i].Si, "", k)).join("")
-      + row("Total", no, si, "tot", 3)
-      + `<tr class="pc anim" data-step="4"><th>% de cada grupo</th>${cols.map(c =>
-          pct(no[c.k], tot(no), "gap hi").replace('class="gap hi"', 'class="gap hi"') + pct(si[c.k], tot(si), "si hi")).join("")}<td class="tt"></td></tr>`;
+    const body = ints.map((i, k) => {
+      const a = addv(RN[mes][i].No, RN[mes][i].Si), c = RN[mes][i].Si;
+      return row(i === "CS" ? "Corredores de Seguros" : RN_INT[i], a, c, "", 1 + k);
+    }).join("") + row("Total", all, cr, "tot", 4)
+      + `<tr class="pc anim" data-step="5"><th>% del total</th>${cols.map(col => `<td><b>${(all[col.k] / tot(all) * 100).toFixed(0)}%</b><small>${(cr[col.k] / tot(cr) * 100).toFixed(0)}% con crédito</small></td>`).join("")}<td class="tt"><b>100%</b><small>${(tot(cr) / tot(all) * 100).toFixed(0)}% recibió crédito</small></td></tr>`;
     return `<section class="slide rn" aria-label="Renovaciones · ${mes}">${rnHead(`${mes} <span class="brand">· Renovaciones</span>`,
-        `<b>${nf(tot(no) + tot(si))} clientes</b> · ${nf(tot(si))} con crédito aplicado`, "Detalle")}
-        <div class="rt-wrap anim">
-          <table class="rt">
-            <thead>
-              <tr class="g"><th class="blank"></th>${cols.map(c => `<th colspan="2" style="--c:${c.c}">${c.lb}</th>`).join("")}<th class="tt" rowspan="2">Total</th></tr>
-              <tr class="s"><th></th>${cols.map(() => `<th>Sin crédito</th><th class="si">Con crédito</th>`).join("")}</tr>
-            </thead>
+        `<b>${nf(tot(all))} clientes</b> · ${nf(tot(cr))} aplicaron para el crédito`, "Detalle")}
+        <div class="rt-wrap">
+          <div class="dist anim">
+            <div class="dl">Todos los clientes<small>${nf(tot(all))}</small></div>${dbar(all)}
+            <div class="dl cr">Aplicaron para el crédito<small>${nf(tot(cr))}</small></div>${dbar(cr)}
+          </div>
+          <table class="rt anim" data-step="1">
+            <thead><tr><th class="blank"></th>${cols.map(c => `<th style="--c:${c.c}">${c.lb}</th>`).join("")}<th class="tt">Total</th></tr></thead>
             <tbody>${body}</tbody>
           </table>
-          <div class="rt-leg anim fade" data-step="4"><span>Clientes por intermediario y estatus · <b>azul</b> = con crédito aplicado</span><span>% de cada grupo = sobre el total sin crédito y sobre el total con crédito</span></div>
+          <div class="rt-leg anim fade" data-step="5"><span>Número grande = total de clientes · <b>azul</b> = de ellos, cuántos recibieron el crédito</span></div>
         </div>
       </div>
     </section>`;
