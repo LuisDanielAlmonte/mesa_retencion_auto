@@ -247,70 +247,53 @@
   .note .without .tag { font-size: 14px; font-weight: 600; color: #6fe0a6; letter-spacing: .06em; text-transform: uppercase; }
 
   /* ---------- Slides de renovaciones (créditos y comunicaciones) ---------- */
-  :root { --pago: #12b886; --sinpago: #ffa94d; --pend: #cfd8e3; --anul: #e03131; }
-  .rn-kpis { margin-top: 26px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-  .rn-kpi { border-radius: 18px; padding: 18px 24px; border: 1px solid var(--line); background: #fff; }
-  .rn-kpi h3 { margin: 0; font-size: 14px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-  .rn-kpi .v { font-size: 52px; font-weight: 700; line-height: 1.05; margin-top: 4px; font-variant-numeric: tabular-nums; color: var(--navy); }
-  .rn-kpi .s { font-size: 16px; color: var(--muted); }
-  .rn-kpi.main { background: linear-gradient(150deg, var(--blue), var(--navy)); border: 0; }
-  .rn-kpi.main h3, .rn-kpi.main .s { color: rgba(255,255,255,.72); } .rn-kpi.main .v { color: #fff; }
-  .rn-legend { display: flex; gap: 22px; font-size: 16px; color: var(--muted); }
-  .rn-legend span { display: inline-flex; align-items: center; gap: 8px; }
-  .rn-legend i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
-  .rn-months { margin-top: 26px; flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; gap: 20px; }
-  .rn-month { display: grid; grid-template-columns: 230px 1fr; gap: 26px; align-items: center; }
-  .rn-month .mname { font-size: 38px; font-weight: 700; color: var(--navy); line-height: 1; }
-  .rn-month .mtot { font-size: 17px; color: var(--muted); margin-top: 6px; }
-  .rn-month .mcred { font-size: 16px; color: var(--blue); margin-top: 4px; font-weight: 600; }
-  .sbar { display: flex; height: 92px; border-radius: 16px; overflow: hidden; background: var(--line); }
-  .sbar.sm { height: 64px; border-radius: 12px; }
-  .sbar .seg { width: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 16px; color: #fff; white-space: nowrap; overflow: hidden; transition: width 1.1s var(--ease); transition-delay: calc(var(--k) * .12s + var(--d, 0s) + .2s); }
-  .in .sbar .seg, .sbar.in .seg { width: var(--w); }
-  .sbar .seg b { font-size: 26px; line-height: 1.05; font-variant-numeric: tabular-nums; }
-  .sbar.sm .seg b { font-size: 22px; }
-  .sbar .seg small { font-size: 14px; opacity: .9; }
-  .sbar .seg.pago { background: var(--pago); } .sbar .seg.sinpago { background: var(--sinpago); color: #5a2d00; }
-  .sbar .seg.pend { background: var(--pend); color: var(--navy); } .sbar .seg.anul { background: var(--anul); }
-  .sbar .seg.tiny b, .sbar .seg.tiny small { display: none; }
-
-  .rn2 { margin-top: 22px; flex: 1; display: grid; grid-template-columns: 1fr 470px; gap: 28px; min-height: 0; }
-  .cmp { display: flex; flex-direction: column; gap: 22px; }
-  .cmp-m { border: 1px solid var(--line); border-radius: 18px; padding: 18px 24px; background: #fff; }
-  .cmp-m h2 { margin: 0 0 12px; font-size: 24px; color: var(--navy); }
-  .cmp-row { display: grid; grid-template-columns: 150px 1fr; gap: 18px; align-items: center; }
-  .cmp-row + .cmp-row { margin-top: 10px; }
-  .cmp-row .lab { font-size: 17px; font-weight: 600; color: var(--ink); }
-  .cmp-row .lab small { display: block; font-weight: 400; color: var(--muted); font-size: 14px; }
-  .cmp-row.si .lab { color: var(--blue); }
-  .dl { display: flex; flex-direction: column; gap: 18px; }
-  .dcard { border: 1px solid var(--line); border-radius: 18px; padding: 16px 20px 6px; background: #fff; }
-  .dcard h3 { margin: 0; font-size: 14px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-  .dcard svg { display: block; width: 100%; height: auto; }
-  .take { border-radius: 18px; padding: 20px 24px; color: #fff; background: linear-gradient(160deg, var(--blue), var(--navy)); }
-  .take h3 { margin: 0 0 8px; font-size: 14px; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
-  .take p { margin: 0; font-size: 19px; line-height: 1.4; font-weight: 300; }
-  .take p b { font-weight: 700; }
-  .take p + p { margin-top: 10px; }
-  .take .small { font-size: 15px; color: rgba(255,255,255,.7); }
-
-  .rn3 { margin-top: 24px; flex: 1; display: grid; grid-template-columns: 1fr 520px; gap: 30px; min-height: 0; }
-  .mx { border-collapse: separate; border-spacing: 10px; width: 100%; margin: -10px; }
-  .mx th { font-size: 16px; color: var(--muted); font-weight: 600; text-align: center; background: none; padding: 4px; }
-  .mx thead tr.top th { font-size: 22px; color: var(--navy); }
-  .mx tbody th { text-align: left; font-size: 20px; color: var(--navy); padding-left: 0; border: 0; white-space: nowrap; }
-  .mx td { border: 0; border-radius: 14px; text-align: center; padding: 0; height: 158px; font-variant-numeric: tabular-nums; }
-  .mx td b { display: block; font-size: 42px; line-height: 1; }
-  .mx td small { font-size: 14px; opacity: .8; }
-  .mx tr.tot th, .mx tr.tot td { font-weight: 700; }
-  .mx td.tot { background: var(--cyan-soft); color: var(--navy); }
-  .prio { display: flex; flex-direction: column; gap: 20px; justify-content: center; }
-  .pr { border-radius: 18px; padding: 26px 22px; border: 1px solid var(--line); background: #fff; display: grid; grid-template-columns: 52px 1fr auto; gap: 14px; align-items: center; }
-  .pr .n { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; font-weight: 700; color: #fff; background: var(--alert); }
-  .pr:nth-child(2) .n { background: var(--sinpago); } .pr:nth-child(3) .n { background: var(--blue); } .pr:nth-child(4) .n { background: var(--gray); }
-  .pr .t { font-size: 19px; font-weight: 600; color: var(--navy); line-height: 1.2; }
-  .pr .t small { display: block; font-size: 15px; font-weight: 400; color: var(--muted); margin-top: 3px; }
-  .pr .v { font-size: 38px; font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
+  :root { --pago: #12b886; --sinpago: #ffa94d; --anul: #e03131; --pend: #8a97a6; }
+  .rn h1 { font-size: 64px; }
+  .rn .sub { margin-top: 14px; font-size: 24px; color: var(--muted); font-weight: 300; }
+  .rn .sub b { color: var(--navy); font-weight: 600; }
+  /* Resumen */
+  .rsum-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 40px; }
+  .rsum { margin-top: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; }
+  .rcard { border-radius: 24px; padding: 44px 36px 38px; background: #fff; border: 1px solid var(--line); box-shadow: 0 20px 44px -30px rgba(11,47,91,.5); position: relative; overflow: hidden; }
+  .rcard::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 8px; background: var(--c); }
+  .rcard .ic { width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center; font-size: 30px; background: color-mix(in srgb, var(--c) 15%, #fff); color: var(--c); }
+  .rcard .v { margin-top: 28px; font-size: 110px; font-weight: 700; line-height: 1; color: var(--navy); font-variant-numeric: tabular-nums; }
+  .rcard .l { margin-top: 10px; font-size: 26px; font-weight: 600; color: var(--c); }
+  .rcard .p { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 18px; color: var(--muted); }
+  .rcard .p b { color: var(--ink); }
+  .rbar { margin-top: 56px; display: flex; height: 26px; border-radius: 13px; overflow: hidden; background: var(--line); }
+  .rbar div { width: 0; transition: width 1.2s var(--ease) .5s; }
+  .in .rbar div, .rbar.in div { width: var(--w); }
+  /* Waffle: de cada 100 */
+  .wf-wrap { margin-top: 46px; flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; padding: 0 60px; }
+  .wf-col { display: grid; grid-template-columns: 330px 1fr; gap: 40px; align-items: center; }
+  .wf { display: grid; grid-template-columns: repeat(10, 1fr); gap: 7px; width: 330px; }
+  .wf i { aspect-ratio: 1; border-radius: 50%; background: #e7edf3; transform: scale(.3); opacity: 0; transition: transform .45s var(--ease), opacity .3s; transition-delay: calc(var(--n) * 9ms + var(--d, 0s)); }
+  .in .wf i { transform: none; opacity: 1; }
+  .wf i.on { background: var(--c); }
+  .wf-txt .who { font-size: 26px; font-weight: 600; color: var(--navy); }
+  .wf-txt .big { font-size: 150px; font-weight: 700; line-height: .95; color: var(--c); font-variant-numeric: tabular-nums; }
+  .wf-txt .of { font-size: 24px; color: var(--muted); }
+  .wf-txt .det { margin-top: 18px; font-size: 18px; color: var(--muted); line-height: 1.5; }
+  .wf-txt .det b { color: var(--ink); }
+  .rnote { margin: 0 60px 10px; padding: 18px 26px; border-radius: 16px; background: var(--cyan-soft); font-size: 20px; color: var(--navy); }
+  .rnote b { font-weight: 700; }
+  /* Foco */
+  .foco { margin-top: 50px; flex: 1; display: grid; grid-template-columns: 480px 1fr; gap: 70px; align-items: center; }
+  .foco .big { font-size: 150px; font-weight: 700; line-height: .9; color: var(--alert); font-variant-numeric: tabular-nums; }
+  .foco .bl { font-size: 30px; color: var(--navy); font-weight: 600; margin-top: 10px; }
+  .foco .bs { font-size: 20px; color: var(--muted); margin-top: 26px; line-height: 1.5; }
+  .foco .bs b { color: var(--ink); }
+  .hb { display: flex; flex-direction: column; gap: 38px; }
+  .hb-row .hn { display: flex; justify-content: space-between; align-items: baseline; font-size: 28px; font-weight: 600; color: var(--navy); margin-bottom: 12px; }
+  .hb-row .hn span { font-size: 44px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .hb-row .hn small { font-size: 20px; color: var(--muted); font-weight: 400; margin-left: 10px; }
+  .hb-track { height: 64px; border-radius: 14px; background: #f1f4f8; overflow: hidden; }
+  .hb-bar { height: 100%; display: flex; width: 0; transition: width 1.2s var(--ease); transition-delay: calc(var(--k) * .15s + .4s); }
+  .in .hb-bar { width: var(--w); }
+  .hb-bar div { display: flex; align-items: center; padding: 0 16px; color: #fff; font-size: 20px; font-weight: 700; white-space: nowrap; overflow: hidden; }
+  .hb-leg { display: flex; gap: 26px; font-size: 18px; color: var(--muted); }
+  .hb-leg i { width: 16px; height: 16px; border-radius: 4px; display: inline-block; margin-right: 8px; vertical-align: -2px; }
 
   /* ---------- Controles ---------- */
   .controls { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(11,47,91,.82); color: #fff; backdrop-filter: blur(6px); font-size: 14px; opacity: 0; pointer-events: none; transform: translate(-50%, 24px); transition: opacity .3s ease, transform .4s var(--ease); z-index: 10; }
@@ -1016,9 +999,9 @@
   renderPlanStages("sl");
 
   /* =================== Renovaciones sep–oct 2026: créditos y comunicaciones =================== */
-  // Clientes por mes, intermediario y crédito aplicado (No / Si):
-  // an = anuladas, cp = vigente con pago, sp = vigente sin pago, pr = pendiente de renovar (factura no emitida)
-  const RN_INT = { AG: "Agentes Generales", CS: "Corredores de Seguros", DI: "Directo" };
+  // Clientes por mes, intermediario y crédito (No / Si):
+  // [anuladas, vigente con pago, vigente sin pago, pendiente de renovar (factura aún no emitida)]
+  const RN_INT = { CS: "Corredores", AG: "Agentes Generales", DI: "Directo" };
   const RN = {
     Septiembre: { AG: { No: [18, 104, 31, 0], Si: [1, 12, 41, 0] },
                   CS: { No: [91, 337, 138, 0], Si: [5, 78, 173, 0] },
@@ -1027,28 +1010,13 @@
                   CS: { No: [35, 58, 447, 25], Si: [8, 54, 506, 0] },
                   DI: { No: [4, 3, 28, 1],    Si: [2, 6, 17, 0] } },
   };
-  const RN_SEG = [ // orden de los segmentos en las barras
-    { k: 1, cls: "pago", name: "Vigente con pago" },
-    { k: 2, cls: "sinpago", name: "Vigente sin pago" },
-    { k: 3, cls: "pend", name: "Pendiente de renovar" },
-    { k: 0, cls: "anul", name: "Anulada" },
-  ];
   const addv = (a, b) => a.map((v, i) => v + b[i]);
-  const rnSum = (mes, ints = Object.keys(RN_INT), creds = ["No", "Si"]) =>
-    ints.reduce((t, i) => creds.reduce((u, c) => addv(u, RN[mes][i][c]), t), [0, 0, 0, 0]);
   const tot = v => v.reduce((a, b) => a + b, 0);
-  const pc = (a, b, d = 0) => (b ? (a / b * 100) : 0).toFixed(d) + "%";
+  const rnSum = (meses = ["Septiembre", "Octubre"], creds = ["No", "Si"], ints = Object.keys(RN_INT)) =>
+    meses.reduce((t, m) => ints.reduce((u, i) => creds.reduce((w, c) => addv(w, RN[m][i][c]), u), t), [0, 0, 0, 0]);
+  const pc = (a, b) => Math.round(a / b * 100);
 
-  function sbar(v, sm, d = 0) {
-    const n = tot(v);
-    return `<div class="sbar${sm ? " sm" : ""}" style="--d:${d}s">${RN_SEG.map((sg, k) => {
-      const x = v[sg.k], w = x / n * 100;
-      if (!x) return "";
-      return `<div class="seg ${sg.cls}${w < (sm ? 7 : 6) ? " tiny" : ""}" style="--w:${w}%;--k:${k}" title="${sg.name}: ${nf(x)} (${pc(x, n, 1)})"><b>${nf(x)}</b><small>${pc(x, n)}</small></div>`;
-    }).join("")}</div>`;
-  }
-  const rnLegend = () => `<div class="rn-legend">${RN_SEG.map(s => `<span><i style="background:var(--${s.cls})"></i>${s.name}</span>`).join("")}</div>`;
-  const rnHead = (title, tag) => `
+  const rnHead = (title, sub, tag) => `
       <div class="deco tl1"></div><div class="deco tl2"></div>
       <div class="deco br1"></div><div class="deco br2"></div>
       <div class="deco band"></div>
@@ -1057,121 +1025,92 @@
           <div class="anim">
             <span class="eyebrow"><span class="dot"></span>Renovaciones Auto · Septiembre y Octubre 2026</span>
             <h1>${title}</h1>
+            ${sub ? `<div class="sub">${sub}</div>` : ""}
           </div>
           <div class="section-tag anim from-right">${tag}</div>
         </div>`;
 
-  // Slide A: ¿dónde están hoy los clientes gestionados?
-  function rnSlideA() {
-    const all = addv(rnSum("Septiembre"), rnSum("Octubre")), N = tot(all);
-    const cred = tot(rnSum("Septiembre", undefined, ["Si"])) + tot(rnSum("Octubre", undefined, ["Si"]));
-    const months = ["Septiembre", "Octubre"].map((m, i) => {
-      const v = rnSum(m), n = tot(v), c = tot(rnSum(m, undefined, ["Si"]));
-      return `<div class="rn-month anim" data-step="${i}">
-          <div><div class="mname">${m}</div><div class="mtot">${nf(n)} clientes</div><div class="mcred">${nf(c)} con crédito (${pc(c, n)})</div></div>
-          ${sbar(v)}
-        </div>`;
-    }).join("");
-    return `<section class="slide" aria-label="Renovaciones sep–oct · Estatus actual">${rnHead("¿Dónde están hoy? <span class=\"brand\">· Renovaciones</span>", "Estatus actual")}
-        <div class="rn-kpis">
-          <div class="rn-kpi main anim"><h3>Clientes gestionados</h3><div class="v" data-count="${N}" data-dec="0">${nf(N)}</div><div class="s">Septiembre y octubre</div></div>
-          <div class="rn-kpi anim"><h3>Con crédito aplicado</h3><div class="v" data-count="${cred}" data-dec="0">${nf(cred)}</div><div class="s">${pc(cred, N)} de los gestionados</div></div>
-          <div class="rn-kpi anim"><h3>Vigentes con pago</h3><div class="v" style="color:var(--pago)" data-count="${all[1]}" data-dec="0">${nf(all[1])}</div><div class="s">${pc(all[1], N)} de los gestionados</div></div>
-          <div class="rn-kpi anim"><h3>Vigentes sin pago</h3><div class="v" style="color:var(--alert)" data-count="${all[2]}" data-dec="0">${nf(all[2])}</div><div class="s">${pc(all[2], N)} · requieren seguimiento</div></div>
+  // 1 · ¿Cómo vamos?
+  function rnResumen() {
+    const t = rnSum(), N = tot(t), se = rnSum(["Septiembre"]), oc = rnSum(["Octubre"]);
+    const card = (c, ic, v, l, k) => `<div class="rcard anim" style="--c:${c}"><div class="ic">${ic}</div>
+        <div class="v" data-count="${v}" data-dec="0">${nf(v)}</div><div class="l">${l}</div>
+        <div class="p">${pc(v, N)}% · <b>Sep ${nf(se[k])}</b> · <b>Oct ${nf(oc[k])}</b></div></div>`;
+    return `<section class="slide rn" aria-label="Renovaciones · ¿Cómo vamos?">${rnHead("¿Cómo vamos? <span class=\"brand\">· Renovaciones</span>",
+        `De <b>${nf(N)} clientes</b> gestionados en septiembre y octubre`, "Resultado")}
+        <div class="rsum-wrap"><div class="rsum">
+          ${card("var(--pago)", "✓", t[1], "Pagaron", 1)}
+          ${card("var(--sinpago)", "⏳", t[2], "Siguen sin pagar", 2)}
+          ${card("var(--anul)", "✕", t[0], "Se anularon", 0)}
+          ${card("var(--pend)", "…", t[3], "Por renovar", 3)}
         </div>
-        <div style="margin-top:28px;display:flex;justify-content:flex-end" class="anim fade">${rnLegend()}</div>
-        <div class="rn-months">${months}</div>
+        <div class="rbar anim fade">${[[1, "pago"], [2, "sinpago"], [0, "anul"], [3, "pend"]].map(([k, c]) => `<div style="--w:${t[k] / N * 100}%;background:var(--${c})"></div>`).join("")}</div></div>
       </div>
     </section>`;
   }
 
-  // Slide B: con crédito vs sin crédito
-  function dumbbell(rows, metric, max) {
-    const W = 470, rh = 52, L = 178, R = 34, T = 30, H = T + rows.length * rh + 6;
-    const x = v => L + (W - L - R) * v / max;
-    let s = "";
-    for (let v = 0; v <= max + 1e-9; v += max / 4) {
-      s += `<line x1="${x(v)}" x2="${x(v)}" y1="${T - 8}" y2="${H - 4}" stroke="${C.line}"/>`;
-      s += `<text x="${x(v)}" y="${T - 14}" text-anchor="middle" font-size="12" fill="${C.muted}">${v}%</text>`;
-    }
-    rows.forEach((r, i) => {
-      const y = T + i * rh + rh / 2, a = metric(r.No), b = metric(r.Si);
-      if (r.sep) s += `<line x1="0" x2="${W}" y1="${T + i * rh}" y2="${T + i * rh}" stroke="${C.line}" stroke-width="2"/>`;
-      s += `<text x="0" y="${y - 3}" font-size="15" font-weight="600" fill="${C.navy}">${r.int}</text><text x="0" y="${y + 14}" font-size="12.5" fill="${C.muted}">${r.mes}${r.small ? " · n=" + r.small : ""}</text>`;
-      s += `<line class="fadein" style="animation-delay:${(0.3 + i * 0.08).toFixed(2)}s" x1="${x(a)}" x2="${x(b)}" y1="${y}" y2="${y}" stroke="${C.gray}" stroke-width="5" stroke-linecap="round" opacity=".5"/>`;
-      s += `<g class="pop" style="animation-delay:${(0.4 + i * 0.08).toFixed(2)}s"><circle cx="${x(a)}" cy="${y}" r="9" fill="${C.gray}"/><text x="${x(a) + (a <= b ? -14 : 14)}" y="${y + 5}" text-anchor="${a <= b ? "end" : "start"}" font-size="14" font-weight="600" fill="${C.muted}">${a.toFixed(0)}%</text></g>`;
-      s += `<g class="pop" style="animation-delay:${(0.55 + i * 0.08).toFixed(2)}s"><circle cx="${x(b)}" cy="${y}" r="9" fill="${C.blue}"/><text x="${x(b) + (a <= b ? 14 : -14)}" y="${y + 5}" text-anchor="${a <= b ? "start" : "end"}" font-size="14" font-weight="700" fill="${C.blue}">${b.toFixed(0)}%</text></g>`;
-    });
-    return `<svg viewBox="0 0 ${W} ${H}" role="img">${s}</svg>`;
+  // Waffle de 100 puntos
+  const waffle = (n, color, d = 0) => `<div class="wf" style="--c:${color};--d:${d}s">${Array.from({ length: 100 }, (_, i) => `<i class="${i < n ? "on" : ""}" style="--n:${i}"></i>`).join("")}</div>`;
+  function wfCol(who, n, color, of, det, d) {
+    return `<div class="wf-col">${waffle(n, color, d)}
+        <div class="wf-txt" style="--c:${color}"><div class="who">${who}</div><div class="big">${n}</div><div class="of">${of}</div><div class="det">${det}</div></div></div>`;
   }
-  function rnSlideB() {
-    const cmp = ["Septiembre", "Octubre"].map((m, i) => {
-      const no = rnSum(m, undefined, ["No"]), si = rnSum(m, undefined, ["Si"]);
-      return `<div class="cmp-m anim" data-step="${i}"><h2>${m}</h2>
-        <div class="cmp-row"><div class="lab">Sin crédito<small>${nf(tot(no))} clientes</small></div>${sbar(no, true)}</div>
-        <div class="cmp-row si"><div class="lab">Con crédito<small>${nf(tot(si))} clientes</small></div>${sbar(si, true, .25)}</div>
-      </div>`;
-    }).join("");
-    const rows = [];
-    ["Septiembre", "Octubre"].forEach((m, mi) => Object.keys(RN_INT).forEach((k, ki) => {
-      const d = RN[m][k], nSi = tot(d.Si);
-      rows.push({ mes: m, int: RN_INT[k].replace(" de Seguros", "").replace("Agentes Generales", "Ag. Generales"), No: d.No, Si: d.Si, sep: mi && !ki, small: nSi < 30 ? nSi : 0 });
-    }));
-    const pay = v => v[1] / tot(v) * 100, anu = v => v[0] / tot(v) * 100;
-    const sNo = rnSum("Septiembre", undefined, ["No"]), sSi = rnSum("Septiembre", undefined, ["Si"]);
-    const oNo = rnSum("Octubre", undefined, ["No"]), oSi = rnSum("Octubre", undefined, ["Si"]);
-    return `<section class="slide" aria-label="Renovaciones sep–oct · Con crédito vs sin crédito">${rnHead("Con crédito vs sin crédito <span class=\"brand\">· Renovaciones</span>", "Efectividad")}
-        <div style="margin-top:20px;display:flex;justify-content:flex-end" class="anim fade">${rnLegend()}</div>
-        <div class="rn2">
-          <div class="cmp">${cmp}
-            <div class="take anim" data-step="2">
-              <h3>Lectura</h3>
-              <p>Con crédito, <b>casi no hay anulaciones</b>: ${pc(sSi[0], tot(sSi), 1)} vs ${pc(sNo[0], tot(sNo), 1)} en septiembre y ${pc(oSi[0], tot(oSi), 1)} vs ${pc(oNo[0], tot(oNo), 1)} en octubre.</p>
-              <p>Pero <b>el pago todavía no responde</b>: en septiembre paga el ${pc(sSi[1], tot(sSi))} con crédito vs ${pc(sNo[1], tot(sNo))} sin crédito; en octubre ambos rondan el ${pc(oNo[1] + oSi[1], tot(oNo) + tot(oSi))}.</p>
-              <p class="small">El crédito se aplicó la semana pasada: el pago puede venir con rezago. El estatus muestra la situación actual, no prueba causalidad.</p>
-            </div>
-          </div>
-          <div class="dl">
-            <div class="dcard anim from-right" data-step="2"><h3>% vigente con pago · <span style="color:${C.gray}">● sin</span> <span style="color:${C.blue}">● con crédito</span></h3>${dumbbell(rows, pay, 100)}</div>
-            <div class="dcard anim from-right" data-step="2"><h3>% anuladas · <span style="color:${C.gray}">● sin</span> <span style="color:${C.blue}">● con crédito</span></h3>${dumbbell(rows, anu, 20)}</div>
-          </div>
+
+  // 2 · El crédito frenó las anulaciones
+  function rnAnulaciones() {
+    const no = rnSum(undefined, ["No"]), si = rnSum(undefined, ["Si"]);
+    const m = (mes, c) => { const v = rnSum([mes], [c]); return pc(v[0], tot(v)); };
+    return `<section class="slide rn" aria-label="Renovaciones · Anulaciones con y sin crédito">${rnHead("El crédito frenó las anulaciones",
+        "De cada 100 clientes, cuántos se anularon", "Anulaciones")}
+        <div class="wf-wrap">
+          <div class="anim">${wfCol("Sin crédito", pc(no[0], tot(no)), "var(--anul)", "de cada 100 se anularon", `Septiembre <b>${m("Septiembre", "No")}%</b> · Octubre <b>${m("Octubre", "No")}%</b>`, 0)}</div>
+          <div class="anim" data-step="1">${wfCol("Con crédito", pc(si[0], tot(si)), "var(--anul)", "de cada 100 se anularon", `Septiembre <b>${m("Septiembre", "Si")}%</b> · Octubre <b>${m("Octubre", "Si")}%</b>`, 0)}</div>
         </div>
       </div>
     </section>`;
   }
 
-  // Slide C: vigentes sin pago — dónde actuar
-  function rnSlideC() {
-    const cols = [["Septiembre", "Si"], ["Septiembre", "No"], ["Octubre", "Si"], ["Octubre", "No"]];
-    const cell = (m, i, c) => RN[m][i][c][2];
-    const all = cols.reduce((t, [m, c]) => t + Object.keys(RN_INT).reduce((u, i) => u + cell(m, i, c), 0), 0);
-    const max = Math.max(...cols.flatMap(([m, c]) => Object.keys(RN_INT).map(i => cell(m, i, c))));
-    const heat = v => { const t = v / max; return `background:rgba(232,89,12,${(0.08 + 0.8 * t).toFixed(2)});color:${t > 0.45 ? "#fff" : "#7a2e00"}`; };
-    let h = `<thead><tr class="top"><th></th><th colspan="2">Septiembre</th><th colspan="2">Octubre</th><th></th></tr>
-      <tr><th></th><th>Con crédito</th><th>Sin crédito</th><th>Con crédito</th><th>Sin crédito</th><th>Total</th></tr></thead><tbody>`;
-    Object.keys(RN_INT).forEach((i, r) => {
-      const vals = cols.map(([m, c]) => cell(m, i, c)), t = tot(vals);
-      h += `<tr style="--r:${r}"><th>${RN_INT[i]}</th>${vals.map(v => `<td style="${heat(v)}"><b>${nf(v)}</b></td>`).join("")}<td class="tot"><b>${nf(t)}</b><small>${pc(t, all)}</small></td></tr>`;
-    });
-    const colT = cols.map(([m, c]) => Object.keys(RN_INT).reduce((u, i) => u + cell(m, i, c), 0));
-    h += `<tr class="tot" style="--r:3"><th>Total</th>${colT.map(v => `<td class="tot"><b>${nf(v)}</b><small>${pc(v, all)}</small></td>`).join("")}<td class="tot" style="background:var(--navy);color:#fff"><b>${nf(all)}</b></td></tr></tbody>`;
-    const pend = tot(Object.keys(RN_INT).map(i => RN.Octubre[i].No[3]));
-    const cs = Object.keys(RN_INT).filter(i => i === "CS").reduce((u, i) => u + cols.reduce((t, [m, c]) => t + cell(m, i, c), 0), 0);
-    return `<section class="slide" aria-label="Renovaciones sep–oct · Vigentes sin pago">${rnHead(`<span data-count="${all}" data-dec="0">${nf(all)}</span> vigentes sin pago <span class="brand">· Dónde actuar</span>`, "Seguimiento")}
-        <div class="rn3">
-          <div class="anim"><table class="mx">${h}</table></div>
-          <div class="prio">
-            <div class="pr anim from-right" data-step="1"><div class="n">1</div><div class="t">Septiembre con crédito<small>Ya tienen el crédito y su renovación venció hace un mes</small></div><div class="v">${nf(colT[0])}</div></div>
-            <div class="pr anim from-right" data-step="1"><div class="n">2</div><div class="t">Septiembre sin crédito<small>Evaluar si aplica crédito antes de anulación</small></div><div class="v">${nf(colT[1])}</div></div>
-            <div class="pr anim from-right" data-step="1"><div class="n">3</div><div class="t">Octubre con crédito<small>Renovación en curso: reforzar contacto para el pago</small></div><div class="v">${nf(colT[2])}</div></div>
-            <div class="pr anim from-right" data-step="1"><div class="n">4</div><div class="t">Octubre sin crédito<small>+ ${pend} pendientes de renovar (factura aún no emitida)</small></div><div class="v">${nf(colT[3])}</div></div>
-            <div class="take anim from-right" data-step="1"><p><b>Corredores concentran ${pc(cs, all)}</b> (${nf(cs)}) de los vigentes sin pago: la gestión con ellos define el resultado.</p></div>
+  // 3 · Pero el pago todavía no llega (septiembre: el mes con tiempo para pagar)
+  function rnPago() {
+    const no = rnSum(["Septiembre"], ["No"]), si = rnSum(["Septiembre"], ["Si"]);
+    const oc = rnSum(["Octubre"]);
+    return `<section class="slide rn" aria-label="Renovaciones · Pago con y sin crédito">${rnHead("Pero el pago todavía no llega",
+        "Septiembre · de cada 100 clientes, cuántos ya pagaron", "Pago")}
+        <div class="wf-wrap">
+          <div class="anim">${wfCol("Sin crédito", pc(no[1], tot(no)), "var(--pago)", "de cada 100 pagaron", `${nf(no[1])} de ${nf(tot(no))} clientes`, 0)}</div>
+          <div class="anim" data-step="1">${wfCol("Con crédito", pc(si[1], tot(si)), "var(--blue)", "de cada 100 pagaron", `${nf(si[1])} de ${nf(tot(si))} clientes`, 0)}</div>
+        </div>
+        <div class="rnote anim" data-step="2">⏱ El crédito se aplicó <b>la semana pasada</b>: el pago puede venir con rezago. Octubre sigue en curso (${pc(oc[1], tot(oc))}% pagado con o sin crédito).</div>
+      </div>
+    </section>`;
+  }
+
+  // 4 · Foco: vigentes sin pago por intermediario
+  function rnFoco() {
+    const all = rnSum()[2];
+    const credTot = rnSum(undefined, ["Si"])[2];
+    const rows = Object.keys(RN_INT).map(i => ({ i, si: rnSum(undefined, ["Si"], [i])[2], no: rnSum(undefined, ["No"], [i])[2] }));
+    const max = Math.max(...rows.map(r => r.si + r.no));
+    return `<section class="slide rn" aria-label="Renovaciones · Clientes por cobrar">${rnHead("El foco: Corredores <span class=\"brand\">· Por cobrar</span>",
+        "Clientes vigentes que aún no pagan", "Seguimiento")}
+        <div class="foco">
+          <div class="anim"><div class="big" data-count="${all}" data-dec="0">${nf(all)}</div><div class="bl">clientes por cobrar</div>
+            <div class="bs"><b>${nf(credTot)}</b> ya tienen el crédito aplicado: solo falta el pago.</div></div>
+          <div class="hb">
+            ${rows.map((r, k) => `<div class="hb-row anim" style="--k:${k}">
+              <div class="hn">${RN_INT[r.i]}<span>${nf(r.si + r.no)}<small>${pc(r.si + r.no, all)}%</small></span></div>
+              <div class="hb-track"><div class="hb-bar" style="--w:${(r.si + r.no) / max * 100}%;--k:${k}">
+                <div style="width:${r.si / (r.si + r.no) * 100}%;background:var(--blue)">${r.si > 40 ? nf(r.si) : ""}</div>
+                <div style="width:${r.no / (r.si + r.no) * 100}%;background:#9aa5b1">${r.no > 40 ? nf(r.no) : ""}</div>
+              </div></div></div>`).join("")}
+            <div class="hb-leg anim fade"><span><i style="background:var(--blue)"></i>Con crédito</span><span><i style="background:#9aa5b1"></i>Sin crédito</span></div>
           </div>
         </div>
       </div>
     </section>`;
   }
-  document.getElementById("deck").insertAdjacentHTML("beforeend", METRICS.map(metricSlide).join("") + rnSlideA() + rnSlideB() + rnSlideC());
+
+  document.getElementById("deck").insertAdjacentHTML("beforeend", METRICS.map(metricSlide).join("") + rnResumen() + rnAnulaciones() + rnPago() + rnFoco());
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
 
   /* =================== Motor de presentación =================== */
