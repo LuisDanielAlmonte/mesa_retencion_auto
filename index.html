@@ -247,13 +247,16 @@
   .note .without .tag { font-size: 14px; font-weight: 600; color: #6fe0a6; letter-spacing: .06em; text-transform: uppercase; }
 
   /* ---------- Controles ---------- */
-  .controls { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(11,47,91,.82); color: #fff; backdrop-filter: blur(6px); font-size: 14px; opacity: 0; transition: opacity .25s; z-index: 10; }
-  body:hover .controls, .controls:focus-within { opacity: 1; }
+  .controls { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(11,47,91,.82); color: #fff; backdrop-filter: blur(6px); font-size: 14px; opacity: 0; pointer-events: none; transform: translate(-50%, 24px); transition: opacity .3s ease, transform .4s var(--ease); z-index: 10; }
+  .controls.show, .controls.pin { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+  .controls .pin-b.on { background: rgba(255,255,255,.22); }
+  .hint { position: fixed; left: 50%; bottom: 0; transform: translateX(-50%); width: 120px; height: 4px; border-radius: 4px 4px 0 0; background: rgba(255,255,255,.35); opacity: 0; transition: opacity .4s; z-index: 9; }
+  body.peek .hint { opacity: 1; }
+  body.idle, body.idle * { cursor: none !important; }
   .controls button { all: unset; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; }
   .controls button:hover { background: rgba(255,255,255,.15); }
   .controls button:disabled { opacity: .35; cursor: default; }
   .controls .count { min-width: 52px; text-align: center; font-variant-numeric: tabular-nums; }
-  @media (hover: none) { .controls { opacity: 1; } }
   .controls .hid { font-size: 12px; padding: 0 8px; color: #ffb37a; }
   .sl-panel { position: fixed; inset: 0; z-index: 20; background: rgba(5,15,28,.55); backdrop-filter: blur(3px); display: grid; place-items: center; padding: 16px; }
   .sl-panel[hidden] { display: none; }
@@ -403,7 +406,9 @@
   <button id="next" aria-label="Siguiente">›</button>
   <button id="fs" aria-label="Pantalla completa" title="Pantalla completa (F)">⛶</button>
   <button id="menu" aria-label="Mostrar u ocultar slides" title="Mostrar u ocultar slides (O)">☰</button>
+  <button id="pin" class="pin-b" aria-label="Fijar controles" title="Fijar controles (C)">📌</button>
 </nav>
+<div class="hint" aria-hidden="true"></div>
 
 <div class="sl-panel" id="sl-panel" hidden>
   <div class="sl-box" role="dialog" aria-label="Mostrar u ocultar slides">
@@ -1105,6 +1110,27 @@
     document.querySelectorAll(".anim").forEach(el => el.classList.add("in"));
     document.querySelectorAll("clipPath rect").forEach(r => { r.querySelector("animate")?.remove(); r.setAttribute("width", 4000); });
   });
+
+  /* ---------- Controles discretos ----------
+     Ocultos por defecto: aparecen al llevar el mouse al borde inferior (o tocar abajo en pantallas táctiles)
+     y se esconden solos. La tecla C (o 📌) los deja fijos. El cursor se oculta si no se mueve. */
+  const ctr = document.querySelector(".controls");
+  let hideT, idleT;
+  const showCtr = ms => { ctr.classList.add("show"); clearTimeout(hideT); if (ms) hideT = setTimeout(() => { if (!ctr.matches(":hover")) ctr.classList.remove("show"); }, ms); };
+  const setPin = on => { ctr.classList.toggle("pin", on); document.getElementById("pin").classList.toggle("on", on); };
+  document.getElementById("pin").onclick = e => { e.stopPropagation(); setPin(!ctr.classList.contains("pin")); };
+  addEventListener("mousemove", e => {
+    document.body.classList.remove("idle");
+    clearTimeout(idleT);
+    idleT = setTimeout(() => { if (!ctr.matches(":hover") && panel.hidden) document.body.classList.add("idle"); }, 2500);
+    const near = e.clientY > innerHeight - 90;
+    document.body.classList.toggle("peek", !near && e.clientY > innerHeight - 220);
+    if (near || ctr.matches(":hover")) showCtr(0);
+    else if (ctr.classList.contains("show")) showCtr(900);
+  });
+  ctr.addEventListener("mouseleave", () => showCtr(900));
+  addEventListener("touchstart", e => { if (e.touches[0].clientY > innerHeight * 0.82) showCtr(3500); }, { passive: true });
+  addEventListener("keydown", e => { if (e.key.toLowerCase() === "c" && panel.hidden) setPin(!ctr.classList.contains("pin")); });
 
   fit();
   applyHidden();
