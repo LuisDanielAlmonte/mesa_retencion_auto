@@ -1083,7 +1083,7 @@
         <div class="top"><div class="ic">${ic}</div><span class="pp">${pc(v, N)}% del total</span></div>
         <div class="v" data-count="${v}" data-dec="0">${nf(v)}</div><div class="l">${l}</div>
         <div class="mm"><div><span>Septiembre</span><b>${nf(se[k])}</b></div><div><span>Octubre</span><b>${nf(oc[k])}</b></div></div>
-        <div class="crb anim" data-step="1"><span>De ellos, con crédito</span><b>${nf(cr[k])}</b>${v ? `<em>${pc(cr[k], v)}% de ${nf(v)}</em>` : ""}</div>
+        <div class="crb anim" data-step="1"><span>Se les aplicó el crédito comercial</span><b>${nf(cr[k])}</b>${v ? `<em>${pc(cr[k], v)}% de ${nf(v)}</em>` : ""}</div>
       </div>`;
     return `<section class="slide rn" aria-label="Renovaciones · ¿Cómo vamos?">${rnHead("¿Cómo vamos? <span class=\"brand\">· Renovaciones</span>",
         `<b>${nf(N)} clientes de Daños Propios</b> a los que se les revisó la propuesta comercial · septiembre y octubre`, "Resultado")}
@@ -1122,16 +1122,16 @@
     }).join("") + `<tr class="tot" style="--r:3"><th>Total</th>${cols.map(col => cell(all[col.k], cr[col.k], "",
         Math.round(all[col.k] / tot(all) * 100), Math.round(cr[col.k] / tot(cr) * 100))).join("")}${cell(tot(all), tot(cr), "tt", 100, 100)}</tr>`;
     return `<section class="slide rn" aria-label="Renovaciones · ${mes}">${rnHead(`${mes} <span class="brand">· Renovaciones</span>`,
-        `<b>${nf(tot(all))} clientes</b> · ${nf(tot(cr))} aplicaron para el crédito`, "Detalle")}
+        `<b>${nf(tot(all))} clientes</b> · ${nf(tot(cr))} con crédito comercial aplicado`, "Detalle")}
         <div class="rt-wrap">
           <div class="flow">
             <div class="fl all anim"><div class="n">${nf(tot(all))}</div><div class="t">Total de clientes · ¿qué pasó?</div></div>
             <div class="anim">${tiles(all)}</div>
-            <div class="fl cr anim" data-step="1"><div class="n">${nf(tot(cr))}</div><div class="t">aplicaron al crédito (${(tot(cr) / tot(all) * 100).toFixed(0)}%) · ¿qué pasó?</div></div>
+            <div class="fl cr anim" data-step="1"><div class="n">${nf(tot(cr))}</div><div class="t">se les aplicó el crédito comercial (${(tot(cr) / tot(all) * 100).toFixed(0)}%) · ¿qué pasó?</div></div>
             <div class="anim" data-step="1">${tiles(cr)}</div>
           </div>
           <div class="rt-box anim" data-step="2">
-            <div class="rt-cap"><span class="sw"><span class="va">Por intermediario · <b>todos los clientes</b></span><span class="vc">Por intermediario · <b>solo los que aplicaron al crédito</b></span></span></div>
+            <div class="rt-cap"><span class="sw"><span class="va">Por intermediario · <b>todos los clientes</b></span><span class="vc">Por intermediario · <b>solo a los que se les aplicó el crédito comercial</b></span></span></div>
             <table class="rt">
               <thead><tr><th class="blank"></th>${cols.map(c => `<th style="--c:${c.c}">${c.lb}</th>`).join("")}<th class="tt">Total</th></tr></thead>
               <tbody>${body}</tbody>
@@ -1153,7 +1153,6 @@
       ["GABRIEL ANTONIO ESPINAL RODRIGUEZ", "Luis Carreno", "Ozzi Betance", 1, 8, 6, 1, 0],
       ["KM SEGUROS & ASESORES, S.R.L.", "Rosalynn Ceballos", "Arlin Feliu", 1, 7, 4, 1, 1],
       ["ROBINSON LEONARDO PAULINO", "Luis Carreno", "Zuleidy Diaz", 1, 7, 6, 0, 0],
-      ["DAVID CORNELIO", "Rosalynn Ceballos", "Wander Cedano", 2, 11, 2, 6, 1],
       ["FEDERICO RAFAEL FERNANDEZ DIAZ", "Antolin Alejandro Alcantara Fernandez", "Julia Patricia Noboa Gañan", 2, 9, 4, 1, 2],
       ["TOLEDANO ASESORES, S.R.L", "Laura Arias", "Anyaury Stephany Valdez Rochet", 3, 12, 7, 0, 2],
       ["GUIMANFER CORREDORES SRL", "Laura Arias", "Mariel Medina", 4, 14, 10, 0, 0],
