@@ -246,14 +246,73 @@
   .note .without .v { font-size: 54px; font-weight: 700; color: #6fe0a6; line-height: 1.1; margin-top: 6px; }
   .note .without .tag { font-size: 14px; font-weight: 600; color: #6fe0a6; letter-spacing: .06em; text-transform: uppercase; }
 
+  /* ---------- Slides de renovaciones (créditos y comunicaciones) ---------- */
+  :root { --pago: #12b886; --sinpago: #ffa94d; --anul: #e03131; --pend: #8a97a6; }
+  .rn h1 { font-size: 64px; }
+  .rn .sub { margin-top: 14px; font-size: 24px; color: var(--muted); font-weight: 300; }
+  .rn .sub b { color: var(--navy); font-weight: 600; }
+  /* Resumen */
+  .rsum-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 40px; }
+  .rsum { margin-top: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; }
+  .rcard { border-radius: 24px; padding: 44px 36px 38px; background: #fff; border: 1px solid var(--line); box-shadow: 0 20px 44px -30px rgba(11,47,91,.5); position: relative; overflow: hidden; }
+  .rcard::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 8px; background: var(--c); }
+  .rcard .ic { width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center; font-size: 30px; background: color-mix(in srgb, var(--c) 15%, #fff); color: var(--c); }
+  .rcard .v { margin-top: 28px; font-size: 110px; font-weight: 700; line-height: 1; color: var(--navy); font-variant-numeric: tabular-nums; }
+  .rcard .l { margin-top: 10px; font-size: 26px; font-weight: 600; color: var(--c); }
+  .rcard .p { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 18px; color: var(--muted); }
+  .rcard .p b { color: var(--ink); }
+  .rbar { margin-top: 56px; display: flex; height: 26px; border-radius: 13px; overflow: hidden; background: var(--line); }
+  .rbar div { width: 0; transition: width 1.2s var(--ease) .5s; }
+  .in .rbar div, .rbar.in div { width: var(--w); }
+  /* Tabla por mes: total general y, de ellos, con crédito */
+  .rt-wrap { margin-top: 22px; flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+  .flow { display: grid; grid-template-columns: 300px 1fr; gap: 14px 22px; }
+  .fl { border-radius: 16px; padding: 14px 20px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+  .fl .n { font-size: 40px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+  .fl .t { font-size: 15px; margin-top: 6px; }
+  .fl.all { background: var(--navy); color: #fff; } .fl.all .t { color: rgba(255,255,255,.75); }
+  .fl.cr { background: var(--blue); color: #fff; margin-left: 34px; } .fl.cr .t { color: rgba(255,255,255,.8); }
+  .fl.cr::before { content: "↳"; position: absolute; left: -32px; top: 50%; transform: translateY(-50%); font-size: 30px; color: var(--blue); }
+  .tiles { display: grid; gap: 14px; }
+  .tile { border-radius: 16px; padding: 12px 18px; background: color-mix(in srgb, var(--c) 10%, #fff); border: 1px solid color-mix(in srgb, var(--c) 30%, #fff); display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 10px; }
+  .tile .lb { grid-column: 1 / -1; font-size: 14px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: color-mix(in srgb, var(--c) 75%, #1c2b3a); }
+  .tile .n { font-size: 38px; font-weight: 700; color: var(--navy); line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .tile .p { font-size: 24px; font-weight: 700; color: color-mix(in srgb, var(--c) 80%, #1c2b3a); }
+  .tile.z { opacity: .45; }
+  .rt { width: 100%; border-collapse: separate; border-spacing: 0; font-variant-numeric: tabular-nums; }
+  .rt th, .rt td { border: 0; }
+  .rt thead th { padding: 10px 10px 12px; font-size: 22px; font-weight: 700; color: var(--navy); background: none; text-align: center; border-bottom: 5px solid var(--c); }
+  .rt thead th.blank { border: 0; }
+  .rt thead th.tt { border-bottom-color: var(--navy); }
+  .rt tbody th { text-align: left; font-size: 22px; font-weight: 600; color: var(--navy); padding: 8px 16px 8px 0; white-space: nowrap; border-bottom: 1px solid var(--line); }
+  .rt tbody td { text-align: center; padding: 7px 10px; border-bottom: 1px solid var(--line); border-left: 2px solid var(--line); line-height: 1.1; }
+  .rt tbody td b { font-size: 30px; font-weight: 700; color: var(--navy); }
+  .rt tbody td em { font-style: normal; font-size: 18px; font-weight: 600; color: var(--muted); margin-left: 8px; }
+  .rt tbody td.tt { background: #f6f8fb; }
+  .rt tbody tr.tot th, .rt tbody tr.tot td { background: var(--cyan-soft); border-bottom: 0; }
+  .rt-cap { font-size: 18px; color: var(--muted); margin-bottom: 4px; }
+  .rt-cap b { color: var(--navy); }
+  .sw { display: inline-grid; }
+  .sw > span { grid-area: 1 / 1; transition: opacity .5s ease, transform .6s var(--ease); }
+  .sw .vc { opacity: 0; transform: translateY(10px); }
+  .rt-box:has(.swap.in) .sw .va { opacity: 0; transform: translateY(-10px); }
+  .rt-box:has(.swap.in) .sw .vc { opacity: 1; transform: none; }
+  .rt-box:has(.swap.in) .rt-cap b, .rt-box:has(.swap.in) .rt tbody td b { color: var(--blue); }
+  .rt-box:has(.swap.in) .rt tbody tr.tot th, .rt-box:has(.swap.in) .rt tbody tr.tot td { background: #e3effa; }
+  .sw .vc.z b { color: #c3ccd6 !important; }
+  .rt-box .swap { position: absolute; }
+
   /* ---------- Controles ---------- */
-  .controls { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(11,47,91,.82); color: #fff; backdrop-filter: blur(6px); font-size: 14px; opacity: 0; transition: opacity .25s; z-index: 10; }
-  body:hover .controls, .controls:focus-within { opacity: 1; }
+  .controls { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(11,47,91,.82); color: #fff; backdrop-filter: blur(6px); font-size: 14px; opacity: 0; pointer-events: none; transform: translate(-50%, 24px); transition: opacity .3s ease, transform .4s var(--ease); z-index: 10; }
+  .controls.show, .controls.pin { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+  .controls .pin-b.on { background: rgba(255,255,255,.22); }
+  .hint { position: fixed; left: 50%; bottom: 0; transform: translateX(-50%); width: 120px; height: 4px; border-radius: 4px 4px 0 0; background: rgba(255,255,255,.35); opacity: 0; transition: opacity .4s; z-index: 9; }
+  body.peek .hint { opacity: 1; }
+  body.idle, body.idle * { cursor: none !important; }
   .controls button { all: unset; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: 18px; }
   .controls button:hover { background: rgba(255,255,255,.15); }
   .controls button:disabled { opacity: .35; cursor: default; }
   .controls .count { min-width: 52px; text-align: center; font-variant-numeric: tabular-nums; }
-  @media (hover: none) { .controls { opacity: 1; } }
   .controls .hid { font-size: 12px; padding: 0 8px; color: #ffb37a; }
   .sl-panel { position: fixed; inset: 0; z-index: 20; background: rgba(5,15,28,.55); backdrop-filter: blur(3px); display: grid; place-items: center; padding: 16px; }
   .sl-panel[hidden] { display: none; }
@@ -403,7 +462,9 @@
   <button id="next" aria-label="Siguiente">›</button>
   <button id="fs" aria-label="Pantalla completa" title="Pantalla completa (F)">⛶</button>
   <button id="menu" aria-label="Mostrar u ocultar slides" title="Mostrar u ocultar slides (O)">☰</button>
+  <button id="pin" class="pin-b" aria-label="Fijar controles" title="Fijar controles (C)">📌</button>
 </nav>
+<div class="hint" aria-hidden="true"></div>
 
 <div class="sl-panel" id="sl-panel" hidden>
   <div class="sl-box" role="dialog" aria-label="Mostrar u ocultar slides">
@@ -943,7 +1004,104 @@
   }
   renderPlanStages("dp");
   renderPlanStages("sl");
-  document.getElementById("deck").insertAdjacentHTML("beforeend", METRICS.map(metricSlide).join(""));
+
+  /* =================== Renovaciones sep–oct 2026: créditos y comunicaciones =================== */
+  // Clientes por mes, intermediario y crédito (No / Si):
+  // [anuladas, vigente con pago, vigente sin pago, pendiente de renovar (factura aún no emitida)]
+  const RN_INT = { CS: "Corredores", AG: "Agentes Generales", DI: "Directo" };
+  const RN = {
+    Septiembre: { AG: { No: [18, 104, 31, 0], Si: [1, 12, 41, 0] },
+                  CS: { No: [91, 337, 138, 0], Si: [5, 78, 173, 0] },
+                  DI: { No: [0, 10, 3, 0],    Si: [0, 1, 1, 0] } },
+    Octubre:    { AG: { No: [6, 17, 95, 6],   Si: [0, 16, 130, 0] },
+                  CS: { No: [35, 58, 447, 25], Si: [8, 54, 506, 0] },
+                  DI: { No: [4, 3, 28, 1],    Si: [2, 6, 17, 0] } },
+  };
+  const addv = (a, b) => a.map((v, i) => v + b[i]);
+  const tot = v => v.reduce((a, b) => a + b, 0);
+  const rnSum = (meses = ["Septiembre", "Octubre"], creds = ["No", "Si"], ints = Object.keys(RN_INT)) =>
+    meses.reduce((t, m) => ints.reduce((u, i) => creds.reduce((w, c) => addv(w, RN[m][i][c]), u), t), [0, 0, 0, 0]);
+  const pc = (a, b) => Math.round(a / b * 100);
+
+  const rnHead = (title, sub, tag) => `
+      <div class="deco tl1"></div><div class="deco tl2"></div>
+      <div class="deco br1"></div><div class="deco br2"></div>
+      <div class="deco band"></div>
+      <div class="content">
+        <div class="head">
+          <div class="anim">
+            <span class="eyebrow"><span class="dot"></span>Renovaciones Auto · Septiembre y Octubre 2026</span>
+            <h1>${title}</h1>
+            ${sub ? `<div class="sub">${sub}</div>` : ""}
+          </div>
+          <div class="section-tag anim from-right">${tag}</div>
+        </div>`;
+
+  // 1 · ¿Cómo vamos?
+  function rnResumen() {
+    const t = rnSum(), N = tot(t), se = rnSum(["Septiembre"]), oc = rnSum(["Octubre"]), cr = rnSum(undefined, ["Si"]);
+    const card = (c, ic, v, l, k) => `<div class="rcard anim" style="--c:${c}"><div class="ic">${ic}</div>
+        <div class="v" data-count="${v}" data-dec="0">${nf(v)}</div><div class="l">${l}</div>
+        <div class="p">${pc(v, N)}% · <b>Sep ${nf(se[k])}</b> · <b>Oct ${nf(oc[k])}</b><br><span style="color:var(--blue)">De ellos con crédito: <b style="color:var(--blue)">${nf(cr[k])}</b></span></div></div>`;
+    return `<section class="slide rn" aria-label="Renovaciones · ¿Cómo vamos?">${rnHead("¿Cómo vamos? <span class=\"brand\">· Renovaciones</span>",
+        `De <b>${nf(N)} clientes</b> gestionados en septiembre y octubre`, "Resultado")}
+        <div class="rsum-wrap"><div class="rsum">
+          ${card("var(--pago)", "✓", t[1], "Pagaron", 1)}
+          ${card("var(--sinpago)", "⏳", t[2], "Siguen sin pagar", 2)}
+          ${card("var(--anul)", "✕", t[0], "Se anularon", 0)}
+          ${card("var(--pend)", "…", t[3], "Por renovar", 3)}
+        </div>
+        <div class="rbar anim fade">${[[1, "pago"], [2, "sinpago"], [0, "anul"], [3, "pend"]].map(([k, c]) => `<div style="--w:${t[k] / N * 100}%;background:var(--${c})"></div>`).join("")}</div></div>
+      </div>
+    </section>`;
+  }
+
+  // Slide del mes: distribución (todos vs con crédito) + tabla intermediario × estatus.
+  // Cada celda: total general y, debajo, cuántos de ellos recibieron el crédito (un subconjunto, no un grupo opuesto).
+  function rnMesSlide(mes) {
+    const all = addv(rnSum([mes], ["No"]), rnSum([mes], ["Si"])), cr = rnSum([mes], ["Si"]);
+    const cols = [
+      { k: 1, lb: "Con pago", c: "var(--pago)", cls: "pago" },
+      { k: 2, lb: "Sin pago", c: "var(--sinpago)", cls: "sinpago" },
+      { k: 3, lb: "Pendiente de renovar", c: "var(--pend)", cls: "pend" },
+      { k: 0, lb: "Anulada", c: "var(--anul)", cls: "anul" },
+    ].filter(c => all[c.k] > 0);
+    const tiles = v => `<div class="tiles" style="grid-template-columns:repeat(${cols.length},1fr)">${cols.map(c =>
+      `<div class="tile${v[c.k] ? "" : " z"}" style="--c:${c.c}"><div class="lb">${c.lb}</div><div class="n">${nf(v[c.k])}</div><div class="p">${(v[c.k] / tot(v) * 100).toFixed(0)}%</div></div>`).join("")}</div>`;
+    // Cada celda tiene dos valores superpuestos: todos los clientes (.va) y solo con crédito (.vc);
+    // al llegar al paso del cambio, la tabla pasa de uno a otro con una transición.
+    const val = (v, pc) => `<b>${nf(v)}</b>${pc != null ? `<em>${pc}%</em>` : ""}`;
+    const cell = (a, c, cls = "", pa, pcr) => `<td class="${cls}"><span class="sw"><span class="va">${val(a, pa)}</span><span class="vc${c ? "" : " z"}">${val(c, pcr)}</span></span></td>`;
+    const ints = ["CS", "AG", "DI"];
+    const body = ints.map((i, k) => {
+      const a = addv(RN[mes][i].No, RN[mes][i].Si), c = RN[mes][i].Si;
+      const pr = (v, t) => t ? Math.round(v / t * 100) : null;
+      return `<tr style="--r:${k}"><th>${i === "CS" ? "Corredores de Seguros" : RN_INT[i]}</th>${cols.map(col => cell(a[col.k], c[col.k], "", pr(a[col.k], tot(a)), pr(c[col.k], tot(c)))).join("")}${cell(tot(a), tot(c), "tt", pr(tot(a), tot(all)), pr(tot(c), tot(cr)))}</tr>`;
+    }).join("") + `<tr class="tot" style="--r:3"><th>Total</th>${cols.map(col => cell(all[col.k], cr[col.k], "",
+        Math.round(all[col.k] / tot(all) * 100), Math.round(cr[col.k] / tot(cr) * 100))).join("")}${cell(tot(all), tot(cr), "tt", 100, 100)}</tr>`;
+    return `<section class="slide rn" aria-label="Renovaciones · ${mes}">${rnHead(`${mes} <span class="brand">· Renovaciones</span>`,
+        `<b>${nf(tot(all))} clientes</b> · ${nf(tot(cr))} aplicaron para el crédito`, "Detalle")}
+        <div class="rt-wrap">
+          <div class="flow">
+            <div class="fl all anim"><div class="n">${nf(tot(all))}</div><div class="t">Total de clientes · ¿qué pasó?</div></div>
+            <div class="anim">${tiles(all)}</div>
+            <div class="fl cr anim" data-step="1"><div class="n">${nf(tot(cr))}</div><div class="t">aplicaron al crédito (${(tot(cr) / tot(all) * 100).toFixed(0)}%) · ¿qué pasó?</div></div>
+            <div class="anim" data-step="1">${tiles(cr)}</div>
+          </div>
+          <div class="rt-box anim" data-step="2">
+            <div class="rt-cap"><span class="sw"><span class="va">Por intermediario · <b>todos los clientes</b></span><span class="vc">Por intermediario · <b>solo los que aplicaron al crédito</b></span></span></div>
+            <table class="rt">
+              <thead><tr><th class="blank"></th>${cols.map(c => `<th style="--c:${c.c}">${c.lb}</th>`).join("")}<th class="tt">Total</th></tr></thead>
+              <tbody>${body}</tbody>
+            </table>
+            <i class="swap anim" data-step="3"></i>
+          </div>
+        </div>
+      </div>
+    </section>`;
+  }
+
+  document.getElementById("deck").insertAdjacentHTML("beforeend", METRICS.map(metricSlide).join("") + rnResumen() + rnMesSlide("Septiembre") + rnMesSlide("Octubre"));
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
 
   /* =================== Motor de presentación =================== */
@@ -1105,6 +1263,27 @@
     document.querySelectorAll(".anim").forEach(el => el.classList.add("in"));
     document.querySelectorAll("clipPath rect").forEach(r => { r.querySelector("animate")?.remove(); r.setAttribute("width", 4000); });
   });
+
+  /* ---------- Controles discretos ----------
+     Ocultos por defecto: aparecen al llevar el mouse al borde inferior (o tocar abajo en pantallas táctiles)
+     y se esconden solos. La tecla C (o 📌) los deja fijos. El cursor se oculta si no se mueve. */
+  const ctr = document.querySelector(".controls");
+  let hideT, idleT;
+  const showCtr = ms => { ctr.classList.add("show"); clearTimeout(hideT); if (ms) hideT = setTimeout(() => { if (!ctr.matches(":hover")) ctr.classList.remove("show"); }, ms); };
+  const setPin = on => { ctr.classList.toggle("pin", on); document.getElementById("pin").classList.toggle("on", on); };
+  document.getElementById("pin").onclick = e => { e.stopPropagation(); setPin(!ctr.classList.contains("pin")); };
+  addEventListener("mousemove", e => {
+    document.body.classList.remove("idle");
+    clearTimeout(idleT);
+    idleT = setTimeout(() => { if (!ctr.matches(":hover") && panel.hidden) document.body.classList.add("idle"); }, 2500);
+    const near = e.clientY > innerHeight - 90;
+    document.body.classList.toggle("peek", !near && e.clientY > innerHeight - 220);
+    if (near || ctr.matches(":hover")) showCtr(0);
+    else if (ctr.classList.contains("show")) showCtr(900);
+  });
+  ctr.addEventListener("mouseleave", () => showCtr(900));
+  addEventListener("touchstart", e => { if (e.touches[0].clientY > innerHeight * 0.82) showCtr(3500); }, { passive: true });
+  addEventListener("keydown", e => { if (e.key.toLowerCase() === "c" && panel.hidden) setPin(!ctr.classList.contains("pin")); });
 
   fit();
   applyHidden();
