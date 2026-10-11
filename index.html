@@ -257,10 +257,18 @@
   .rcard { border-radius: 24px; padding: 44px 36px 38px; background: #fff; border: 1px solid var(--line); box-shadow: 0 20px 44px -30px rgba(11,47,91,.5); position: relative; overflow: hidden; }
   .rcard::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 8px; background: var(--c); }
   .rcard .ic { width: 58px; height: 58px; border-radius: 16px; display: grid; place-items: center; font-size: 30px; background: color-mix(in srgb, var(--c) 15%, #fff); color: var(--c); }
-  .rcard .v { margin-top: 28px; font-size: 110px; font-weight: 700; line-height: 1; color: var(--navy); font-variant-numeric: tabular-nums; }
+  .rcard .v { margin-top: 22px; font-size: 100px; font-weight: 700; line-height: 1; color: var(--navy); font-variant-numeric: tabular-nums; }
   .rcard .l { margin-top: 10px; font-size: 26px; font-weight: 600; color: var(--c); }
-  .rcard .p { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 18px; color: var(--muted); }
-  .rcard .p b { color: var(--ink); }
+  .rcard { padding-bottom: 0 !important; display: flex; flex-direction: column; }
+  .rcard .top { display: flex; justify-content: space-between; align-items: center; }
+  .rcard .pp { font-size: 18px; font-weight: 700; padding: 6px 14px; border-radius: 999px; background: color-mix(in srgb, var(--c) 14%, #fff); color: color-mix(in srgb, var(--c) 80%, #1c2b3a); }
+  .rcard .mm { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .rcard .mm span { display: block; font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .rcard .mm b { font-size: 30px; color: var(--navy); font-variant-numeric: tabular-nums; }
+  .rcard .crb { margin: 22px -36px 0 -28px; padding: 16px 36px 18px 36px; background: var(--blue); color: #fff; display: grid; grid-template-columns: 1fr auto; align-items: baseline; column-gap: 10px; }
+  .rcard .crb span { grid-column: 1 / -1; font-size: 14px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
+  .rcard .crb b { font-size: 40px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .rcard .crb em { font-style: normal; font-size: 20px; font-weight: 700; opacity: .85; }
   .rbar { margin-top: 56px; display: flex; height: 26px; border-radius: 13px; overflow: hidden; background: var(--line); }
   .rbar div { width: 0; transition: width 1.2s var(--ease) .5s; }
   .in .rbar div, .rbar.in div { width: var(--w); }
@@ -1040,9 +1048,12 @@
   // 1 · ¿Cómo vamos?
   function rnResumen() {
     const t = rnSum(), N = tot(t), se = rnSum(["Septiembre"]), oc = rnSum(["Octubre"]), cr = rnSum(undefined, ["Si"]);
-    const card = (c, ic, v, l, k) => `<div class="rcard anim" style="--c:${c}"><div class="ic">${ic}</div>
+    const card = (c, ic, v, l, k) => `<div class="rcard anim" style="--c:${c}">
+        <div class="top"><div class="ic">${ic}</div><span class="pp">${pc(v, N)}% del total</span></div>
         <div class="v" data-count="${v}" data-dec="0">${nf(v)}</div><div class="l">${l}</div>
-        <div class="p">${pc(v, N)}% · <b>Sep ${nf(se[k])}</b> · <b>Oct ${nf(oc[k])}</b><br><span style="color:var(--blue)">De ellos con crédito: <b style="color:var(--blue)">${nf(cr[k])}</b></span></div></div>`;
+        <div class="mm"><div><span>Septiembre</span><b>${nf(se[k])}</b></div><div><span>Octubre</span><b>${nf(oc[k])}</b></div></div>
+        <div class="crb anim" data-step="1"><span>De ellos, con crédito</span><b>${nf(cr[k])}</b>${v ? `<em>${pc(cr[k], v)}% de ${nf(v)}</em>` : ""}</div>
+      </div>`;
     return `<section class="slide rn" aria-label="Renovaciones · ¿Cómo vamos?">${rnHead("¿Cómo vamos? <span class=\"brand\">· Renovaciones</span>",
         `<b>${nf(N)} clientes de Daños Propios</b> a los que se les revisó la propuesta comercial · septiembre y octubre`, "Resultado")}
         <div class="rsum-wrap"><div class="rsum">
