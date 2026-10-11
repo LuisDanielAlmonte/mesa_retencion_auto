@@ -1030,7 +1030,7 @@
       <div class="content">
         <div class="head">
           <div class="anim">
-            <span class="eyebrow"><span class="dot"></span>Renovaciones Auto · Septiembre y Octubre 2026</span>
+            <span class="eyebrow"><span class="dot"></span>Renovaciones Auto · Daños Propios · Septiembre y Octubre 2026</span>
             <h1>${title}</h1>
             ${sub ? `<div class="sub">${sub}</div>` : ""}
           </div>
@@ -1044,7 +1044,7 @@
         <div class="v" data-count="${v}" data-dec="0">${nf(v)}</div><div class="l">${l}</div>
         <div class="p">${pc(v, N)}% · <b>Sep ${nf(se[k])}</b> · <b>Oct ${nf(oc[k])}</b><br><span style="color:var(--blue)">De ellos con crédito: <b style="color:var(--blue)">${nf(cr[k])}</b></span></div></div>`;
     return `<section class="slide rn" aria-label="Renovaciones · ¿Cómo vamos?">${rnHead("¿Cómo vamos? <span class=\"brand\">· Renovaciones</span>",
-        `De <b>${nf(N)} clientes</b> gestionados en septiembre y octubre`, "Resultado")}
+        `<b>${nf(N)} clientes de Daños Propios</b> a los que se les revisó la propuesta comercial · septiembre y octubre`, "Resultado")}
         <div class="rsum-wrap"><div class="rsum">
           ${card("var(--pago)", "✓", t[1], "Pagaron", 1)}
           ${card("var(--sinpago)", "⏳", t[2], "Siguen sin pagar", 2)}
