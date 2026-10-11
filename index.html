@@ -264,36 +264,50 @@
   .rbar { margin-top: 56px; display: flex; height: 26px; border-radius: 13px; overflow: hidden; background: var(--line); }
   .rbar div { width: 0; transition: width 1.2s var(--ease) .5s; }
   .in .rbar div, .rbar.in div { width: var(--w); }
-  /* Waffle: de cada 100 */
-  .wf-wrap { margin-top: 46px; flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; padding: 0 60px; }
-  .wf-col { display: grid; grid-template-columns: 330px 1fr; gap: 40px; align-items: center; }
-  .wf { display: grid; grid-template-columns: repeat(10, 1fr); gap: 7px; width: 330px; }
-  .wf i { aspect-ratio: 1; border-radius: 50%; background: #e7edf3; transform: scale(.3); opacity: 0; transition: transform .45s var(--ease), opacity .3s; transition-delay: calc(var(--n) * 9ms + var(--d, 0s)); }
-  .in .wf i { transform: none; opacity: 1; }
-  .wf i.on { background: var(--c); }
-  .wf-txt .who { font-size: 26px; font-weight: 600; color: var(--navy); }
-  .wf-txt .big { font-size: 150px; font-weight: 700; line-height: .95; color: var(--c); font-variant-numeric: tabular-nums; }
-  .wf-txt .of { font-size: 24px; color: var(--muted); }
-  .wf-txt .det { margin-top: 18px; font-size: 18px; color: var(--muted); line-height: 1.5; }
-  .wf-txt .det b { color: var(--ink); }
-  .rnote { margin: 0 60px 10px; padding: 18px 26px; border-radius: 16px; background: var(--cyan-soft); font-size: 20px; color: var(--navy); }
-  .rnote b { font-weight: 700; }
-  /* Foco */
-  .foco { margin-top: 50px; flex: 1; display: grid; grid-template-columns: 480px 1fr; gap: 70px; align-items: center; }
-  .foco .big { font-size: 150px; font-weight: 700; line-height: .9; color: var(--alert); font-variant-numeric: tabular-nums; }
-  .foco .bl { font-size: 30px; color: var(--navy); font-weight: 600; margin-top: 10px; }
-  .foco .bs { font-size: 20px; color: var(--muted); margin-top: 26px; line-height: 1.5; }
-  .foco .bs b { color: var(--ink); }
-  .hb { display: flex; flex-direction: column; gap: 38px; }
-  .hb-row .hn { display: flex; justify-content: space-between; align-items: baseline; font-size: 28px; font-weight: 600; color: var(--navy); margin-bottom: 12px; }
-  .hb-row .hn span { font-size: 44px; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .hb-row .hn small { font-size: 20px; color: var(--muted); font-weight: 400; margin-left: 10px; }
-  .hb-track { height: 64px; border-radius: 14px; background: #f1f4f8; overflow: hidden; }
-  .hb-bar { height: 100%; display: flex; width: 0; transition: width 1.2s var(--ease); transition-delay: calc(var(--k) * .15s + .4s); }
-  .in .hb-bar { width: var(--w); }
-  .hb-bar div { display: flex; align-items: center; padding: 0 16px; color: #fff; font-size: 20px; font-weight: 700; white-space: nowrap; overflow: hidden; }
-  .hb-leg { display: flex; gap: 26px; font-size: 18px; color: var(--muted); }
-  .hb-leg i { width: 16px; height: 16px; border-radius: 4px; display: inline-block; margin-right: 8px; vertical-align: -2px; }
+  /* Árbol de desglose */
+  .tree { position: relative; margin-top: 18px; flex: 1; min-height: 0; }
+  .tree svg.links { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .tree svg.links path { fill: none; stroke: #c9d5e2; stroke-width: 2.5; }
+  .tree .colh { position: absolute; top: -6px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .nd { position: absolute; translate: 0 -50%; border-radius: 14px; background: #fff; border: 1px solid var(--line); box-shadow: 0 10px 24px -18px rgba(11,47,91,.55); padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; }
+  .nd::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 5px; border-radius: 0 4px 4px 0; background: var(--c, var(--blue)); }
+  .nd .t { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .nd .lb { font-size: 17px; font-weight: 600; color: var(--navy); white-space: nowrap; }
+  .nd .lb small { font-weight: 400; color: var(--muted); font-size: 13px; margin-left: 6px; }
+  .nd .v { font-size: 26px; font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
+  .nd .v small { font-size: 13px; font-weight: 500; color: var(--muted); margin-left: 4px; }
+  .nd .sp { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .nd .sp span b { font-size: 16px; }
+  .nd .sp .no b { color: #6b7785; } .nd .sp .si b { color: var(--blue); }
+  .nd .bar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: var(--line); }
+  .nd .bar i { display: block; height: 100%; }
+  .nd.root { background: linear-gradient(150deg, var(--blue), var(--navy)); border: 0; padding: 18px 20px; }
+  .nd.root::before { display: none; }
+  .nd.root .lb, .nd.root .v { color: #fff; } .nd.root .lb { font-size: 26px; } .nd.root .v { font-size: 50px; }
+  .nd.root .t { flex-direction: column; align-items: flex-start; gap: 0; }
+  .nd.root .sp { grid-template-columns: 1fr; gap: 2px; font-size: 16px; }
+  .nd.root .sp, .nd.root .v small { color: rgba(255,255,255,.75); } .nd.root .sp .no b, .nd.root .sp .si b { color: #fff; }
+  .nd.leaf { flex-direction: row; align-items: center; gap: 16px; padding: 8px 14px 8px 18px; }
+  .nd.leaf .t { flex: 1; }
+  .nd.leaf .sp { width: 230px; flex: none; }
+  .nd .nnote { font-size: 13px; color: var(--muted); font-style: italic; }
+  .tree .anim.lk { transition-delay: var(--d, 0s); }
+  .tleg { display: flex; gap: 22px; font-size: 15px; color: var(--muted); }
+  .tleg i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; margin-right: 6px; vertical-align: -2px; }
+  /* Comparativo sin vs con crédito */
+  .cmp2 { margin-top: 40px; flex: 1; display: grid; align-content: center; padding-bottom: 40px; grid-template-columns: 1fr 1fr; gap: 34px; }
+  .ct { border: 1px solid var(--line); border-radius: 20px; overflow: hidden; background: #fff; box-shadow: 0 18px 40px -28px rgba(11,47,91,.45); align-self: start; }
+  .ct h2 { margin: 0; padding: 22px 26px; font-size: 32px; color: #fff; background: linear-gradient(120deg, var(--navy), var(--blue)); }
+  .ct table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .ct th, .ct td { padding: 26px 22px; font-size: 25px; border-top: 1px solid var(--line); }
+  .ct thead th { background: var(--cyan-soft); color: var(--navy); font-size: 16px; letter-spacing: .06em; text-transform: uppercase; border: 0; text-align: right; }
+  .ct thead th:first-child { text-align: left; }
+  .ct tbody th { text-align: left; font-weight: 600; color: var(--navy); white-space: nowrap; }
+  .ct tbody th i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; margin-right: 10px; }
+  .ct td { text-align: right; }
+  .ct td small { color: var(--muted); font-size: 16px; margin-left: 8px; display: inline-block; width: 54px; }
+  .ct td.si { color: var(--blue); font-weight: 600; }
+  .ct tr.tt th, .ct tr.tt td { font-weight: 700; background: #f6f8fb; }
 
   /* ---------- Controles ---------- */
   .controls { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(11,47,91,.82); color: #fff; backdrop-filter: blur(6px); font-size: 14px; opacity: 0; pointer-events: none; transform: translate(-50%, 24px); transition: opacity .3s ease, transform .4s var(--ease); z-index: 10; }
@@ -1049,68 +1063,98 @@
     </section>`;
   }
 
-  // Waffle de 100 puntos
-  const waffle = (n, color, d = 0) => `<div class="wf" style="--c:${color};--d:${d}s">${Array.from({ length: 100 }, (_, i) => `<i class="${i < n ? "on" : ""}" style="--n:${i}"></i>`).join("")}</div>`;
-  function wfCol(who, n, color, of, det, d) {
-    return `<div class="wf-col">${waffle(n, color, d)}
-        <div class="wf-txt" style="--c:${color}"><div class="who">${who}</div><div class="big">${n}</div><div class="of">${of}</div><div class="det">${det}</div></div></div>`;
-  }
+  // Anuladas que tenían pago registrado (dentro de las anuladas): [No, Si]
+  const RN_ANUL_CP = { Septiembre: { AG: [0, 0], CS: [8, 0], DI: [0, 0] }, Octubre: { AG: [1, 0], CS: [2, 2], DI: [0, 0] } };
+  const ST = [ // estatus finales, en orden
+    { k: 1, lb: "Con pago", c: "var(--pago)" },
+    { k: 3, lb: "Pendiente de renovar", c: "var(--pend)" },
+    { k: 2, lb: "Sin pago", c: "var(--sinpago)" },
+  ];
 
-  // 2 · El crédito frenó las anulaciones
-  function rnAnulaciones() {
-    const no = rnSum(undefined, ["No"]), si = rnSum(undefined, ["Si"]);
-    const m = (mes, c) => { const v = rnSum([mes], [c]); return pc(v[0], tot(v)); };
-    return `<section class="slide rn" aria-label="Renovaciones · Anulaciones con y sin crédito">${rnHead("El crédito frenó las anulaciones",
-        "De cada 100 clientes, cuántos se anularon", "Anulaciones")}
-        <div class="wf-wrap">
-          <div class="anim">${wfCol("Sin crédito", pc(no[0], tot(no)), "var(--anul)", "de cada 100 se anularon", `Septiembre <b>${m("Septiembre", "No")}%</b> · Octubre <b>${m("Octubre", "No")}%</b>`, 0)}</div>
-          <div class="anim" data-step="1">${wfCol("Con crédito", pc(si[0], tot(si)), "var(--anul)", "de cada 100 se anularon", `Septiembre <b>${m("Septiembre", "Si")}%</b> · Octubre <b>${m("Octubre", "Si")}%</b>`, 0)}</div>
-        </div>
+  // Árbol del mes: Mes → Intermediario → Anulada / Vigente → Con pago / Pendiente / Sin pago
+  function rnTree(mes) {
+    const node = (lb, no, si, extra = {}) => ({ lb, no, si, n: no + si, ...extra });
+    const ints = Object.keys(RN_INT).map(i => {
+      const d = RN[mes][i];
+      const kids = [];
+      const an = node("Anulada", d.No[0], d.Si[0], { c: "var(--anul)", leaf: true,
+        note: (() => { const cp = RN_ANUL_CP[mes][i][0] + RN_ANUL_CP[mes][i][1]; return cp ? `incluye ${cp} con pago` : ""; })() });
+      if (an.n) kids.push(an);
+      const vk = ST.map(s => node(s.lb, d.No[s.k], d.Si[s.k], { c: s.c, leaf: true })).filter(x => x.n);
+      kids.push(node("Vigente", vk.reduce((a, x) => a + x.no, 0), vk.reduce((a, x) => a + x.si, 0), { c: "var(--blue)", kids: vk }));
+      return node(RN_INT[i], d.No.reduce((a, b) => a + b, 0), d.Si.reduce((a, b) => a + b, 0), { c: "var(--navy)", kids });
+    });
+    const root = node(mes, ints.reduce((a, x) => a + x.no, 0), ints.reduce((a, x) => a + x.si, 0), { root: true, kids: ints });
+
+    // Layout: cada hoja ocupa una fila; los padres se centran sobre sus hojas
+    const W = 1700, H = 760, top = 64;
+    const COLS = [{ x: 0, w: 270 }, { x: 345, w: 320 }, { x: 745, w: 300 }, { x: 1120, w: 580 }];
+    const leaves = [];
+    const walk = (n, depth) => { n.depth = depth; if (n.kids) n.kids.forEach(k => walk(k, depth + 1)); else leaves.push(n); };
+    walk(root, 0);
+    const rowH = (H - top) / leaves.length;
+    leaves.forEach((l, r) => { l.y = top + rowH * (r + 0.5); l.col = 3; });
+    const place = n => { if (n.kids) { n.kids.forEach(place); n.y = (n.kids[0].y + n.kids.at(-1).y) / 2; } n.col = n.kids ? n.depth : 3; };
+    place(root);
+    // Las anuladas son hojas en la columna de estatus
+    const all = []; const coll = n => { all.push(n); (n.kids || []).forEach(coll); }; coll(root);
+    all.forEach(n => { if (n.leaf && n.lb === "Anulada") n.col = 2; });
+
+    const pctM = v => (v / root.n * 100).toFixed(1) + "%";
+    const sp = n => `<div class="sp"><span class="no">Sin crédito <b>${nf(n.no)}</b></span><span class="si">Con crédito <b>${nf(n.si)}</b></span></div>`;
+    const bar = n => `<div class="bar"><i style="width:${n.no / n.n * 100}%;background:#9aa5b1"></i><i style="width:${n.si / n.n * 100}%;background:var(--blue)"></i></div>`;
+    let html = "", links = "";
+    COLS.forEach((c, k) => html += `<div class="colh anim fade" data-step="${k}" style="left:${c.x / W * 100}%">${["Mes", "Intermediario", "Estatus póliza", "Estatus pago"][k]}</div>`);
+    all.forEach(n => {
+      const c = COLS[n.col];
+      const step = n.col;
+      const isLeaf = n.col === 3 || (n.leaf && n.lb === "Anulada");
+      const cls = n.root ? "nd root" : (n.col === 3 ? "nd leaf" : "nd");
+      const inner = n.col === 3
+        ? `<div class="t"><span class="lb">${n.lb}</span><span class="v">${nf(n.n)}<small>${pctM(n.n)}</small></span></div>${sp(n)}`
+        : `<div class="t"><span class="lb">${n.lb}</span><span class="v">${nf(n.n)}${n.root ? "" : `<small>${pctM(n.n)}</small>`}</span></div>${bar(n)}${sp(n)}${n.note ? `<div class="nnote">${n.note}</div>` : ""}`;
+      html += `<div class="${cls} anim from-right" data-step="${step}" data-d="${(0.06 * all.indexOf(n) % 0.6).toFixed(2)}" style="--c:${n.c || "var(--blue)"};left:${c.x / W * 100}%;width:${c.w / W * 100}%;top:${n.y / H * 100}%">${inner}</div>`;
+      (n.kids || []).forEach(k => {
+        const x1 = c.x + c.w, x2 = COLS[k.col].x, mx = (x1 + x2) / 2;
+        links += `<path class="anim fade" data-step="${k.col}" d="M${x1},${n.y} C${mx},${n.y} ${mx},${k.y} ${x2},${k.y}"/>`;
+      });
+    });
+    return `<div class="tree"><svg class="links" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${links}</svg>${html}</div>`;
+  }
+  function rnMesSlide(mes) {
+    return `<section class="slide rn" aria-label="Renovaciones · Desglose ${mes}">${rnHead(`${mes} <span class="brand">· Desglose de renovaciones</span>`,
+        "", "Detalle")}
+        <div class="tleg anim fade" style="margin-top:14px"><span><i style="background:#9aa5b1"></i>Sin crédito</span><span><i style="background:var(--blue)"></i>Con crédito aplicado</span><span>% sobre el total del mes</span></div>
+        ${rnTree(mes)}
       </div>
     </section>`;
   }
 
-  // 3 · Pero el pago todavía no llega (septiembre: el mes con tiempo para pagar)
-  function rnPago() {
-    const no = rnSum(["Septiembre"], ["No"]), si = rnSum(["Septiembre"], ["Si"]);
-    const oc = rnSum(["Octubre"]);
-    return `<section class="slide rn" aria-label="Renovaciones · Pago con y sin crédito">${rnHead("Pero el pago todavía no llega",
-        "Septiembre · de cada 100 clientes, cuántos ya pagaron", "Pago")}
-        <div class="wf-wrap">
-          <div class="anim">${wfCol("Sin crédito", pc(no[1], tot(no)), "var(--pago)", "de cada 100 pagaron", `${nf(no[1])} de ${nf(tot(no))} clientes`, 0)}</div>
-          <div class="anim" data-step="1">${wfCol("Con crédito", pc(si[1], tot(si)), "var(--blue)", "de cada 100 pagaron", `${nf(si[1])} de ${nf(tot(si))} clientes`, 0)}</div>
-        </div>
-        <div class="rnote anim" data-step="2">⏱ El crédito se aplicó <b>la semana pasada</b>: el pago puede venir con rezago. Octubre sigue en curso (${pc(oc[1], tot(oc))}% pagado con o sin crédito).</div>
+  // Comparativo sin vs con crédito por mes, con todos los estatus
+  function rnComparativo() {
+    const rows = [
+      { k: 1, lb: "Vigente con pago", c: "var(--pago)" },
+      { k: 2, lb: "Vigente sin pago", c: "var(--sinpago)" },
+      { k: 3, lb: "Pendiente de renovar", c: "var(--pend)" },
+      { k: 0, lb: "Anulada", c: "var(--anul)" },
+    ];
+    const tbl = (mes, step) => {
+      const no = rnSum([mes], ["No"]), si = rnSum([mes], ["Si"]), tn = tot(no), ts = tot(si);
+      const cell = (v, t, cls = "") => `<td class="${cls}">${nf(v)}<small>${(v / t * 100).toFixed(1)}%</small></td>`;
+      return `<div class="ct anim" data-step="${step}"><h2>${mes}</h2><table>
+        <thead><tr><th>Estatus</th><th>Sin crédito</th><th>Con crédito</th><th>Total</th></tr></thead><tbody>
+        ${rows.filter(r => no[r.k] + si[r.k]).map((r, i) => `<tr style="--r:${i}"><th><i style="background:${r.c}"></i>${r.lb}</th>${cell(no[r.k], tn)}${cell(si[r.k], ts, "si")}${cell(no[r.k] + si[r.k], tn + ts)}</tr>`).join("")}
+        <tr class="tt"><th>Total</th><td>${nf(tn)}<small>100%</small></td><td class="si">${nf(ts)}<small>100%</small></td><td>${nf(tn + ts)}<small>100%</small></td></tr>
+        </tbody></table></div>`;
+    };
+    return `<section class="slide rn" aria-label="Renovaciones · Sin crédito vs con crédito">${rnHead("Sin crédito vs con crédito <span class=\"brand\">· Renovaciones</span>",
+        "Clientes y % sobre cada grupo", "Comparativo")}
+        <div class="cmp2">${tbl("Septiembre", 0)}${tbl("Octubre", 1)}</div>
       </div>
     </section>`;
   }
 
-  // 4 · Foco: vigentes sin pago por intermediario
-  function rnFoco() {
-    const all = rnSum()[2];
-    const credTot = rnSum(undefined, ["Si"])[2];
-    const rows = Object.keys(RN_INT).map(i => ({ i, si: rnSum(undefined, ["Si"], [i])[2], no: rnSum(undefined, ["No"], [i])[2] }));
-    const max = Math.max(...rows.map(r => r.si + r.no));
-    return `<section class="slide rn" aria-label="Renovaciones · Clientes por cobrar">${rnHead("El foco: Corredores <span class=\"brand\">· Por cobrar</span>",
-        "Clientes vigentes que aún no pagan", "Seguimiento")}
-        <div class="foco">
-          <div class="anim"><div class="big" data-count="${all}" data-dec="0">${nf(all)}</div><div class="bl">clientes por cobrar</div>
-            <div class="bs"><b>${nf(credTot)}</b> ya tienen el crédito aplicado: solo falta el pago.</div></div>
-          <div class="hb">
-            ${rows.map((r, k) => `<div class="hb-row anim" style="--k:${k}">
-              <div class="hn">${RN_INT[r.i]}<span>${nf(r.si + r.no)}<small>${pc(r.si + r.no, all)}%</small></span></div>
-              <div class="hb-track"><div class="hb-bar" style="--w:${(r.si + r.no) / max * 100}%;--k:${k}">
-                <div style="width:${r.si / (r.si + r.no) * 100}%;background:var(--blue)">${r.si > 40 ? nf(r.si) : ""}</div>
-                <div style="width:${r.no / (r.si + r.no) * 100}%;background:#9aa5b1">${r.no > 40 ? nf(r.no) : ""}</div>
-              </div></div></div>`).join("")}
-            <div class="hb-leg anim fade"><span><i style="background:var(--blue)"></i>Con crédito</span><span><i style="background:#9aa5b1"></i>Sin crédito</span></div>
-          </div>
-        </div>
-      </div>
-    </section>`;
-  }
-
-  document.getElementById("deck").insertAdjacentHTML("beforeend", METRICS.map(metricSlide).join("") + rnResumen() + rnAnulaciones() + rnPago() + rnFoco());
+  document.getElementById("deck").insertAdjacentHTML("beforeend", METRICS.map(metricSlide).join("") + rnResumen() + rnMesSlide("Septiembre") + rnMesSlide("Octubre") + rnComparativo());
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
 
   /* =================== Motor de presentación =================== */
