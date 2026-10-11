@@ -286,16 +286,21 @@
   .rt thead th.tt { border-bottom-color: var(--navy); }
   .rt tbody th { text-align: left; font-size: 22px; font-weight: 600; color: var(--navy); padding: 8px 16px 8px 0; white-space: nowrap; border-bottom: 1px solid var(--line); }
   .rt tbody td { text-align: center; padding: 7px 10px; border-bottom: 1px solid var(--line); border-left: 2px solid var(--line); line-height: 1.1; }
-  .rt tbody td b { display: block; font-size: 30px; font-weight: 700; color: var(--navy); }
-  .rt tbody td small { display: block; font-size: 16px; font-weight: 600; color: var(--blue); margin-top: 3px; }
-  .rt tbody td small.z { color: #c3ccd6; font-weight: 500; }
+  .rt tbody td b { font-size: 30px; font-weight: 700; color: var(--navy); }
+  .rt tbody td em { font-style: normal; font-size: 18px; font-weight: 600; color: var(--muted); margin-left: 8px; }
   .rt tbody td.tt { background: #f6f8fb; }
   .rt tbody tr.tot th, .rt tbody tr.tot td { background: var(--cyan-soft); border-bottom: 0; }
-  .rt tbody tr.pc th, .rt tbody tr.pc td { border-bottom: 0; padding-top: 12px; }
-  .rt tbody tr.pc th { font-size: 18px; color: var(--muted); font-weight: 600; }
-  .rt tbody tr.pc td b { font-size: 26px; color: var(--muted); }
-  .rt-leg { display: flex; gap: 28px; font-size: 16px; color: var(--muted); }
-  .rt-leg b { color: var(--blue); }
+  .rt-cap { font-size: 18px; color: var(--muted); margin-bottom: 4px; }
+  .rt-cap b { color: var(--navy); }
+  .sw { display: inline-grid; }
+  .sw > span { grid-area: 1 / 1; transition: opacity .5s ease, transform .6s var(--ease); }
+  .sw .vc { opacity: 0; transform: translateY(10px); }
+  .rt-box:has(.swap.in) .sw .va { opacity: 0; transform: translateY(-10px); }
+  .rt-box:has(.swap.in) .sw .vc { opacity: 1; transform: none; }
+  .rt-box:has(.swap.in) .rt-cap b, .rt-box:has(.swap.in) .rt tbody td b { color: var(--blue); }
+  .rt-box:has(.swap.in) .rt tbody tr.tot th, .rt-box:has(.swap.in) .rt tbody tr.tot td { background: #e3effa; }
+  .sw .vc.z b { color: #c3ccd6 !important; }
+  .rt-box .swap { position: absolute; }
 
   /* ---------- Controles ---------- */
   .controls { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(11,47,91,.82); color: #fff; backdrop-filter: blur(6px); font-size: 14px; opacity: 0; pointer-events: none; transform: translate(-50%, 24px); transition: opacity .3s ease, transform .4s var(--ease); z-index: 10; }
@@ -1063,14 +1068,16 @@
     ].filter(c => all[c.k] > 0);
     const tiles = v => `<div class="tiles" style="grid-template-columns:repeat(${cols.length},1fr)">${cols.map(c =>
       `<div class="tile${v[c.k] ? "" : " z"}" style="--c:${c.c}"><div class="lb">${c.lb}</div><div class="n">${nf(v[c.k])}</div><div class="p">${(v[c.k] / tot(v) * 100).toFixed(0)}%</div></div>`).join("")}</div>`;
-    const cell = (a, c, cls = "") => `<td class="${cls}"><b>${nf(a)}</b>${c ? `<small>${nf(c)} con crédito</small>` : `<small class="z">— con crédito</small>`}</td>`;
-    const row = (lb, a, c, cls, step) => `<tr class="${cls} anim" data-step="${step}"><th>${lb}</th>${cols.map(col => cell(a[col.k], c[col.k])).join("")}${cell(tot(a), tot(c), "tt")}</tr>`;
+    // Cada celda tiene dos valores superpuestos: todos los clientes (.va) y solo con crédito (.vc);
+    // al llegar al paso del cambio, la tabla pasa de uno a otro con una transición.
+    const val = (v, pc) => `<b>${nf(v)}</b>${pc != null ? `<em>${pc}%</em>` : ""}`;
+    const cell = (a, c, cls = "", pa, pcr) => `<td class="${cls}"><span class="sw"><span class="va">${val(a, pa)}</span><span class="vc${c ? "" : " z"}">${val(c, pcr)}</span></span></td>`;
     const ints = ["CS", "AG", "DI"];
     const body = ints.map((i, k) => {
       const a = addv(RN[mes][i].No, RN[mes][i].Si), c = RN[mes][i].Si;
-      return row(i === "CS" ? "Corredores de Seguros" : RN_INT[i], a, c, "", 2 + k);
-    }).join("") + row("Total", all, cr, "tot", 5)
-      + `<tr class="pc anim" data-step="6"><th>% del total</th>${cols.map(col => `<td><b>${(all[col.k] / tot(all) * 100).toFixed(0)}%</b><small>${(cr[col.k] / tot(cr) * 100).toFixed(0)}% con crédito</small></td>`).join("")}<td class="tt"><b>100%</b><small>${(tot(cr) / tot(all) * 100).toFixed(0)}% recibió crédito</small></td></tr>`;
+      return `<tr style="--r:${k}"><th>${i === "CS" ? "Corredores de Seguros" : RN_INT[i]}</th>${cols.map(col => cell(a[col.k], c[col.k])).join("")}${cell(tot(a), tot(c), "tt")}</tr>`;
+    }).join("") + `<tr class="tot" style="--r:3"><th>Total</th>${cols.map(col => cell(all[col.k], cr[col.k], "",
+        Math.round(all[col.k] / tot(all) * 100), Math.round(cr[col.k] / tot(cr) * 100))).join("")}${cell(tot(all), tot(cr), "tt")}</tr>`;
     return `<section class="slide rn" aria-label="Renovaciones · ${mes}">${rnHead(`${mes} <span class="brand">· Renovaciones</span>`,
         `<b>${nf(tot(all))} clientes</b> · ${nf(tot(cr))} aplicaron para el crédito`, "Detalle")}
         <div class="rt-wrap">
@@ -1080,11 +1087,14 @@
             <div class="fl cr anim" data-step="1"><div class="n">${nf(tot(cr))}</div><div class="t">aplicaron al crédito (${(tot(cr) / tot(all) * 100).toFixed(0)}%) · ¿qué pasó?</div></div>
             <div class="anim" data-step="1">${tiles(cr)}</div>
           </div>
-          <table class="rt anim" data-step="2">
-            <thead><tr><th class="blank"></th>${cols.map(c => `<th style="--c:${c.c}">${c.lb}</th>`).join("")}<th class="tt">Total</th></tr></thead>
-            <tbody>${body}</tbody>
-          </table>
-          <div class="rt-leg anim fade" data-step="6"><span>Número grande = total de clientes · <b>azul</b> = de ellos, cuántos recibieron el crédito</span></div>
+          <div class="rt-box anim" data-step="2">
+            <div class="rt-cap"><span class="sw"><span class="va">Por intermediario · <b>todos los clientes</b></span><span class="vc">Por intermediario · <b>solo los que aplicaron al crédito</b></span></span></div>
+            <table class="rt">
+              <thead><tr><th class="blank"></th>${cols.map(c => `<th style="--c:${c.c}">${c.lb}</th>`).join("")}<th class="tt">Total</th></tr></thead>
+              <tbody>${body}</tbody>
+            </table>
+            <i class="swap anim" data-step="3"></i>
+          </div>
         </div>
       </div>
     </section>`;
