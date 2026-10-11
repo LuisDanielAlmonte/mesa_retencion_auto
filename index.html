@@ -1203,14 +1203,14 @@
           <span class="k"><b>${rows.length}</b> intermediarios</span><span class="k">·</span>
           <span class="k"><b>${nf(sum(3))}</b> de <b>${nf(sum(4))}</b> pagaron su 1ra cuota (${Math.round(sum(3) / sum(4) * 100)}%)</span><span class="k">·</span>
           <span class="k"><b style="color:var(--blue)">${nf(sum(6))}</b> con pago parcial</span><span class="k">·</span>
-          <span class="k o"><b>${nf(sum(5))}</b> pendientes de pago</span></div>
+          <span class="k o"><b>${nf(sum(5))}</b> sin pago</span></div>
         <table class="ibt">
-          <thead><tr><th></th><th class="l">Intermediario · Director · Gerente</th><th>Pagaron 1ra cuota / Total</th><th></th><th>%</th><th>Pendientes de pago</th><th>Pago parcial<br><span style="text-transform:none;letter-spacing:0;font-weight:500">(abonó, sin completar)</span></th><th>Canceladas</th></tr></thead>
+          <thead><tr><th></th><th class="l">Intermediario · Director · Gerente</th><th>Pagaron 1ra cuota / Total</th><th></th><th>%</th><th>Pago parcial<br><span style="text-transform:none;letter-spacing:0;font-weight:500">(abonó, sin completar)</span></th><th>Sin pago</th><th>Canceladas</th></tr></thead>
           <tbody>${rows.map((r, i) => { const p = r[3] / r[4] * 100; return `<tr style="--r:${i}">
             <td class="n"><span>${i + 1}</span></td>
             <td class="nm"><b>${r[0]}</b><small>Dir. ${r[1]} · Ger. ${r[2]}</small></td>
             <td class="fr"><b>${r[3]}</b> / ${r[4]}</td><td class="br"><div><i style="width:${p}%"></i></div></td>
-            <td class="pc">${Math.round(p)}%</td>${v(r[5], "pe")}${v(r[6], "pp")}${v(r[7], "ca")}</tr>`; }).join("")}</tbody>
+            <td class="pc">${Math.round(p)}%</td>${v(r[6], "pp")}${v(r[5], "pe")}${v(r[7], "ca")}</tr>`; }).join("")}</tbody>
         </table>
       </div>`;
   }
