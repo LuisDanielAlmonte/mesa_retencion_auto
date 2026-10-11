@@ -175,16 +175,28 @@
   .pstage.on .pname { transform: none; }
   .legend i.bar { width: 14px; height: 14px; border: 0; border-radius: 3px; background: var(--cyan); }
   .legend .ch i { border-color: var(--navy); border-top-width: 4px; }
-  .pname { border-radius: 22px; padding: 34px 32px; color: #fff; background: linear-gradient(160deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+  .pname { border-radius: 22px; padding: 26px 28px; color: #fff; background: linear-gradient(160deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
   .pname::after { content: ""; position: absolute; right: -80px; top: -80px; width: 240px; height: 240px; border-radius: 50%; background: rgba(0,180,230,.22); }
   .pname .g { font-size: 14px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); }
   .pname .n { font-size: 46px; font-weight: 700; line-height: 1.05; margin-top: 8px; }
   .pname .c { font-size: 19px; color: rgba(255,255,255,.75); margin-top: 6px; }
-  .pname .cart { margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,.2); display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 1; }
+  .pname .cart { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.2); display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 1; }
   .pname .cart .l { font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.65); }
-  .pname .cart .v { font-size: 52px; font-weight: 700; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .pname .cart .v { font-size: 40px; font-weight: 700; line-height: 1.05; font-variant-numeric: tabular-nums; }
   .pname .cart .fin .v { color: #7fdcff; }
-  .pname .cart .arrow { font-size: 30px; color: rgba(255,255,255,.45); line-height: 1; }
+  .pname .cart .arrow { font-size: 24px; color: rgba(255,255,255,.45); line-height: 1; }
+  .grow-box { margin-top: 22px; padding: 18px 18px 16px; border-radius: 16px; background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.16); position: relative; z-index: 1; }
+  .grow-box .gb-row { display: flex; justify-content: space-between; gap: 12px; }
+  .grow-box .gb-b { text-align: right; }
+  .grow-box .l { font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.65); }
+  .grow-box .gv { font-size: 34px; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .grow-box .gv.b { color: var(--orange); }
+  .grow-box .gb-bar { margin-top: 12px; height: 10px; border-radius: 5px; background: rgba(255,255,255,.15); overflow: hidden; }
+  .grow-box .gb-fill { height: 100%; width: 0; border-radius: 5px; transition: width 1.3s var(--ease) .5s; }
+  .pstage.on .grow-box .gb-fill { width: var(--w); }
+  .grow-box .gb-fill.ok { background: #6fe0a6; } .grow-box .gb-fill.bad { background: #ffb37a; }
+  .grow-box .gb-tag { margin-top: 10px; font-size: 15px; font-weight: 700; }
+  .grow-box .gb-tag.ok { color: #6fe0a6; } .grow-box .gb-tag.bad { color: #ffb37a; }
   .pcard { position: relative; border: 1px solid var(--line); border-radius: 18px; padding: 8px 14px 0; display: flex; flex-direction: column; min-height: 0; background: #fff; box-shadow: 0 14px 30px -26px rgba(11,47,91,.5); }
   .pcard svg { flex: 1; width: 100%; min-height: 0; display: block; }
   svg .grow { transform-box: fill-box; transform-origin: bottom; animation: grow .8s var(--ease) both; }
@@ -214,7 +226,7 @@
   .metric tbody td.g { border-left: 1px solid var(--line); }
   .metric tbody td.an { color: var(--muted); }
   .metric tbody tr.ov th, .metric tbody tr.ov td { font-weight: 600; color: var(--blue); background: var(--row-hl); }
-  .sep-hl { position: absolute; right: -6px; top: 44px; bottom: -6px; width: calc((100% - 185px) / 8 + 12px); border: 3px solid var(--alert); border-radius: 16px; pointer-events: none; box-shadow: 0 0 0 6px rgba(232, 89, 12, .1); }
+  .sep-hl { position: absolute; right: -6px; top: 44px; bottom: -6px; width: calc((100% - 185px) / 7 + 12px); border: 3px solid var(--alert); border-radius: 16px; pointer-events: none; box-shadow: 0 0 0 6px rgba(232, 89, 12, .1); }
   .s3-side.fill .kpi { flex: 1; }
   .s3-side.fill .kpi .v { font-size: 72px; }
   .s3-side { display: flex; flex-direction: column; gap: 18px; min-height: 0; }
@@ -242,6 +254,23 @@
   .controls button:disabled { opacity: .35; cursor: default; }
   .controls .count { min-width: 52px; text-align: center; font-variant-numeric: tabular-nums; }
   @media (hover: none) { .controls { opacity: 1; } }
+  .controls .hid { font-size: 12px; padding: 0 8px; color: #ffb37a; }
+  .sl-panel { position: fixed; inset: 0; z-index: 20; background: rgba(5,15,28,.55); backdrop-filter: blur(3px); display: grid; place-items: center; padding: 16px; }
+  .sl-panel[hidden] { display: none; }
+  .sl-box { width: min(560px, 100%); max-height: 90vh; overflow: auto; background: #fff; border-radius: 18px; padding: 22px 24px; box-shadow: 0 30px 80px rgba(0,0,0,.4); font-size: 15px; }
+  .sl-head { display: flex; justify-content: space-between; align-items: center; font-size: 19px; color: var(--navy); }
+  .sl-head button, .sl-foot button { all: unset; cursor: pointer; }
+  .sl-head button { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; color: var(--muted); }
+  .sl-head button:hover { background: var(--line); }
+  .sl-box p { color: var(--muted); margin: 6px 0 14px; }
+  .sl-box ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .sl-box li label { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); cursor: pointer; }
+  .sl-box li label:hover { background: var(--cyan-soft); }
+  .sl-box li input { width: 18px; height: 18px; accent-color: var(--blue); }
+  .sl-box li .n { width: 26px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .sl-box li.off label { opacity: .5; text-decoration: line-through; }
+  .sl-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; color: var(--muted); font-size: 13px; }
+  .sl-foot button { padding: 8px 14px; border-radius: 999px; background: var(--blue); color: #fff; font-weight: 600; font-size: 14px; }
 
   @media (prefers-reduced-motion: reduce) {
     .slide, .anim, .deco, .progress, .tab { transition: none !important; }
@@ -256,7 +285,8 @@
     .slide { position: relative; opacity: 1; visibility: visible; transform: none; width: 1920px; height: 1080px; break-after: page; }
     .anim { opacity: 1 !important; transform: none !important; }
     svg .pop, svg .fadein, svg .grow { opacity: 1; animation: none; }
-    .controls, .progress { display: none; }
+    .controls, .progress, .sl-panel { display: none !important; }
+    .slide.skip { display: none; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 </style>
@@ -310,7 +340,7 @@
             <div class="kpi main anim from-right">
               <h3>Churn 2026 · ene–sep</h3>
               <div class="v" data-count="2.44" data-dec="2" data-suffix="%">2.44%</div>
-              <span class="pill">10 pb bajo objetivo</span>
+              <span class="pill">0.10 p.p. bajo objetivo</span>
             </div>
             <div class="kpi anim from-right">
               <h3>Objetivo</h3>
@@ -372,7 +402,17 @@
   <span class="count" id="count">1 / 1</span>
   <button id="next" aria-label="Siguiente">›</button>
   <button id="fs" aria-label="Pantalla completa" title="Pantalla completa (F)">⛶</button>
+  <button id="menu" aria-label="Mostrar u ocultar slides" title="Mostrar u ocultar slides (O)">☰</button>
 </nav>
+
+<div class="sl-panel" id="sl-panel" hidden>
+  <div class="sl-box" role="dialog" aria-label="Mostrar u ocultar slides">
+    <div class="sl-head"><b>Slides de la presentación</b><button id="sl-close" aria-label="Cerrar">✕</button></div>
+    <p>Desmarca un slide para ocultarlo. Se salta al presentar y al imprimir. La elección se guarda en este navegador.</p>
+    <ol id="sl-list"></ol>
+    <div class="sl-foot"><button id="sl-all">Mostrar todos</button><span>Tecla <b>O</b> para abrir · <b>Esc</b> para cerrar</span></div>
+  </div>
+</div>
 
 <script>
   const C = { cyan: "#00b4e6", blue: "#0067b1", navy: "#0b2f5b", orange: "#ffa94d", alert: "#e8590c", red: "#e03131", good: "#12b886", gray: "#9aa5b1", line: "#e4ebf2", muted: "#6b7c8f", ink: "#1c2b3a" };
@@ -417,15 +457,15 @@
   /* =================== Datos · Planes =================== */
   // cartera: ene–oct (oct = inicio del mes, real) · cancel: ene–sep (meses cerrados)
   const PLANS = [
-    { name: "Mi Auto Flex",    cov: "Todo riesgo pérdida total",  group: "dp",
+    { name: "Mi Auto Flex", budget: 286,    cov: "Todo riesgo pérdida total",  group: "dp",
       cartera: [1148,1175,1214,1253,1294,1242,1308,1352,1426,1478], cancel: [28,31,30,21,18,25,34,28,47] },
-    { name: "Mi Auto Full",    cov: "Todo riesgo con deducible",  group: "dp",
+    { name: "Mi Auto Full", budget: 5813,    cov: "Todo riesgo con deducible",  group: "dp",
       cartera: [26905,27622,28134,28749,29128,29706,30084,30588,30849,30846], cancel: [623,659,676,822,616,830,794,843,1009] },
-    { name: "Mi Auto Premier", cov: "Todo riesgo cero deducible", group: "dp",
+    { name: "Mi Auto Premier", budget: 278, cov: "Todo riesgo cero deducible", group: "dp",
       cartera: [2157,2186,2246,2271,2310,2370,2401,2441,2469,2512], cancel: [42,26,43,45,35,80,51,53,80] },
-    { name: "Mi Auto Básico",  cov: "Seguro de ley",              group: "sl",
+    { name: "Mi Auto Básico", budget: 6301,  cov: "Seguro de ley",              group: "sl",
       cartera: [29381,30501,30967,31456,32028,32768,33331,33964,34325,34795], cancel: [626,722,854,636,543,760,857,856,1021] },
-    { name: "Mi Moto Básico",  cov: "Seguro de ley",              group: "sl",
+    { name: "Mi Moto Básico", budget: -306,  cov: "Seguro de ley",              group: "sl",
       cartera: [699,858,1007,1154,1347,1546,1720,1897,2053,2150], cancel: [5,3,4,4,7,13,18,16,68] },
   ];
   PLANS.forEach((p, i) => {
@@ -437,9 +477,7 @@
   });
 
   /* =================== Datos · Métricas de gestión =================== */
-  const PERIODS = ["2023","2024","2025","Q1 2026","Q2 2026","Julio 2026","Agosto 2026","Septiembre 2026"];
-  const PERIODS_ALL = PERIODS;
-  const PERIODS_23FEB = ["2023 (feb–dic)", ...PERIODS.slice(1)];   // reportes cuyo detalle mensual inicia en feb 2023
+  const PERIODS = ["2024","2025","Q1 2026","Q2 2026","Julio 2026","Agosto 2026","Septiembre 2026"];
   const SERIES_STYLE = [                       // [0] = Overall
     { color: C.blue, width: 4, text: C.blue, weight: 700 },
     { color: C.cyan, width: 3.5, text: C.cyan, weight: 500 },
@@ -452,76 +490,76 @@
     { brand: "Mi Auto", objective: 2.54,
       series: ["Overall", "Individual", "Flotilla"],
       cust: {
-        Overall:    { pct: nums("2.72 3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("14,486 18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("44,380 48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
-        Individual: { pct: nums("2.73 3.17 2.63 2.30 2.24 2.65 2.53 3.36"), an: strs("10,421 13,447 12,309 3,344 3,529 1,442 1,404 1,890"), ca: strs("31,711 35,361 39,159 48,361 52,131 54,362 55,415 56,235") },
-        Flotilla:   { pct: nums("2.68 2.99 2.77 2.50 2.19 2.15 2.64 2.25"), an: strs("4,065 4,863 4,246 1,028 926 312 392 335"),          ca: strs("12,669 13,534 12,739 13,706 14,076 14,482 14,827 14,887") },
+        Overall:    { pct: nums("3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
+        Individual: { pct: nums("3.17 2.63 2.30 2.24 2.65 2.53 3.36"), an: strs("13,447 12,309 3,344 3,529 1,442 1,404 1,890"), ca: strs("35,361 39,159 48,361 52,131 54,362 55,415 56,235") },
+        Flotilla:   { pct: nums("2.99 2.77 2.50 2.19 2.15 2.64 2.25"), an: strs("4,863 4,246 1,028 926 312 392 335"),          ca: strs("13,534 12,739 13,706 14,076 14,482 14,827 14,887") },
       },
       rev: {
-        Overall:    { pct: nums("1.67 2.12 1.88 1.57 1.65 1.73 1.89 2.44"), an: strs("239.1 386.9 381.0 98.7 110.4 39.7 44.1 57.4"), ca: strs("1,172.2 1,516.1 1,699.8 2,087.4 2,233.1 2,303.2 2,333.2 2,358.3") },
-        Individual: { pct: nums("2.18 2.65 2.12 1.89 2.06 2.16 2.29 2.99"), an: strs("213.4 341.0 316.0 88.6 103.1 37.2 40.0 52.7"), ca: strs("802.8 1,067.5 1,248.9 1,563.2 1,673.1 1,727.1 1,744.9 1,760.7") },
-        Flotilla:   { pct: nums("0.57 0.85 1.18 0.63 0.44 0.44 0.71 0.80"), an: strs("25.7 45.9 64.9 10.1 7.3 2.5 4.1 4.7"),         ca: strs("369.3 448.6 450.8 524.2 559.9 576.1 588.2 597.5") },
+        Overall:    { pct: nums("2.12 1.88 1.57 1.65 1.73 1.89 2.44"), an: strs("386.9 381.0 98.7 110.4 39.7 44.1 57.4"), ca: strs("1,516.1 1,699.8 2,087.4 2,233.1 2,303.2 2,333.2 2,358.3") },
+        Individual: { pct: nums("2.65 2.12 1.89 2.06 2.16 2.29 2.99"), an: strs("341.0 316.0 88.6 103.1 37.2 40.0 52.7"), ca: strs("1,067.5 1,248.9 1,563.2 1,673.1 1,727.1 1,744.9 1,760.7") },
+        Flotilla:   { pct: nums("0.85 1.18 0.63 0.44 0.44 0.71 0.80"), an: strs("45.9 64.9 10.1 7.3 2.5 4.1 4.7"),         ca: strs("448.6 450.8 524.2 559.9 576.1 588.2 597.5") },
       },
       note: `<p class="sm">El churn de Auto se vio impactado por la cancelación de <b>145 certificados</b> de las flotillas de <b>Banco Caribe</b> y <b>Motor Crédito</b>, equivalentes al <b>7%</b> de las cancelaciones del ramo.</p>
              <p class="sm">Además, las cancelaciones de Agentes aumentaron de manera generalizada un <b>62%</b> (+254 certificados), lideradas por <b>Nicole Arias</b> (25 certificados; churn de 21.93%) y <b>Rubelina Mercedes</b> (24 certificados; churn de 16.44%), entre otros.</p>` },
     { brand: "Mi Auto Flotilla", objective: 3.07,
       series: ["Flotilla Overall", "100% Humano + Líder", "Minoritario"],
       cust: {
-        "Flotilla Overall":    { pct: nums("2.67 2.99 2.77 2.50 2.19 2.15 2.64 2.25"), an: strs("4,065 4,863 4,246 1,028 926 312 392 335"), ca: strs("12,669 13,534 12,739 13,706 14,076 14,482 14,827 14,887") },
-        "100% Humano + Líder": { pct: nums("2.58 2.89 2.65 2.66 2.35 2.31 2.84 2.38"), an: strs("3,426 4,076 3,701 1,022 926 312 392 330"), ca: strs("11,042 11,726 11,670 12,771 13,129 13,533 13,792 13,852") },
-        "Minoritario":         { pct: nums("4.32 4.45 4.12 0.32 0.00 0.00 0.00 0.48"), an: strs("639 787 545 6 0 0 0 5"),                  ca: strs("1,627 1,807 1,070 935 947 949 1,035 1,035") },
+        "Flotilla Overall":    { pct: nums("2.99 2.77 2.50 2.19 2.15 2.64 2.25"), an: strs("4,863 4,246 1,028 926 312 392 335"), ca: strs("13,534 12,739 13,706 14,076 14,482 14,827 14,887") },
+        "100% Humano + Líder": { pct: nums("2.89 2.65 2.66 2.35 2.31 2.84 2.38"), an: strs("4,076 3,701 1,022 926 312 392 330"), ca: strs("11,726 11,670 12,771 13,129 13,533 13,792 13,852") },
+        "Minoritario":         { pct: nums("4.45 4.12 0.32 0.00 0.00 0.00 0.48"), an: strs("787 545 6 0 0 0 5"),                  ca: strs("1,807 1,070 935 947 949 1,035 1,035") },
       },
       rev: {
-        "Flotilla Overall":    { pct: nums("0.75 0.86 1.19 0.64 0.44 0.44 0.72 0.81"), an: strs("25.72 45.89 64.9 10.1 7.3 2.5 4.1 4.7"), ca: strs("369.33 448.59 451.0 524.2 559.9 576.1 588.2 597.5") },
-        "100% Humano + Líder": { pct: nums("0.53 0.85 1.18 0.63 0.44 0.44 0.71 0.80"), an: strs("23.18 45.38 64.6 10.1 7.3 2.5 4.1 4.7"), ca: strs("357.44 434.11 442.4 517.1 552.5 568.5 578.7 587.9") },
-        "Minoritario":         { pct: nums("0.57 0.37 0.27 0.00 0.00 0.00 0.00 0.05"), an: strs("2.54 0.51 0.3 0.0 0 0 0 0.01"),        ca: strs("11.89 14.49 8.5 7.07 7.4 7.6 9.4 9.6") },
+        "Flotilla Overall":    { pct: nums("0.86 1.19 0.64 0.44 0.44 0.72 0.81"), an: strs("45.89 64.9 10.1 7.3 2.5 4.1 4.7"), ca: strs("448.59 451.0 524.2 559.9 576.1 588.2 597.5") },
+        "100% Humano + Líder": { pct: nums("0.85 1.18 0.63 0.44 0.44 0.71 0.80"), an: strs("45.38 64.6 10.1 7.3 2.5 4.1 4.7"), ca: strs("434.11 442.4 517.1 552.5 568.5 578.7 587.9") },
+        "Minoritario":         { pct: nums("0.37 0.27 0.00 0.00 0.00 0.00 0.05"), an: strs("0.51 0.3 0.0 0 0 0 0.01"),        ca: strs("14.49 8.5 7.07 7.4 7.6 9.4 9.6") },
       } },
     { brand: "Mi Auto Emisión – Renovación", objective: 2.54,
       series: ["Overall", "Emisión", "Renovación"],
       cust: {
-        Overall:      { pct: nums("2.71 3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("14,486 18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("44,380 48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
-        "Emisión":    { pct: nums("1.99 1.56 1.48 1.49 1.44 1.65 1.59 2.22"), an: strs("6,402 3,462 3,048 1,163 1,255 496 472 661"),          ca: strs("27,116 19,223 17,209 25,870 28,950 30,016 29,645 29,840") },
-        "Renovación": { pct: nums("3.92 4.17 3.24 2.95 2.86 3.24 3.26 3.79"), an: strs("8,084 14,848 13,507 3,209 3,200 1,258 1,324 1,564"),  ca: strs("17,264 29,672 34,689 36,196 37,257 38,828 40,597 41,282") },
+        Overall:      { pct: nums("3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
+        "Emisión":    { pct: nums("1.56 1.48 1.49 1.44 1.65 1.59 2.22"), an: strs("3,462 3,048 1,163 1,255 496 472 661"),          ca: strs("19,223 17,209 25,870 28,950 30,016 29,645 29,840") },
+        "Renovación": { pct: nums("4.17 3.24 2.95 2.86 3.24 3.26 3.79"), an: strs("14,848 13,507 3,209 3,200 1,258 1,324 1,564"),  ca: strs("29,672 34,689 36,196 37,257 38,828 40,597 41,282") },
       },
       rev: {
-        Overall:      { pct: nums("1.67 2.12 1.88 1.57 1.65 1.73 1.89 2.44"), an: strs("239.1 386.8 381.0 98.7 110.4 39.7 44.1 57.4"), ca: strs("1,172.2 1,516.1 1,699.8 2,087.4 2,233.1 2,303.2 2,333.2 2,358.3") },
-        "Emisión":    { pct: nums("0.87 0.91 0.89 0.90 0.80 0.87 0.89 1.10"), an: strs("79.5 68.6 63.7 24.7 24.6 9.3 9.2 11.5"),      ca: strs("761.0 635.5 602.0 911.2 1,028.1 1,072.4 1,041.2 1,046.8") },
-        "Renovación": { pct: nums("3.22 2.98 2.40 2.10 2.37 2.47 2.70 3.50"), an: strs("159.6 318.2 317.2 74.0 85.8 30.4 34.9 45.9"),   ca: strs("441.1 880.6 1,097.8 1,176.2 1,205.0 1,230.8 1,291.9 1,311.4") },
+        Overall:      { pct: nums("2.12 1.88 1.57 1.65 1.73 1.89 2.44"), an: strs("386.8 381.0 98.7 110.4 39.7 44.1 57.4"), ca: strs("1,516.1 1,699.8 2,087.4 2,233.1 2,303.2 2,333.2 2,358.3") },
+        "Emisión":    { pct: nums("0.91 0.89 0.90 0.80 0.87 0.89 1.10"), an: strs("68.6 63.7 24.7 24.6 9.3 9.2 11.5"),      ca: strs("635.5 602.0 911.2 1,028.1 1,072.4 1,041.2 1,046.8") },
+        "Renovación": { pct: nums("2.98 2.40 2.10 2.37 2.47 2.70 3.50"), an: strs("318.2 317.2 74.0 85.8 30.4 34.9 45.9"),   ca: strs("880.6 1,097.8 1,176.2 1,205.0 1,230.8 1,291.9 1,311.4") },
       } },
     { brand: "Mi Auto Ley – DP", objective: 2.54,
       series: ["Overall", "Ley", "Daños propios"],
       cust: {
-        Overall:         { pct: nums("2.71 3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("14,486 18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("44,389 48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
-        Ley:             { pct: nums("2.81 3.33 2.84 2.36 1.95 2.50 2.22 2.99"), an: strs("7,707 9,647 8,685 2,214 1,963 875 872 1,089"),       ca: strs("22,732 24,159 25,608 31,138 33,433 35,051 35,861 36,378") },
-        "Daños propios": { pct: nums("2.60 2.92 2.50 2.33 2.53 2.60 2.59 3.27"), an: strs("6,779 8,663 7,870 2,158 2,492 879 924 1,136"),       ca: strs("21,648 24,735 26,291 30,929 32,774 33,793 34,381 34,744") },
+        Overall:         { pct: nums("3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("18,310 16,551 4,372 4,455 1,754 1,796 2,225"), ca: strs("48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
+        Ley:             { pct: nums("3.33 2.84 2.36 1.95 2.50 2.43 2.99"), an: strs("9,647 8,681 2,214 1,963 875 872 1,089"), ca: strs("24,159 25,608 31,138 33,433 35,051 35,861 36,378") },
+        "Daños propios": { pct: nums("2.92 2.50 2.33 2.53 2.60 2.69 3.27"), an: strs("8,663 7,870 2,158 2,492 879 924 1,136"), ca: strs("24,735 26,290 30,929 32,774 33,793 34,381 34,744") },
       },
       rev: {
-        Overall:         { pct: nums("1.67 2.13 1.88 1.57 1.65 1.75 1.89 2.44"), an: strs("239.1 386.9 381.0 98.7 110.4 39.7 44.1 57.4"), ca: strs("1,172.2 1,516.1 1,699.8 2,087.4 2,233.1 2,303.2 2,333.2 2,358.3") },
-        Ley:             { pct: nums("2.35 2.92 2.31 1.89 1.59 1.98 2.22 2.36"), an: strs("51.0 72.9 62.3 14.9 13.1 5.5 6.34 6.7"),      ca: strs("179.6 208.4 225.3 262.2 273.7 282.0 285.3 287.1") },
-        "Daños propios": { pct: nums("1.55 1.99 1.82 1.53 1.66 1.69 1.85 2.45"), an: strs("188.1 313.9 318.7 83.8 97.3 34.2 37.8 50.7"),  ca: strs("992.6 1,307.7 1,474.5 1,825.2 1,959.4 2,021.2 2,047.9 2,071.1") },
+        Overall:         { pct: nums("2.12 1.88 1.57 1.65 1.73 1.89 2.44"), an: strs("386.8 381.0 98.7 110.5 39.8 44.2 57.5"), ca: strs("1,516.1 1,699.8 2,087.4 2,233.1 2,303.2 2,333.2 2,358.3") },
+        Ley:             { pct: nums("2.92 2.31 1.89 1.59 1.98 2.22 2.36"), an: strs("72.9 62.3 14.9 13.1 5.6 6.3 6.8"), ca: strs("208.4 225.3 262.3 273.7 282.0 285.3 287.1") },
+        "Daños propios": { pct: nums("1.99 1.82 1.53 1.66 1.69 1.85 2.45"), an: strs("313.9 318.7 83.9 97.4 34.2 37.8 50.7"), ca: strs("1,307.7 1,474.5 1,825.2 1,959.4 2,021.2 2,047.9 2,071.2") },
       } },
-    { brand: "Mi Auto Ley", objective: 2.54, periods: PERIODS_23FEB,
+    { brand: "Mi Auto Ley", objective: 2.54,
       series: ["Overall", "Individual", "Flotilla"],
       cust: {
-        Overall:    { pct: nums("2.81 3.33 2.84 2.36 1.95 2.50 2.43 2.99"), an: strs("7,105 9,647 8,681 2,214 1,963 875 872 1,089"), ca: strs("22,870 24,159 25,608 31,138 33,433 35,051 35,861 36,378") },
-        Individual: { pct: nums("2.96 3.37 2.78 2.28 2.01 2.57 2.35 3.16"), an: strs("6,023 7,841 7,159 1,821 1,736 775 726 996"), ca: strs("18,412 19,370 21,530 26,609 28,787 30,152 30,912 31,478") },
-        Flotilla:   { pct: nums("2.18 3.15 3.09 2.86 1.63 2.04 2.95 1.90"), an: strs("1,082 1,806 1,522 393 227 100 146 93"), ca: strs("4,457 4,789 4,078 4,529 4,646 4,899 4,949 4,900") },
+        Overall:    { pct: nums("3.33 2.84 2.36 1.95 2.50 2.43 2.99"), an: strs("9,647 8,681 2,214 1,963 875 872 1,089"), ca: strs("24,159 25,608 31,138 33,433 35,051 35,861 36,378") },
+        Individual: { pct: nums("3.37 2.78 2.28 2.01 2.57 2.35 3.16"), an: strs("7,841 7,159 1,821 1,736 775 726 996"), ca: strs("19,370 21,530 26,609 28,787 30,152 30,912 31,478") },
+        Flotilla:   { pct: nums("3.15 3.09 2.86 1.63 2.04 2.95 1.90"), an: strs("1,806 1,522 393 227 100 146 93"), ca: strs("4,789 4,078 4,529 4,646 4,899 4,949 4,900") },
       },
       rev: {
-        Overall:    { pct: nums("2.35 2.92 2.31 1.89 1.59 1.98 2.22 2.36"), an: strs("47.2 72.9 62.3 14.9 13.1 5.6 6.3 6.8"), ca: strs("181.4 208.4 225.3 262.3 273.7 282.0 285.3 287.1") },
-        Individual: { pct: nums("2.64 3.01 2.43 2.01 1.71 2.16 2.16 2.70"), an: strs("40.2 57.4 51.8 12.5 11.3 4.9 5.0 6.3"), ca: strs("137.2 158.7 177.9 208.2 220.3 226.9 229.9 232.4") },
-        Flotilla:   { pct: nums("1.42 2.59 1.84 1.43 1.11 1.25 2.47 0.89"), an: strs("7.0 15.5 10.5 2.3 1.8 0.7 1.4 0.5"), ca: strs("44.2 49.7 47.4 54.1 53.4 55.2 55.4 54.8") },
+        Overall:    { pct: nums("2.92 2.31 1.89 1.59 1.98 2.22 2.36"), an: strs("72.9 62.3 14.9 13.1 5.6 6.3 6.8"), ca: strs("208.4 225.3 262.3 273.7 282.0 285.3 287.1") },
+        Individual: { pct: nums("3.01 2.43 2.01 1.71 2.16 2.16 2.70"), an: strs("57.4 51.8 12.5 11.3 4.9 5.0 6.3"), ca: strs("158.7 177.9 208.2 220.3 226.9 229.9 232.4") },
+        Flotilla:   { pct: nums("2.59 1.84 1.43 1.11 1.25 2.47 0.89"), an: strs("15.5 10.5 2.3 1.8 0.7 1.4 0.5"), ca: strs("49.7 47.4 54.1 53.4 55.2 55.4 54.8") },
       } },
-    { brand: "Mi Auto Daños Propios", objective: 2.54, periods: PERIODS_23FEB,
+    { brand: "Mi Auto Daños Propios", objective: 2.54,
       series: ["Overall", "Individual", "Flotilla"],
       cust: {
-        Overall:    { pct: nums("2.63 2.92 2.50 2.33 2.53 2.60 2.69 3.27"), an: strs("6,342 8,663 7,870 2,158 2,492 879 924 1,136"), ca: strs("21,845 24,735 26,290 30,929 32,774 33,793 34,381 34,744") },
-        Individual: { pct: nums("2.43 2.92 2.44 2.33 2.56 2.76 2.77 3.61"), an: strs("3,660 5,606 5,150 1,523 1,793 667 678 894"), ca: strs("13,578 15,991 17,629 21,752 23,344 24,210 24,503 24,757") },
-        Flotilla:   { pct: nums("2.95 2.91 2.62 2.31 2.47 2.21 2.49 2.42"), an: strs("2,682 3,057 2,720 635 699 212 246 242"), ca: strs("8,267 8,744 8,662 9,177 9,431 9,583 9,878 9,987") },
+        Overall:    { pct: nums("2.92 2.50 2.33 2.53 2.60 2.69 3.27"), an: strs("8,663 7,870 2,158 2,492 879 924 1,136"), ca: strs("24,735 26,290 30,929 32,774 33,793 34,381 34,744") },
+        Individual: { pct: nums("2.92 2.44 2.33 2.56 2.76 2.77 3.61"), an: strs("5,606 5,150 1,523 1,793 667 678 894"), ca: strs("15,991 17,629 21,752 23,344 24,210 24,503 24,757") },
+        Flotilla:   { pct: nums("2.91 2.62 2.31 2.47 2.21 2.49 2.42"), an: strs("3,057 2,720 635 699 212 246 242"), ca: strs("8,744 8,662 9,177 9,431 9,583 9,878 9,987") },
       },
       rev: {
-        Overall:    { pct: nums("1.59 1.99 1.82 1.53 1.66 1.69 1.85 2.45"), an: strs("179.0 313.9 318.7 83.9 97.4 34.2 37.8 50.7"), ca: strs("1,008.1 1,307.7 1,474.5 1,825.2 1,959.4 2,021.2 2,047.9 2,071.2") },
-        Individual: { pct: nums("2.12 2.59 2.07 1.87 2.11 2.16 2.31 3.04"), an: strs("161.3 283.5 264.3 76.1 91.8 32.4 35.0 46.4"), ca: strs("678.8 908.9 1,071.0 1,355.0 1,452.9 1,500.3 1,515.1 1,528.4") },
-        Flotilla:   { pct: nums("0.48 0.63 1.09 0.54 0.37 0.35 0.53 0.79"), an: strs("17.7 30.4 54.4 7.8 5.6 1.8 2.8 4.3"), ca: strs("329.3 398.9 403.5 470.1 506.5 520.9 532.8 542.8") },
+        Overall:    { pct: nums("1.99 1.82 1.53 1.66 1.69 1.85 2.45"), an: strs("313.9 318.7 83.9 97.4 34.2 37.8 50.7"), ca: strs("1,307.7 1,474.5 1,825.2 1,959.4 2,021.2 2,047.9 2,071.2") },
+        Individual: { pct: nums("2.59 2.07 1.87 2.11 2.16 2.31 3.04"), an: strs("283.5 264.3 76.1 91.8 32.4 35.0 46.4"), ca: strs("908.9 1,071.0 1,355.0 1,452.9 1,500.3 1,515.1 1,528.4") },
+        Flotilla:   { pct: nums("0.63 1.09 0.54 0.37 0.35 0.53 0.79"), an: strs("30.4 54.4 7.8 5.6 1.8 2.8 4.3"), ca: strs("398.9 403.5 470.1 506.5 520.9 532.8 542.8") },
       } },
   ];
 
@@ -665,6 +703,20 @@
   }
 
   const GROUP_NAME = { dp: "Daños propios", sl: "Seguro de ley" };
+  // Crecimiento estimado 2026 (final esperada − inicial) contra el presupuesto de crecimiento
+  function growthBox(est, budget) {
+    const sg = v => (v > 0 ? "+" : v < 0 ? "−" : "") + nf(Math.abs(v));
+    const diff = est - budget, ok = diff >= 0;
+    const pctOf = budget > 0 ? Math.round(est / budget * 100) : null;
+    const w = budget > 0 ? Math.max(0, Math.min(est / budget, 1)) * 100 : (ok ? 100 : 0);
+    return `<div class="grow-box">
+      <div class="gb-row"><div><div class="l">Crecimiento estimado 2026</div><div class="gv">${sg(est)}</div></div>
+        <div class="gb-b"><div class="l">Presupuesto</div><div class="gv b">${sg(budget)}</div></div></div>
+      <div class="gb-bar"><div class="gb-fill ${ok ? "ok" : "bad"}" style="--w:${w}%"></div></div>
+      <div class="gb-tag ${ok ? "ok" : "bad"}">${ok ? "▲" : "▼"} ${sg(diff)} vs presupuesto${pctOf !== null ? ` · ${pctOf}%` : ""}</div>
+    </div>`;
+  }
+
   // Un plan por paso: barra de pasos arriba y el plan activo a lo grande
   function renderPlanStages(group) {
     const plans = PLANS.filter(p => p.group === group);
@@ -692,7 +744,8 @@
             <div><div class="l">Cartera inicial · ene 2026</div><div class="v" data-count="${p.cartera[0]}" data-dec="0">${nf(p.cartera[0])}</div></div>
             <div class="arrow">↓</div>
             <div class="fin"><div class="l">Final esperada · dic 2026</div><div class="v" data-count="${fin}" data-dec="0">${nf(fin)}</div></div>
-          </div></div>
+          </div>
+          ${growthBox(fin - p.cartera[0], p.budget)}</div>
         <div class="pcard"><svg data-chart="${p.id}" viewBox="0 0 1100 600" role="img" aria-label="Crecimiento mensual y churn de ${p.name} con su proyección"></svg></div>
       </div>`;
     });
@@ -726,8 +779,8 @@
 
   /* =================== Slides de métricas de gestión =================== */
   function segTable(m, kind) {
-    const ds = m[kind], PERIODS = m.periods || PERIODS_ALL;
-    let h = '<colgroup><col class="lbl">' + "<col>".repeat(16) + "</colgroup>";
+    const ds = m[kind];
+    let h = '<colgroup><col class="lbl">' + "<col>".repeat(PERIODS.length * 2) + "</colgroup>";
     h += '<thead><tr class="per"><th class="corner"></th>' + PERIODS.map(p => `<th colspan="2">${p}</th>`).join("") + "</tr>";
     h += '<tr class="sub"><th class="corner">Segmento</th>' + PERIODS.map(() => "<th>Anuladas</th><th>Cartera</th>").join("") + "</tr></thead><tbody>";
     m.series.forEach((key, ri) => {
@@ -739,7 +792,7 @@
   }
 
   function chartSeg(svg, id, m, kind, objective) {
-    const ds = m[kind], PERIODS = m.periods || PERIODS_ALL;
+    const ds = m[kind];
     const [, , W, H] = svg.getAttribute("viewBox").split(" ").map(Number);
     const L = 191, T = 40, B = 26;
     const all = m.series.flatMap(k => ds[k].pct).concat(objective ?? []);
@@ -796,8 +849,8 @@
     const id = "m" + idx;
     const legend = (withObj) => `<div class="legend">${m.series.map((k, i) =>
       `<span><i style="border-color:${SERIES_STYLE[i].color}"></i>${k}</span>`).join("")}${withObj ? '<span class="obj"><i></i>Objetivo</span>' : ""}</div>`;
-    const cSep = m.cust[m.series[0]].pct[7], rSep = m.rev[m.series[0]].pct[7];
-    const pb = Math.round((cSep - m.objective) * 100);
+    const cSep = m.cust[m.series[0]].pct[PERIODS.length - 1], rSep = m.rev[m.series[0]].pct[PERIODS.length - 1];
+    const pp = +(cSep - m.objective).toFixed(2);
     const third = m.note
       ? `<div class="note anim from-right" data-step="2"><h3>¿Qué pasó en septiembre?</h3>${m.note}</div>`
       : "";
@@ -834,12 +887,12 @@
             <div class="kpi anim from-right" data-step="0">
               <h3>Customer churn · Sep 2026</h3>
               <div class="v blue" data-count="${cSep}" data-dec="2" data-suffix="%">${pct(cSep)}</div>
-              <div><span class="pill ${pb > 0 ? "bad" : ""}">${pb > 0 ? "+" : "−"}${Math.abs(pb)} pb ${pb > 0 ? "sobre" : "bajo"} objetivo (${pct(m.objective)})</span></div>
+              <div><span class="pill ${pp > 0 ? "bad" : ""}">${pp > 0 ? "+" : "−"}${Math.abs(pp).toFixed(2)} p.p. ${pp > 0 ? "sobre" : "bajo"} objetivo (${pct(m.objective)})</span></div>
             </div>
             <div class="kpi anim from-right" data-step="1">
               <h3>Revenue churn · Sep 2026</h3>
               <div class="v cyan" data-count="${rSep}" data-dec="2" data-suffix="%">${pct(rSep)}</div>
-              <div class="s">${m.series.slice(1).map(k => `${k} ${pct(m.rev[k].pct[7])}`).join(" · ")}</div>
+              <div class="s">${m.series.slice(1).map(k => `${k} ${pct(m.rev[k].pct[PERIODS.length - 1])}`).join(" · ")}</div>
             </div>
             ${third}
           </div>
@@ -883,10 +936,10 @@
     const k = document.getElementById("k-close");
     Object.assign(k.dataset, { count: CLOSE.toFixed(2), dec: 2, suffix: "%" });
     k.textContent = pct(CLOSE);
-    const pb = Math.round((CLOSE - OBJETIVO) * 100);
+    const pp = +(CLOSE - OBJETIVO).toFixed(2);
     const pill = document.getElementById("k-close-pill");
-    pill.textContent = `${Math.abs(pb)} pb ${pb > 0 ? "sobre" : "bajo"} objetivo`;
-    if (pb <= 0) pill.className = "pill";
+    pill.textContent = `${Math.abs(pp).toFixed(2)} p.p. ${pp > 0 ? "sobre" : "bajo"} objetivo`;
+    if (pp <= 0) pill.className = "pill";
   }
   renderPlanStages("dp");
   renderPlanStages("sl");
@@ -946,8 +999,28 @@
     slide.querySelectorAll(".anim.in").forEach(el => { el.classList.remove("in"); el.style.removeProperty("--d"); });
   }
 
+  /* ---------- Slides ocultos (se guardan en este navegador) ---------- */
+  const HKEY = "mesa-retencion-ocultos";
+  const slideKey = s => s.getAttribute("aria-label");
+  let hiddenKeys = new Set();
+  try { hiddenKeys = new Set(JSON.parse(localStorage.getItem(HKEY) || "[]")); } catch (e) {}
+  const isHidden = i => slides[i].classList.contains("skip");
+  const visible = () => slides.map((_, i) => i).filter(i => !isHidden(i));
+  function applyHidden() {
+    slides.forEach(s => s.classList.toggle("skip", hiddenKeys.has(slideKey(s))));
+    if (!visible().length) { hiddenKeys.clear(); slides.forEach(s => s.classList.remove("skip")); }
+    try { localStorage.setItem(HKEY, JSON.stringify([...hiddenKeys])); } catch (e) {}
+  }
+  // Índice visible más cercano en la dirección indicada
+  function nearestVisible(n, dir = 1) {
+    for (let i = n; i >= 0 && i < slides.length; i += dir) if (!isHidden(i)) return i;
+    for (let i = n; i >= 0 && i < slides.length; i -= dir) if (!isHidden(i)) return i;
+    return 0;
+  }
+
   function go(n, st = 0) {
     n = Math.min(Math.max(n, 0), slides.length - 1);
+    if (isHidden(n)) { n = nearestVisible(n, n >= cur ? 1 : -1); }
     st = Math.min(Math.max(st, 0), stepsOf(slides[n]));
     const changed = n !== cur;
     if (changed) {
@@ -961,14 +1034,43 @@
     cur = n; step = st;
     if (slides[n].dataset.stage) setStage(slides[n], st, stepChanged);
     build(slides[n], st, changed);
-    count.textContent = `${cur + 1} / ${slides.length}`;
-    progress.style.width = ((cur + (step + 1) / (stepsOf(slides[cur]) + 1)) / slides.length * 100) + "%";
-    prev.disabled = cur === 0 && step === 0;
-    next.disabled = cur === slides.length - 1 && step === stepsOf(slides[cur]);
+    const vis = visible(), pos = vis.indexOf(cur);
+    const nHidden = slides.length - vis.length;
+    count.innerHTML = `${pos + 1} / ${vis.length}${nHidden ? `<span class="hid">${nHidden} oculto${nHidden > 1 ? "s" : ""}</span>` : ""}`;
+    progress.style.width = ((pos + (step + 1) / (stepsOf(slides[cur]) + 1)) / vis.length * 100) + "%";
+    prev.disabled = pos === 0 && step === 0;
+    next.disabled = pos === vis.length - 1 && step === stepsOf(slides[cur]);
     history.replaceState(null, "", "#" + (cur + 1));
   }
-  const forward = () => step < stepsOf(slides[cur]) ? go(cur, step + 1) : go(cur + 1, 0);
-  const back = () => step > 0 ? go(cur, step - 1) : (cur > 0 && go(cur - 1, stepsOf(slides[cur - 1])));
+  const nextVis = () => visible().find(i => i > cur);
+  const prevVis = () => visible().reverse().find(i => i < cur);
+  const forward = () => {
+    if (step < stepsOf(slides[cur])) return go(cur, step + 1);
+    const n = nextVis(); if (n != null) go(n, 0);
+  };
+  const back = () => {
+    if (step > 0) return go(cur, step - 1);
+    const n = prevVis(); if (n != null) go(n, stepsOf(slides[n]));
+  };
+
+  // Panel para mostrar u ocultar slides
+  const panel = document.getElementById("sl-panel");
+  function renderPanel() {
+    document.getElementById("sl-list").innerHTML = slides.map((s, i) =>
+      `<li class="${isHidden(i) ? "off" : ""}"><label><input type="checkbox" data-i="${i}" ${isHidden(i) ? "" : "checked"}><span class="n">${i + 1}</span>${slideKey(s)}</label></li>`).join("");
+    document.querySelectorAll("#sl-list input").forEach(inp => inp.addEventListener("change", () => {
+      const k = slideKey(slides[+inp.dataset.i]);
+      inp.checked ? hiddenKeys.delete(k) : hiddenKeys.add(k);
+      applyHidden(); renderPanel();
+      if (isHidden(cur)) go(nearestVisible(cur, 1), 0); else go(cur, step);
+    }));
+  }
+  const openPanel = () => { renderPanel(); panel.hidden = false; };
+  const closePanel = () => { panel.hidden = true; };
+  document.getElementById("menu").onclick = openPanel;
+  document.getElementById("sl-close").onclick = closePanel;
+  panel.addEventListener("click", e => { if (e.target === panel) closePanel(); });
+  document.getElementById("sl-all").onclick = () => { hiddenKeys.clear(); applyHidden(); renderPanel(); go(cur, step); };
 
   function toggleFs() {
     if (document.fullscreenElement) document.exitFullscreen();
@@ -977,10 +1079,12 @@
 
   addEventListener("resize", fit);
   addEventListener("keydown", e => {
+    if (!panel.hidden) { if (e.key === "Escape" || e.key.toLowerCase() === "o") closePanel(); return; }
+    if (e.key.toLowerCase() === "o") return openPanel();
     if (["ArrowRight", "ArrowDown", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); forward(); }
     else if (["ArrowLeft", "ArrowUp", "PageUp", "Backspace"].includes(e.key)) { e.preventDefault(); back(); }
-    else if (e.key === "Home") go(0);
-    else if (e.key === "End") go(slides.length - 1, 99);
+    else if (e.key === "Home") go(visible()[0]);
+    else if (e.key === "End") go(visible().at(-1), 99);
     else if (e.key.toLowerCase() === "f") toggleFs();
   });
   prev.onclick = back;
@@ -991,7 +1095,7 @@
   let tx = null;
   addEventListener("touchstart", e => tx = e.touches[0].clientX, { passive: true });
   addEventListener("touchend", e => {
-    if (tx === null) return;
+    if (tx === null || !panel.hidden) return;
     const dx = e.changedTouches[0].clientX - tx;
     if (Math.abs(dx) > 50) dx < 0 ? forward() : back();
     tx = null;
@@ -1003,6 +1107,7 @@
   });
 
   fit();
+  applyHidden();
   go((parseInt(location.hash.slice(1), 10) || 1) - 1, 0);
 </script>
 </body>
