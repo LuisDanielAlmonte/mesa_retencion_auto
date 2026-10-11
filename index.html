@@ -1201,10 +1201,11 @@
     return `<div class="ibp ${cls}">
         <div class="ibh"><span class="mes">${mes}</span>
           <span class="k"><b>${rows.length}</b> intermediarios</span><span class="k">·</span>
-          <span class="k"><b>${nf(sum(3))}</b> de <b>${nf(sum(4))}</b> pagaron (${Math.round(sum(3) / sum(4) * 100)}%)</span><span class="k">·</span>
+          <span class="k"><b>${nf(sum(3))}</b> de <b>${nf(sum(4))}</b> pagaron su 1ra cuota (${Math.round(sum(3) / sum(4) * 100)}%)</span><span class="k">·</span>
+          <span class="k"><b style="color:var(--blue)">${nf(sum(6))}</b> con pago parcial</span><span class="k">·</span>
           <span class="k o"><b>${nf(sum(5))}</b> pendientes de pago</span></div>
         <table class="ibt">
-          <thead><tr><th></th><th class="l">Intermediario · Director · Gerente</th><th>Pagaron / Total</th><th></th><th>%</th><th>Pendientes de pago</th><th>Pago parcial</th><th>Canceladas</th></tr></thead>
+          <thead><tr><th></th><th class="l">Intermediario · Director · Gerente</th><th>Pagaron 1ra cuota / Total</th><th></th><th>%</th><th>Pendientes de pago</th><th>Pago parcial<br><span style="text-transform:none;letter-spacing:0;font-weight:500">(abonó, sin completar)</span></th><th>Canceladas</th></tr></thead>
           <tbody>${rows.map((r, i) => { const p = r[3] / r[4] * 100; return `<tr style="--r:${i}">
             <td class="n"><span>${i + 1}</span></td>
             <td class="nm"><b>${r[0]}</b><small>Dir. ${r[1]} · Ger. ${r[2]}</small></td>
