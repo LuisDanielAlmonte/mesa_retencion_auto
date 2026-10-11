@@ -340,7 +340,7 @@
             <div class="kpi main anim from-right">
               <h3>Churn 2026 · ene–sep</h3>
               <div class="v" data-count="2.44" data-dec="2" data-suffix="%">2.44%</div>
-              <span class="pill">10 pb bajo objetivo</span>
+              <span class="pill">0.10 p.p. bajo objetivo</span>
             </div>
             <div class="kpi anim from-right">
               <h3>Objetivo</h3>
@@ -479,7 +479,7 @@
   /* =================== Datos · Métricas de gestión =================== */
   const PERIODS = ["2023","2024","2025","Q1 2026","Q2 2026","Julio 2026","Agosto 2026","Septiembre 2026"];
   const PERIODS_ALL = PERIODS;
-  const PERIODS_23FEB = ["2023 (feb–dic)", ...PERIODS.slice(1)];   // reportes cuyo detalle mensual inicia en feb 2023
+  const PERIODS_23FEB = PERIODS;   // el detalle mensual de Ley y Daños Propios inicia en feb 2023
   const SERIES_STYLE = [                       // [0] = Overall
     { color: C.blue, width: 4, text: C.blue, weight: 700 },
     { color: C.cyan, width: 3.5, text: C.cyan, weight: 500 },
@@ -852,7 +852,7 @@
     const legend = (withObj) => `<div class="legend">${m.series.map((k, i) =>
       `<span><i style="border-color:${SERIES_STYLE[i].color}"></i>${k}</span>`).join("")}${withObj ? '<span class="obj"><i></i>Objetivo</span>' : ""}</div>`;
     const cSep = m.cust[m.series[0]].pct[7], rSep = m.rev[m.series[0]].pct[7];
-    const pb = Math.round((cSep - m.objective) * 100);
+    const pp = +(cSep - m.objective).toFixed(2);
     const third = m.note
       ? `<div class="note anim from-right" data-step="2"><h3>¿Qué pasó en septiembre?</h3>${m.note}</div>`
       : "";
@@ -889,7 +889,7 @@
             <div class="kpi anim from-right" data-step="0">
               <h3>Customer churn · Sep 2026</h3>
               <div class="v blue" data-count="${cSep}" data-dec="2" data-suffix="%">${pct(cSep)}</div>
-              <div><span class="pill ${pb > 0 ? "bad" : ""}">${pb > 0 ? "+" : "−"}${Math.abs(pb)} pb ${pb > 0 ? "sobre" : "bajo"} objetivo (${pct(m.objective)})</span></div>
+              <div><span class="pill ${pp > 0 ? "bad" : ""}">${pp > 0 ? "+" : "−"}${Math.abs(pp).toFixed(2)} p.p. ${pp > 0 ? "sobre" : "bajo"} objetivo (${pct(m.objective)})</span></div>
             </div>
             <div class="kpi anim from-right" data-step="1">
               <h3>Revenue churn · Sep 2026</h3>
@@ -938,10 +938,10 @@
     const k = document.getElementById("k-close");
     Object.assign(k.dataset, { count: CLOSE.toFixed(2), dec: 2, suffix: "%" });
     k.textContent = pct(CLOSE);
-    const pb = Math.round((CLOSE - OBJETIVO) * 100);
+    const pp = +(CLOSE - OBJETIVO).toFixed(2);
     const pill = document.getElementById("k-close-pill");
-    pill.textContent = `${Math.abs(pb)} pb ${pb > 0 ? "sobre" : "bajo"} objetivo`;
-    if (pb <= 0) pill.className = "pill";
+    pill.textContent = `${Math.abs(pp).toFixed(2)} p.p. ${pp > 0 ? "sobre" : "bajo"} objetivo`;
+    if (pp <= 0) pill.className = "pill";
   }
   renderPlanStages("dp");
   renderPlanStages("sl");
