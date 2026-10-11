@@ -264,50 +264,30 @@
   .rbar { margin-top: 56px; display: flex; height: 26px; border-radius: 13px; overflow: hidden; background: var(--line); }
   .rbar div { width: 0; transition: width 1.2s var(--ease) .5s; }
   .in .rbar div, .rbar.in div { width: var(--w); }
-  /* Árbol de desglose */
-  .tree { position: relative; margin-top: 18px; flex: 1; min-height: 0; }
-  .tree svg.links { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-  .tree svg.links path { fill: none; stroke: #c9d5e2; stroke-width: 2.5; }
-  .tree .colh { position: absolute; top: -6px; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-  .nd { position: absolute; translate: 0 -50%; border-radius: 14px; background: #fff; border: 1px solid var(--line); box-shadow: 0 10px 24px -18px rgba(11,47,91,.55); padding: 10px 14px; display: flex; flex-direction: column; gap: 6px; }
-  .nd::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 5px; border-radius: 0 4px 4px 0; background: var(--c, var(--blue)); }
-  .nd .t { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
-  .nd .lb { font-size: 17px; font-weight: 600; color: var(--navy); white-space: nowrap; }
-  .nd .lb small { font-weight: 400; color: var(--muted); font-size: 13px; margin-left: 6px; }
-  .nd .v { font-size: 26px; font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
-  .nd .v small { font-size: 13px; font-weight: 500; color: var(--muted); margin-left: 4px; }
-  .nd .sp { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .nd .sp span b { font-size: 16px; }
-  .nd .sp .no b { color: #6b7785; } .nd .sp .si b { color: var(--blue); }
-  .nd .bar { display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: var(--line); }
-  .nd .bar i { display: block; height: 100%; }
-  .nd.root { background: linear-gradient(150deg, var(--blue), var(--navy)); border: 0; padding: 18px 20px; }
-  .nd.root::before { display: none; }
-  .nd.root .lb, .nd.root .v { color: #fff; } .nd.root .lb { font-size: 26px; } .nd.root .v { font-size: 50px; }
-  .nd.root .t { flex-direction: column; align-items: flex-start; gap: 0; }
-  .nd.root .sp { grid-template-columns: 1fr; gap: 2px; font-size: 16px; }
-  .nd.root .sp, .nd.root .v small { color: rgba(255,255,255,.75); } .nd.root .sp .no b, .nd.root .sp .si b { color: #fff; }
-  .nd.leaf { flex-direction: row; align-items: center; gap: 16px; padding: 8px 14px 8px 18px; }
-  .nd.leaf .t { flex: 1; }
-  .nd.leaf .sp { width: 230px; flex: none; }
-  .nd .nnote { font-size: 13px; color: var(--muted); font-style: italic; }
-  .tree .anim.lk { transition-delay: var(--d, 0s); }
-  .tleg { display: flex; gap: 22px; font-size: 15px; color: var(--muted); }
-  .tleg i { width: 14px; height: 14px; border-radius: 4px; display: inline-block; margin-right: 6px; vertical-align: -2px; }
-  /* Comparativo sin vs con crédito */
-  .cmp2 { margin-top: 40px; flex: 1; display: grid; align-content: center; padding-bottom: 40px; grid-template-columns: 1fr 1fr; gap: 34px; }
-  .ct { border: 1px solid var(--line); border-radius: 20px; overflow: hidden; background: #fff; box-shadow: 0 18px 40px -28px rgba(11,47,91,.45); align-self: start; }
-  .ct h2 { margin: 0; padding: 22px 26px; font-size: 32px; color: #fff; background: linear-gradient(120deg, var(--navy), var(--blue)); }
-  .ct table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-  .ct th, .ct td { padding: 26px 22px; font-size: 25px; border-top: 1px solid var(--line); }
-  .ct thead th { background: var(--cyan-soft); color: var(--navy); font-size: 16px; letter-spacing: .06em; text-transform: uppercase; border: 0; text-align: right; }
-  .ct thead th:first-child { text-align: left; }
-  .ct tbody th { text-align: left; font-weight: 600; color: var(--navy); white-space: nowrap; }
-  .ct tbody th i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; margin-right: 10px; }
-  .ct td { text-align: right; }
-  .ct td small { color: var(--muted); font-size: 16px; margin-left: 8px; display: inline-block; width: 54px; }
-  .ct td.si { color: var(--blue); font-weight: 600; }
-  .ct tr.tt th, .ct tr.tt td { font-weight: 700; background: #f6f8fb; }
+  /* Tabla limpia por mes */
+  .rt-wrap { margin-top: 30px; flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 30px; }
+  .rt { width: 100%; border-collapse: separate; border-spacing: 0; font-variant-numeric: tabular-nums; }
+  .rt th, .rt td { border: 0; }
+  .rt thead tr.g th { padding: 14px 10px; font-size: 24px; font-weight: 700; color: var(--navy); background: none; text-align: center; border-bottom: 5px solid var(--c); }
+  .rt thead tr.g th.blank { border: 0; }
+  .rt thead tr.g th.tt { border-bottom-color: var(--navy); }
+  .rt thead tr.s th { padding: 12px 10px; font-size: 16px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; background: none; color: var(--muted); text-align: center; }
+  .rt thead tr.s th.si { color: var(--blue); }
+  .rt tbody th { text-align: left; font-size: 26px; font-weight: 600; color: var(--navy); padding: 22px 16px 22px 0; white-space: nowrap; border-bottom: 1px solid var(--line); }
+  .rt tbody td { text-align: center; font-size: 34px; font-weight: 500; color: #4a5866; padding: 22px 10px; border-bottom: 1px solid var(--line); }
+  .rt tbody td.si { color: var(--blue); font-weight: 700; }
+  .rt tbody td.gap { border-left: 2px solid var(--line); }
+  .rt tbody td.tt { font-weight: 700; color: var(--navy); border-left: 2px solid var(--line); background: #f6f8fb; }
+  .rt tbody td.zero { color: #c3ccd6; }
+  .rt tbody tr.tot th, .rt tbody tr.tot td { font-weight: 700; color: var(--navy); background: var(--cyan-soft); border-bottom: 0; }
+  .rt tbody tr.tot td.si { color: var(--blue); }
+  .rt tbody tr.pc th, .rt tbody tr.pc td { font-size: 24px; color: var(--muted); padding: 16px 10px; border-bottom: 0; }
+  .rt tbody tr.pc th { font-size: 20px; padding-left: 0; }
+  .rt tbody tr.pc td.si { color: var(--blue); }
+  .rt tbody tr.pc td.hi { color: var(--navy); font-weight: 700; }
+  .rt tbody tr.pc td.si.hi { color: var(--blue); }
+  .rt-leg { margin-top: 26px; display: flex; gap: 28px; font-size: 17px; color: var(--muted); }
+  .rt-leg b { color: var(--blue); }
 
   /* ---------- Controles ---------- */
   .controls { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(11,47,91,.82); color: #fff; backdrop-filter: blur(6px); font-size: 14px; opacity: 0; pointer-events: none; transform: translate(-50%, 24px); transition: opacity .3s ease, transform .4s var(--ease); z-index: 10; }
@@ -1063,98 +1043,41 @@
     </section>`;
   }
 
-  // Anuladas que tenían pago registrado (dentro de las anuladas): [No, Si]
-  const RN_ANUL_CP = { Septiembre: { AG: [0, 0], CS: [8, 0], DI: [0, 0] }, Octubre: { AG: [1, 0], CS: [2, 2], DI: [0, 0] } };
-  const ST = [ // estatus finales, en orden
-    { k: 1, lb: "Con pago", c: "var(--pago)" },
-    { k: 3, lb: "Pendiente de renovar", c: "var(--pend)" },
-    { k: 2, lb: "Sin pago", c: "var(--sinpago)" },
-  ];
-
-  // Árbol del mes: Mes → Intermediario → Anulada / Vigente → Con pago / Pendiente / Sin pago
-  function rnTree(mes) {
-    const node = (lb, no, si, extra = {}) => ({ lb, no, si, n: no + si, ...extra });
-    const ints = Object.keys(RN_INT).map(i => {
-      const d = RN[mes][i];
-      const kids = [];
-      const an = node("Anulada", d.No[0], d.Si[0], { c: "var(--anul)", leaf: true,
-        note: (() => { const cp = RN_ANUL_CP[mes][i][0] + RN_ANUL_CP[mes][i][1]; return cp ? `incluye ${cp} con pago` : ""; })() });
-      if (an.n) kids.push(an);
-      const vk = ST.map(s => node(s.lb, d.No[s.k], d.Si[s.k], { c: s.c, leaf: true })).filter(x => x.n);
-      kids.push(node("Vigente", vk.reduce((a, x) => a + x.no, 0), vk.reduce((a, x) => a + x.si, 0), { c: "var(--blue)", kids: vk }));
-      return node(RN_INT[i], d.No.reduce((a, b) => a + b, 0), d.Si.reduce((a, b) => a + b, 0), { c: "var(--navy)", kids });
-    });
-    const root = node(mes, ints.reduce((a, x) => a + x.no, 0), ints.reduce((a, x) => a + x.si, 0), { root: true, kids: ints });
-
-    // Layout: cada hoja ocupa una fila; los padres se centran sobre sus hojas
-    const W = 1700, H = 760, top = 64;
-    const COLS = [{ x: 0, w: 270 }, { x: 345, w: 320 }, { x: 745, w: 300 }, { x: 1120, w: 580 }];
-    const leaves = [];
-    const walk = (n, depth) => { n.depth = depth; if (n.kids) n.kids.forEach(k => walk(k, depth + 1)); else leaves.push(n); };
-    walk(root, 0);
-    const rowH = (H - top) / leaves.length;
-    leaves.forEach((l, r) => { l.y = top + rowH * (r + 0.5); l.col = 3; });
-    const place = n => { if (n.kids) { n.kids.forEach(place); n.y = (n.kids[0].y + n.kids.at(-1).y) / 2; } n.col = n.kids ? n.depth : 3; };
-    place(root);
-    // Las anuladas son hojas en la columna de estatus
-    const all = []; const coll = n => { all.push(n); (n.kids || []).forEach(coll); }; coll(root);
-    all.forEach(n => { if (n.leaf && n.lb === "Anulada") n.col = 2; });
-
-    const pctM = v => (v / root.n * 100).toFixed(1) + "%";
-    const sp = n => `<div class="sp"><span class="no">Sin crédito <b>${nf(n.no)}</b></span><span class="si">Con crédito <b>${nf(n.si)}</b></span></div>`;
-    const bar = n => `<div class="bar"><i style="width:${n.no / n.n * 100}%;background:#9aa5b1"></i><i style="width:${n.si / n.n * 100}%;background:var(--blue)"></i></div>`;
-    let html = "", links = "";
-    COLS.forEach((c, k) => html += `<div class="colh anim fade" data-step="${k}" style="left:${c.x / W * 100}%">${["Mes", "Intermediario", "Estatus póliza", "Estatus pago"][k]}</div>`);
-    all.forEach(n => {
-      const c = COLS[n.col];
-      const step = n.col;
-      const isLeaf = n.col === 3 || (n.leaf && n.lb === "Anulada");
-      const cls = n.root ? "nd root" : (n.col === 3 ? "nd leaf" : "nd");
-      const inner = n.col === 3
-        ? `<div class="t"><span class="lb">${n.lb}</span><span class="v">${nf(n.n)}<small>${pctM(n.n)}</small></span></div>${sp(n)}`
-        : `<div class="t"><span class="lb">${n.lb}</span><span class="v">${nf(n.n)}${n.root ? "" : `<small>${pctM(n.n)}</small>`}</span></div>${bar(n)}${sp(n)}${n.note ? `<div class="nnote">${n.note}</div>` : ""}`;
-      html += `<div class="${cls} anim from-right" data-step="${step}" data-d="${(0.06 * all.indexOf(n) % 0.6).toFixed(2)}" style="--c:${n.c || "var(--blue)"};left:${c.x / W * 100}%;width:${c.w / W * 100}%;top:${n.y / H * 100}%">${inner}</div>`;
-      (n.kids || []).forEach(k => {
-        const x1 = c.x + c.w, x2 = COLS[k.col].x, mx = (x1 + x2) / 2;
-        links += `<path class="anim fade" data-step="${k.col}" d="M${x1},${n.y} C${mx},${n.y} ${mx},${k.y} ${x2},${k.y}"/>`;
-      });
-    });
-    return `<div class="tree"><svg class="links" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">${links}</svg>${html}</div>`;
-  }
+  // Tabla del mes: filas = intermediario, columnas = estatus (sin crédito │ con crédito)
   function rnMesSlide(mes) {
-    return `<section class="slide rn" aria-label="Renovaciones · Desglose ${mes}">${rnHead(`${mes} <span class="brand">· Desglose de renovaciones</span>`,
-        "", "Detalle")}
-        <div class="tleg anim fade" style="margin-top:14px"><span><i style="background:#9aa5b1"></i>Sin crédito</span><span><i style="background:var(--blue)"></i>Con crédito aplicado</span><span>% sobre el total del mes</span></div>
-        ${rnTree(mes)}
-      </div>
-    </section>`;
-  }
-
-  // Comparativo sin vs con crédito por mes, con todos los estatus
-  function rnComparativo() {
-    const rows = [
-      { k: 1, lb: "Vigente con pago", c: "var(--pago)" },
-      { k: 2, lb: "Vigente sin pago", c: "var(--sinpago)" },
+    const cols = [
+      { k: 1, lb: "Con pago", c: "var(--pago)" },
+      { k: 2, lb: "Sin pago", c: "var(--sinpago)" },
       { k: 3, lb: "Pendiente de renovar", c: "var(--pend)" },
       { k: 0, lb: "Anulada", c: "var(--anul)" },
-    ];
-    const tbl = (mes, step) => {
-      const no = rnSum([mes], ["No"]), si = rnSum([mes], ["Si"]), tn = tot(no), ts = tot(si);
-      const cell = (v, t, cls = "") => `<td class="${cls}">${nf(v)}<small>${(v / t * 100).toFixed(1)}%</small></td>`;
-      return `<div class="ct anim" data-step="${step}"><h2>${mes}</h2><table>
-        <thead><tr><th>Estatus</th><th>Sin crédito</th><th>Con crédito</th><th>Total</th></tr></thead><tbody>
-        ${rows.filter(r => no[r.k] + si[r.k]).map((r, i) => `<tr style="--r:${i}"><th><i style="background:${r.c}"></i>${r.lb}</th>${cell(no[r.k], tn)}${cell(si[r.k], ts, "si")}${cell(no[r.k] + si[r.k], tn + ts)}</tr>`).join("")}
-        <tr class="tt"><th>Total</th><td>${nf(tn)}<small>100%</small></td><td class="si">${nf(ts)}<small>100%</small></td><td>${nf(tn + ts)}<small>100%</small></td></tr>
-        </tbody></table></div>`;
-    };
-    return `<section class="slide rn" aria-label="Renovaciones · Sin crédito vs con crédito">${rnHead("Sin crédito vs con crédito <span class=\"brand\">· Renovaciones</span>",
-        "Clientes y % sobre cada grupo", "Comparativo")}
-        <div class="cmp2">${tbl("Septiembre", 0)}${tbl("Octubre", 1)}</div>
+    ].filter(c => tot(rnSum([mes], ["No", "Si"]).slice(c.k, c.k + 1)) > 0 || rnSum([mes])[c.k] > 0);
+    const cell = (v, cls) => `<td class="${cls}${v ? "" : " zero"}">${nf(v)}</td>`;
+    const row = (lb, no, si, cls, step) => `<tr class="${cls} anim" data-step="${step}"><th>${lb}</th>${cols.map(c =>
+      cell(no[c.k], "gap") + cell(si[c.k], "si")).join("")}<td class="tt">${nf(tot(no) + tot(si))}</td></tr>`;
+    const ints = ["CS", "AG", "DI"];
+    const no = rnSum([mes], ["No"]), si = rnSum([mes], ["Si"]);
+    const pct = (v, t, hi) => `<td class="${hi}">${(v / t * 100).toFixed(0)}%</td>`;
+    const body = ints.map((i, k) => row(RN_INT[i] === "Corredores" ? "Corredores de Seguros" : RN_INT[i], RN[mes][i].No, RN[mes][i].Si, "", k)).join("")
+      + row("Total", no, si, "tot", 3)
+      + `<tr class="pc anim" data-step="4"><th>% de cada grupo</th>${cols.map(c =>
+          pct(no[c.k], tot(no), "gap hi").replace('class="gap hi"', 'class="gap hi"') + pct(si[c.k], tot(si), "si hi")).join("")}<td class="tt"></td></tr>`;
+    return `<section class="slide rn" aria-label="Renovaciones · ${mes}">${rnHead(`${mes} <span class="brand">· Renovaciones</span>`,
+        `<b>${nf(tot(no) + tot(si))} clientes</b> · ${nf(tot(si))} con crédito aplicado`, "Detalle")}
+        <div class="rt-wrap anim">
+          <table class="rt">
+            <thead>
+              <tr class="g"><th class="blank"></th>${cols.map(c => `<th colspan="2" style="--c:${c.c}">${c.lb}</th>`).join("")}<th class="tt" rowspan="2">Total</th></tr>
+              <tr class="s"><th></th>${cols.map(() => `<th>Sin crédito</th><th class="si">Con crédito</th>`).join("")}</tr>
+            </thead>
+            <tbody>${body}</tbody>
+          </table>
+          <div class="rt-leg anim fade" data-step="4"><span>Clientes por intermediario y estatus · <b>azul</b> = con crédito aplicado</span><span>% de cada grupo = sobre el total sin crédito y sobre el total con crédito</span></div>
+        </div>
       </div>
     </section>`;
   }
 
-  document.getElementById("deck").insertAdjacentHTML("beforeend", METRICS.map(metricSlide).join("") + rnResumen() + rnMesSlide("Septiembre") + rnMesSlide("Octubre") + rnComparativo());
+  document.getElementById("deck").insertAdjacentHTML("beforeend", METRICS.map(metricSlide).join("") + rnResumen() + rnMesSlide("Septiembre") + rnMesSlide("Octubre"));
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
 
   /* =================== Motor de presentación =================== */
