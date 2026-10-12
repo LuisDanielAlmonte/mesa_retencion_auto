@@ -1181,6 +1181,7 @@
       ["TOLEDANO ASESORES, S.R.L", "Laura Arias", "Anyaury Stephany Valdez Rochet", 3, 12, 7, 0, 2],
       ["GUIMANFER CORREDORES SRL", "Laura Arias", "Mariel Medina", 4, 14, 10, 0, 0],
       ["MAX,CORREDORES DE SEGUROS, SRL", "Antolin Alejandro Alcantara Fernandez", "Luisa Virginia Marmolejos Gonzalez y otros", 8, 24, 11, 3, 2],
+      ["GDA & ASOCIADOS, SRL", "Laura Arias", "Yahaira Guerrero", 3, 9, 4, 1, 1],
     ],
     Octubre: [
       ["ROS & ASOCIADOS, S.R.L.", "Antolin Alejandro Alcantara Fernandez", "Julia Patricia Noboa Gañan", 0, 23, 21, 1, 1],
@@ -1226,19 +1227,19 @@
   // [mes, renovadas, [día 0, 30, 60, 90, hoy], períodos aún no cumplidos (de día 90 hacia atrás), tendencia día 30 (pp vs mismo mes año anterior),
   //  pago parcial, pendientes de pago, canceladas sin pago, [% día 0, % día 30, % hoy]]
   const HC = [
-    ["Nov 2026", 1064, [0, 0, 0, 0, 0], 4, null, 10, 1052, 0, [0.0, 0.0, 0.0]],
-    ["Oct 2026", 1205, [7, 9, 9, 9, 9], 4, null, 25, 1055, 15, [0.9, 1.2, 1.2]],
-    ["Sep 2026", 1144, [23, 49, 50, 50, 50], 3, null, 55, 404, 118, [4.2, 10.1, 10.3]],
-    ["Ago 2026", 1039, [22, 56, 60, 60, 60], 2, -6, 56, 204, 155, [4.5, 12.4, 14.9]],
-    ["Jul 2026", 1094, [25, 59, 64, 65, 65], 1, -3, 35, 137, 208, [3.9, 10.2, 19.0]],
-    ["Jun 2026", 1101, [25, 59, 65, 68, 68], 0, -5, 37, 75, 235, [3.7, 10.0, 21.3]],
+    ["Nov 2026", 1145, [0, 0, 0, 0, 0], 4, null, 10, 1133, 0, [0.0, 0.0, 0.0]],
+    ["Oct 2026", 1205, [7, 9, 9, 9, 9], 4, null, 25, 1052, 18, [1.0, 1.5, 1.5]],
+    ["Sep 2026", 1144, [23, 49, 50, 50, 50], 3, null, 55, 401, 121, [4.2, 10.4, 10.6]],
+    ["Ago 2026", 1039, [22, 56, 60, 60, 60], 2, -6, 56, 203, 156, [4.5, 12.4, 15.0]],
+    ["Jul 2026", 1094, [25, 59, 64, 65, 65], 1, -3, 35, 136, 209, [3.9, 10.2, 19.1]],
+    ["Jun 2026", 1101, [25, 59, 65, 68, 68], 0, -5, 37, 74, 236, [3.7, 10.0, 21.4]],
     ["May 2026", 939, [24, 60, 67, 69, 70], 0, -6, 34, 23, 229, [3.0, 7.8, 24.4]],
     ["Abr 2026", 821, [28, 60, 66, 69, 70], 0, -5, 32, 19, 196, [4.0, 7.4, 23.9]],
     ["Mar 2026", 923, [25, 60, 67, 70, 70], 0, -3, 25, 10, 240, [3.9, 9.2, 26.0]],
     ["Feb 2026", 812, [25, 63, 71, 74, 74], 0, 0, 22, 4, 185, [2.6, 7.6, 22.8]],
     ["Ene 2026", 887, [25, 60, 67, 69, 69], 0, -8, 36, 3, 235, [1.8, 7.7, 26.5]],
   ];
-  const HC_TOT = ["Total", 11029, [20, 47, 52, 53, 53], 0, undefined, 367, 2986, 1816, [2.9, 7.5, 16.5]];
+  const HC_TOT = ["Total", 11110, [20, 47, 51, 52, 53], 0, undefined, 367, 3058, 1825, [2.9, 7.5, 16.4]];
   function hcSlide() {
     const A = (st, cls, inner) => `<td class="${cls} anim fade" data-step="${st}" data-d="0">${inner}</td>`;
     const blue = v => `background:rgba(0,103,177,${(0.06 + v / 80 * 0.32).toFixed(2)})`;
@@ -1259,7 +1260,7 @@
             <tr class="g"><th class="blank" colspan="2"></th><th colspan="5" style="--c:var(--blue)">Pago 1ra cuota · % de renovadas con pago</th>
               ${G(1, "var(--navy)", 1, "Tendencia día 30")}${G(2, "#d9822b", 2, "Pago parcial · Sin pago")}${G(3, "var(--red)", 4, "Canceladas sin pago")}</tr>
             <tr><th class="l">Mes de renovación</th><th>Renovadas</th><th style="text-align:center">Día 0</th><th style="text-align:center">Día 30</th><th style="text-align:center">Día 60</th><th style="text-align:center">Día 90</th><th style="text-align:center">Hoy</th>
-              ${H(1, "vs mismo mes<br>año anterior")}${H(2, "Pago parcial<br>(activas)")}${H(2, "Pendientes<br>de pago")}${H(3, "Total")}${H(3, "% día 0")}${H(3, "% día 30")}${H(3, "% hoy")}</tr>
+              ${H(1, "vs mismo mes<br>año anterior")}${H(2, "Pago parcial<br>(activas)")}${H(2, "Sin pago<br>(hoy)")}${H(3, "Total")}${H(3, "% día 0")}${H(3, "% día 30")}${H(3, "% hoy")}</tr>
           </thead>
           <tbody>${HC.map(r => row(r)).join("")}${row(HC_TOT, true)}</tbody>
         </table>
