@@ -1225,20 +1225,24 @@
 
 
   /* =================== Funnel de renovaciones · Septiembre =================== */
-  // Certificados renovados en septiembre: [anulada, con pago, sin pago]
+  // Certificados renovados en el mes: [anulada, con pago, sin pago]
   const FN = {
-    total: [425, 2200, 1638],
-    ley:   [216, 1298, 944],
-    dp:    [209, 902, 694],
-    sinEmp: [209, 882, 685],
-    dpNeto: [207, 850, 624],   // sin empleados, sin flotilla, sin coaseguro minoritario
-    sinSin: [124, 591, 398],
-    cred:  [9, 98, 205],
+    Septiembre: {
+      total: [425, 2200, 1638], ley: [216, 1298, 944], dp: [209, 902, 694], sinEmp: [209, 882, 685],
+      dpNeto: [207, 850, 624],   // sin empleados, sin flotilla, sin coaseguro minoritario
+      sinSin: [124, 591, 398], cred: [9, 98, 205],
+      ints: [["Corredores de Seguros", [8, 84, 164]], ["Agentes Generales", [1, 13, 40]], ["Directo", [0, 1, 1]]],
+    },
+    Octubre: {
+      total: [197, 548, 3788], ley: [117, 312, 2104], dp: [80, 236, 1684], sinEmp: [80, 214, 1676],
+      dpNeto: [78, 204, 1584], sinSin: [70, 177, 1308], cred: [16, 84, 639],
+      ints: [["Corredores de Seguros", [13, 61, 494]], ["Agentes Generales", [1, 17, 128]], ["Directo", [2, 6, 17]]],
+    },
   };
-  const FN_INT = [["Corredores de Seguros", [8, 84, 164]], ["Agentes Generales", [1, 13, 40]], ["Directo", [0, 1, 1]]];
   const FN_COLS = [[1, "Con pago", "pago"], [2, "Sin pago", "sinpago"], [0, "Anulada", "anul"]];
   // Árbol que se va abriendo de izquierda a derecha: Total → Ley / Daños Propios → exclusiones → sin siniestro → crédito
-  function fnSlide() {
+  function fnSlide(mes) {
+    const F = FN[mes];
     const comp = v => `<div class="fn-comp">${FN_COLS.map(([k, lb, c]) =>
         `<div class="fc" style="--c:var(--${c})"><i></i><span>${lb}</span><b>${nf(v[k])}</b><em>${pc(v[k], tot(v))}%</em></div>`).join("")}
         <div class="fn-bar">${FN_COLS.map(([k, , c]) => `<i style="--w:${v[k] / tot(v) * 100}%;background:var(--${c})"></i>`).join("")}</div></div>`;
@@ -1246,19 +1250,19 @@
         <div class="t">${t}</div><div class="n">${nf(tot(v))}</div>${extra}${comp(v)}</div>`;
     const of = (v, b) => `<div class="of">${pc(tot(v), tot(b))}% de ${nf(tot(b))}</div>`;
     const cell = (v, k) => `<td><b>${nf(v[k])}</b><em>${pc(v[k], tot(v))}%</em></td>`;
-    const tbl = FN_INT.map(([nm, v]) => `<tr><th>${nm}</th>${FN_COLS.map(([k]) => cell(v, k)).join("")}<td class="tt"><b>${nf(tot(v))}</b></td></tr>`).join("")
-      + `<tr class="tot"><th>Total</th>${FN_COLS.map(([k]) => cell(FN.cred, k)).join("")}<td class="tt"><b>${nf(tot(FN.cred))}</b></td></tr>`;
-    return `<section class="slide rn fn nobr" aria-label="Renovaciones · Septiembre · Funnel">${rnHead("Septiembre <span class=\"brand\">· Funnel de renovaciones</span>",
-        "", "Funnel", "Renovaciones Auto · Certificados renovados en septiembre 2026")}
+    const tbl = F.ints.map(([nm, v]) => `<tr><th>${nm}</th>${FN_COLS.map(([k]) => cell(v, k)).join("")}<td class="tt"><b>${nf(tot(v))}</b></td></tr>`).join("")
+      + `<tr class="tot"><th>Total</th>${FN_COLS.map(([k]) => cell(F.cred, k)).join("")}<td class="tt"><b>${nf(tot(F.cred))}</b></td></tr>`;
+    return `<section class="slide rn fn nobr" aria-label="Renovaciones · ${mes} · Funnel">${rnHead(`${mes} <span class="brand">· Funnel de renovaciones</span>`,
+        "", "Funnel", `Renovaciones Auto · Certificados renovados en ${mes.toLowerCase()} 2026`)}
         <div class="fn-tree">
-          ${node("total", 0, "tot", "Total septiembre", FN.total)}
-          ${node("ley", 1, "ley", "Ley", FN.ley, of(FN.ley, FN.total))}
-          ${node("dp", 1, "dp", "Daños Propios", FN.dp, of(FN.dp, FN.total))}
-          ${node("net", 2, "net", "Daños Propios con exclusiones", FN.dpNeto, `<div class="ex">
-              <span>Sin empleados <b>−${nf(tot(FN.dp) - tot(FN.sinEmp))}</b></span>
-              <span>Sin flotilla · sin coa. minoritario <b>−${nf(tot(FN.sinEmp) - tot(FN.dpNeto))}</b></span></div>`)}
-          ${node("sin", 3, "sin", "Sin siniestro", FN.sinSin, of(FN.sinSin, FN.dpNeto))}
-          ${node("cr", 4, "cr", "Se les aplicó el crédito comercial", FN.cred, of(FN.cred, FN.sinSin))}
+          ${node("total", 0, "tot", `Total ${mes.toLowerCase()}`, F.total)}
+          ${node("ley", 1, "ley", "Ley", F.ley, of(F.ley, F.total))}
+          ${node("dp", 1, "dp", "Daños Propios", F.dp, of(F.dp, F.total))}
+          ${node("net", 2, "net", "Daños Propios con exclusiones", F.dpNeto, `<div class="ex">
+              <span>Sin empleados <b>−${nf(tot(F.dp) - tot(F.sinEmp))}</b></span>
+              <span>Sin flotilla · sin coa. minoritario <b>−${nf(tot(F.sinEmp) - tot(F.dpNeto))}</b></span></div>`)}
+          ${node("sin", 3, "sin", "Sin siniestro", F.sinSin, of(F.sinSin, F.dpNeto))}
+          ${node("cr", 4, "cr", "Se les aplicó el crédito comercial", F.cred, of(F.cred, F.sinSin))}
           <div class="fn-tbl anim" data-step="5" style="grid-area:tbl">
             <div class="cap">Crédito comercial por tipo de intermediario</div>
             <table class="rt">
@@ -1414,7 +1418,7 @@
       </div>
     </section>`;
   }
-  document.getElementById("deck").insertAdjacentHTML("beforeend", ytdSlide() + METRICS.map(metricSlide).join("") + rnResumen() + fnSlide() + rnMesSlide("Septiembre") + rnMesSlide("Octubre") + ibSlide() + hcSlide());
+  document.getElementById("deck").insertAdjacentHTML("beforeend", ytdSlide() + METRICS.map(metricSlide).join("") + rnResumen() + fnSlide("Septiembre") + rnMesSlide("Septiembre") + fnSlide("Octubre") + rnMesSlide("Octubre") + ibSlide() + hcSlide());
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
 
   /* =================== Motor de presentación =================== */
@@ -1435,6 +1439,7 @@
     "Renovaciones · ¿Cómo vamos?",
     "Renovaciones · Septiembre · Funnel",
     "Renovaciones · Septiembre",
+    "Renovaciones · Octubre · Funnel",
     "Renovaciones · Octubre",
     "Histórico de pago de la primera cuota",
     "Intermediarios con bajo porcentaje de pago",
@@ -1494,7 +1499,7 @@
   }
 
   /* ---------- Slides ocultos (se guardan en este navegador) ---------- */
-  const HKEY = "mesa-retencion-ocultos-v4";
+  const HKEY = "mesa-retencion-ocultos-v5";
   const slideKey = s => s.getAttribute("aria-label");
   let hiddenKeys = new Set();
   // Slides ocultos por defecto (hasta que se cambie desde el menú)
@@ -1504,6 +1509,7 @@
     "Métricas Gestión · Mi Auto Daños Propios",
     "Renovaciones · ¿Cómo vamos?",
     "Renovaciones · Septiembre",
+    "Renovaciones · Octubre",
     "Intermediarios con bajo porcentaje de pago",
   ];
   hiddenKeys = new Set(HIDDEN_DEFAULT);
