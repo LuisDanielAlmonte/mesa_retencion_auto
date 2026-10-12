@@ -135,7 +135,7 @@
   .v.orange { color: var(--orange); } .v.blue { color: var(--blue); } .v.cyan { color: var(--cyan); } .v.alert { color: var(--alert); }
 
   /* ---------- Slide 1 ---------- */
-  .bottom { margin-top: 26px; flex: 1; display: grid; grid-template-columns: 1fr 360px; gap: 26px; min-height: 0; }
+  .bottom { margin-top: 24px; flex: 1; display: grid; grid-template-columns: 1fr 360px; gap: 26px; min-height: 0; }
   .kpis { display: grid; grid-template-rows: 1.2fr 1fr 1fr; gap: 16px; min-height: 0; }
 
   /* ---------- Portada ---------- */
@@ -168,34 +168,36 @@
   .stepper .bar.fill::after { transform: none; }
   .stepper .legend { margin-left: 28px; font-size: 14px; gap: 16px; white-space: nowrap; }
   .stage { position: relative; margin-top: 22px; flex: 1; min-height: 0; }
-  .pstage { position: absolute; inset: 0; display: grid; grid-template-columns: 340px 1fr; gap: 24px; opacity: 0; transform: translateX(120px); pointer-events: none; transition: opacity .55s ease, transform .8s var(--ease); }
+  .pstage { position: absolute; inset: 0; display: grid; grid-template-columns: 380px 1fr; gap: 24px; opacity: 0; transform: translateX(120px); pointer-events: none; transition: opacity .55s ease, transform .8s var(--ease); }
   .pstage.past { transform: translateX(-120px); }
   .pstage.on { opacity: 1; transform: none; pointer-events: auto; transition-delay: .12s; }
   .pstage .pname { transform: translateY(18px); transition: transform .8s var(--ease) .2s; }
   .pstage.on .pname { transform: none; }
   .legend i.bar { width: 14px; height: 14px; border: 0; border-radius: 3px; background: var(--cyan); }
   .legend .ch i { border-color: var(--navy); border-top-width: 4px; }
-  .pname { border-radius: 22px; padding: 26px 28px; color: #fff; background: linear-gradient(160deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+  .pname { border-radius: 22px; padding: 22px 24px; color: #fff; background: linear-gradient(160deg, var(--blue), var(--navy)); display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
   .pname::after { content: ""; position: absolute; right: -80px; top: -80px; width: 240px; height: 240px; border-radius: 50%; background: rgba(0,180,230,.22); }
   .pname .g { font-size: 14px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--orange); }
-  .pname .n { font-size: 46px; font-weight: 700; line-height: 1.05; margin-top: 8px; }
+  .pname .n { font-size: 40px; font-weight: 700; line-height: 1.05; margin-top: 6px; }
+  .pname .share { margin-top: 10px; display: inline-flex; align-self: flex-start; font-size: 16px; padding: 5px 12px; border-radius: 999px; background: rgba(255,255,255,.14); color: rgba(255,255,255,.9); position: relative; z-index: 1; }
+  .pname .share b { color: #7fdcff; margin-right: 4px; }
   .pname .c { font-size: 19px; color: rgba(255,255,255,.75); margin-top: 6px; }
-  .pname .cart { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.2); display: flex; flex-direction: column; gap: 10px; position: relative; z-index: 1; }
-  .pname .cart .l { font-size: 14px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.65); }
-  .pname .cart .v { font-size: 40px; font-weight: 700; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .pname .cart { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.2); display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 8px; position: relative; z-index: 1; }
+  .pname .cart .l { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.65); }
+  .pname .cart .v { font-size: 30px; font-weight: 700; line-height: 1.05; font-variant-numeric: tabular-nums; }
   .pname .cart .fin .v { color: #7fdcff; }
-  .pname .cart .arrow { font-size: 24px; color: rgba(255,255,255,.45); line-height: 1; }
-  .grow-box { margin-top: 22px; padding: 18px 18px 16px; border-radius: 16px; background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.16); position: relative; z-index: 1; }
+  .pname .cart .arrow { font-size: 22px; color: rgba(255,255,255,.45); line-height: 1; padding-bottom: 4px; }
+  .grow-box { margin-top: 14px; padding: 12px 16px 12px; border-radius: 16px; background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.16); position: relative; z-index: 1; }
   .grow-box .gb-row { display: flex; justify-content: space-between; gap: 12px; }
   .grow-box .gb-b { text-align: right; }
   .grow-box .l { font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.65); }
-  .grow-box .gv { font-size: 34px; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .grow-box .gv { font-size: 28px; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
   .grow-box .gv.b { color: var(--orange); }
-  .grow-box .gb-bar { margin-top: 12px; height: 10px; border-radius: 5px; background: rgba(255,255,255,.15); overflow: hidden; }
+  .grow-box .gb-bar { margin-top: 8px; height: 8px; border-radius: 5px; background: rgba(255,255,255,.15); overflow: hidden; }
   .grow-box .gb-fill { height: 100%; width: 0; border-radius: 5px; transition: width 1.3s var(--ease) .5s; }
   .pstage.on .grow-box .gb-fill { width: var(--w); }
   .grow-box .gb-fill.ok { background: #6fe0a6; } .grow-box .gb-fill.bad { background: #ffb37a; }
-  .grow-box .gb-tag { margin-top: 10px; font-size: 15px; font-weight: 700; }
+  .grow-box .gb-tag { margin-top: 6px; font-size: 14px; font-weight: 700; }
   .grow-box .gb-tag.ok { color: #6fe0a6; } .grow-box .gb-tag.bad { color: #ffb37a; }
   .pcard { position: relative; border: 1px solid var(--line); border-radius: 18px; padding: 8px 14px 0; display: flex; flex-direction: column; min-height: 0; background: #fff; box-shadow: 0 14px 30px -26px rgba(11,47,91,.5); }
   .pcard svg { flex: 1; width: 100%; min-height: 0; display: block; }
@@ -365,6 +367,18 @@
   .hc-leg { display: flex; gap: 26px; margin-top: 10px; font-size: 15px; color: var(--muted); }
   .hc-leg i { display: inline-block; width: 16px; height: 16px; border-radius: 4px; vertical-align: -3px; margin-right: 6px; }
 
+  /* Retención · Churn YTD (3 indicadores) */
+  .balls { margin-top: 30px; flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: center; }
+  .ball { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .ball svg { width: 380px; height: 380px; display: block; }
+  .ball .arc { transition: stroke-dashoffset 1.6s var(--ease) .3s; stroke-dashoffset: 100; }
+  .ball.in .arc { stroke-dashoffset: calc(100 - var(--f)); }
+  .ball .nm { margin-top: 18px; font-size: 40px; font-weight: 600; color: var(--c); }
+  .ball .sg { margin-top: 10px; display: flex; gap: 26px; font-size: 22px; color: var(--muted); }
+  .ball .sg b { color: var(--navy); font-weight: 700; }
+  .ball .mp { margin-top: 14px; font-size: 17px; font-weight: 700; padding: 5px 14px; border-radius: 999px; }
+  .ball .mp.ok { background: #e6f8f1; color: #0c8a63; } .ball .mp.bad { background: #fff0e6; color: var(--alert); }
+
   /* ---------- Controles ---------- */
   .controls { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: rgba(11,47,91,.82); color: #fff; backdrop-filter: blur(6px); font-size: 14px; opacity: 0; pointer-events: none; transform: translate(-50%, 24px); transition: opacity .3s ease, transform .4s var(--ease); z-index: 10; }
   .controls.show, .controls.pin { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
@@ -444,7 +458,6 @@
           <div class="section-tag anim from-right"><span class="num">1</span>Certificados</div>
         </div>
 
-        <div class="table-wrap anim" style="margin-top:34px"><table id="t-main"></table></div>
 
         <div class="bottom">
           <div class="chart-box anim">
@@ -475,6 +488,7 @@
             </div>
           </div>
         </div>
+        <div class="table-wrap anim" style="margin-top:22px"><table id="t-main"></table></div>
       </div>
     </section>
 
@@ -581,15 +595,15 @@
   /* =================== Datos · Planes =================== */
   // cartera: ene–oct (oct = inicio del mes, real) · cancel: ene–sep (meses cerrados)
   const PLANS = [
-    { name: "Mi Auto Flex", budget: 286,    cov: "Todo riesgo pérdida total",  group: "dp",
+    { name: "Mi Auto Flex", budget: 286, budgetM: [47, 22, 21, 22, 22, 22, 22, 21, 22, 22, 21, 22],    cov: "Todo riesgo pérdida total",  group: "dp",
       cartera: [1148,1175,1214,1253,1294,1242,1308,1352,1426,1478], cancel: [28,31,30,21,18,25,34,28,47] },
-    { name: "Mi Auto Full", budget: 5813,    cov: "Todo riesgo con deducible",  group: "dp",
+    { name: "Mi Auto Full", budget: 5813, budgetM: [365, 495, 496, 495, 495, 496, 495, 495, 495, 495, 496, 495],    cov: "Todo riesgo con deducible",  group: "dp",
       cartera: [26905,27622,28134,28749,29128,29706,30084,30588,30849,30846], cancel: [623,659,676,822,616,830,794,843,1009] },
-    { name: "Mi Auto Premier", budget: 278, cov: "Todo riesgo cero deducible", group: "dp",
+    { name: "Mi Auto Premier", budget: 278, budgetM: [-128, 37, 37, 37, 37, 37, 37, 36, 37, 37, 37, 37], cov: "Todo riesgo cero deducible", group: "dp",
       cartera: [2157,2186,2246,2271,2310,2370,2401,2441,2469,2512], cancel: [42,26,43,45,35,80,51,53,80] },
-    { name: "Mi Auto Básico", budget: 6301,  cov: "Seguro de ley",              group: "sl",
+    { name: "Mi Auto Básico", budget: 6301, budgetM: [359, 540, 540, 540, 540, 541, 541, 540, 540, 540, 540, 540],  cov: "Seguro de ley",              group: "sl",
       cartera: [29381,30501,30967,31456,32028,32768,33331,33964,34325,34795], cancel: [626,722,854,636,543,760,857,856,1021] },
-    { name: "Mi Moto Básico", budget: -306,  cov: "Seguro de ley",              group: "sl",
+    { name: "Mi Moto Básico", budget: -306, budgetM: [-371, 6, 6, 6, 6, 6, 5, 6, 6, 6, 6, 6],  cov: "Seguro de ley",              group: "sl",
       cartera: [699,858,1007,1154,1347,1546,1720,1897,2053,2150], cancel: [5,3,4,4,7,13,18,16,68] },
   ];
   PLANS.forEach((p, i) => {
@@ -828,14 +842,14 @@
 
   const GROUP_NAME = { dp: "Daños propios", sl: "Seguro de ley" };
   // Crecimiento estimado 2026 (final esperada − inicial) contra el presupuesto de crecimiento
-  function growthBox(est, budget) {
+  function growthBox(est, budget, title = "Crecimiento estimado 2026", btitle = "Presupuesto") {
     const sg = v => (v > 0 ? "+" : v < 0 ? "−" : "") + nf(Math.abs(v));
     const diff = est - budget, ok = diff >= 0;
     const pctOf = budget > 0 ? Math.round(est / budget * 100) : null;
     const w = budget > 0 ? Math.max(0, Math.min(est / budget, 1)) * 100 : (ok ? 100 : 0);
     return `<div class="grow-box">
-      <div class="gb-row"><div><div class="l">Crecimiento estimado 2026</div><div class="gv">${sg(est)}</div></div>
-        <div class="gb-b"><div class="l">Presupuesto</div><div class="gv b">${sg(budget)}</div></div></div>
+      <div class="gb-row"><div><div class="l">${title}</div><div class="gv">${sg(est)}</div></div>
+        <div class="gb-b"><div class="l">${btitle}</div><div class="gv b">${sg(budget)}</div></div></div>
       <div class="gb-bar"><div class="gb-fill ${ok ? "ok" : "bad"}" style="--w:${w}%"></div></div>
       <div class="gb-tag ${ok ? "ok" : "bad"}">${ok ? "▲" : "▼"} ${sg(diff)} vs presupuesto${pctOf !== null ? ` · ${pctOf}%` : ""}</div>
     </div>`;
@@ -862,14 +876,20 @@
     plans.forEach(p => {
       // Cartera final esperada = cartera de octubre + crecimiento proyectado oct–dic (los mismos valores de las barras)
       const fin = p.cartera[9] + [10, 11, 12].reduce((a, m) => a + Math.round(p.fitGrowth(m)), 0);
+      // % de la cartera del grupo (Daños Propios o Ley) a octubre
+      const share = p.cartera[9] / plans.reduce((a, q) => a + q.cartera[9], 0) * 100;
+      // YTD ene–sep: crecimiento real (cartera oct − cartera ene) vs presupuesto acumulado ene–sep
+      const ytdReal = p.cartera[9] - p.cartera[0], ytdBud = p.budgetM.slice(0, REAL).reduce((a, b) => a + b, 0);
       h += `<div class="pstage">
         <div class="pname"><div class="g">${GROUP_NAME[group]}</div><div class="n">${p.name}</div><div class="c">${p.cov}</div>
+          <div class="share"><b>${share.toFixed(1)}%</b> de la cartera de ${group === "dp" ? "Daños Propios" : "Ley"}</div>
           <div class="cart">
-            <div><div class="l">Cartera inicial · ene 2026</div><div class="v" data-count="${p.cartera[0]}" data-dec="0">${nf(p.cartera[0])}</div></div>
-            <div class="arrow">↓</div>
-            <div class="fin"><div class="l">Final esperada · dic 2026</div><div class="v" data-count="${fin}" data-dec="0">${nf(fin)}</div></div>
+            <div><div class="l">Inicial · ene</div><div class="v" data-count="${p.cartera[0]}" data-dec="0">${nf(p.cartera[0])}</div></div>
+            <div class="arrow">→</div>
+            <div class="fin"><div class="l">Final esp. · dic</div><div class="v" data-count="${fin}" data-dec="0">${nf(fin)}</div></div>
           </div>
-          ${growthBox(fin - p.cartera[0], p.budget)}</div>
+          ${growthBox(ytdReal, ytdBud, "YTD ene–sep", "Ppto. YTD")}
+          ${growthBox(fin - p.cartera[0], p.budget, "Estimado 2026", "Ppto. 2026")}</div>
         <div class="pcard"><svg data-chart="${p.id}" viewBox="0 0 1100 600" role="img" aria-label="Crecimiento mensual y churn de ${p.name} con su proyección"></svg></div>
       </div>`;
     });
@@ -1015,7 +1035,7 @@
             </div>
             <div class="kpi anim from-right" data-step="1">
               <h3>Revenue churn · Sep 2026</h3>
-              <div class="v cyan" data-count="${rSep}" data-dec="2" data-suffix="%">${pct(rSep)}</div>
+              <div class="v blue" data-count="${rSep}" data-dec="2" data-suffix="%">${pct(rSep)}</div>
               <div class="s">${m.series.slice(1).map(k => `${k} ${pct(m.rev[k].pct[PERIODS.length - 1])}`).join(" · ")}</div>
             </div>
             ${third}
@@ -1146,16 +1166,16 @@
     }).join("") + `<tr class="tot" style="--r:3"><th>Total</th>${cols.map(col => cell(all[col.k], cr[col.k], "",
         Math.round(all[col.k] / tot(all) * 100), Math.round(cr[col.k] / tot(cr) * 100))).join("")}${cell(tot(all), tot(cr), "tt", 100, 100)}</tr>`;
     return `<section class="slide rn" aria-label="Renovaciones · ${mes}">${rnHead(`${mes} <span class="brand">· Renovaciones</span>`,
-        `<b>${nf(tot(all))} clientes</b> · ${nf(tot(cr))} con crédito comercial aplicado`, "Detalle")}
+        `<b>${nf(tot(all))} certificados</b> · ${nf(tot(cr))} con crédito comercial aplicado`, "Detalle")}
         <div class="rt-wrap">
           <div class="flow">
-            <div class="fl all anim"><div class="n">${nf(tot(all))}</div><div class="t">Total de clientes · ¿qué pasó?</div></div>
+            <div class="fl all anim"><div class="n">${nf(tot(all))}</div><div class="t">Total de certificados · ¿qué pasó?</div></div>
             <div class="anim">${tiles(all)}</div>
             <div class="fl cr anim" data-step="1"><div class="n">${nf(tot(cr))}</div><div class="t">se les aplicó el crédito comercial (${(tot(cr) / tot(all) * 100).toFixed(0)}%) · ¿qué pasó?</div></div>
             <div class="anim" data-step="1">${tiles(cr)}</div>
           </div>
           <div class="rt-box anim" data-step="2">
-            <div class="rt-cap"><span class="sw"><span class="va">Por intermediario · <b>todos los clientes</b></span><span class="vc">Por intermediario · <b>solo a los que se les aplicó el crédito comercial</b></span></span></div>
+            <div class="rt-cap"><span class="sw"><span class="va">Por intermediario · <b>todos los certificados</b></span><span class="vc">Por intermediario · <b>solo a los que se les aplicó el crédito comercial</b></span></span></div>
             <table class="rt">
               <thead><tr><th class="blank"></th>${cols.map(c => `<th style="--c:${c.c}">${c.lb}</th>`).join("")}<th class="tt">Total</th></tr></thead>
               <tbody>${body}</tbody>
@@ -1268,11 +1288,76 @@
       </div>
     </section>`.replace("Daños Propios · Septiembre y Octubre 2026", "Daños Propios · Enero – Noviembre 2026");
   }
-  document.getElementById("deck").insertAdjacentHTML("beforeend", METRICS.map(metricSlide).join("") + rnResumen() + rnMesSlide("Septiembre") + rnMesSlide("Octubre") + ibSlide() + hcSlide());
+
+  /* =================== Retención · Principales indicadores · Churn YTD =================== */
+  const YTD = [
+    { name: "Auto", v: 2.44, ind: 2.47, flo: 2.35, c: "#4fb8c9" },
+    { name: "Daños Propios", v: 2.57, ind: 2.65, flo: 2.39, c: "var(--cyan)" },
+    { name: "Ley", v: 2.32, ind: 2.33, flo: 2.26, c: "var(--blue)" },
+  ];
+  function ytdSlide() {
+    const MAX = 3.5; // escala del anillo: 0 – 3.5%
+    const ball = (b, i) => {
+      const f = b.v / MAX * 100, mt = OBJETIVO / MAX * 360 - 90, d = b.v - OBJETIVO;
+      const mx = 190 + 160 * Math.cos(mt * Math.PI / 180), my = 190 + 160 * Math.sin(mt * Math.PI / 180);
+      return `<div class="ball anim" data-step="${i}" style="--c:${b.c};--f:${f.toFixed(2)}">
+        <svg viewBox="0 0 380 380" role="img" aria-label="Churn YTD ${b.name} ${pct(b.v)}">
+          <circle cx="190" cy="190" r="160" fill="none" stroke="#e3e9ef" stroke-width="22"/>
+          <circle class="arc" cx="190" cy="190" r="160" fill="none" stroke="${b.c}" stroke-width="22" stroke-linecap="round" pathLength="100" stroke-dasharray="100" transform="rotate(-90 190 190)"/>
+          <circle cx="${mx.toFixed(1)}" cy="${my.toFixed(1)}" r="9" fill="#fff" stroke="${C.red}" stroke-width="4"><title>Meta ${pct(OBJETIVO)}</title></circle>
+          <circle cx="190" cy="190" r="128" fill="${b.c}"/>
+          <text x="190" y="${i ? 206 : 196}" text-anchor="middle" font-size="58" font-weight="700" fill="#fff">${pct(b.v)}</text>
+          ${i ? "" : `<text x="190" y="236" text-anchor="middle" font-size="22" fill="#fff" opacity=".85">Meta ${pct(OBJETIVO)}</text>`}
+        </svg>
+        <div class="nm">${b.name}</div>
+        <div class="sg"><span>Individual <b>${pct(b.ind)}</b></span><span>Flotilla <b>${pct(b.flo)}</b></span></div>
+        <div class="mp ${d > 0 ? "bad" : "ok"}">${d > 0 ? "+" : "−"}${Math.abs(d).toFixed(2)} p.p. ${d > 0 ? "sobre" : "bajo"} la meta</div>
+      </div>`;
+    };
+    return `<section class="slide" aria-label="Retención · Principales indicadores · Churn YTD">
+      <div class="deco tl1"></div><div class="deco tl2"></div>
+      <div class="deco br1"></div><div class="deco br2"></div>
+      <div class="deco band"></div>
+      <div class="content">
+        <div class="head">
+          <div class="anim">
+            <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto</span>
+            <h1>Retención <span class="brand">· Churn YTD</span></h1>
+            <div style="margin-top:12px;font-size:24px;color:var(--muted);font-weight:300">Principales indicadores · ● meta ${pct(OBJETIVO)}</div>
+          </div>
+          <div class="section-tag anim from-right">Resumen</div>
+        </div>
+        <div class="balls">${YTD.map(ball).join("")}</div>
+      </div>
+    </section>`;
+  }
+  document.getElementById("deck").insertAdjacentHTML("beforeend", ytdSlide() + METRICS.map(metricSlide).join("") + rnResumen() + rnMesSlide("Septiembre") + rnMesSlide("Octubre") + ibSlide() + hcSlide());
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
 
   /* =================== Motor de presentación =================== */
   const deck = document.getElementById("deck");
+  // Orden de la presentación (por aria-label)
+  const ORDER = [
+    "Mesa de Retención Auto · Octubre 2026",
+    "Retención · Principales indicadores · Churn YTD",
+    "Proyección de Churn 2026 · Mi Auto — Certificados",
+    "Métricas Gestión · Mi Auto",
+    "Métricas Gestión · Mi Auto Flotilla",
+    "Métricas Gestión · Mi Auto Emisión – Renovación",
+    "Métricas Gestión · Mi Auto Ley – DP",
+    "Métricas Gestión · Mi Auto Ley",
+    "Métricas Gestión · Mi Auto Daños Propios",
+    "Daños Propios · Tendencia por plan",
+    "Seguro de Ley · Tendencia por plan",
+    "Renovaciones · ¿Cómo vamos?",
+    "Renovaciones · Septiembre",
+    "Renovaciones · Octubre",
+    "Histórico de pago de la primera cuota",
+    "Intermediarios con bajo porcentaje de pago",
+  ];
+  [...deck.querySelectorAll(".slide")]
+    .sort((a, b) => ORDER.indexOf(a.getAttribute("aria-label")) - ORDER.indexOf(b.getAttribute("aria-label")))
+    .forEach(sl => deck.appendChild(sl));
   const slides = [...deck.querySelectorAll(".slide")];
   const count = document.getElementById("count");
   const progress = document.getElementById("progress");
@@ -1325,10 +1410,18 @@
   }
 
   /* ---------- Slides ocultos (se guardan en este navegador) ---------- */
-  const HKEY = "mesa-retencion-ocultos";
+  const HKEY = "mesa-retencion-ocultos-v2";
   const slideKey = s => s.getAttribute("aria-label");
   let hiddenKeys = new Set();
-  try { hiddenKeys = new Set(JSON.parse(localStorage.getItem(HKEY) || "[]")); } catch (e) {}
+  // Slides ocultos por defecto (hasta que se cambie desde el menú)
+  const HIDDEN_DEFAULT = [
+    "Métricas Gestión · Mi Auto Flotilla",
+    "Métricas Gestión · Mi Auto Ley",
+    "Métricas Gestión · Mi Auto Daños Propios",
+    "Renovaciones · ¿Cómo vamos?",
+  ];
+  hiddenKeys = new Set(HIDDEN_DEFAULT);
+  try { const sv = localStorage.getItem(HKEY); if (sv !== null) hiddenKeys = new Set(JSON.parse(sv)); } catch (e) {}
   const isHidden = i => slides[i].classList.contains("skip");
   const visible = () => slides.map((_, i) => i).filter(i => !isHidden(i));
   function applyHidden() {
