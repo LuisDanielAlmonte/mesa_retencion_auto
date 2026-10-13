@@ -7,7 +7,7 @@
 <meta name="description" content="Mesa de Retención de Auto — Proyección de churn 2026, tendencia por plan y métricas de gestión de Mi Auto.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" crossorigin="anonymous">
 <style>
   :root {
     --cyan: #00b4e6;
@@ -469,6 +469,14 @@
   .controls button:disabled { opacity: .35; cursor: default; }
   .controls .count { min-width: 52px; text-align: center; font-variant-numeric: tabular-nums; }
   .controls .hid { font-size: 12px; padding: 0 8px; color: #ffb37a; }
+  .controls .sep { width: 1px; height: 20px; margin: 0 4px; background: rgba(255,255,255,.25); }
+  .controls button.xp { width: auto; padding: 0 12px; border-radius: 999px; font-size: 13px; font-weight: 700; letter-spacing: .06em; }
+  /* Exportación: sin transiciones ni animaciones, cada slide en su estado final */
+  body.exporting *, body.exporting *::before, body.exporting *::after { transition: none !important; animation-duration: 0s !important; animation-delay: 0s !important; }
+  .xp-busy { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; background: rgba(5,15,28,.6); backdrop-filter: blur(3px); }
+  .xp-busy[hidden] { display: none; }
+  .xp-busy div { background: #fff; color: var(--navy); border-radius: 16px; padding: 22px 30px; font-size: 18px; font-weight: 600; box-shadow: 0 30px 80px rgba(0,0,0,.4); }
+  .xp-busy small { display: block; margin-top: 6px; font-weight: 400; color: var(--muted); font-size: 14px; }
   .sl-panel { position: fixed; inset: 0; z-index: 20; background: rgba(5,15,28,.55); backdrop-filter: blur(3px); display: grid; place-items: center; padding: 16px; }
   .sl-panel[hidden] { display: none; }
   .sl-box { width: min(560px, 100%); max-height: 90vh; overflow: auto; background: #fff; border-radius: 18px; padding: 22px 24px; box-shadow: 0 30px 80px rgba(0,0,0,.4); font-size: 15px; }
@@ -499,7 +507,7 @@
     .slide { position: relative; opacity: 1; visibility: visible; transform: none; width: 1920px; height: 1080px; break-after: page; }
     .anim { opacity: 1 !important; transform: none !important; }
     svg .pop, svg .fadein, svg .grow { opacity: 1; animation: none; }
-    .controls, .progress, .sl-panel { display: none !important; }
+    .controls, .progress, .sl-panel, .xp-busy { display: none !important; }
     .slide.skip { display: none; }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
@@ -618,13 +626,17 @@
   <button id="fs" aria-label="Pantalla completa" title="Pantalla completa (F)">⛶</button>
   <button id="menu" aria-label="Mostrar u ocultar slides" title="Mostrar u ocultar slides (O)">☰</button>
   <button id="pin" class="pin-b" aria-label="Fijar controles" title="Fijar controles (C)">📌</button>
+  <span class="sep"></span>
+  <button id="xp-pdf" class="xp" title="Descargar la presentación en PDF">PDF</button>
+  <button id="xp-ppt" class="xp" title="Descargar la presentación en PowerPoint (.pptx)">PPT</button>
 </nav>
+<div class="xp-busy" id="xp-busy" hidden><div><span id="xp-msg">Preparando…</span><small>Se incluyen los slides visibles; cada plan va en su propia página.</small></div></div>
 <div class="hint" aria-hidden="true"></div>
 
 <div class="sl-panel" id="sl-panel" hidden>
   <div class="sl-box" role="dialog" aria-label="Mostrar u ocultar slides">
     <div class="sl-head"><b>Slides de la presentación</b><button id="sl-close" aria-label="Cerrar">✕</button></div>
-    <p>Desmarca un slide para ocultarlo. Se salta al presentar y al imprimir. La elección se guarda en este navegador.</p>
+    <p>Desmarca un slide para ocultarlo. Se salta al presentar, al imprimir y al exportar. La elección se guarda en este navegador.</p>
     <ol id="sl-list"></ol>
     <div class="sl-foot"><button id="sl-all">Mostrar todos</button><span>Tecla <b>O</b> para abrir · <b>Esc</b> para cerrar</span></div>
   </div>
@@ -632,6 +644,7 @@
 
 <script>
   const C = { cyan: "#00b4e6", blue: "#0067b1", navy: "#0b2f5b", orange: "#ffa94d", alert: "#e8590c", red: "#e03131", good: "#12b886", gray: "#9aa5b1", line: "#e4ebf2", muted: "#6b7c8f", ink: "#1c2b3a" };
+  let exporting = false;   // true mientras se exporta a PDF / PowerPoint: todo se dibuja en su estado final
   const nf = (v, d = 0) => v.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
   const pct = (v, d = 2) => v.toFixed(d) + "%";
   const sum = a => a.reduce((s, v) => s + v, 0);
@@ -996,7 +1009,7 @@
       el.classList.toggle("done", i < st);
     });
     document.querySelectorAll(`#step-${group} .bar`).forEach((el, i) => el.classList.toggle("fill", i < st));
-    if (animate) {
+    if (animate && !exporting) {
       const active = document.querySelectorAll(`#stage-${group} .pstage`)[st];
       setTimeout(() => {
         active.querySelectorAll("svg[data-chart]").forEach(drawChart);
@@ -1149,6 +1162,7 @@
   function countUp(el) {
     if (el.dataset.count == null) return;
     const to = parseFloat(el.dataset.count), dec = +el.dataset.dec || 0, pre = el.dataset.prefix || "", suf = el.dataset.suffix || "";
+    if (exporting) { el.textContent = pre + nf(to, dec) + suf; return; }
     const t0 = performance.now(), dur = 1100;
     const tick = t => {
       const k = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - k, 3);
@@ -1576,7 +1590,7 @@
         const d = el.dataset.d != null ? base + +el.dataset.d : base + order++ * 0.12;
         el.style.setProperty("--d", d.toFixed(2) + "s");
         el.classList.add("in");
-        setTimeout(() => { if (el.classList.contains("in")) trigger(el, slide); }, reduced ? 0 : d * 1000 + 150);
+        if (!exporting) setTimeout(() => { if (el.classList.contains("in")) trigger(el, slide); }, reduced ? 0 : d * 1000 + 150);
       } else if (!show && was) {
         el.classList.remove("in");
         el.style.removeProperty("--d");
@@ -1678,6 +1692,7 @@
 
   addEventListener("resize", fit);
   addEventListener("keydown", e => {
+    if (exporting) return;
     if (!panel.hidden) { if (e.key === "Escape" || e.key.toLowerCase() === "o") closePanel(); return; }
     if (e.key.toLowerCase() === "o") return openPanel();
     if (["ArrowRight", "ArrowDown", "PageDown", " ", "Enter"].includes(e.key)) { e.preventDefault(); forward(); }
@@ -1725,6 +1740,89 @@
   ctr.addEventListener("mouseleave", () => showCtr(900));
   addEventListener("touchstart", e => { if (e.touches[0].clientY > innerHeight * 0.82) showCtr(3500); }, { passive: true });
   addEventListener("keydown", e => { if (e.key.toLowerCase() === "c" && panel.hidden) setPin(!ctr.classList.contains("pin")); });
+
+  /* ---------- Exportar a PDF y PowerPoint ----------
+     Recorre los slides visibles (los ocultos desde ☰ no se exportan), cada uno en su estado final y,
+     en los slides por plan, una página por plan. Cada página se captura como imagen 1920×1080 a doble
+     resolución, así el PDF y el PowerPoint se ven igual que la presentación. Las librerías se cargan
+     solo al exportar. */
+  const XP_FILE = "Mesa de Retención Auto - Octubre 2026";
+  const XP_LIBS = {
+    shot: "https://cdn.jsdelivr.net/npm/modern-screenshot@4.4.39/dist/index.js",
+    pdf: "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
+    ppt: "https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js",
+  };
+  const xpLoaded = {};
+  const loadLib = src => xpLoaded[src] ??= new Promise((ok, ko) => {
+    const sc = document.createElement("script");
+    sc.src = src; sc.onload = ok;
+    sc.onerror = () => { delete xpLoaded[src]; sc.remove(); ko(new Error("no se pudo descargar una librería (¿sin conexión a internet?)")); };
+    document.head.appendChild(sc);
+  });
+  const frames = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  // Dibuja gráficos y cifras del slide actual sin animación
+  function settle(slide) {
+    slide.querySelectorAll(".anim.in").forEach(el => trigger(el, slide));
+    slide.querySelectorAll("clipPath rect").forEach(r => { r.querySelector("animate")?.remove(); r.setAttribute("width", 4000); });
+  }
+  function xpPages() {
+    const pages = [];
+    visible().forEach(i => {
+      const s = slides[i];
+      if (s.dataset.stage) for (let k = 0; k <= stepsOf(s); k++) pages.push([i, k]);
+      else pages.push([i, stepsOf(s)]);
+    });
+    return pages;
+  }
+  async function exportar(kind) {
+    if (exporting) return;
+    const busy = document.getElementById("xp-busy"), msg = document.getElementById("xp-msg");
+    const at = [cur, step];
+    msg.textContent = "Preparando…"; busy.hidden = false;
+    try {
+      await Promise.all([loadLib(XP_LIBS.shot), loadLib(XP_LIBS[kind])]);
+      if (document.fonts) await document.fonts.ready;
+      exporting = true; document.body.classList.add("exporting");
+      // el lienzo a tamaño real (1920×1080) mientras se captura; el aviso de exportación lo tapa
+      Object.assign(deck.style, { transform: "none", left: "0", top: "0" });
+      const pages = xpPages();
+      let doc;
+      if (kind === "pdf") doc = new jspdf.jsPDF({ orientation: "landscape", unit: "px", format: [1920, 1080], hotfixes: ["px_scaling"], compress: true });
+      else { doc = new PptxGenJS(); doc.layout = "LAYOUT_WIDE"; doc.title = XP_FILE; }
+      for (const [n, [i, st]] of pages.entries()) {
+        msg.textContent = `Exportando página ${n + 1} de ${pages.length}…`;
+        const slide = slides[i];
+        go(i, st);
+        if (slide.dataset.stage) setStage(slide, st, false);
+        settle(slide);
+        await frames();
+        const img = await modernScreenshot.domToJpeg(slide, { width: 1920, height: 1080, scale: 2, quality: .92, backgroundColor: "#fff" });
+        if (kind === "pdf") {
+          if (n) doc.addPage([1920, 1080], "landscape");
+          doc.addImage(img, "JPEG", 0, 0, 1920, 1080);
+        } else {
+          const plan = slide.dataset.stage ? slide.querySelector(".pstage.on .pname .n")?.textContent : "";
+          const sl = doc.addSlide();
+          sl.addImage({ data: img.replace(/^data:/, ""), x: 0, y: 0, w: "100%", h: "100%" });
+          sl.addNotes(slideKey(slide) + (plan ? " · " + plan : ""));
+        }
+      }
+      msg.textContent = "Guardando archivo…";
+      if (kind === "pdf") doc.save(XP_FILE + ".pdf");
+      else await doc.writeFile({ fileName: XP_FILE + ".pptx" });
+    } catch (e) {
+      alert("No se pudo exportar: " + e.message);
+    } finally {
+      exporting = false;
+      document.body.classList.remove("exporting");
+      Object.assign(deck.style, { left: "", top: "" });
+      fit();
+      busy.hidden = true;
+      go(at[0], at[1]);
+    }
+  }
+  document.getElementById("xp-pdf").onclick = () => exportar("pdf");
+  document.getElementById("xp-ppt").onclick = () => exportar("ppt");
 
   fit();
   applyHidden();
