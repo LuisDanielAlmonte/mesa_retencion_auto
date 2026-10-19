@@ -490,6 +490,42 @@
   .cp-hi td.l i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 10px; background: var(--c); vertical-align: 2px; }
   .cp-hi tr.tt td { border-top: 2px solid #c7e7f5; font-weight: 700; color: var(--navy); }
 
+  /* Tasa de abandono · Salud y Auto */
+  .ta { margin-top: 26px; flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; padding-bottom: 20px; }
+  .ta-col { display: flex; flex-direction: column; min-height: 0; }
+  .ta-col:first-child { padding-right: 48px; border-right: 2px solid var(--line); }
+  .ta-col + .ta-col { padding-left: 48px; }
+  .ta-top { display: grid; grid-template-columns: 250px 1fr; gap: 20px; align-items: center; }
+  .ta-nm { display: flex; align-items: center; gap: 14px; }
+  .ta-nm .ic { flex: none; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--c); color: #fff; }
+  .ta-nm b { display: block; font-size: 38px; font-weight: 600; color: var(--c); line-height: 1; }
+  .ta-nm span { display: block; margin-top: 4px; font-size: 13px; font-weight: 600; letter-spacing: .1em; white-space: nowrap; text-transform: uppercase; color: var(--cyan); }
+  .ta-kpi { margin-top: 28px; }
+  .ta-kpi small { display: block; font-size: 16px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); }
+  .ta-kpi .v { font-size: 66px; font-weight: 700; color: var(--c); line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .ta-kpi .ok { display: inline-block; margin-top: 6px; padding: 5px 14px; border-radius: 8px; background: var(--blue); color: #fff; font-size: 18px; font-weight: 500; }
+  .ta-kpi .ob { display: block; margin-top: 6px; font-size: 19px; color: var(--blue); }
+  .ta-ch { border: 2px solid #bfe6f6; border-radius: 22px; padding: 10px 12px 8px; background: #fff; }
+  .ta-ch svg { display: block; width: 100%; height: auto; }
+  .ta-lg { display: flex; justify-content: center; gap: 22px; font-size: 15px; color: var(--muted); }
+  .ta-lg i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; margin-right: 6px; vertical-align: 4px; background: var(--c); }
+  .ta-lg i.ds { height: 0; border-top: 3px dashed var(--red); background: none; }
+  .ta-note { margin-top: 18px; display: flex; align-items: center; gap: 14px; padding: 14px 22px; border-radius: 14px; background: var(--cyan-soft); font-size: 21px; line-height: 1.3; color: var(--blue); min-height: 84px; }
+  .ta-note p { margin: 0; }
+  .ta-note::before { content: "»"; flex: none; font-size: 40px; font-weight: 700; line-height: 1; color: var(--blue); }
+  .ta-note b { color: var(--navy); }
+  .ta-band { margin-top: 20px; padding: 9px; border-radius: 6px; text-align: center; background: linear-gradient(90deg, var(--cyan), var(--blue)); color: #fff; font-size: 19px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .ta-mini { margin-top: 14px; flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .ta-m { border: 2px solid #bfe6f6; border-radius: 22px; padding: 10px 6px 4px; display: flex; flex-direction: column; }
+  .ta-m h4 { margin: 0; text-align: center; font-size: 22px; font-weight: 500; color: var(--cyan); }
+  .ta-m svg { display: block; width: 100%; flex: 1; min-height: 0; }
+  .ta-ml { margin-top: 10px; display: flex; justify-content: center; gap: 26px; font-size: 17px; color: var(--muted); }
+  .ta-ml i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+  .ta svg text { font-family: inherit; font-variant-numeric: tabular-nums; paint-order: stroke; stroke: #fff; stroke-width: 5px; stroke-linejoin: round; }
+  .ta svg text.ns { stroke: none; }
+  .ta svg .ln { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.2s var(--ease) .3s; }
+  .ta .in svg .ln { stroke-dashoffset: 0; }
+
   /* Retención · Churn YTD (3 indicadores) */
   .balls { margin-top: 30px; flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: center; }
   .ball { display: flex; flex-direction: column; align-items: center; text-align: center; }
@@ -1569,6 +1605,95 @@
     </section>`;
   }
 
+  /* =================== Tasa de abandono · Salud y Auto (2024 – 2026) =================== */
+  // Tasa de abandono por año [2024, 2025, 2026]; cartera y anulación en pólizas
+  const TA = [
+    { name: "Salud", c: "#e8505b", acum: 1.98, obj: 2.00, min: 0.4, max: 2.9,
+      ic: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>`,
+      rate: { ov: [2.17, 2.04, 1.98], ind: [2.69, 2.54, 2.44], col: [0.81, 0.75, 0.71] },
+      note: "La tendencia va mejorando año tras año, de 2.69% en 2024 a <b>2.44%</b> ahora.",
+      seg: [["Overall", [70252, 69378, 72392], [18301, 16997, 8586]],
+            ["Individual", [50911, 50186, 53065], [16417, 15263, 7765]],
+            ["Colectivo", [19341, 19192, 19327], [1884, 1734, 821]]] },
+    { name: "Auto", c: "var(--orange)", acum: 2.29, obj: 2.54, min: 2.1, max: 3.3,
+      ic: `<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 16V11l2-5h10l2 5v5M3 11h18M5 16h14M6.5 19v-3M17.5 19v-3"/><circle cx="8" cy="13.5" r=".6"/><circle cx="16" cy="13.5" r=".6"/></svg>`,
+      rate: { ov: [3.17, 2.63, 2.29], ind: [3.12, 2.67, 2.28], col: [2.99, 2.77, 2.34] },
+      note: "Veníamos de un abandono de <b>3.17%</b> en 2024 y hoy estamos en <b>2.29%</b>, con una mejora sostenida de casi un punto porcentual en dos años.",
+      seg: [["Overall", [48895, 51898, 64137], [18310, 16555, 8827]],
+            ["Individual", [35361, 39159, 50246], [13447, 12309, 6873]],
+            ["Colectivo", [13534, 12739, 13891], [4863, 4246, 314]]] },
+  ];
+  const TA_SER = [["ov", "Overall", "var(--blue)"], ["ind", "Individual", "var(--cyan)"], ["col", "Colectivo", "var(--gray)"]];
+  // Separa etiquetas verticalmente para que no se encimen (mínimo `gap` px)
+  const spread = (ls, gap) => {
+    ls.sort((a, b) => a.y - b.y);
+    for (let k = 0; k < 30; k++) for (let i = 1; i < ls.length; i++) {
+      const o = gap - (ls[i].y - ls[i - 1].y);
+      if (o > 0) { ls[i - 1].y -= o / 2; ls[i].y += o / 2; }
+    }
+    return ls;
+  };
+  function taChart(t) {
+    const W = 600, X = [70, 290, 510], T = 26, H = 200, Y = v => T + (t.max - v) / (t.max - t.min) * H;
+    const path = vs => `M${vs.map((v, i) => `${X[i]},${Y(v).toFixed(1)}`).join("L")}`;
+    let out = `<line x1="40" x2="560" y1="${Y(t.obj).toFixed(1)}" y2="${Y(t.obj).toFixed(1)}" stroke="var(--red)" stroke-width="2.5" stroke-dasharray="8 7"/>`;
+    TA_SER.forEach(([k, , c]) => {
+      out += `<path class="ln" pathLength="1" d="${path(t.rate[k])}" fill="none" stroke="${c}" stroke-width="${k === "ov" ? 4 : 3}" stroke-linejoin="round"/>`;
+      out += t.rate[k].map((v, i) => `<circle cx="${X[i]}" cy="${Y(v).toFixed(1)}" r="5.5" fill="${c}" stroke="#fff" stroke-width="2"/>`).join("");
+    });
+    X.forEach((x, i) => {
+      const ls = TA_SER.map(([k]) => ({ v: t.rate[k][i], y: Y(t.rate[k][i]) + 6, b: k === "ov" && i === 2 }));
+      if (i === 2) ls.push({ v: t.obj, y: Y(t.obj) + 6, o: true });
+      const [dx, an] = i === 0 ? [-12, "end"] : i === 2 ? [12, "start"] : [0, "middle"];
+      ls.forEach(l => { l.y0 = l.y; });
+      spread(ls, 20);
+      // al centro: si hubo que separar etiquetas, se apilan por encima del punto más alto
+      const up = i !== 1 ? 0 : ls.some(l => Math.abs(l.y - l.y0) > .5) ? Math.max(...ls.map(l => l.y)) - Math.min(...ls.map(l => l.y0)) + 16 : 18;
+      ls.forEach(l => {
+        const y = l.y - up;
+        out += `<text x="${x + dx}" y="${y.toFixed(1)}" text-anchor="${an}" font-size="${l.b ? 19 : 17}" font-weight="${l.b ? 700 : 400}" fill="${l.b ? t.c : l.o ? "var(--red)" : "#4a5a6b"}">${pct(l.v)}</text>`;
+      });
+    });
+    out += `<rect x="20" y="${T + H + 16}" width="${W - 40}" height="30" rx="4" fill="var(--cyan)"/>` +
+      X.map((x, i) => `<text x="${x}" y="${T + H + 37}" text-anchor="middle" font-size="16" font-weight="600" fill="#fff" class="ns">${2024 + i}</text>`).join("");
+    return `<svg viewBox="0 0 ${W} ${T + H + 52}" role="img" aria-label="Tasa de abandono ${t.name} 2024 – 2026 contra objetivo de ${pct(t.obj)}">${out}</svg>`;
+  }
+  function taMini([nm, cart, anul]) {
+    const X = [40, 125, 210];
+    const line = (vs, top, c) => {
+      const mx = Math.max(...vs), ys = vs.map(v => top + (1 - v / mx) * 70);
+      return `<path class="ln" pathLength="1" d="M${vs.map((v, i) => `${X[i]},${ys[i].toFixed(1)}`).join("L")}" fill="none" stroke="${c}" stroke-width="3.5"/>` +
+        vs.map((v, i) => `<circle cx="${X[i]}" cy="${ys[i].toFixed(1)}" r="6" fill="${c}"/><text x="${X[i]}" y="${(ys[i] - 13).toFixed(1)}" text-anchor="middle" font-size="16" fill="#3c4b5c">${nf(v)}</text>`).join("");
+    };
+    return `<div class="ta-m"><h4>${nm}</h4>
+        <svg viewBox="0 0 250 220" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Cartera y anulación ${nm} 2024 – 2026">
+          ${line(cart, 42, "var(--cyan)")}${line(anul, 118, "var(--blue)")}
+          ${X.map((x, i) => `<text x="${x}" y="212" text-anchor="middle" font-size="17" font-weight="700" fill="var(--blue)">${24 + i}</text>`).join("")}
+        </svg></div>`;
+  }
+  function taSlide() {
+    const col = (t, i) => `<div class="ta-col anim${i ? " from-right" : ""}" data-step="${i}" style="--c:${t.c}">
+          <div class="ta-top">
+            <div>
+              <div class="ta-nm"><div class="ic">${t.ic}</div><div><b>${t.name}</b><span>Tasa de abandono</span></div></div>
+              <div class="ta-kpi"><small>Acumulado</small><div class="v" data-count="${t.acum}" data-dec="2" data-suffix="%">${pct(t.acum)}</div>
+                ${t.acum <= t.obj ? `<span class="ok">Meta cumplida</span>` : ""}<span class="ob">Obj <b>${pct(t.obj)}</b></span></div>
+            </div>
+            <div class="ta-ch">${taChart(t)}
+              <div class="ta-lg">${TA_SER.map(s => `<span><i style="--c:${s[2]}"></i>${s[1]}</span>`).join("")}<span><i class="ds"></i>Objetivo</span></div></div>
+          </div>
+          <div class="ta-note"><p>${t.note}</p></div>
+          <div class="ta-band">Anulación y cartera</div>
+          <div class="ta-mini">${t.seg.map(taMini).join("")}</div>
+          <div class="ta-ml"><span><i style="--c:var(--cyan)"></i>Cartera</span><span><i style="--c:var(--blue)"></i>Anulación</span></div>
+        </div>`;
+    return `<section class="slide rn nobr" aria-label="Tasa de abandono · Salud y Auto">${rnHead("Tasa de abandono <span class=\"brand\">· Salud y Auto</span>",
+        "Acumulado vs. objetivo · Cartera y anulación <b>2024 – 2026</b>", "Abandono", "Mesa de Retención · Salud y Auto")}
+        <div class="ta">${TA.map(col).join("")}</div>
+      </div>
+    </section>`;
+  }
+
   /* =================== Retención · Principales indicadores · Churn YTD =================== */
   const YTD = [
     { name: "Auto", v: 2.44, ind: 2.47, flo: 2.35, c: "#4fb8c9" },
@@ -1611,7 +1736,7 @@
       </div>
     </section>`;
   }
-  document.getElementById("deck").insertAdjacentHTML("beforeend", ytdSlide() + METRICS.map(metricSlide).join("") + rnResumen() + fnSlide("Septiembre") + rnMesSlide("Septiembre") + fnSlide("Octubre") + rnMesSlide("Octubre") + ibSlide() + hcSlide() + cpSlide());
+  document.getElementById("deck").insertAdjacentHTML("beforeend", ytdSlide() + METRICS.map(metricSlide).join("") + rnResumen() + fnSlide("Septiembre") + rnMesSlide("Septiembre") + fnSlide("Octubre") + rnMesSlide("Octubre") + ibSlide() + hcSlide() + cpSlide() + taSlide());
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
   fnLayout();
   if (document.fonts) document.fonts.ready.then(fnLayout);
@@ -1640,6 +1765,7 @@
     "Histórico de pago de la primera cuota",
     "Intermediarios con bajo porcentaje de pago",
     "Métricas · Canales de pago",
+    "Tasa de abandono · Salud y Auto",
   ];
   [...deck.querySelectorAll(".slide")]
     .sort((a, b) => ORDER.indexOf(a.getAttribute("aria-label")) - ORDER.indexOf(b.getAttribute("aria-label")))
