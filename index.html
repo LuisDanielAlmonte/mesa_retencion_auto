@@ -526,6 +526,8 @@
   .ta-m svg { display: block; width: 100%; flex: 1; min-height: 0; }
   .ta svg .ar { opacity: 0; transition: opacity .9s ease 1s; }
   .ta .in svg .ar { opacity: 1; }
+  .ta svg .bar { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0); transition: transform .9s var(--ease) .5s; }
+  .ta .in svg .bar { transform: none; }
   .ta svg text { font-family: inherit; font-variant-numeric: tabular-nums; paint-order: stroke; stroke: #fff; stroke-width: 5px; stroke-linejoin: round; }
   .ta svg text.ns { stroke: none; }
   .ta svg .ln { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.2s var(--ease) .3s; }
@@ -1674,10 +1676,20 @@
         P.map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${i === 2 ? 7 : 5}" fill="${c}" stroke="#fff" stroke-width="${i === 2 ? 3 : 2}"/>
           <text x="${x}" y="${(y - 13).toFixed(1)}" text-anchor="middle" font-size="${i === 2 ? 16 : 15}" font-weight="${i === 2 ? 700 : 500}" fill="${lc}">${nf(vs[i])}</text>`).join("");
     };
+    // Anulación: barras con degradado, alto proporcional al mayor de los tres años
+    const barras = (vs, base, g) => {
+      const mx = Math.max(...vs);
+      return `<linearGradient id="${g}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#0067b1"/><stop offset="1" stop-color="#4fa3dc"/></linearGradient>` +
+        vs.map((v, i) => {
+          const h = Math.max(4, v / mx * 78), y = +(base - h).toFixed(1);
+          return `<rect class="bar" x="${X[i] - 24}" y="${y}" width="48" height="${h.toFixed(1)}" rx="8" fill="url(#${g})" opacity="${i === 2 ? 1 : .75}"/>
+          <text x="${X[i]}" y="${(y - 9).toFixed(1)}" text-anchor="middle" font-size="${i === 2 ? 16 : 15}" font-weight="${i === 2 ? 700 : 500}" fill="var(--blue)">${nf(v)}</text>`;
+        }).join("") + `<line x1="10" x2="250" y1="${base}" y2="${base}" stroke="#c9dceb" stroke-width="1.5"/>`;
+    };
     return `<div class="ta-m"><h4>${nm}</h4>
         <svg viewBox="0 0 260 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Cartera y anulación ${nm} 2024 – 2026">
           ${X.map(x => `<line x1="${x}" x2="${x}" y1="26" y2="268" stroke="#e1edf4" stroke-dasharray="3 5"/>`).join("")}
-          ${serie(cart, 50, 140, "var(--cyan)", "var(--navy)", `${id}c`)}${serie(anul, 180, 268, "var(--blue)", "var(--blue)", `${id}a`)}
+          ${serie(cart, 50, 140, "var(--cyan)", "var(--navy)", `${id}c`)}${barras(anul, 268, `${id}a`)}
           ${X.map((x, i) => `<text x="${x}" y="292" text-anchor="middle" font-size="15" font-weight="600" fill="var(--muted)">${2024 + i}</text>`).join("")}
         </svg></div>`;
   }
@@ -1694,7 +1706,7 @@
           </div>
           <div class="ta-note"><p>${t.note}</p></div>
           <div class="ta-sec"><b>Anulación y cartera</b><i class="rl"></i>
-            <div class="ta-ml"><span><i style="--c:var(--cyan)"></i>Cartera</span><span><i style="--c:var(--blue)"></i>Anulación</span></div></div>
+            <div class="ta-ml"><span><i style="--c:var(--cyan)"></i>Cartera</span><span><i style="--c:var(--blue);border-radius:3px"></i>Anulación</span></div></div>
           <div class="ta-mini">${t.seg.map((sg, j) => taMini(sg, `ta${i}${j}`)).join("")}</div>
         </div>`;
     return `<section class="slide rn nobr" aria-label="Tasa de abandono · Salud y Auto">${rnHead("Tasa de abandono <span class=\"brand\">· Salud y Auto</span>",
