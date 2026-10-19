@@ -1985,14 +1985,15 @@
 
   /* ---------- Exportar a PDF y PowerPoint ----------
      Recorre los slides visibles (los ocultos desde ☰ no se exportan), cada uno en su estado final y,
-     en los slides por plan, una página por plan. Cada página se captura como imagen 1920×1080 a doble
-     resolución, así el PDF y el PowerPoint se ven igual que la presentación. Las librerías se cargan
-     solo al exportar. */
+     en los slides por plan, una página por plan. El PDF lleva cada página como imagen 1920×1080 a doble
+     resolución; el PowerPoint se arma con textos, formas y gráficos nativos, todos editables
+     (exportar-pptx.js). Las librerías se cargan solo al exportar. */
   const XP_FILE = "Mesa de Retención Auto - Octubre 2026";
   const XP_LIBS = {
     shot: "https://cdn.jsdelivr.net/npm/modern-screenshot@4.4.39/dist/index.js",
     pdf: "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
     ppt: "https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js",
+    pptx: "exportar-pptx.js",
   };
   const xpLoaded = {};
   const loadLib = src => xpLoaded[src] ??= new Promise((ok, ko) => {
@@ -2022,7 +2023,8 @@
     const at = [cur, step];
     msg.textContent = "Preparando…"; busy.hidden = false;
     try {
-      await Promise.all([loadLib(XP_LIBS.shot), loadLib(XP_LIBS[kind])]);
+      if (kind === "pdf") await Promise.all([loadLib(XP_LIBS.shot), loadLib(XP_LIBS.pdf)]);
+      else await Promise.all([loadLib(XP_LIBS.ppt), loadLib(XP_LIBS.pptx)]);
       if (document.fonts) await document.fonts.ready;
       exporting = true; document.body.classList.add("exporting");
       // el lienzo a tamaño real (1920×1080) mientras se captura; el aviso de exportación lo tapa
@@ -2038,20 +2040,20 @@
         if (slide.dataset.stage) setStage(slide, st, false);
         settle(slide);
         await frames();
-        const img = await modernScreenshot.domToJpeg(slide, { width: 1920, height: 1080, scale: 2, quality: .92, backgroundColor: "#fff" });
         if (kind === "pdf") {
+          const img = await modernScreenshot.domToJpeg(slide, { width: 1920, height: 1080, scale: 2, quality: .92, backgroundColor: "#fff" });
           if (n) doc.addPage([1920, 1080], "landscape");
           doc.addImage(img, "JPEG", 0, 0, 1920, 1080);
         } else {
           const plan = slide.dataset.stage ? slide.querySelector(".pstage.on .pname .n")?.textContent : "";
           const sl = doc.addSlide();
-          sl.addImage({ data: img.replace(/^data:/, ""), x: 0, y: 0, w: "100%", h: "100%" });
+          xpPptx.slide(doc, sl, slide);
           sl.addNotes(slideKey(slide) + (plan ? " · " + plan : ""));
         }
       }
       msg.textContent = "Guardando archivo…";
       if (kind === "pdf") doc.save(XP_FILE + ".pdf");
-      else await doc.writeFile({ fileName: XP_FILE + ".pptx" });
+      else await xpPptx.save(doc, XP_FILE + ".pptx");
     } catch (e) {
       alert("No se pudo exportar: " + e.message);
     } finally {
