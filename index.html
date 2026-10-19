@@ -445,6 +445,51 @@
   .hc-leg { display: flex; gap: 26px; margin-top: 10px; font-size: 15px; color: var(--muted); }
   .hc-leg i { display: inline-block; width: 16px; height: 16px; border-radius: 4px; vertical-align: -3px; margin-right: 6px; }
 
+  /* ---------- Métricas · Canales de pago ---------- */
+  .cp { margin-top: 30px; flex: 1; min-height: 0; display: grid; grid-template-columns: 1.08fr 1fr; gap: 64px; padding-bottom: 18px; }
+  .cp-l, .cp-r { display: flex; flex-direction: column; min-height: 0; }
+  .cp-r { border-left: 2px solid var(--line); padding-left: 64px; gap: 30px; }
+  .cp-kpis { display: grid; grid-template-columns: 1fr 1.3fr; gap: 22px; }
+  .cp-kpi { border-radius: 20px; padding: 18px 26px; background: var(--cyan-soft); text-align: center; box-shadow: 0 16px 32px -26px rgba(11,47,91,.6); }
+  .cp-kpi span { display: block; font-size: 17px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); }
+  .cp-kpi b { display: block; margin-top: 4px; font-size: 48px; font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .cp-cols { margin-top: 26px; display: grid; grid-template-columns: 250px 1fr; gap: 14px; font-size: 15px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+  .cp-g { margin-top: 14px; }
+  .cp-g h3 { margin: 0 0 6px; font-size: 24px; font-weight: 700; color: var(--navy); }
+  .cp-row { display: grid; grid-template-columns: 250px 1fr; gap: 14px; align-items: center; height: 52px; }
+  .cp-row .lb { font-size: 21px; color: var(--ink); }
+  .cp-row .tr { height: 36px; display: flex; align-items: center; gap: 14px; }
+  .cp-row .tr i { flex: none; display: flex; align-items: center; justify-content: flex-end; height: 100%; width: 0; padding-right: 12px; border-radius: 8px; background: var(--c);
+    color: #fff; font-style: normal; font-size: 19px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; transition: width 1.1s var(--ease) .3s; }
+  .cp-g.in .cp-row .tr i { width: max(var(--w), 92px); }
+  .cp-row .mt { font-size: 20px; white-space: nowrap; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .cp-row.t .lb { font-weight: 700; color: var(--navy); }
+  .cp-row.t .tr { height: 44px; }
+  .cp-row.t .mt { color: var(--navy); font-weight: 600; }
+  .cp-hl { display: flex; align-items: center; gap: 26px; border-radius: 22px; padding: 24px 30px; background: var(--cyan-soft); box-shadow: 0 16px 32px -26px rgba(11,47,91,.6); }
+  .cp-hl .ic { flex: none; width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--blue); }
+  .cp-hl .n { font-size: 82px; font-weight: 700; color: var(--cyan); line-height: 1; font-variant-numeric: tabular-nums; }
+  .cp-hl p { margin: 0; font-size: 23px; line-height: 1.3; color: var(--navy); }
+  .cp-hl p b { color: var(--blue); }
+  .cp-st { font-size: 22px; font-weight: 700; color: var(--navy); }
+  .cp-dist .bar { margin-top: 12px; display: flex; height: 52px; border-radius: 12px; overflow: hidden; }
+  .cp-dist .bar div { display: grid; place-items: center; color: #fff; font-size: 22px; font-weight: 700; background: var(--c); }
+  .cp-dist .lg { margin-top: 12px; display: flex; }
+  .cp-dist .lg div { text-align: center; }
+  .cp-dist .lg b { display: block; font-size: 19px; color: var(--c); }
+  .cp-dist .lg span { font-size: 17px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .cp-dist .br { margin-top: 10px; height: 14px; border: 3px solid var(--cyan); border-top: 0; border-radius: 0 0 10px 10px; }
+  .cp-dist .bt { margin-top: 8px; text-align: center; font-size: 20px; font-weight: 700; color: var(--cyan); }
+  .cp-hi { border-radius: 22px; padding: 22px 28px; background: var(--cyan-soft); }
+  .cp-hi table { margin-top: 10px; }
+  .cp-hi th, .cp-hi td { border: 0; background: none; padding: 7px 10px; font-size: 20px; text-align: center; }
+  .cp-hi thead th { font-size: 17px; font-weight: 700; color: var(--navy); background: #fff; border-radius: 10px; }
+  .cp-hi thead th:first-child { background: none; }
+  .cp-hi td { font-weight: 600; color: var(--blue); }
+  .cp-hi td.l { text-align: left; font-weight: 400; color: var(--ink); white-space: nowrap; }
+  .cp-hi td.l i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 10px; background: var(--c); vertical-align: 2px; }
+  .cp-hi tr.tt td { border-top: 2px solid #c7e7f5; font-weight: 700; color: var(--navy); }
+
   /* Retención · Churn YTD (3 indicadores) */
   .balls { margin-top: 30px; flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: center; }
   .ball { display: flex; flex-direction: column; align-items: center; text-align: center; }
@@ -1476,6 +1521,54 @@
     </section>`.replace("Daños Propios · Septiembre y Octubre 2026", "Daños Propios · Enero – Noviembre 2026");
   }
 
+  /* =================== Métricas · Canales de pago (septiembre 2026) =================== */
+  // [canal, # transacciones, monto RD$ MM]
+  const CP_NA = [["Total No Asistidos", 58202, 865.5], ["Domiciliación", 18981, 142.7], ["Oficina Virtual HS", 14943, 290.4], ["Internet Banking", 8697, 214.1], ["APP Intermediarios", 6422, 83.7]];
+  const CP_AS = [["Total Asistidos", 22526, 1549.9], ["Transferencia", 13054, 943.1], ["Caja", 9472, 606.8]];
+  // [nombre, color, 2025, YTD 2026, Sept. 26]
+  const CP_HI = [["No Asistidos", "var(--cyan)", 36, 36, 36], ["Transferencia", "var(--blue)", 40, 41, 39], ["Caja", "var(--gray)", 24, 23, 26]];
+  function cpSlide() {
+    const MAX = CP_NA[0][1];
+    const grp = (t, rows, c) => `<div class="cp-g anim" style="--c:${c}"><h3>${t}</h3>${rows.map((r, i) => `
+          <div class="cp-row${i ? "" : " t"}"><span class="lb">${r[0]}</span><div class="tr"><i style="--w:${(r[1] / MAX * 72).toFixed(1)}%">${nf(r[1])}</i><span class="mt">RD$${nf(r[2], 1)} MM</span></div></div>`).join("")}
+        </div>`;
+    const card = `<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg>`;
+    const dist = [["Canales no Asistidos", "var(--cyan)", 36, 865.5], ["Transferencia Bancaria", "var(--blue)", 39, 943.1], ["Caja", "var(--gray)", 25, 606.8]];
+    return `<section class="slide rn nobr" aria-label="Métricas · Canales de pago">${rnHead("Métricas <span class=\"brand\">· Canales de Pago</span>",
+        "Flujo de canales de pago · <b>Septiembre 2026</b>", "Cobros", "Mesa de Retención · Auto")}
+        <div class="cp">
+          <div class="cp-l">
+            <div class="cp-kpis anim">
+              <div class="cp-kpi"><span>Total transacciones</span><b data-count="80728" data-dec="0">80,728</b></div>
+              <div class="cp-kpi"><span>Total cobrado</span><b data-count="2415.4" data-dec="1" data-prefix="RD$" data-suffix=" MM">RD$2,415.4 MM</b></div>
+            </div>
+            <div class="cp-cols anim fade"><span></span><span># Transacciones · $ Monto</span></div>
+            ${grp("No Asistidos", CP_NA, "var(--blue)")}
+            ${grp("Asistidos", CP_AS, "var(--cyan)")}
+          </div>
+          <div class="cp-r">
+            <div class="cp-hl anim from-right" data-step="1"><div class="ic">${card}</div><div class="n" data-count="88" data-dec="0" data-suffix="%">88%</div>
+              <p>de los pagos se realiza a través de <b>canales no presenciales</b>, representando el <b>75% del monto cobrado</b>.</p></div>
+            <div class="cp-dist anim" data-step="1">
+              <div class="cp-st">Distribución de Transacciones</div>
+              <div class="bar">${dist.map(d => `<div style="--c:${d[1]};width:${d[2]}%">${d[2]}%</div>`).join("")}</div>
+              <div class="lg">${dist.map(d => `<div style="--c:${d[1]};width:${d[2]}%"><b>${d[0]}</b><span>RD$${nf(d[3], 1)} MM</span></div>`).join("")}</div>
+              <div class="br" style="width:75%"></div><div class="bt" style="width:75%">75% Canales no presenciales</div>
+            </div>
+            <div class="cp-hi anim" data-step="1">
+              <div class="cp-st">Histórico <span style="font-weight:400;color:var(--muted)">· Promedio mensual de transacciones</span></div>
+              <table>
+                <thead><tr><th></th><th>2025</th><th>YTD 2026</th><th>Sept. 26</th></tr></thead>
+                <tbody>${CP_HI.map((r, i) => `<tr style="--r:${i}"><td class="l" style="--c:${r[1]}"><i></i>${r[0]}</td>${r.slice(2).map(v => `<td>${v}%</td>`).join("")}</tr>`).join("")}
+                  <tr class="tt" style="--r:3"><td class="l">Total mensual (RD$ MM)</td><td>2,013.7</td><td>2,248.7</td><td>2,415.4</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>`;
+  }
+
   /* =================== Retención · Principales indicadores · Churn YTD =================== */
   const YTD = [
     { name: "Auto", v: 2.44, ind: 2.47, flo: 2.35, c: "#4fb8c9" },
@@ -1518,7 +1611,7 @@
       </div>
     </section>`;
   }
-  document.getElementById("deck").insertAdjacentHTML("beforeend", ytdSlide() + METRICS.map(metricSlide).join("") + rnResumen() + fnSlide("Septiembre") + rnMesSlide("Septiembre") + fnSlide("Octubre") + rnMesSlide("Octubre") + ibSlide() + hcSlide());
+  document.getElementById("deck").insertAdjacentHTML("beforeend", ytdSlide() + METRICS.map(metricSlide).join("") + rnResumen() + fnSlide("Septiembre") + rnMesSlide("Septiembre") + fnSlide("Octubre") + rnMesSlide("Octubre") + ibSlide() + hcSlide() + cpSlide());
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
   fnLayout();
   if (document.fonts) document.fonts.ready.then(fnLayout);
@@ -1546,6 +1639,7 @@
     "Renovaciones · Octubre",
     "Histórico de pago de la primera cuota",
     "Intermediarios con bajo porcentaje de pago",
+    "Métricas · Canales de pago",
   ];
   [...deck.querySelectorAll(".slide")]
     .sort((a, b) => ORDER.indexOf(a.getAttribute("aria-label")) - ORDER.indexOf(b.getAttribute("aria-label")))
