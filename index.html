@@ -1996,7 +1996,8 @@
      (exportar-pptx.js). Las librerías se cargan solo al exportar. */
   const XP_FILE = "Mesa de Retención Auto - Octubre 2026";
   // Fuente de las descargas: familia Verlag, una cara por peso
-  const XP_FONT = w => ({ face: w <= 300 ? "Verlag Light" : w < 600 ? "Verlag Book" : w < 800 ? "Verlag Bold" : "Verlag Black" });
+  // los pesos gruesos van como Verlag Book + negrita: así Office toma la cara Bold aunque no exista una familia "Verlag Bold"
+  const XP_FONT = w => w <= 300 ? { face: "Verlag Light" } : w < 600 ? { face: "Verlag Book" } : { face: "Verlag Book", bold: true };
   const XP_LIBS = {
     shot: "https://cdn.jsdelivr.net/npm/modern-screenshot@4.4.39/dist/index.js",
     pdf: "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
