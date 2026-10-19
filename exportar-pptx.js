@@ -113,6 +113,12 @@
     return hex(c.a < 1 ? blend(c, backdrop(el, root)) : c);
   }
   const fontFace = cs => (cs.fontFamily.split(",")[0] || "Calibri").replace(/["']/g, "").trim();
+  // Fuente del archivo: xpPptx.font(peso) puede devolver { face, bold } para usar otra familia (p. ej. Verlag)
+  function fontOf(cs) {
+    const w = parseInt(cs.fontWeight, 10) || 400;
+    const f = window.xpPptx && window.xpPptx.font && window.xpPptx.font(w);
+    return f ? { fontFace: f.face, bold: !!f.bold } : { fontFace: fontFace(cs), bold: w >= 600 };
+  }
   function transformText(t, cs) {
     if (cs.textTransform === "uppercase") return t.toUpperCase();
     if (cs.textTransform === "lowercase") return t.toLowerCase();
@@ -122,10 +128,9 @@
   function runOpts(cs, el, root, opacity) {
     const ls = parseFloat(cs.letterSpacing);
     const o = {
-      fontFace: fontFace(cs),
+      ...fontOf(cs),
       fontSize: r2(parseFloat(cs.fontSize) * PT),
       color: textColor(cs, el, root, opacity),
-      bold: (parseInt(cs.fontWeight, 10) || 400) >= 600,
       italic: cs.fontStyle === "italic",
     };
     if (ls) o.charSpacing = r2(ls * PT);
@@ -517,8 +522,8 @@
       const o = {
         x: r2(x * PX), y: r2((c.y - ctx.oy - H / 2) * PX), w: r2((W + extra) * PX), h: r2(H * PX),
         margin: 0, valign: "middle", align, wrap: false, isTextBox: true, fit: "none",
-        fontFace: fontFace(cs), fontSize: r2(parseFloat(cs.fontSize) * scale * PT), color: hex(col),
-        bold: (parseInt(cs.fontWeight, 10) || 400) >= 600, italic: cs.fontStyle === "italic",
+        ...fontOf(cs), fontSize: r2(parseFloat(cs.fontSize) * scale * PT), color: hex(col),
+        italic: cs.fontStyle === "italic",
       };
       if (ls) o.charSpacing = r2(ls * scale * PT);
       if (Math.abs(rot) > .1) o.rotate = r2(((rot % 360) + 360) % 360);
@@ -663,5 +668,5 @@
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
   }
 
-  window.xpPptx = { slide, save };
+  window.xpPptx = Object.assign(window.xpPptx || {}, { slide, save });
 })();

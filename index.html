@@ -560,6 +560,12 @@
   .controls .sep { width: 1px; height: 20px; margin: 0 4px; background: rgba(255,255,255,.25); }
   .controls button.xp { width: auto; padding: 0 12px; border-radius: 999px; font-size: 13px; font-weight: 700; letter-spacing: .06em; }
   /* Exportación: sin transiciones ni animaciones, cada slide en su estado final */
+  /* Descargas con la familia Verlag: si está instalada en el equipo, el PDF y el PowerPoint se arman con ella */
+  @font-face { font-family: "XP Verlag"; src: local("Verlag Light"), local("Verlag-Light"); font-weight: 100 300; }
+  @font-face { font-family: "XP Verlag"; src: local("Verlag Book"), local("Verlag-Book"), local("Verlag"); font-weight: 400 500; }
+  @font-face { font-family: "XP Verlag"; src: local("Verlag Bold"), local("Verlag-Bold"); font-weight: 600 700; }
+  @font-face { font-family: "XP Verlag"; src: local("Verlag Black"), local("Verlag-Black"); font-weight: 800 900; }
+  body.exporting.xp-verlag .deck, body.exporting.xp-verlag .deck * { font-family: "XP Verlag", "Outfit", system-ui, sans-serif !important; }
   body.exporting *, body.exporting *::before, body.exporting *::after { transition: none !important; animation-duration: 0s !important; animation-delay: 0s !important; }
   .xp-busy { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; background: rgba(5,15,28,.6); backdrop-filter: blur(3px); }
   .xp-busy[hidden] { display: none; }
@@ -1989,6 +1995,8 @@
      resolución; el PowerPoint se arma con textos, formas y gráficos nativos, todos editables
      (exportar-pptx.js). Las librerías se cargan solo al exportar. */
   const XP_FILE = "Mesa de Retención Auto - Octubre 2026";
+  // Fuente de las descargas: familia Verlag, una cara por peso
+  const XP_FONT = w => ({ face: w <= 300 ? "Verlag Light" : w < 600 ? "Verlag Book" : w < 800 ? "Verlag Bold" : "Verlag Black" });
   const XP_LIBS = {
     shot: "https://cdn.jsdelivr.net/npm/modern-screenshot@4.4.39/dist/index.js",
     pdf: "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
@@ -2027,6 +2035,11 @@
       else await Promise.all([loadLib(XP_LIBS.ppt), loadLib(XP_LIBS.pptx)]);
       if (document.fonts) await document.fonts.ready;
       exporting = true; document.body.classList.add("exporting");
+      if (kind === "ppt") xpPptx.font = XP_FONT;
+      // si Verlag está instalada, se maqueta con ella para que el PDF y el PowerPoint queden iguales
+      let verlag = false;
+      try { verlag = (await document.fonts.load('400 20px "XP Verlag"')).length > 0; } catch (e) {}
+      if (verlag) { document.body.classList.add("xp-verlag"); await document.fonts.ready; if (typeof fnLayout === "function") fnLayout(); }
       // el lienzo a tamaño real (1920×1080) mientras se captura; el aviso de exportación lo tapa
       Object.assign(deck.style, { transform: "none", left: "0", top: "0" });
       const pages = xpPages();
@@ -2058,7 +2071,8 @@
       alert("No se pudo exportar: " + e.message);
     } finally {
       exporting = false;
-      document.body.classList.remove("exporting");
+      document.body.classList.remove("exporting", "xp-verlag");
+      if (typeof fnLayout === "function") fnLayout();
       Object.assign(deck.style, { left: "", top: "" });
       fit();
       busy.hidden = true;
