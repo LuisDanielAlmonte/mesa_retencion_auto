@@ -35,6 +35,49 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* ---------- Propuesta · Flujo de teléfonos ---------- */
+  .tf-sub { margin-top: 12px; font-size: 24px; color: var(--muted); font-weight: 300; }
+  .tf-lab { font-size: 15px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); margin: 26px 0 12px; }
+  .tf-prob { display: grid; grid-template-columns: 1fr 1.25fr 1.25fr; gap: 22px; }
+  .tf-card { border-radius: 20px; padding: 22px 28px; border: 1px solid var(--line); background: #fff; box-shadow: 0 18px 40px -30px rgba(11,47,91,.45); }
+  .tf-card.main { background: linear-gradient(150deg, var(--blue), var(--navy)); color: #fff; border: 0; }
+  .tf-card h3 { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .tf-card.main h3 { color: rgba(255,255,255,.7); }
+  .tf-card .big { display: flex; align-items: baseline; gap: 14px; margin-top: 6px; }
+  .tf-card .big b { font-size: 54px; font-weight: 700; line-height: 1; color: var(--navy); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .tf-card.main .big b { color: #fff; }
+  .tf-card .big span { font-size: 19px; color: var(--muted); }
+  .tf-card.main .big span { color: rgba(255,255,255,.75); }
+  .tf-card p { margin: 10px 0 0; font-size: 18px; line-height: 1.4; color: var(--ink); }
+  .tf-card.main p { color: rgba(255,255,255,.88); }
+  .tf-card p em { font-style: normal; font-weight: 700; color: var(--alert); }
+  .tf-cmp { display: grid; grid-template-columns: 1fr auto auto; gap: 2px 18px; margin-top: 10px; font-size: 17px; font-variant-numeric: tabular-nums; }
+  .tf-cmp .h { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); text-align: right; }
+  .tf-cmp .h:first-child { text-align: left; }
+  .tf-cmp span { color: var(--muted); }
+  .tf-cmp b { text-align: right; color: var(--navy); }
+  .tf-cmp b.bad { color: var(--alert); }
+
+  .tf-flow { position: relative; display: grid; grid-template-columns: 1fr 70px 1fr 70px 1fr; align-items: stretch; padding-bottom: 96px; }
+  .tf-node { position: relative; z-index: 1; border-radius: 22px; padding: 22px 26px 20px; background: #fff; border: 2px solid var(--c); box-shadow: 0 20px 44px -30px rgba(11,47,91,.55); }
+  .tf-node .k { display: flex; align-items: center; gap: 12px; font-size: 28px; font-weight: 700; color: var(--c); }
+  .tf-node .k i { font-style: normal; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--c); color: #fff; font-size: 21px; }
+  .tf-node p { margin: 10px 0 0; font-size: 18px; line-height: 1.4; color: var(--ink); }
+  .tf-node .tag { display: inline-block; margin-top: 12px; font-size: 15px; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: color-mix(in srgb, var(--c) 12%, #fff); color: var(--c); }
+  .tf-arr { display: grid; place-items: center; font-size: 44px; font-weight: 700; color: var(--blue); }
+  .tf-loop { position: absolute; left: 0; bottom: 0; width: 100%; height: 110px; overflow: visible; }
+  .tf-loop-l { position: absolute; left: 0; right: 0; bottom: 4px; text-align: center; }
+  .tf-loop-l span { display: inline-block; padding: 4px 20px; background: #fff; font-size: 19px; font-weight: 600; color: var(--blue); }
+
+  .tf-ask { margin-top: auto; display: grid; grid-template-columns: 300px 1fr 1fr 1fr; border-radius: 22px; background: var(--navy); color: #fff; padding: 22px 0; }
+  .tf-ask > div { padding: 0 30px; border-left: 1px solid rgba(255,255,255,.18); }
+  .tf-ask > div:first-child { border: 0; display: flex; flex-direction: column; justify-content: center; }
+  .tf-ask .e { font-size: 15px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--orange); }
+  .tf-ask .t { font-size: 32px; font-weight: 700; margin-top: 4px; white-space: nowrap; }
+  .tf-ask h4 { margin: 0; font-size: 20px; font-weight: 700; }
+  .tf-ask p { margin: 6px 0 0; font-size: 16.5px; line-height: 1.4; color: rgba(255,255,255,.8); }
+  .tf-ask p b { color: var(--orange); }
+
   /* ---------- Deck: lienzo fijo 1920×1080 escalado a la ventana ---------- */
   .viewport { position: fixed; inset: 0; }
   .deck {
@@ -596,6 +639,79 @@
         </div>
         <div class="stepper anim" id="step-dp"></div>
         <div class="stage anim" id="stage-dp"></div>
+      </div>
+    </section>
+
+    <!-- ================= Propuesta: flujo de teléfonos ================= -->
+    <section class="slide" aria-label="Propuesta · Nuevo flujo de teléfonos">
+      <div class="deco tl1"></div><div class="deco tl2"></div>
+      <div class="deco br1"></div><div class="deco br2"></div>
+      <div class="deco band"></div>
+      <div class="content">
+        <div class="head">
+          <div class="anim">
+            <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto · Retención y Cobros</span>
+            <h1>Teléfonos de clientes <span class="brand">· Nuevo flujo</span></h1>
+            <div class="tf-sub">Auto individual · excluye Coaseguro Minoritario y Banca Seguros</div>
+          </div>
+          <div class="section-tag anim from-right">Propuesta</div>
+        </div>
+
+        <div class="tf-lab anim" data-step="0">Sin teléfono no hay llamada: el cliente queda fuera de la gestión</div>
+        <div class="tf-prob">
+          <div class="tf-card main anim" data-step="0">
+            <h3>Pólizas sin teléfono</h3>
+            <div class="big"><b>1 de 13</b><span>≈ 7.8%</span></div>
+            <p>Y tener un número no garantiza que sea correcto ni que el cliente conteste: solo <b>47%</b> de los teléfonos de contratantes está validado.</p>
+          </div>
+          <div class="tf-card anim" data-step="0" style="--d:.1s">
+            <h3>Retención · renovaciones ene–sep</h3>
+            <div class="big"><b>2,011</b><span>pólizas · RD$90.8 MM en primas</span></div>
+            <p><em>455 ya cancelaron</em> (RD$21.7 MM) sin poder llamarlas y 1,556 siguen activas sin forma de contacto. Cada mes quedan fuera <b>223 pólizas · RD$10 MM</b>, con una prima promedio de RD$45,176.</p>
+          </div>
+          <div class="tf-card anim" data-step="0" style="--d:.2s">
+            <h3>Cobros · deuda al 30/09/2026</h3>
+            <div class="big"><b>1,682</b><span>pólizas · RD$50.8 MM por cobrar</span></div>
+            <div class="tf-cmp">
+              <span class="h">Parte de la deuda</span><span class="h">Sin tel.</span><span class="h">Con tel.</span>
+              <span>Ya vencida</span><b class="bad">31.9%</b><b>29.1%</b>
+              <span>Más de 60 días</span><b class="bad">11.2%</b><b>9.9%</b>
+            </div>
+          </div>
+        </div>
+
+        <div class="tf-lab anim" data-step="1">Propuesta · un ciclo continuo de depuración y compra</div>
+        <div class="tf-flow">
+          <div class="tf-node anim" data-step="1" style="--c:var(--red)">
+            <div class="k"><i>1</i>Depurar</div>
+            <p>Inactivar los números que no funcionan, según el resultado de las llamadas de Retención y Cobros.</p>
+            <span class="tag">Hoy no se puede inactivar el último teléfono</span>
+          </div>
+          <div class="tf-arr anim fade" data-step="1" style="--d:.15s">→</div>
+          <div class="tf-node anim" data-step="1" style="--c:var(--blue);--d:.25s">
+            <div class="k"><i>2</i>Comprar</div>
+            <p>Comprar teléfonos para las pólizas que quedan sin ningún número activo.</p>
+            <span class="tag">1ra compra: 3,512 vacíos × RD$15 = RD$52,680</span>
+          </div>
+          <div class="tf-arr anim fade" data-step="1" style="--d:.4s">→</div>
+          <div class="tf-node anim" data-step="1" style="--c:var(--good);--d:.5s">
+            <div class="k"><i>3</i>Gestionar</div>
+            <p>Retención y Cobros llaman con los números nuevos y marcan cuáles son válidos.</p>
+            <span class="tag">Se valida en la propia gestión</span>
+          </div>
+          <svg class="tf-loop anim fade" data-step="1" style="--d:.7s" viewBox="0 0 1700 110" aria-hidden="true">
+            <defs><marker id="tf-ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0067b1"/></marker></defs>
+            <path d="M1440,4 V62 Q1440,92 1410,92 H290 Q260,92 260,62 V10" fill="none" stroke="#0067b1" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#tf-ah)"/>
+          </svg>
+          <div class="tf-loop-l anim fade" data-step="1" style="--d:.7s"><span>↺ Los números no válidos vuelven a depurarse y el ciclo se repite</span></div>
+        </div>
+
+        <div class="tf-ask anim" data-step="2">
+          <div><span class="e">Para arrancar</span><span class="t">Próximos pasos</span></div>
+          <div><h4>1 · Ajuste en Sirweb</h4><p>Permitir inactivar números, incluido el último teléfono disponible del cliente.</p></div>
+          <div><h4>2 · Aprobar la compra inicial</h4><p>3,512 teléfonos vacíos × RD$15 = <b>RD$52,680</b>.</p></div>
+          <div><h4>3 · Empresas sin validar</h4><p>Las empresas que queden sin número válido se canalizan a CAC para contactarlas.</p></div>
+        </div>
       </div>
     </section>
 
@@ -1552,6 +1668,7 @@
     "Renovaciones · Octubre",
     "Histórico de pago de la primera cuota",
     "Intermediarios con bajo porcentaje de pago",
+    "Propuesta · Nuevo flujo de teléfonos",
   ];
   [...deck.querySelectorAll(".slide")]
     .sort((a, b) => ORDER.indexOf(a.getAttribute("aria-label")) - ORDER.indexOf(b.getAttribute("aria-label")))
