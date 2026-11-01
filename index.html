@@ -559,9 +559,9 @@
           </div>
           <div class="kpis">
             <div class="kpi main anim from-right">
-              <h3>Churn 2026 · ene–sep</h3>
-              <div class="v" data-count="2.44" data-dec="2" data-suffix="%">2.44%</div>
-              <span class="pill">0.10 p.p. bajo objetivo</span>
+              <h3>Churn 2026 · ene–oct</h3>
+              <div class="v" data-count="2.48" data-dec="2" data-suffix="%">2.48%</div>
+              <span class="pill">0.06 p.p. bajo objetivo</span>
             </div>
             <div class="kpi anim from-right">
               <h3>Objetivo</h3>
@@ -660,27 +660,28 @@
 
   /* =================== Datos · Total certificados =================== */
   const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-  const REAL = 9;                 // ene–sep cerrados
+  const REAL = 10;                // ene–oct cerrados (Proyección de Churn)
+  const REAL_P = 9;               // ene–sep cerrados (tendencias por plan)
   const OBJETIVO = 2.54;
-  const CARTERA_OCT = 71781;      // cartera al inicio de octubre (real)
+  const CARTERA_SIG = 72531;      // cartera al inicio de noviembre (real)
   const total = {
-    cartera:   [60290,62342,63568,64883,66107,67632,68844,70242,71122],
-    emisiones: [3376,2667,2922,2752,2744,2920,3152,2676,2884],
-    cancel:    [1324,1441,1607,1528,1219,1708,1754,1796,2225],
+    cartera:   [60290,62342,63568,64883,66107,67632,68844,70242,71122,71781],
+    emisiones: [3376,2667,2922,2752,2744,2920,3152,2676,2884,2753],   // oct = cartera nov − cartera oct + cancelaciones oct
+    cancel:    [1324,1441,1607,1528,1219,1708,1754,1796,2225,2003],
   };
   total.churn = total.cancel.map((c, i) => c / total.cartera[i] * 100);
-  const TREND = [10, 11, 12].map(linreg(total.churn));
+  const TREND = Array.from({ length: 12 - REAL }, (_, i) => REAL + 1 + i).map(linreg(total.churn));
   const EMIS_PROM = avg(total.emisiones);
   const proj = { cartera: [], emisiones: [], cancel: [], crec: [] };
   {
-    let cart = CARTERA_OCT;
+    let cart = CARTERA_SIG;
     TREND.forEach(t => {
       const canc = cart * t / 100;
       proj.cartera.push(cart); proj.emisiones.push(EMIS_PROM); proj.cancel.push(canc); proj.crec.push(EMIS_PROM - canc);
       cart += EMIS_PROM - canc;
     });
   }
-  const crecReal = total.cartera.map((c, i) => (total.cartera[i + 1] ?? CARTERA_OCT) - c);
+  const crecReal = total.cartera.map((c, i) => (total.cartera[i + 1] ?? CARTERA_SIG) - c);
   const CLOSE = (sum(total.churn) + sum(TREND)) / 12;
 
   /* =================== Datos · Planes =================== */
@@ -805,7 +806,7 @@
   function renderMainTable() {
     const span = (txt, col) => `<span class="anim fade" data-step="1" data-d="${(0.1 + col * 0.12).toFixed(2)}">${txt}</span>`;
     let h = '<thead><tr class="phase"><th class="corner"></th>' +
-            `<th class="real" colspan="${REAL}">REAL</th><th class="proj" colspan="3">${span("TENDENCIA", 0)}</th></tr>` +
+            `<th class="real" colspan="${REAL}">REAL</th><th class="proj" colspan="${12 - REAL}">${span("TENDENCIA", 0)}</th></tr>` +
             '<tr><th class="corner">Concepto</th>' +
             MONTHS.map((m, i) => `<th class="${i >= REAL ? "proj" : ""}">${m}</th>`).join("") + "</tr></thead><tbody>";
     const rows = [
@@ -819,7 +820,7 @@
       h += `<tr class="${r.hl ? "hl" : ""}" style="--r:${ri}"><th scope="row">${r.label}</th>`;
       r.real.forEach(v => h += `<td class="${r.hl && v > OBJETIVO ? "over" : ""}">${r.fmt(v)}</td>`);
       r.proj.forEach((v, j) => {
-        const isRealOct = r.label === "Cartera" && j === 0;   // la cartera de octubre ya es real
+        const isRealOct = r.label === "Cartera" && j === 0;   // la cartera del primer mes proyectado ya es real
         const over = r.hl && v > OBJETIVO ? " over" : "";
         h += `<td class="proj${isRealOct ? " realv" : ""}${over}">${isRealOct ? r.fmt(v) : span(r.fmt(v), j)}</td>`;
       });
@@ -872,7 +873,7 @@
   function comboChart(svg, p) {
     const [, , W, H] = svg.getAttribute("viewBox").split(" ").map(Number);
     const L = 40, R = 8, T = 46, B = 30, GAP = 40;
-    const n = REAL;
+    const n = REAL_P;
     const x = i => L + (W - L - R) * (i + 0.5) / 12;
     const colW = (W - L - R) / 12, bw = colW * 0.42;
     const churnH = (H - T - B - GAP) * 0.42;
@@ -970,7 +971,7 @@
       // % de la cartera del grupo (Daños Propios o Ley) a octubre
       const share = p.cartera[9] / plans.reduce((a, q) => a + q.cartera[9], 0) * 100;
       // YTD ene–sep: crecimiento real (cartera oct − cartera ene) vs presupuesto acumulado ene–sep
-      const ytdReal = p.cartera[9] - p.cartera[0], ytdBud = p.budgetM.slice(0, REAL).reduce((a, b) => a + b, 0);
+      const ytdReal = p.cartera[9] - p.cartera[0], ytdBud = p.budgetM.slice(0, REAL_P).reduce((a, b) => a + b, 0);
       h += `<div class="pstage">
         <div class="pname"><div class="ph"><div class="g">${GROUP_NAME[group]}</div><div class="n">${p.name}</div><div class="c">${p.cov}</div>
           <div class="share"><b>${share.toFixed(1)}%</b> de la cartera de ${group === "dp" ? "Daños Propios" : "Ley"}</div></div>
