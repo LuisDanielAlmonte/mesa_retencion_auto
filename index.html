@@ -229,7 +229,7 @@
   .metric tbody td.g { border-left: 1px solid var(--line); }
   .metric tbody td.an { color: var(--muted); }
   .metric tbody tr.ov th, .metric tbody tr.ov td { font-weight: 600; color: var(--blue); background: var(--row-hl); }
-  .sep-hl { position: absolute; right: -6px; top: 44px; bottom: -6px; width: calc((100% - 185px) / 7 + 12px); border: 3px solid var(--alert); border-radius: 16px; pointer-events: none; box-shadow: 0 0 0 6px rgba(232, 89, 12, .1); }
+  .sep-hl { position: absolute; right: -6px; top: 44px; bottom: -6px; width: calc((100% - 185px) / var(--np, 7) + 12px); border: 3px solid var(--alert); border-radius: 16px; pointer-events: none; box-shadow: 0 0 0 6px rgba(232, 89, 12, .1); }
   .s3-side.fill .kpi { flex: 1; }
   .s3-side.fill .kpi .v { font-size: 72px; }
   .s3-side { display: flex; flex-direction: column; gap: 18px; min-height: 0; }
@@ -520,12 +520,12 @@
     <div class="progress" id="progress"></div>
 
     <!-- ================= Portada ================= -->
-    <section class="slide cover" aria-label="Mesa de Retención Auto · Octubre 2026">
+    <section class="slide cover" aria-label="Mesa de Retención Auto · Noviembre 2026">
       <div class="stripe s1"></div><div class="stripe s2"></div><div class="stripe s3"></div><div class="stripe s4"></div>
       <div class="cover-inner">
         <div class="kicker anim">Mi Auto</div>
         <h1 class="ct anim">Mesa de Retención<br><span>Auto</span></h1>
-        <div class="date anim">Octubre <b>2026</b></div>
+        <div class="date anim">Noviembre <b>2026</b></div>
       </div>
     </section>
 
@@ -706,7 +706,7 @@
   });
 
   /* =================== Datos · Métricas de gestión =================== */
-  const PERIODS = ["2024","2025","Q1 2026","Q2 2026","Julio 2026","Agosto 2026","Septiembre 2026"];
+  const PERIODS = ["2024","2025","Q1 2026","Q2 2026","Q3 2026"];   // por defecto; un slide puede sumar meses con `months`
   const SERIES_STYLE = [                       // [0] = Overall
     { color: C.blue, width: 4, text: C.blue, weight: 700 },
     { color: C.cyan, width: 3.5, text: C.cyan, weight: 500 },
@@ -716,85 +716,79 @@
   const strs = t => t.trim().split(/\s+/);
   // Por serie: pct (gráfico), an = anuladas y ca = cartera (tabla, tal cual el reporte)
   const METRICS = [
-    { brand: "Mi Auto", objective: 2.54,
+    { brand: "Mi Auto", objective: 2.54, months: ["Octubre 2026"],
       series: ["Overall", "Individual", "Flotilla"],
       cust: {
-        Overall:    { pct: nums("3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
-        Individual: { pct: nums("3.17 2.63 2.30 2.24 2.65 2.53 3.36"), an: strs("13,447 12,309 3,344 3,529 1,442 1,404 1,890"), ca: strs("35,361 39,159 48,361 52,131 54,362 55,415 56,235") },
-        Flotilla:   { pct: nums("2.99 2.77 2.50 2.19 2.15 2.64 2.25"), an: strs("4,863 4,246 1,028 926 312 392 335"),          ca: strs("13,534 12,739 13,706 14,076 14,482 14,827 14,887") },
+        Overall:    { pct: nums("3.12 2.67 2.35 2.24 2.75 2.79"), an: strs("18,310 16,555 4,372 4,455 5,775 2,003"), ca: strs("48,895 51,898 62,067 66,207 70,069 71,781") },
+        Individual: { pct: nums("3.17 2.63 2.30 2.24 2.85 2.97"), an: strs("13,447 12,309 3,344 3,529 4,736 1,685"), ca: strs("35,361 39,159 48,361 52,131 55,337 56,776") },
+        Flotilla:   { pct: nums("2.99 2.77 2.50 2.19 2.35 2.12"), an: strs("4,863 4,246 1,028 926 1,039 318"),          ca: strs("13,534 12,739 13,706 14,076 14,732 15,005") },
       },
       rev: {
-        Overall:    { pct: nums("2.12 1.88 1.57 1.65 1.73 1.89 2.44"), an: strs("386.9 381.0 98.7 110.4 39.7 44.1 57.4"), ca: strs("1,516.1 1,699.8 2,087.4 2,233.1 2,303.2 2,333.2 2,358.3") },
-        Individual: { pct: nums("2.65 2.12 1.89 2.06 2.16 2.29 2.99"), an: strs("341.0 316.0 88.6 103.1 37.2 40.0 52.7"), ca: strs("1,067.5 1,248.9 1,563.2 1,673.1 1,727.1 1,744.9 1,760.7") },
-        Flotilla:   { pct: nums("0.85 1.18 0.63 0.44 0.44 0.71 0.80"), an: strs("45.9 64.9 10.1 7.3 2.5 4.1 4.7"),         ca: strs("448.6 450.8 524.2 559.9 576.1 588.2 597.5") },
+        Overall:    { pct: nums("2.12 1.88 1.57 1.65 2.02 1.92"), an: strs("386.9 381.0 98.7 110.4 141.2 45.4"), ca: strs("1,516.1 1,699.8 2,087.4 2,233.1 2,331.6 2,364.1") },
+        Individual: { pct: nums("2.65 2.12 1.89 2.06 2.48 2.43"), an: strs("341.0 316.0 88.6 103.1 129.9 42.8"), ca: strs("1,067.5 1,248.9 1,563.2 1,673.1 1,744.2 1,760.7") },
+        Flotilla:   { pct: nums("0.85 1.18 0.63 0.44 0.64 0.42"), an: strs("45.9 64.9 10.1 7.3 11.3 2.6"),         ca: strs("448.6 450.8 524.2 559.9 587.3 603.3") },
       },
-      note: `<p class="sm">El churn de Auto se vio impactado por la cancelación de <b>145 certificados</b> de las flotillas de <b>Banco Caribe</b> y <b>Motor Crédito</b>, equivalentes al <b>7%</b> de las cancelaciones del ramo.</p>
-             <p class="sm">Además, las cancelaciones de Agentes aumentaron de manera generalizada un <b>62%</b> (+254 certificados), lideradas por <b>Nicole Arias</b> (25 certificados; churn de 21.93%) y <b>Rubelina Mercedes</b> (24 certificados; churn de 16.44%), entre otros.</p>` },
-    { brand: "Mi Auto Flotilla", objective: 3.07,
+      note: `<p class="sm">El churn de Auto se vio impactado por la cancelación de <b>139 certificados</b> de las flotillas de <b>Banco Caribe</b> (88) y <b>Motor Crédito</b> (51), equivalentes al <b>7%</b> de las cancelaciones del ramo.</p>
+             <p class="sm">Además, el churn de Agentes aumentó un <b>23%</b>, liderado por <b>Josefina Abreu Suriel</b> (34 certificados; churn de 7.61%) y <b>Angelita Ondina Benítez</b> (26 certificados; churn de 26.26%), entre otros.</p>` },
+    { brand: "Mi Auto Flotilla", objective: 3.07, months: ["Octubre 2026"],
       series: ["Flotilla Overall", "100% Humano + Líder", "Minoritario"],
       cust: {
-        "Flotilla Overall":    { pct: nums("2.99 2.77 2.50 2.19 2.15 2.64 2.25"), an: strs("4,863 4,246 1,028 926 312 392 335"), ca: strs("13,534 12,739 13,706 14,076 14,482 14,827 14,887") },
-        "100% Humano + Líder": { pct: nums("2.89 2.65 2.66 2.35 2.31 2.84 2.38"), an: strs("4,076 3,701 1,022 926 312 392 330"), ca: strs("11,726 11,670 12,771 13,129 13,533 13,792 13,852") },
-        "Minoritario":         { pct: nums("4.45 4.12 0.32 0.00 0.00 0.00 0.48"), an: strs("787 545 6 0 0 0 5"),                  ca: strs("1,807 1,070 935 947 949 1,035 1,035") },
+        "Flotilla Overall":    { pct: nums("2.99 2.77 2.50 2.19 2.35 2.12"), an: strs("4,863 4,246 1,028 926 1,039 318"), ca: strs("13,534 12,739 13,706 14,076 14,732 15,005") },
+        "100% Humano + Líder": { pct: nums("2.89 2.65 2.66 2.35 2.51 2.28"), an: strs("4,076 3,701 1,022 926 1,034 318"), ca: strs("11,726 11,670 12,771 13,129 13,726 13,972") },
+        "Minoritario":         { pct: nums("4.45 4.12 0.32 0.00 0.17 0.00"), an: strs("787 545 6 0 5 0"),                  ca: strs("1,807 1,070 935 947 1,006 1,033") },
       },
       rev: {
-        "Flotilla Overall":    { pct: nums("0.86 1.19 0.64 0.44 0.44 0.72 0.81"), an: strs("45.89 64.9 10.1 7.3 2.5 4.1 4.7"), ca: strs("448.59 451.0 524.2 559.9 576.1 588.2 597.5") },
-        "100% Humano + Líder": { pct: nums("0.85 1.18 0.63 0.44 0.44 0.71 0.80"), an: strs("45.38 64.6 10.1 7.3 2.5 4.1 4.7"), ca: strs("434.11 442.4 517.1 552.5 568.5 578.7 587.9") },
-        "Minoritario":         { pct: nums("0.37 0.27 0.00 0.00 0.00 0.00 0.05"), an: strs("0.51 0.3 0.0 0 0 0 0.01"),        ca: strs("14.49 8.5 7.07 7.4 7.6 9.4 9.6") },
+        "Flotilla Overall":    { pct: nums("0.86 1.19 0.64 0.44 0.64 0.42"), an: strs("45.89 64.9 10.1 7.3 11.3 2.6"), ca: strs("448.59 451.0 524.2 559.9 587.3 603.3") },
+        "100% Humano + Líder": { pct: nums("0.85 1.18 0.63 0.44 0.65 0.43"), an: strs("45.38 64.6 10.1 7.3 11.3 2.6"), ca: strs("434.11 442.4 517.1 552.5 578.4 593.9") },
+        "Minoritario":         { pct: nums("0.37 0.27 0.00 0.00 0.04 0.00"), an: strs("0.51 0.3 0.0 0 0.01 0"),        ca: strs("14.49 8.5 7.07 7.4 8.9 9.5") },
       } },
-    { brand: "Mi Auto Emisión – Renovación", objective: 2.54,
+    { brand: "Mi Auto Emisión – Renovación", objective: 2.54, months: ["Octubre 2026"],
       series: ["Overall", "Emisión", "Renovación"],
       cust: {
-        Overall:      { pct: nums("3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("18,310 16,555 4,372 4,455 1,754 1,796 2,225"), ca: strs("48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
-        "Emisión":    { pct: nums("1.56 1.48 1.49 1.44 1.65 1.59 2.22"), an: strs("3,462 3,048 1,163 1,255 496 472 661"),          ca: strs("19,223 17,209 25,870 28,950 30,016 29,645 29,840") },
-        "Renovación": { pct: nums("4.17 3.24 2.95 2.86 3.24 3.26 3.79"), an: strs("14,848 13,507 3,209 3,200 1,258 1,324 1,564"),  ca: strs("29,672 34,689 36,196 37,257 38,828 40,597 41,282") },
+        Overall:      { pct: nums("3.12 2.67 2.35 2.24 2.75 2.79"), an: strs("18,310 16,555 4,372 4,455 5,775 2,003"), ca: strs("48,895 51,898 62,067 66,207 70,069 71,781") },
+        "Emisión":    { pct: nums("1.56 1.48 1.49 1.44 1.82 1.68"), an: strs("3,462 3,048 1,163 1,255 1,629 505"),          ca: strs("19,223 17,209 25,870 28,950 29,834 30,027") },
+        "Renovación": { pct: nums("4.17 3.24 2.95 2.86 3.43 3.59"), an: strs("14,848 13,507 3,209 3,200 4,146 1,498"),  ca: strs("29,672 34,689 36,196 37,257 40,236 41,754") },
       },
       rev: {
-        Overall:      { pct: nums("2.12 1.88 1.57 1.65 1.73 1.89 2.44"), an: strs("386.8 381.0 98.7 110.4 39.7 44.1 57.4"), ca: strs("1,516.1 1,699.8 2,087.4 2,233.1 2,303.2 2,333.2 2,358.3") },
-        "Emisión":    { pct: nums("0.91 0.89 0.90 0.80 0.87 0.89 1.10"), an: strs("68.6 63.7 24.7 24.6 9.3 9.2 11.5"),      ca: strs("635.5 602.0 911.2 1,028.1 1,072.4 1,041.2 1,046.8") },
-        "Renovación": { pct: nums("2.98 2.40 2.10 2.37 2.47 2.70 3.50"), an: strs("318.2 317.2 74.0 85.8 30.4 34.9 45.9"),   ca: strs("880.6 1,097.8 1,176.2 1,205.0 1,230.8 1,291.9 1,311.4") },
-      },
-      note: `<p class="sm">Cancelamos <b>305 certificados</b> de renovaciones y emisiones con vigencia desde octubre 2025 <b>sin ningún pago</b>, que no se habían cancelado a solicitud del intermediario:</p>
-             <div class="split"><div><span>Renovaciones</span><b>180</b><em>59%</em></div><div><span>Emisiones</span><b>125</b><em>41%</em></div></div>
-             <p class="sm lead">Lideran:</p>
-             <div class="rank">${[["GLOBAL ASESORES C Y R, S.R.L.", 36, 12], ["Nicole Arias Susaña", 25, 8], ["Rubelina Mercedes Guevaras Soto", 21, 7], ["Anthony Rafael Ramos Morel", 19, 6]]
-               .map(([n, c, p]) => `<div><span>${n}</span><b>${c}</b><em>${p}%</em></div>`).join("")}</div>
-             <p class="sm more">entre otros.</p>` },
-    { brand: "Mi Auto Ley – DP", objective: 2.54,
+        Overall:      { pct: nums("2.12 1.88 1.57 1.65 2.02 1.92"), an: strs("386.8 381.0 98.7 110.4 141.2 45.4"), ca: strs("1,516.1 1,699.8 2,087.4 2,233.1 2,331.6 2,364.1") },
+        "Emisión":    { pct: nums("0.91 0.89 0.90 0.80 0.95 0.84"), an: strs("68.6 63.7 24.7 24.6 30.0 8.8"),      ca: strs("635.5 602.0 911.2 1,028.1 1,053.5 1,035.4") },
+        "Renovación": { pct: nums("2.98 2.40 2.10 2.37 2.90 2.76"), an: strs("318.2 317.2 74.0 85.8 111.2 36.6"),   ca: strs("880.6 1,097.8 1,176.2 1,205.0 1,278.0 1,328.6") },
+      } },
+    { brand: "Mi Auto Ley – DP", objective: 2.54, months: ["Octubre 2026"],
       series: ["Overall", "Ley", "Daños propios"],
       cust: {
-        Overall:         { pct: nums("3.12 2.67 2.35 2.24 2.55 2.56 3.13"), an: strs("18,310 16,551 4,372 4,455 1,754 1,796 2,225"), ca: strs("48,895 51,898 62,067 66,207 68,844 70,242 71,122") },
-        Ley:             { pct: nums("3.33 2.84 2.36 1.95 2.50 2.43 2.99"), an: strs("9,647 8,681 2,214 1,963 875 872 1,089"), ca: strs("24,159 25,608 31,138 33,433 35,051 35,861 36,378") },
-        "Daños propios": { pct: nums("2.92 2.50 2.33 2.53 2.60 2.69 3.27"), an: strs("8,663 7,870 2,158 2,492 879 924 1,136"), ca: strs("24,735 26,290 30,929 32,774 33,793 34,381 34,744") },
+        Overall:         { pct: nums("3.12 2.67 2.35 2.24 2.75 2.79"), an: strs("18,310 16,551 4,372 4,455 5,775 2,003"), ca: strs("48,895 51,898 62,067 66,207 70,069 71,781") },
+        Ley:             { pct: nums("3.33 2.84 2.36 1.95 2.64 2.84"), an: strs("9,647 8,681 2,214 1,963 2,836 1,051"), ca: strs("24,159 25,608 31,138 33,433 35,763 36,945") },
+        "Daños propios": { pct: nums("2.92 2.50 2.33 2.53 2.86 2.73"), an: strs("8,663 7,870 2,158 2,492 2,939 952"), ca: strs("24,735 26,290 30,929 32,774 34,306 34,836") },
       },
       rev: {
-        Overall:         { pct: nums("2.12 1.88 1.57 1.65 1.73 1.89 2.44"), an: strs("386.8 381.0 98.7 110.5 39.8 44.2 57.5"), ca: strs("1,516.1 1,699.8 2,087.4 2,233.1 2,303.2 2,333.2 2,358.3") },
-        Ley:             { pct: nums("2.92 2.31 1.89 1.59 1.98 2.22 2.36"), an: strs("72.9 62.3 14.9 13.1 5.6 6.3 6.8"), ca: strs("208.4 225.3 262.3 273.7 282.0 285.3 287.1") },
-        "Daños propios": { pct: nums("1.99 1.82 1.53 1.66 1.69 1.85 2.45"), an: strs("313.9 318.7 83.9 97.4 34.2 37.8 50.7"), ca: strs("1,307.7 1,474.5 1,825.2 1,959.4 2,021.2 2,047.9 2,071.2") },
+        Overall:         { pct: nums("2.12 1.88 1.57 1.65 2.02 1.92"), an: strs("386.8 381.0 98.7 110.5 141.5 45.4"), ca: strs("1,516.1 1,699.8 2,087.4 2,233.1 2,331.6 2,364.1") },
+        Ley:             { pct: nums("2.92 2.31 1.89 1.59 2.19 2.27"), an: strs("72.9 62.3 14.9 13.1 18.7 6.6"), ca: strs("208.4 225.3 262.3 273.7 284.8 289.0") },
+        "Daños propios": { pct: nums("1.99 1.82 1.53 1.66 2.00 1.87"), an: strs("313.9 318.7 83.9 97.4 122.7 38.8"), ca: strs("1,307.7 1,474.5 1,825.2 1,959.4 2,046.8 2,075.0") },
       } },
-    { brand: "Mi Auto Ley", objective: 2.54,
+    { brand: "Mi Auto Ley", objective: 2.54, months: ["Octubre 2026"],
       series: ["Overall", "Individual", "Flotilla"],
       cust: {
-        Overall:    { pct: nums("3.33 2.84 2.36 1.95 2.50 2.43 2.99"), an: strs("9,647 8,681 2,214 1,963 875 872 1,089"), ca: strs("24,159 25,608 31,138 33,433 35,051 35,861 36,378") },
-        Individual: { pct: nums("3.37 2.78 2.28 2.01 2.57 2.35 3.16"), an: strs("7,841 7,159 1,821 1,736 775 726 996"), ca: strs("19,370 21,530 26,609 28,787 30,152 30,912 31,478") },
-        Flotilla:   { pct: nums("3.15 3.09 2.86 1.63 2.04 2.95 1.90"), an: strs("1,806 1,522 393 227 100 146 93"), ca: strs("4,789 4,078 4,529 4,646 4,899 4,949 4,900") },
+        Overall:    { pct: nums("3.33 2.84 2.36 1.95 2.64 2.84"), an: strs("9,647 8,681 2,214 1,963 2,836 1,051"), ca: strs("24,159 25,608 31,138 33,433 35,763 36,945") },
+        Individual: { pct: nums("3.37 2.78 2.28 2.01 2.70 2.94"), an: strs("7,841 7,159 1,821 1,736 2,497 940"), ca: strs("19,370 21,530 26,609 28,787 30,847 32,006") },
+        Flotilla:   { pct: nums("3.15 3.09 2.86 1.63 2.30 2.25"), an: strs("1,806 1,522 393 227 339 111"), ca: strs("4,789 4,078 4,529 4,646 4,916 4,939") },
       },
       rev: {
-        Overall:    { pct: nums("2.92 2.31 1.89 1.59 1.98 2.22 2.36"), an: strs("72.9 62.3 14.9 13.1 5.6 6.3 6.8"), ca: strs("208.4 225.3 262.3 273.7 282.0 285.3 287.1") },
-        Individual: { pct: nums("3.01 2.43 2.01 1.71 2.16 2.16 2.70"), an: strs("57.4 51.8 12.5 11.3 4.9 5.0 6.3"), ca: strs("158.7 177.9 208.2 220.3 226.9 229.9 232.4") },
-        Flotilla:   { pct: nums("2.59 1.84 1.43 1.11 1.25 2.47 0.89"), an: strs("15.5 10.5 2.3 1.8 0.7 1.4 0.5"), ca: strs("49.7 47.4 54.1 53.4 55.2 55.4 54.8") },
+        Overall:    { pct: nums("2.92 2.31 1.89 1.59 2.19 2.27"), an: strs("72.9 62.3 14.9 13.1 18.7 6.6"), ca: strs("208.4 225.3 262.3 273.7 284.8 289.0") },
+        Individual: { pct: nums("3.01 2.43 2.01 1.71 2.35 2.46"), an: strs("57.4 51.8 12.5 11.3 16.2 5.8"), ca: strs("158.7 177.9 208.2 220.3 229.7 234.0") },
+        Flotilla:   { pct: nums("2.59 1.84 1.43 1.11 1.57 1.47"), an: strs("15.5 10.5 2.3 1.8 2.6 0.8"), ca: strs("49.7 47.4 54.1 53.4 55.1 55.0") },
       } },
-    { brand: "Mi Auto Daños Propios", objective: 2.54,
+    { brand: "Mi Auto Daños Propios", objective: 2.54, months: ["Octubre 2026"],
       series: ["Overall", "Individual", "Flotilla"],
       cust: {
-        Overall:    { pct: nums("2.92 2.50 2.33 2.53 2.60 2.69 3.27"), an: strs("8,663 7,870 2,158 2,492 879 924 1,136"), ca: strs("24,735 26,290 30,929 32,774 33,793 34,381 34,744") },
-        Individual: { pct: nums("2.92 2.44 2.33 2.56 2.76 2.77 3.61"), an: strs("5,606 5,150 1,523 1,793 667 678 894"), ca: strs("15,991 17,629 21,752 23,344 24,210 24,503 24,757") },
-        Flotilla:   { pct: nums("2.91 2.62 2.31 2.47 2.21 2.49 2.42"), an: strs("3,057 2,720 635 699 212 246 242"), ca: strs("8,744 8,662 9,177 9,431 9,583 9,878 9,987") },
+        Overall:    { pct: nums("2.92 2.50 2.33 2.53 2.86 2.73"), an: strs("8,663 7,870 2,158 2,492 2,939 952"), ca: strs("24,735 26,290 30,929 32,774 34,306 34,836") },
+        Individual: { pct: nums("2.92 2.44 2.33 2.56 3.05 3.01"), an: strs("5,606 5,150 1,523 1,793 2,239 745"), ca: strs("15,991 17,629 21,752 23,344 24,490 24,770") },
+        Flotilla:   { pct: nums("2.91 2.62 2.31 2.47 2.38 2.06"), an: strs("3,057 2,720 635 699 700 207"), ca: strs("8,744 8,662 9,177 9,431 9,816 10,066") },
       },
       rev: {
-        Overall:    { pct: nums("1.99 1.82 1.53 1.66 1.69 1.85 2.45"), an: strs("313.9 318.7 83.9 97.4 34.2 37.8 50.7"), ca: strs("1,307.7 1,474.5 1,825.2 1,959.4 2,021.2 2,047.9 2,071.2") },
-        Individual: { pct: nums("2.59 2.07 1.87 2.11 2.16 2.31 3.04"), an: strs("283.5 264.3 76.1 91.8 32.4 35.0 46.4"), ca: strs("908.9 1,071.0 1,355.0 1,452.9 1,500.3 1,515.1 1,528.4") },
-        Flotilla:   { pct: nums("0.63 1.09 0.54 0.37 0.35 0.53 0.79"), an: strs("30.4 54.4 7.8 5.6 1.8 2.8 4.3"), ca: strs("398.9 403.5 470.1 506.5 520.9 532.8 542.8") },
+        Overall:    { pct: nums("1.99 1.82 1.53 1.66 2.00 1.87"), an: strs("313.9 318.7 83.9 97.4 122.7 38.8"), ca: strs("1,307.7 1,474.5 1,825.2 1,959.4 2,046.8 2,075.0") },
+        Individual: { pct: nums("2.59 2.07 1.87 2.11 2.50 2.43"), an: strs("283.5 264.3 76.1 91.8 113.8 37.1"), ca: strs("908.9 1,071.0 1,355.0 1,452.9 1,514.6 1,526.7") },
+        Flotilla:   { pct: nums("0.63 1.09 0.54 0.37 0.56 0.32"), an: strs("30.4 54.4 7.8 5.6 8.9 1.7"), ca: strs("398.9 403.5 470.1 506.5 532.2 548.3") },
       } },
   ];
 
@@ -1019,11 +1013,17 @@
   }
 
   /* =================== Slides de métricas de gestión =================== */
+  const periodsOf = m => PERIODS.concat(m.months || []);
+  // "Octubre 2026" → { short: "Oct 2026", long: "octubre" }; "Q3 2026" → { short: "Q3 2026", long: "el Q3" }
+  const lastLabel = m => {
+    const p = periodsOf(m).at(-1), [w, y] = p.split(" ");
+    return /^Q\d$/.test(w) ? { short: p, long: "el " + w } : { short: w.slice(0, 3) + " " + y, long: w.toLowerCase() };
+  };
   function segTable(m, kind) {
-    const ds = m[kind];
-    let h = '<colgroup><col class="lbl">' + "<col>".repeat(PERIODS.length * 2) + "</colgroup>";
-    h += '<thead><tr class="per"><th class="corner"></th>' + PERIODS.map(p => `<th colspan="2">${p}</th>`).join("") + "</tr>";
-    h += '<tr class="sub"><th class="corner">Segmento</th>' + PERIODS.map(() => "<th>Anuladas</th><th>Cartera</th>").join("") + "</tr></thead><tbody>";
+    const ds = m[kind], P = periodsOf(m);
+    let h = '<colgroup><col class="lbl">' + "<col>".repeat(P.length * 2) + "</colgroup>";
+    h += '<thead><tr class="per"><th class="corner"></th>' + P.map(p => `<th colspan="2">${p}</th>`).join("") + "</tr>";
+    h += '<tr class="sub"><th class="corner">Segmento</th>' + P.map(() => "<th>Anuladas</th><th>Cartera</th>").join("") + "</tr></thead><tbody>";
     m.series.forEach((key, ri) => {
       const r = ds[key];
       h += `<tr class="${ri === 0 ? "ov" : ""}" style="--r:${ri}"><th scope="row">${key}</th>` +
@@ -1033,7 +1033,7 @@
   }
 
   function chartSeg(svg, id, m, kind, objective) {
-    const ds = m[kind];
+    const ds = m[kind], PERIODS = periodsOf(m);
     const [, , W, H] = svg.getAttribute("viewBox").split(" ").map(Number);
     const L = 191, T = 40, B = 26;
     const all = m.series.flatMap(k => ds[k].pct).concat(objective ?? []);
@@ -1090,13 +1090,14 @@
     const id = "m" + idx;
     const legend = (withObj) => `<div class="legend">${m.series.map((k, i) =>
       `<span><i style="border-color:${SERIES_STYLE[i].color}"></i>${k}</span>`).join("")}${withObj ? '<span class="obj"><i></i>Objetivo</span>' : ""}</div>`;
+    const PERIODS = periodsOf(m), LL = lastLabel(m);
     const cSep = m.cust[m.series[0]].pct[PERIODS.length - 1], rSep = m.rev[m.series[0]].pct[PERIODS.length - 1];
     const pp = +(cSep - m.objective).toFixed(2);
     const third = m.note
-      ? `<div class="note anim from-right" data-step="2"><h3>¿Qué pasó en septiembre?</h3>${m.note}</div>`
+      ? `<div class="note anim from-right" data-step="2"><h3>¿Qué pasó en ${m.noteWhen || LL.long}?</h3>${m.note}</div>`
       : "";
     return `
-    <section class="slide mslide" aria-label="Métricas Gestión · ${m.brand}">
+    <section class="slide mslide" aria-label="Métricas Gestión · ${m.brand}" style="--np:${PERIODS.length}">
       <div class="deco tl1"></div><div class="deco tl2"></div>
       <div class="deco br1"></div><div class="deco br2"></div>
       <div class="deco band"></div>
@@ -1126,12 +1127,12 @@
           </div>
           <div class="s3-side${m.note ? "" : " fill"}">
             <div class="kpi anim from-right" data-step="0">
-              <h3>Customer churn · Sep 2026</h3>
+              <h3>Customer churn · ${LL.short}</h3>
               <div class="v blue" data-count="${cSep}" data-dec="2" data-suffix="%">${pct(cSep)}</div>
               <div><span class="pill ${pp > 0 ? "bad" : ""}">${pp > 0 ? "+" : "−"}${Math.abs(pp).toFixed(2)} p.p. ${pp > 0 ? "sobre" : "bajo"} objetivo (${pct(m.objective)})</span></div>
             </div>
             <div class="kpi anim from-right" data-step="1">
-              <h3>Revenue churn · Sep 2026</h3>
+              <h3>Revenue churn · ${LL.short}</h3>
               <div class="v blue" data-count="${rSep}" data-dec="2" data-suffix="%">${pct(rSep)}</div>
               <div class="s">${m.series.slice(1).map(k => `${k} ${pct(m.rev[k].pct[PERIODS.length - 1])}`).join(" · ")}</div>
             </div>
@@ -1478,9 +1479,9 @@
 
   /* =================== Retención · Principales indicadores · Churn YTD =================== */
   const YTD = [
-    { name: "Auto", v: 2.44, ind: 2.47, flo: 2.35, c: "#4fb8c9" },
-    { name: "Daños Propios", v: 2.57, ind: 2.65, flo: 2.39, c: "var(--cyan)" },
-    { name: "Ley", v: 2.32, ind: 2.33, flo: 2.26, c: "var(--blue)" },
+    { name: "Auto", v: 2.48, ind: 2.52, flo: 2.32, c: "#4fb8c9" },
+    { name: "Daños Propios", v: 2.59, ind: 2.68, flo: 2.35, c: "var(--cyan)" },
+    { name: "Ley", v: 2.37, ind: 2.39, flo: 2.26, c: "var(--blue)" },
   ];
   function ytdSlide() {
     const MAX = 3.5; // escala del anillo: 0 – 3.5%
@@ -1528,7 +1529,7 @@
   const deck = document.getElementById("deck");
   // Orden de la presentación (por aria-label)
   const ORDER = [
-    "Mesa de Retención Auto · Octubre 2026",
+    "Mesa de Retención Auto · Noviembre 2026",
     "Retención · Principales indicadores · Churn YTD",
     "Métricas Gestión · Mi Auto",
     "Métricas Gestión · Mi Auto Flotilla",
