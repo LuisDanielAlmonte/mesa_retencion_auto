@@ -436,8 +436,6 @@
   .hc td.tr { text-align: center; font-weight: 700; color: var(--red); }
   .hc td.tr.eq { color: var(--muted); font-weight: 500; }
   .hc td.tr.up { color: var(--good); }
-  .hc td.any { text-align: center; border-radius: 10px; font-weight: 700; color: #0b6b4f; width: 118px; }
-  .hc tr.tt td.any { background: none; }
   .hc td.pp { color: #d9822b; font-weight: 600; }
   .hc td.sp { color: #c26412; font-weight: 600; }
   .hc td.ct { color: var(--red); font-weight: 700; border-left: 2px solid var(--line); }
@@ -1459,12 +1457,9 @@
     const blue = v => `background:rgba(0,103,177,${(0.06 + v / 80 * 0.32).toFixed(2)})`;
     const row = (r, tt) => {
       const [mes, ren, pg, im, tr, pp, sp, ct, cp] = r;
-      // Con cualquier pago (1ra cuota o pago parcial) = renovadas − sin pago − canceladas sin pago
-      const any = (ren - sp - ct) / ren * 100;
       const hm = pg.map((v, i) => { const imm = i >= 4 - im && i < 4; return `<td class="hm${imm ? " im" : ""}${i === 4 ? " hoy" : ""}" style="${tt ? "" : blue(v)}">${v}%</td>`; }).join("");
       const trTxt = tr === undefined ? "" : tr === null ? "—" : tr === 0 ? "● igual" : `${tr > 0 ? "▲" : "▼"} ${Math.abs(tr)} pp`;
       return `<tr class="${tt ? "tt" : ""}"><td class="l">${mes}</td><td class="rn">${nf(ren)}</td>${hm}
-        <td class="any" style="${tt ? "" : `background:rgba(18,184,134,${(0.06 + any / 80 * 0.3).toFixed(2)})`}">${Math.round(any)}%</td>
         ${A(1, "tr" + (tr ? (tr > 0 ? " up" : "") : " eq"), trTxt)}${A(2, "pp", nf(pp))}${A(2, "sp", nf(sp))}
         ${A(3, "ct", nf(ct))}${cp.map(v => A(3, "cp", v.toFixed(1) + "%")).join("")}</tr>`;
     };
@@ -1474,14 +1469,14 @@
         "Pólizas renovadas · Daños Propios · individual · sin siniestros · % que pagó su primera cuota al día 0, 30, 60 y 90", "Histórico")}
         <table class="hc anim">
           <thead>
-            <tr class="g"><th class="blank" colspan="2"></th><th colspan="5" style="--c:var(--blue)">Pago 1ra cuota · % de renovadas con pago</th><th style="--c:var(--good)">Cualquier pago</th>
+            <tr class="g"><th class="blank" colspan="2"></th><th colspan="5" style="--c:var(--blue)">Pago 1ra cuota · % de renovadas con pago</th>
               ${G(1, "var(--navy)", 1, "Tendencia día 30")}${G(2, "#d9822b", 2, "Pago parcial · Sin pago")}${G(3, "var(--red)", 4, "Canceladas sin pago")}</tr>
-            <tr><th class="l">Mes de renovación</th><th>Renovadas</th><th style="text-align:center">Día 0</th><th style="text-align:center">Día 30</th><th style="text-align:center">Día 60</th><th style="text-align:center">Día 90</th><th style="text-align:center">Hoy</th><th style="text-align:center">1ra cuota o<br>parcial (hoy)</th>
+            <tr><th class="l">Mes de renovación</th><th>Renovadas</th><th style="text-align:center">Día 0</th><th style="text-align:center">Día 30</th><th style="text-align:center">Día 60</th><th style="text-align:center">Día 90</th><th style="text-align:center">Hoy</th>
               ${H(1, "vs mismo mes<br>año anterior")}${H(2, "Pago parcial<br>(activas)")}${H(2, "Sin pago<br>(hoy)")}${H(3, "Total")}${H(3, "% día 0")}${H(3, "% día 30")}${H(3, "% hoy")}</tr>
           </thead>
           <tbody>${HC.map(r => row(r)).join("")}${row(HC_TOT, true)}</tbody>
         </table>
-        <div class="hc-leg anim fade"><span><i style="background:rgba(0,103,177,.3)"></i>% de pólizas renovadas con la 1ra cuota pagada</span><span><i style="background:rgba(18,184,134,.3)"></i>% con cualquier pago (1ra cuota o pago parcial)</span><span><i style="background:#f3f6f9;border:1px solid #dde3ea"></i>Período aún no cumplido</span></div>
+        <div class="hc-leg anim fade"><span><i style="background:rgba(0,103,177,.3)"></i>% de pólizas renovadas con la 1ra cuota pagada</span><span><i style="background:#f3f6f9;border:1px solid #dde3ea"></i>Período aún no cumplido</span></div>
       </div>
     </section>`.replace("Daños Propios · Septiembre y Octubre 2026", "Daños Propios · Enero – Diciembre 2026");
   }
