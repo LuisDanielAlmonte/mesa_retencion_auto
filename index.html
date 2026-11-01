@@ -35,6 +35,33 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* ---------- Teléfonos de contratantes ---------- */
+  .tc-h1 { font-size: 60px; line-height: 1.08; max-width: 1560px; }
+  .tc-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 64px; }
+  .tc-card { min-height: 400px; }
+  .tc-card { border-radius: 24px; padding: 34px 40px 36px; background: #fff; border: 1px solid var(--line); box-shadow: 0 22px 48px -32px rgba(11,47,91,.5); --c: var(--blue); }
+  .tc-card.alert { --c: var(--alert); background: #fff6ef; border: 2px solid #f2a46b; }
+  .tc-card h3 { margin: 0; font-size: 26px; font-weight: 600; color: var(--muted); }
+  .tc-card.alert h3 { color: #b4520f; }
+  .tc-card .v { margin-top: 14px; font-size: 112px; font-weight: 700; line-height: 1; letter-spacing: -.02em; color: var(--c); font-variant-numeric: tabular-nums; }
+  .tc-bar { margin-top: 22px; height: 14px; border-radius: 7px; background: #e6edf4; overflow: hidden; }
+  .tc-card.alert .tc-bar { background: #f6dcc8; }
+  .tc-bar i { display: block; height: 100%; width: 0; border-radius: 7px; background: var(--c); transition: width 1.2s var(--ease) .3s; }
+  .tc-card.in .tc-bar i { width: var(--w); }
+  .tc-card p { margin: 18px 0 0; font-size: 22px; line-height: 1.45; color: var(--ink); }
+  .tc-card p + p { margin-top: 8px; }
+  .tc-card p b { color: var(--navy); }
+  .tc-card.alert p, .tc-card.alert p b { color: #8a3d0a; }
+  .tc-ask { margin-top: auto; display: grid; grid-template-columns: 340px 1fr 1fr; border-radius: 24px; background: var(--navy); color: #fff; padding: 32px 0; }
+  .tc-ask > div { padding: 0 40px; border-left: 1px solid rgba(255,255,255,.18); }
+  .tc-ask > div:first-child { border: 0; display: flex; flex-direction: column; justify-content: center; }
+  .tc-ask .e { font-size: 17px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--orange); }
+  .tc-ask .t { font-size: 38px; font-weight: 700; margin-top: 6px; white-space: nowrap; }
+  .tc-ask h4 { margin: 0; font-size: 26px; font-weight: 700; }
+  .tc-ask p { margin: 10px 0 0; font-size: 21px; line-height: 1.45; color: rgba(255,255,255,.82); }
+  .tc-ask p b { color: var(--orange); }
+  .tc-src { margin-top: 18px; font-size: 16px; color: var(--muted); }
+
   /* ---------- Deck: lienzo fijo 1920×1080 escalado a la ventana ---------- */
   .viewport { position: fixed; inset: 0; }
   .deck {
@@ -596,6 +623,52 @@
         </div>
         <div class="stepper anim" id="step-dp"></div>
         <div class="stage anim" id="stage-dp"></div>
+      </div>
+    </section>
+
+    <!-- ================= Teléfonos de contratantes ================= -->
+    <section class="slide" aria-label="Teléfonos de contratantes · Octubre 2026">
+      <div class="deco tl1"></div><div class="deco tl2"></div>
+      <div class="deco br1"></div><div class="deco br2"></div>
+      <div class="deco band"></div>
+      <div class="content">
+        <div class="head">
+          <div class="anim">
+            <span class="eyebrow"><span class="dot"></span>Comité de Auto · Data de contratantes · Octubre 2026</span>
+            <h1 class="tc-h1">Casi todos los contratantes de Auto tienen teléfono;<br><span class="brand">el reto ahora es validarlos</span></h1>
+          </div>
+        </div>
+
+        <div class="tc-cards">
+          <div class="tc-card anim" data-step="0">
+            <h3>Contratantes con teléfono</h3>
+            <div class="v" data-count="92" data-dec="0" data-suffix="%">92%</div>
+            <div class="tc-bar"><i style="--w:92%"></i></div>
+            <p>42,049 de 45,561 · solo <b>3,512 vacíos (8%)</b></p>
+          </div>
+          <div class="tc-card anim" data-step="0" style="--d:.12s">
+            <h3>Emisión / inclusión con teléfono</h3>
+            <div class="v" data-count="88.2" data-dec="1" data-suffix="%">88.2%</div>
+            <div class="tc-bar"><i style="--w:88.2%"></i></div>
+            <p>9,531 de 10,806 · oct. acumulado</p>
+            <p><b>Podemos tener sesión con el equipo para ver el flujo actual y la remediación</b></p>
+          </div>
+          <div class="tc-card alert anim" data-step="0" style="--d:.24s">
+            <h3>Teléfonos validados</h3>
+            <div class="v" data-count="47" data-dec="0" data-suffix="%">47%</div>
+            <div class="tc-bar"><i style="--w:47%"></i></div>
+            <p>19,700 post remediación (antes 45%)</p>
+            <p><b>Brecha: 25,861 sin validar; puede incluir empresas que deben ser contactadas por CAC</b></p>
+          </div>
+        </div>
+
+        <div class="tc-ask anim" data-step="1">
+          <div><span class="e">Acuerdos</span><span class="t">Próximos pasos</span></div>
+          <div><h4>1 · Cotizar compra de teléfonos vacíos</h4><p>3,512 × RD$15 = <b>RD$52,680</b> para que los 45,561 contratantes tengan teléfono</p></div>
+          <div><h4>2 · Ajuste en pantalla de Sirweb</h4><p>Incorporar la inactivación de números para depurar los no válidos</p></div>
+        </div>
+
+        <div class="tc-src anim fade" data-step="1">Fuente: Base de contratantes Auto (post remediación) y tablero de emisión con teléfono, octubre 2026 acumulado · Data y Analítica</div>
       </div>
     </section>
 
@@ -1552,6 +1625,7 @@
     "Renovaciones · Octubre",
     "Histórico de pago de la primera cuota",
     "Intermediarios con bajo porcentaje de pago",
+    "Teléfonos de contratantes · Octubre 2026",
   ];
   [...deck.querySelectorAll(".slide")]
     .sort((a, b) => ORDER.indexOf(a.getAttribute("aria-label")) - ORDER.indexOf(b.getAttribute("aria-label")))
