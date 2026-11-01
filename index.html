@@ -35,95 +35,32 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ---------- Propuesta · Flujo de teléfonos ---------- */
-  .tf-sub { margin-top: 12px; font-size: 24px; color: var(--muted); font-weight: 300; }
-  .tf-lab { font-size: 15px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); margin: 26px 0 12px; }
-  .tf-prob { display: grid; grid-template-columns: 1fr 1.25fr 1.25fr; gap: 22px; }
-  .tf-card { border-radius: 20px; padding: 22px 28px; border: 1px solid var(--line); background: #fff; box-shadow: 0 18px 40px -30px rgba(11,47,91,.45); }
-  .tf-card.main { background: linear-gradient(150deg, var(--blue), var(--navy)); color: #fff; border: 0; }
-  .tf-card h3 { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-  .tf-card.main h3 { color: rgba(255,255,255,.7); }
-  .tf-card .big { display: flex; align-items: baseline; gap: 14px; margin-top: 6px; }
-  .tf-card .big b { font-size: 54px; font-weight: 700; line-height: 1; color: var(--navy); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .tf-card.main .big b { color: #fff; }
-  .tf-card .big span { font-size: 19px; color: var(--muted); }
-  .tf-card.main .big span { color: rgba(255,255,255,.75); }
-  .tf-card p { margin: 10px 0 0; font-size: 18px; line-height: 1.4; color: var(--ink); }
-  .tf-card.main p { color: rgba(255,255,255,.88); }
-  .tf-card p em { font-style: normal; font-weight: 700; color: var(--alert); }
-  .tf-cmp { display: grid; grid-template-columns: 1fr auto auto; gap: 2px 18px; margin-top: 10px; font-size: 17px; font-variant-numeric: tabular-nums; }
-  .tf-cmp .h { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); text-align: right; }
-  .tf-cmp .h:first-child { text-align: left; }
-  .tf-cmp span { color: var(--muted); }
-  .tf-cmp b { text-align: right; color: var(--navy); }
-  .tf-cmp b.bad { color: var(--alert); }
-
-  .tf-flow { position: relative; display: grid; grid-template-columns: 1fr 70px 1fr 70px 1fr; align-items: stretch; padding-bottom: 96px; }
-  .tf-node { position: relative; z-index: 1; border-radius: 22px; padding: 22px 26px 20px; background: #fff; border: 2px solid var(--c); box-shadow: 0 20px 44px -30px rgba(11,47,91,.55); }
-  .tf-node .k { display: flex; align-items: center; gap: 12px; font-size: 28px; font-weight: 700; color: var(--c); }
-  .tf-node .k i { font-style: normal; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: var(--c); color: #fff; font-size: 21px; }
-  .tf-node p { margin: 10px 0 0; font-size: 18px; line-height: 1.4; color: var(--ink); }
-  .tf-node .tag { display: inline-block; margin-top: 12px; font-size: 15px; font-weight: 600; padding: 5px 12px; border-radius: 999px; background: color-mix(in srgb, var(--c) 12%, #fff); color: var(--c); }
-  .tf-arr { display: grid; place-items: center; font-size: 44px; font-weight: 700; color: var(--blue); }
-  .tf-loop { position: absolute; left: 0; bottom: 0; width: 100%; height: 110px; overflow: visible; }
-  .tf-loop-l { position: absolute; left: 0; right: 0; bottom: 4px; text-align: center; }
-  .tf-loop-l span { display: inline-block; padding: 4px 20px; background: #fff; font-size: 19px; font-weight: 600; color: var(--blue); }
-
-  .tf-ask { margin-top: auto; display: grid; grid-template-columns: 300px 1fr 1fr 1fr; border-radius: 22px; background: var(--navy); color: #fff; padding: 22px 0; }
-  .tf-ask > div { padding: 0 30px; border-left: 1px solid rgba(255,255,255,.18); }
-  .tf-ask > div:first-child { border: 0; display: flex; flex-direction: column; justify-content: center; }
-  .tf-ask .e { font-size: 15px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--orange); }
-  .tf-ask .t { font-size: 32px; font-weight: 700; margin-top: 4px; white-space: nowrap; }
-  .tf-ask h4 { margin: 0; font-size: 20px; font-weight: 700; }
-  .tf-ask p { margin: 6px 0 0; font-size: 16.5px; line-height: 1.4; color: rgba(255,255,255,.8); }
-  .tf-ask p b { color: var(--orange); }
-
-  .tf-lab i { font-style: normal; display: inline-grid; place-items: center; width: 26px; height: 26px; margin-right: 10px; border-radius: 8px; background: var(--blue); color: #fff; letter-spacing: 0; font-size: 14px; vertical-align: 1px; }
-  .tf-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 24px 28px; margin-top: 26px; }
-  .tf-panel { position: relative; border-radius: 22px; padding: 24px 30px; background: #fff; border: 1px solid var(--line); box-shadow: 0 20px 44px -32px rgba(11,47,91,.5); display: flex; flex-direction: column; }
-  .tf-ph { display: flex; align-items: center; gap: 12px; font-size: 26px; font-weight: 700; color: var(--navy); }
-  .tf-ph i { font-style: normal; width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #fff; font-size: 19px; }
-  .tf-lead { margin: 10px 0 0; font-size: 19px; color: var(--muted); }
-  .tf-why { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
-  .tf-why div { border-radius: 14px; background: #f3f8fc; padding: 14px 18px; }
-  .tf-why b { display: block; font-size: 19px; color: var(--blue); }
-  .tf-why span { display: block; margin-top: 4px; font-size: 17px; line-height: 1.4; color: var(--ink); }
-  .tf-punch { margin-top: auto; padding: 14px 18px; border-radius: 14px; background: linear-gradient(150deg, var(--blue), var(--navy)); color: #fff; font-size: 21px; font-weight: 600; }
-  .tf-big { display: flex; align-items: baseline; gap: 16px; margin-top: 12px; }
-  .tf-big b { font-size: 58px; font-weight: 700; line-height: 1; color: var(--alert); white-space: nowrap; }
-  .tf-big span { font-size: 20px; color: var(--muted); }
-  .tf-t { width: 100%; margin-top: auto; border-collapse: collapse; font-size: 19px; font-variant-numeric: tabular-nums; }
-  .tf-t thead th { background: none; font-weight: 700; white-space: nowrap; }
-  .tf-t tbody td { font-size: 19px; border-top: 0; }
-  .tf-t th { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); text-align: right; padding: 0 10px 8px; border-bottom: 2px solid var(--line); }
-  .tf-t td { text-align: right; padding: 10px; border-bottom: 1px solid var(--line); color: var(--ink); }
-  .tf-t td:first-child, .tf-t th:first-child { text-align: left; padding-left: 0; }
-  .tf-t td:first-child { font-weight: 700; color: var(--navy); }
-  .tf-t small { display: block; font-size: 14px; font-weight: 400; color: var(--muted); }
-  .tf-t td small { display: inline; }
-  .tf-t td:first-child small { display: block; }
-  .tf-t b { color: var(--alert); }
-  .tf-t.cmp { margin-top: 12px; }
-  .tf-t.cmp td { padding: 8px 10px; }
-  .tf-t td.bad { color: var(--alert); font-weight: 700; }
-  .tf-split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 14px; }
-  .tf-split div { border-radius: 14px; padding: 12px 18px; background: #f3f8fc; display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 0 12px; }
-  .tf-split div.bad { background: #fff0e6; }
-  .tf-split span { grid-column: 1 / -1; font-size: 15.5px; color: var(--muted); }
-  .tf-split b { font-size: 40px; font-weight: 700; color: var(--navy); }
-  .tf-split .bad b { color: var(--alert); }
-  .tf-split em { font-style: normal; font-size: 19px; font-weight: 600; color: var(--ink); }
-  .tf-pts { margin: auto 0 0; padding-left: 22px; font-size: 18px; line-height: 1.45; color: var(--ink); }
-  .tf-pts li + li { margin-top: 6px; }
-  .tf-pts li::marker { color: var(--blue); }
-  .tf-foot { margin: auto 0 0; padding-top: 10px; font-size: 18px; color: var(--ink); }
-  .tf-foot b { color: var(--alert); }
-  .tf-concl { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
-  .tf-concl > div { border-radius: 18px; padding: 18px 22px; background: #f3f8fc; border: 1px solid var(--line); }
-  .tf-concl b { display: block; font-size: 38px; font-weight: 700; line-height: 1.05; color: var(--navy); white-space: nowrap; }
-  .tf-concl span { display: block; margin-top: 8px; font-size: 18px; line-height: 1.4; color: var(--ink); }
-  .tf-concl .warn { background: #fff0e6; border-color: #ffd8bf; }
-  .tf-concl .warn b { color: var(--alert); }
+  /* ---------- Teléfonos de contratantes ---------- */
+  .tc-h1 { font-size: 60px; line-height: 1.08; max-width: 1560px; }
+  .tc-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 64px; }
+  .tc-card { min-height: 400px; }
+  .tc-card { border-radius: 24px; padding: 34px 40px 36px; background: #fff; border: 1px solid var(--line); box-shadow: 0 22px 48px -32px rgba(11,47,91,.5); --c: var(--blue); }
+  .tc-card.alert { --c: var(--alert); background: #fff6ef; border: 2px solid #f2a46b; }
+  .tc-card h3 { margin: 0; font-size: 26px; font-weight: 600; color: var(--muted); }
+  .tc-card.alert h3 { color: #b4520f; }
+  .tc-card .v { margin-top: 14px; font-size: 112px; font-weight: 700; line-height: 1; letter-spacing: -.02em; color: var(--c); font-variant-numeric: tabular-nums; }
+  .tc-bar { margin-top: 22px; height: 14px; border-radius: 7px; background: #e6edf4; overflow: hidden; }
+  .tc-card.alert .tc-bar { background: #f6dcc8; }
+  .tc-bar i { display: block; height: 100%; width: 0; border-radius: 7px; background: var(--c); transition: width 1.2s var(--ease) .3s; }
+  .tc-card.in .tc-bar i { width: var(--w); }
+  .tc-card p { margin: 18px 0 0; font-size: 22px; line-height: 1.45; color: var(--ink); }
+  .tc-card p + p { margin-top: 8px; }
+  .tc-card p b { color: var(--navy); }
+  .tc-card.alert p, .tc-card.alert p b { color: #8a3d0a; }
+  .tc-ask { margin-top: auto; display: grid; grid-template-columns: 340px 1fr 1fr; border-radius: 24px; background: var(--navy); color: #fff; padding: 32px 0; }
+  .tc-ask > div { padding: 0 40px; border-left: 1px solid rgba(255,255,255,.18); }
+  .tc-ask > div:first-child { border: 0; display: flex; flex-direction: column; justify-content: center; }
+  .tc-ask .e { font-size: 17px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--orange); }
+  .tc-ask .t { font-size: 38px; font-weight: 700; margin-top: 6px; white-space: nowrap; }
+  .tc-ask h4 { margin: 0; font-size: 26px; font-weight: 700; }
+  .tc-ask p { margin: 10px 0 0; font-size: 21px; line-height: 1.45; color: rgba(255,255,255,.82); }
+  .tc-ask p b { color: var(--orange); }
+  .tc-src { margin-top: 18px; font-size: 16px; color: var(--muted); }
 
   /* ---------- Deck: lienzo fijo 1920×1080 escalado a la ventana ---------- */
   .viewport { position: fixed; inset: 0; }
@@ -689,135 +626,49 @@
       </div>
     </section>
 
-    <!-- ================= Teléfonos 1/2: el impacto (mismo hilo que el correo) ================= -->
-    <section class="slide" aria-label="Teléfonos de clientes · Impacto en Retención y Cobros">
+    <!-- ================= Teléfonos de contratantes ================= -->
+    <section class="slide" aria-label="Teléfonos de contratantes · Octubre 2026">
       <div class="deco tl1"></div><div class="deco tl2"></div>
       <div class="deco br1"></div><div class="deco br2"></div>
       <div class="deco band"></div>
       <div class="content">
         <div class="head">
           <div class="anim">
-            <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto · Retención y Cobros</span>
-            <h1>Teléfonos de clientes <span class="brand">· Impacto</span></h1>
-            <div class="tf-sub">Auto individual · excluye Coaseguro Minoritario y Banca Seguros</div>
-          </div>
-          <div class="section-tag anim from-right"><span class="num">1</span>El problema</div>
-        </div>
-
-        <div class="tf-grid">
-          <!-- 1 · Por qué importa -->
-          <div class="tf-panel anim" data-step="0">
-            <div class="tf-ph"><i>1</i>¿Por qué importa el teléfono?</div>
-            <p class="tf-lead">Las dos áreas trabajan llamando al cliente:</p>
-            <div class="tf-why">
-              <div><b>Retención</b><span>Al renovar la póliza, llama para confirmar que el cliente recibió su renovación y ofrecerle beneficios para que siga con nosotros.</span></div>
-              <div><b>Cobros</b><span>Si hay pagos pendientes, llama para recordarlos y acordar el pago antes de que la deuda se atrase.</span></div>
-            </div>
-            <div class="tf-punch">Sin teléfono no hay llamada: el cliente queda fuera de la gestión.</div>
-          </div>
-
-          <!-- 2 · Cuántos -->
-          <div class="tf-panel anim" data-step="1">
-            <div class="tf-ph"><i>2</i>¿Cuántos clientes no tienen teléfono?</div>
-            <div class="tf-big"><b>1 de cada 13</b><span>pólizas no tiene teléfono, en las dos áreas</span></div>
-            <table class="tf-t">
-              <thead><tr><th></th><th>Revisadas</th><th>Sin teléfono</th><th>%</th><th>Dinero involucrado</th></tr></thead>
-              <tbody>
-                <tr><td>Retención <small>renovaciones ene–sep</small></td><td>25,728</td><td><b>2,011</b></td><td><b>7.8%</b></td><td>RD$90.8 MM <small>en primas</small></td></tr>
-                <tr><td>Cobros <small>deuda al 30/09/2026</small></td><td>21,900</td><td><b>1,682</b></td><td><b>7.7%</b></td><td>RD$50.8 MM <small>por cobrar</small></td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- 3 · Retención -->
-          <div class="tf-panel anim" data-step="2">
-            <div class="tf-ph"><i>3</i>¿Qué pasa en Retención?</div>
-            <p class="tf-lead">Ninguna de las 2,011 renovadas sin teléfono recibió la llamada. Hoy están así:</p>
-            <div class="tf-split">
-              <div class="bad"><span>Ya cancelaron, sin poder llamarlas</span><b>455</b><em>RD$21.7 MM</em></div>
-              <div><span>Siguen activas, sin forma de contactarlas</span><b>1,556</b><em>RD$69.1 MM</em></div>
-            </div>
-            <ul class="tf-pts">
-              <li>Pasa <b>todos los meses</b>: en promedio <b>223 pólizas y RD$10 MM</b> en primas quedan sin gestionarse.</li>
-              <li>No son clientes de bajo valor: pagan en promedio <b>RD$45,176</b>, algo más que los que sí tienen teléfono (RD$42,749).</li>
-            </ul>
-          </div>
-
-          <!-- 4 · Cobros -->
-          <div class="tf-panel anim" data-step="3">
-            <div class="tf-ph"><i>4</i>¿Qué pasa en Cobros?</div>
-            <p class="tf-lead">Las renovadas activas que no pagan llegan aquí, y otra vez sin teléfono. Mientras más días pasa una deuda, más difícil es cobrarla.</p>
-            <table class="tf-t cmp">
-              <thead><tr><th></th><th>Sin teléfono</th><th>Con teléfono</th></tr></thead>
-              <tbody>
-                <tr><td>Deuda total</td><td>RD$50.8 MM</td><td>RD$556.9 MM</td></tr>
-                <tr><td>Ya pasó su fecha de pago</td><td class="bad">31.9%</td><td>29.1%</td></tr>
-                <tr><td>Más de 60 días de atraso</td><td class="bad">11.2%</td><td>9.9%</td></tr>
-                <tr><td>Deuda promedio por póliza</td><td>RD$30,186</td><td>RD$27,544</td></tr>
-              </tbody>
-            </table>
-            <p class="tf-foot"><b>RD$16.2 MM</b> ya pasaron su fecha de pago y <b>RD$5.7 MM</b> tienen más de 60 días.</p>
+            <span class="eyebrow"><span class="dot"></span>Comité de Auto · Data de contratantes · Octubre 2026</span>
+            <h1 class="tc-h1">Casi todos los contratantes de Auto tienen teléfono;<br><span class="brand">el reto ahora es validarlos</span></h1>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ================= Teléfonos 2/2: conclusión y propuesta ================= -->
-    <section class="slide" aria-label="Teléfonos de clientes · Propuesta de nuevo flujo">
-      <div class="deco tl1"></div><div class="deco tl2"></div>
-      <div class="deco br1"></div><div class="deco br2"></div>
-      <div class="deco band"></div>
-      <div class="content">
-        <div class="head">
-          <div class="anim">
-            <span class="eyebrow"><span class="dot"></span>Mesa de Retención · Auto · Retención y Cobros</span>
-            <h1>Teléfonos de clientes <span class="brand">· Propuesta</span></h1>
-            <div class="tf-sub">Un flujo continuo para comprar y depurar teléfonos</div>
+        <div class="tc-cards">
+          <div class="tc-card anim" data-step="0">
+            <h3>Contratantes con teléfono</h3>
+            <div class="v" data-count="92" data-dec="0" data-suffix="%">92%</div>
+            <div class="tc-bar"><i style="--w:92%"></i></div>
+            <p>42,049 de 45,561 · solo <b>3,512 vacíos (8%)</b></p>
           </div>
-          <div class="section-tag anim from-right"><span class="num">2</span>La propuesta</div>
+          <div class="tc-card anim" data-step="0" style="--d:.12s">
+            <h3>Emisión / inclusión con teléfono</h3>
+            <div class="v" data-count="88.2" data-dec="1" data-suffix="%">88.2%</div>
+            <div class="tc-bar"><i style="--w:88.2%"></i></div>
+            <p>9,531 de 10,806 · oct. acumulado</p>
+            <p><b>Podemos tener sesión con el equipo para ver el flujo actual y la remediación</b></p>
+          </div>
+          <div class="tc-card alert anim" data-step="0" style="--d:.24s">
+            <h3>Teléfonos validados</h3>
+            <div class="v" data-count="47" data-dec="0" data-suffix="%">47%</div>
+            <div class="tc-bar"><i style="--w:47%"></i></div>
+            <p>19,700 post remediación (antes 45%)</p>
+            <p><b>Brecha: 25,861 sin validar; puede incluir empresas que deben ser contactadas por CAC</b></p>
+          </div>
         </div>
 
-        <div class="tf-lab anim" data-step="0"><i>5</i>Conclusión</div>
-        <div class="tf-concl">
-          <div class="anim" data-step="0"><b>1 de cada 13</b><span>clientes queda fuera de la gestión por no tener teléfono.</span></div>
-          <div class="anim" data-step="0" style="--d:.1s"><b>RD$10 MM</b><span>en primas cada mes, en Retención, sin oportunidad de contacto.</span></div>
-          <div class="anim" data-step="0" style="--d:.2s"><b>Más atraso</b><span>en Cobros: la deuda de estos clientes se acumula donde es más difícil de recuperar.</span></div>
-          <div class="warn anim" data-step="0" style="--d:.3s"><b>Impacto mayor</b><span>Probablemente es aún más: tener un teléfono no garantiza que sea correcto ni que el cliente conteste.</span></div>
+        <div class="tc-ask anim" data-step="1">
+          <div><span class="e">Acuerdos</span><span class="t">Próximos pasos</span></div>
+          <div><h4>1 · Cotizar compra de teléfonos vacíos</h4><p>3,512 × RD$15 = <b>RD$52,680</b> para que los 45,561 contratantes tengan teléfono</p></div>
+          <div><h4>2 · Ajuste en pantalla de Sirweb</h4><p>Incorporar la inactivación de números para depurar los no válidos</p></div>
         </div>
 
-        <div class="tf-lab anim" data-step="1"><i>6</i>Propuesta · comprar y depurar teléfonos de forma continua</div>
-        <p class="tf-lead anim" data-step="1" style="margin:-4px 0 16px">La idea es ir depurando (inactivando) los teléfonos que no sirven y comprar nuevos, para luego depurarlos de nuevo.</p>
-        <div class="tf-flow">
-          <div class="tf-node anim" data-step="1" style="--c:var(--red)">
-            <div class="k"><i>1</i>Depurar</div>
-            <p>Inactivar los números que no funcionan, según el resultado de las llamadas de Retención y Cobros.</p>
-            <span class="tag">Hoy no se puede inactivar el último teléfono</span>
-          </div>
-          <div class="tf-arr anim fade" data-step="1" style="--d:.15s">→</div>
-          <div class="tf-node anim" data-step="1" style="--c:var(--blue);--d:.25s">
-            <div class="k"><i>2</i>Comprar</div>
-            <p>Comprar teléfonos para las pólizas que quedan sin ningún número activo.</p>
-            <span class="tag">1ra compra: 3,512 vacíos × RD$15 = RD$52,680</span>
-          </div>
-          <div class="tf-arr anim fade" data-step="1" style="--d:.4s">→</div>
-          <div class="tf-node anim" data-step="1" style="--c:var(--good);--d:.5s">
-            <div class="k"><i>3</i>Gestionar</div>
-            <p>Retención y Cobros llaman con los números nuevos y marcan cuáles son válidos.</p>
-            <span class="tag">Se valida en la propia gestión</span>
-          </div>
-          <svg class="tf-loop anim fade" data-step="1" style="--d:.7s" viewBox="0 0 1700 110" aria-hidden="true">
-            <defs><marker id="tf-ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0067b1"/></marker></defs>
-            <path d="M1440,4 V62 Q1440,92 1410,92 H290 Q260,92 260,62 V10" fill="none" stroke="#0067b1" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#tf-ah)"/>
-          </svg>
-          <div class="tf-loop-l anim fade" data-step="1" style="--d:.7s"><span>↺ Los números no válidos vuelven a depurarse y el ciclo se repite</span></div>
-        </div>
-
-        <div class="tf-ask anim" data-step="2">
-          <div><span class="e">Para arrancar</span><span class="t">Próximos pasos</span></div>
-          <div><h4>1 · Ajuste en Sirweb</h4><p>Permitir inactivar números, incluido el último teléfono disponible del cliente.</p></div>
-          <div><h4>2 · Aprobar la compra inicial</h4><p>3,512 teléfonos vacíos × RD$15 = <b>RD$52,680</b>.</p></div>
-          <div><h4>3 · Empresas sin validar</h4><p>Las empresas que queden sin número válido se canalizan a CAC para contactarlas.</p></div>
-        </div>
+        <div class="tc-src anim fade" data-step="1">Fuente: Base de contratantes Auto (post remediación) y tablero de emisión con teléfono, octubre 2026 acumulado · Data y Analítica</div>
       </div>
     </section>
 
@@ -1774,8 +1625,7 @@
     "Renovaciones · Octubre",
     "Histórico de pago de la primera cuota",
     "Intermediarios con bajo porcentaje de pago",
-    "Teléfonos de clientes · Impacto en Retención y Cobros",
-    "Teléfonos de clientes · Propuesta de nuevo flujo",
+    "Teléfonos de contratantes · Octubre 2026",
   ];
   [...deck.querySelectorAll(".slide")]
     .sort((a, b) => ORDER.indexOf(a.getAttribute("aria-label")) - ORDER.indexOf(b.getAttribute("aria-label")))
