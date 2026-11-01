@@ -438,6 +438,7 @@
   .hc td.tr.up { color: var(--good); }
   .hc td.pp { color: #d9822b; font-weight: 600; }
   .hc td.sp { color: #c26412; font-weight: 600; }
+  .hc td.pp small, .hc td.sp small { font-size: 16px; font-weight: 500; opacity: .8; }
   .hc td.ct { color: var(--red); font-weight: 700; border-left: 2px solid var(--line); }
   .hc td.cp { color: #c94a4a; }
   .hc tbody tr:nth-child(-n+2) td.l { color: var(--muted); }
@@ -1460,7 +1461,7 @@
       const hm = pg.map((v, i) => { const imm = i >= 4 - im && i < 4; return `<td class="hm${imm ? " im" : ""}${i === 4 ? " hoy" : ""}" style="${tt ? "" : blue(v)}">${v}%</td>`; }).join("");
       const trTxt = tr === undefined ? "" : tr === null ? "—" : tr === 0 ? "● igual" : `${tr > 0 ? "▲" : "▼"} ${Math.abs(tr)} pp`;
       return `<tr class="${tt ? "tt" : ""}"><td class="l">${mes}</td><td class="rn">${nf(ren)}</td>${hm}
-        ${A(1, "tr" + (tr ? (tr > 0 ? " up" : "") : " eq"), trTxt)}${A(2, "pp", nf(pp))}${A(2, "sp", nf(sp))}
+        ${A(1, "tr" + (tr ? (tr > 0 ? " up" : "") : " eq"), trTxt)}${A(2, "pp", `${nf(pp)} <small>(${Math.round(pp / ren * 100)}%)</small>`)}${A(2, "sp", `${nf(sp)} <small>(${Math.round(sp / ren * 100)}%)</small>`)}
         ${A(3, "ct", nf(ct))}${cp.map(v => A(3, "cp", v.toFixed(1) + "%")).join("")}</tr>`;
     };
     const G = (st, c, span, lb) => `<th colspan="${span}" class="anim fade" data-step="${st}" data-d="0" style="--c:${c}">${lb}</th>`;
