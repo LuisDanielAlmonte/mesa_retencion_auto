@@ -422,8 +422,8 @@
   .ib:has(.ib-sw.in) .ibp.b tbody tr { animation: rowIn .55s var(--ease) both; animation-delay: calc(var(--r, 0) * 60ms + .15s); }
 
   /* Histórico pago 1ra cuota */
-  .hc { margin-top: 22px; width: 100%; border-collapse: separate; border-spacing: 4px 4px; font-variant-numeric: tabular-nums; }
-  .hc th, .hc td { border: 0; background: none; text-align: right; padding: 0 10px; height: 52px; font-size: 21px; }
+  .hc { margin-top: 16px; width: 100%; border-collapse: separate; border-spacing: 4px 4px; font-variant-numeric: tabular-nums; }
+  .hc th, .hc td { border: 0; background: none; text-align: right; padding: 0 10px; height: 48px; font-size: 21px; }
   .hc thead th { height: auto; padding: 6px 10px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); vertical-align: bottom; }
   .hc thead tr.g th { font-size: 15px; letter-spacing: .1em; color: var(--c); border-bottom: 3px solid var(--c); text-align: center; padding-bottom: 8px; }
   .hc thead tr.g th.blank { border: 0; }
@@ -435,6 +435,7 @@
   .hc td.hm.hoy { box-shadow: inset 0 0 0 2px rgba(0,103,177,.25); }
   .hc td.tr { text-align: center; font-weight: 700; color: var(--red); }
   .hc td.tr.eq { color: var(--muted); font-weight: 500; }
+  .hc td.tr.up { color: var(--good); }
   .hc td.pp { color: #d9822b; font-weight: 600; }
   .hc td.sp { color: #c26412; font-weight: 600; }
   .hc td.ct { color: var(--red); font-weight: 700; border-left: 2px solid var(--line); }
@@ -559,9 +560,9 @@
           </div>
           <div class="kpis">
             <div class="kpi main anim from-right">
-              <h3>Churn 2026 · ene–sep</h3>
-              <div class="v" data-count="2.44" data-dec="2" data-suffix="%">2.44%</div>
-              <span class="pill">0.10 p.p. bajo objetivo</span>
+              <h3>Churn 2026 · ene–oct</h3>
+              <div class="v" data-count="2.48" data-dec="2" data-suffix="%">2.48%</div>
+              <span class="pill">0.06 p.p. bajo objetivo</span>
             </div>
             <div class="kpi anim from-right">
               <h3>Objetivo</h3>
@@ -660,49 +661,51 @@
 
   /* =================== Datos · Total certificados =================== */
   const MONTHS = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-  const REAL = 9;                 // ene–sep cerrados
+  const REAL = 10;                // ene–oct cerrados (Proyección de Churn)
+  const REAL_P = 10;              // ene–oct cerrados (tendencias por plan)
+  const FUT_P = Array.from({ length: 12 - REAL_P }, (_, i) => REAL_P + 1 + i);   // meses proyectados (nov–dic)
   const OBJETIVO = 2.54;
-  const CARTERA_OCT = 71781;      // cartera al inicio de octubre (real)
+  const CARTERA_SIG = 72531;      // cartera al inicio de noviembre (real)
   const total = {
-    cartera:   [60290,62342,63568,64883,66107,67632,68844,70242,71122],
-    emisiones: [3376,2667,2922,2752,2744,2920,3152,2676,2884],
-    cancel:    [1324,1441,1607,1528,1219,1708,1754,1796,2225],
+    cartera:   [60290,62342,63568,64883,66107,67632,68844,70242,71122,71781],
+    emisiones: [3376,2667,2922,2752,2744,2920,3152,2676,2884,2753],   // oct = cartera nov − cartera oct + cancelaciones oct
+    cancel:    [1324,1441,1607,1528,1219,1708,1754,1796,2225,2003],
   };
   total.churn = total.cancel.map((c, i) => c / total.cartera[i] * 100);
-  const TREND = [10, 11, 12].map(linreg(total.churn));
+  const TREND = Array.from({ length: 12 - REAL }, (_, i) => REAL + 1 + i).map(linreg(total.churn));
   const EMIS_PROM = avg(total.emisiones);
   const proj = { cartera: [], emisiones: [], cancel: [], crec: [] };
   {
-    let cart = CARTERA_OCT;
+    let cart = CARTERA_SIG;
     TREND.forEach(t => {
       const canc = cart * t / 100;
       proj.cartera.push(cart); proj.emisiones.push(EMIS_PROM); proj.cancel.push(canc); proj.crec.push(EMIS_PROM - canc);
       cart += EMIS_PROM - canc;
     });
   }
-  const crecReal = total.cartera.map((c, i) => (total.cartera[i + 1] ?? CARTERA_OCT) - c);
+  const crecReal = total.cartera.map((c, i) => (total.cartera[i + 1] ?? CARTERA_SIG) - c);
   const CLOSE = (sum(total.churn) + sum(TREND)) / 12;
 
   /* =================== Datos · Planes =================== */
-  // cartera: ene–oct (oct = inicio del mes, real) · cancel: ene–sep (meses cerrados)
+  // cartera: ene–nov (nov = inicio del mes, real) · cancel: ene–oct (meses cerrados)
   const PLANS = [
     { name: "Mi Auto Flex", budget: 286, budgetM: [47, 22, 21, 22, 22, 22, 21, 22, 22, 21, 22, 22],    cov: "Todo riesgo pérdida total",  group: "dp",
-      cartera: [1148,1175,1214,1253,1294,1242,1308,1352,1426,1478], cancel: [28,31,30,21,18,25,34,28,47] },
+      cartera: [1148,1175,1214,1253,1294,1242,1308,1352,1426,1478,1506], cancel: [28,31,30,21,18,25,34,28,47,41] },
     { name: "Mi Auto Full", budget: 5813, budgetM: [365, 495, 496, 495, 495, 496, 495, 495, 495, 496, 495, 495],    cov: "Todo riesgo con deducible",  group: "dp",
-      cartera: [26905,27622,28134,28749,29128,29706,30084,30588,30849,30846], cancel: [623,659,676,822,616,830,794,843,1009] },
+      cartera: [26905,27622,28134,28749,29128,29706,30084,30588,30849,30846,31085], cancel: [623,659,676,822,616,830,794,843,1009,846] },
     { name: "Mi Auto Premier", budget: 278, budgetM: [-128, 37, 37, 37, 37, 37, 36, 37, 37, 37, 37, 37], cov: "Todo riesgo cero deducible", group: "dp",
-      cartera: [2157,2186,2246,2271,2310,2370,2401,2441,2469,2512], cancel: [42,26,43,45,35,80,51,53,80] },
+      cartera: [2157,2186,2246,2271,2310,2370,2401,2441,2469,2512,2542], cancel: [42,26,43,45,35,80,51,53,80,65] },
     { name: "Mi Auto Básico", budget: 6301, budgetM: [359, 540, 540, 540, 540, 541, 540, 540, 540, 540, 540, 541],  cov: "Seguro de ley",              group: "sl",
-      cartera: [29381,30501,30967,31456,32028,32768,33331,33964,34325,34795], cancel: [626,722,854,636,543,760,857,856,1021] },
+      cartera: [29381,30501,30967,31456,32028,32768,33331,33964,34325,34795,35067], cancel: [626,722,854,636,543,760,857,856,1021,1022] },
     { name: "Mi Moto Básico", budget: -306, budgetM: [-371, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 5],  cov: "Seguro de ley",              group: "sl",
-      cartera: [699,858,1007,1154,1347,1546,1720,1897,2053,2150], cancel: [5,3,4,4,7,13,18,16,68] },
+      cartera: [699,858,1007,1154,1347,1546,1720,1897,2053,2150,2331], cancel: [5,3,4,4,7,13,18,16,68,29] },
   ];
   PLANS.forEach((p, i) => {
     p.id = "p" + i;
     p.churn = p.cancel.map((c, k) => c / p.cartera[k] * 100);
-    p.growth = p.cartera.slice(1).map((c, k) => c - p.cartera[k]);   // crecimiento neto ene–sep
+    p.growth = p.cartera.slice(1).map((c, k) => c - p.cartera[k]);   // crecimiento neto ene–oct
     p.fitGrowth = linreg(p.growth);
-    p.fitChurn = linreg(p.churn);      // ene–sep
+    p.fitChurn = linreg(p.churn);      // ene–oct
   });
 
   /* =================== Datos · Métricas de gestión =================== */
@@ -805,7 +808,7 @@
   function renderMainTable() {
     const span = (txt, col) => `<span class="anim fade" data-step="1" data-d="${(0.1 + col * 0.12).toFixed(2)}">${txt}</span>`;
     let h = '<thead><tr class="phase"><th class="corner"></th>' +
-            `<th class="real" colspan="${REAL}">REAL</th><th class="proj" colspan="3">${span("TENDENCIA", 0)}</th></tr>` +
+            `<th class="real" colspan="${REAL}">REAL</th><th class="proj" colspan="${12 - REAL}">${span("TENDENCIA", 0)}</th></tr>` +
             '<tr><th class="corner">Concepto</th>' +
             MONTHS.map((m, i) => `<th class="${i >= REAL ? "proj" : ""}">${m}</th>`).join("") + "</tr></thead><tbody>";
     const rows = [
@@ -819,7 +822,7 @@
       h += `<tr class="${r.hl ? "hl" : ""}" style="--r:${ri}"><th scope="row">${r.label}</th>`;
       r.real.forEach(v => h += `<td class="${r.hl && v > OBJETIVO ? "over" : ""}">${r.fmt(v)}</td>`);
       r.proj.forEach((v, j) => {
-        const isRealOct = r.label === "Cartera" && j === 0;   // la cartera de octubre ya es real
+        const isRealOct = r.label === "Cartera" && j === 0;   // la cartera del primer mes proyectado ya es real
         const over = r.hl && v > OBJETIVO ? " over" : "";
         h += `<td class="proj${isRealOct ? " realv" : ""}${over}">${isRealOct ? r.fmt(v) : span(r.fmt(v), j)}</td>`;
       });
@@ -872,14 +875,14 @@
   function comboChart(svg, p) {
     const [, , W, H] = svg.getAttribute("viewBox").split(" ").map(Number);
     const L = 40, R = 8, T = 46, B = 30, GAP = 40;
-    const n = REAL;
+    const n = REAL_P;
     const x = i => L + (W - L - R) * (i + 0.5) / 12;
     const colW = (W - L - R) / 12, bw = colW * 0.42;
     const churnH = (H - T - B - GAP) * 0.42;
     const cTop = T, cBot = T + churnH, gTop = cBot + GAP, gBot = H - B;
-    // Real ene–sep + oct–dic rellenados con la tendencia
-    const churn = p.churn.concat([10, 11, 12].map(p.fitChurn));
-    const growth = p.growth.concat([10, 11, 12].map(p.fitGrowth));
+    // Real ene–oct + nov–dic rellenados con la tendencia
+    const churn = p.churn.concat(FUT_P.map(p.fitChurn));
+    const growth = p.growth.concat(FUT_P.map(p.fitGrowth));
     // Escalas
     const cv = churn.concat(OBJETIVO);
     const cLo = Math.min(...cv) - 0.2, cHi = Math.max(...cv) + 0.2;
@@ -960,17 +963,17 @@
     st += `<div class="legend">
         <span><i class="bar"></i>Crecimiento del mes</span>
         <span class="ch"><i></i>Churn</span>
-        <span><i class="bar" style="background:#cfe6f5"></i>Oct–dic proyectado</span>
+        <span><i class="bar" style="background:#cfe6f5"></i>${MONTHS[REAL_P].slice(0, 3)}–dic proyectado</span>
         <span class="o"><i style="border-top-width:2px"></i>Objetivo 2.54%</span></div>`;
     document.getElementById("step-" + group).innerHTML = st;
     let h = "";
     plans.forEach(p => {
-      // Cartera final esperada = cartera de octubre + crecimiento proyectado oct–dic (los mismos valores de las barras)
-      const fin = p.cartera[9] + [10, 11, 12].reduce((a, m) => a + Math.round(p.fitGrowth(m)), 0);
-      // % de la cartera del grupo (Daños Propios o Ley) a octubre
-      const share = p.cartera[9] / plans.reduce((a, q) => a + q.cartera[9], 0) * 100;
-      // YTD ene–sep: crecimiento real (cartera oct − cartera ene) vs presupuesto acumulado ene–sep
-      const ytdReal = p.cartera[9] - p.cartera[0], ytdBud = p.budgetM.slice(0, REAL).reduce((a, b) => a + b, 0);
+      // Cartera final esperada = cartera al inicio del primer mes proyectado + crecimiento proyectado (los mismos valores de las barras)
+      const fin = p.cartera[REAL_P] + FUT_P.reduce((a, m) => a + Math.round(p.fitGrowth(m)), 0);
+      // % de la cartera del grupo (Daños Propios o Ley) al inicio del primer mes proyectado
+      const share = p.cartera[REAL_P] / plans.reduce((a, q) => a + q.cartera[REAL_P], 0) * 100;
+      // YTD: crecimiento real (cartera al inicio del mes siguiente − cartera ene) vs presupuesto acumulado de los meses cerrados
+      const ytdReal = p.cartera[REAL_P] - p.cartera[0], ytdBud = p.budgetM.slice(0, REAL_P).reduce((a, b) => a + b, 0);
       h += `<div class="pstage">
         <div class="pname"><div class="ph"><div class="g">${GROUP_NAME[group]}</div><div class="n">${p.name}</div><div class="c">${p.cov}</div>
           <div class="share"><b>${share.toFixed(1)}%</b> de la cartera de ${group === "dp" ? "Daños Propios" : "Ley"}</div></div>
@@ -979,7 +982,7 @@
             <div class="arrow">→</div>
             <div class="fin"><div class="l">Final esp. · dic</div><div class="v" data-count="${fin}" data-dec="0">${nf(fin)}</div></div>
           </div>
-          ${growthBox(ytdReal, ytdBud, "YTD ene–sep", "Ppto. YTD")}
+          ${growthBox(ytdReal, ytdBud, "YTD ene–" + MONTHS[REAL_P - 1].slice(0, 3).toLowerCase(), "Ppto. YTD")}
           ${growthBox(fin - p.cartera[0], p.budget, "Estimado 2026", "Ppto. 2026")}</div>
         <div class="pcard"><svg data-chart="${p.id}" viewBox="0 0 1100 600" role="img" aria-label="Crecimiento mensual y churn de ${p.name} con su proyección"></svg></div>
       </div>`;
@@ -1435,28 +1438,29 @@
   // [mes, renovadas, [día 0, 30, 60, 90, hoy], períodos aún no cumplidos (de día 90 hacia atrás), tendencia día 30 (pp vs mismo mes año anterior),
   //  pago parcial, pendientes de pago, canceladas sin pago, [% día 0, % día 30, % hoy]]
   const HC = [
-    ["Nov 2026", 1145, [0, 0, 0, 0, 0], 4, null, 10, 1133, 0, [0.0, 0.0, 0.0]],
-    ["Oct 2026", 1205, [7, 9, 9, 9, 9], 4, null, 25, 1052, 18, [1.0, 1.5, 1.5]],
-    ["Sep 2026", 1144, [23, 49, 50, 50, 50], 3, null, 55, 401, 121, [4.2, 10.4, 10.6]],
-    ["Ago 2026", 1039, [22, 56, 60, 60, 60], 2, -6, 56, 203, 156, [4.5, 12.4, 15.0]],
-    ["Jul 2026", 1094, [25, 59, 64, 65, 65], 1, -3, 35, 136, 209, [3.9, 10.2, 19.1]],
-    ["Jun 2026", 1101, [25, 59, 65, 68, 68], 0, -5, 37, 74, 236, [3.7, 10.0, 21.4]],
-    ["May 2026", 939, [24, 60, 67, 69, 70], 0, -6, 34, 23, 229, [3.0, 7.8, 24.4]],
-    ["Abr 2026", 821, [28, 60, 66, 69, 70], 0, -5, 32, 19, 196, [4.0, 7.4, 23.9]],
-    ["Mar 2026", 923, [25, 60, 67, 70, 70], 0, -3, 25, 10, 240, [3.9, 9.2, 26.0]],
-    ["Feb 2026", 812, [25, 63, 71, 74, 74], 0, 0, 22, 4, 185, [2.6, 7.6, 22.8]],
-    ["Ene 2026", 887, [25, 60, 67, 69, 69], 0, -8, 36, 3, 235, [1.8, 7.7, 26.5]],
+    ["Dic 2026", 4068, [0, 0, 0, 0, 0], 4, null, 59, 3999, 2, [0.0, 0.0, 0.0]],
+    ["Nov 2026", 3396, [4, 4, 4, 4, 4], 4, null, 28, 3227, 14, [0.4, 0.4, 0.4]],
+    ["Oct 2026", 3619, [19, 40, 40, 40, 40], 3, null, 153, 1803, 224, [2.9, 6.2, 6.2]],
+    ["Sep 2026", 3334, [23, 55, 60, 60, 60], 2, -7, 120, 831, 392, [4.1, 10.0, 11.8]],
+    ["Ago 2026", 3189, [23, 58, 66, 68, 68], 1, -7, 74, 477, 485, [3.8, 9.6, 15.2]],
+    ["Jul 2026", 3328, [25, 58, 65, 68, 68], 0, -5, 54, 316, 699, [3.5, 8.8, 21.0]],
+    ["Jun 2026", 3116, [24, 60, 67, 70, 71], 0, -5, 54, 149, 700, [3.7, 8.8, 22.5]],
+    ["May 2026", 2862, [24, 60, 68, 70, 71], 0, -4, 47, 71, 721, [3.3, 8.0, 25.2]],
+    ["Abr 2026", 2476, [26, 61, 69, 72, 73], 0, 0, 43, 43, 591, [3.6, 7.1, 23.9]],
+    ["Mar 2026", 2732, [25, 61, 70, 73, 74], 0, -1, 40, 29, 644, [3.2, 8.6, 23.6]],
+    ["Feb 2026", 2402, [27, 63, 71, 74, 75], 0, 2, 30, 6, 557, [3.2, 7.9, 23.2]],
+    ["Ene 2026", 2923, [22, 56, 73, 75, 76], 0, -2, 46, 7, 634, [3.0, 7.2, 21.7]],
   ];
-  const HC_TOT = ["Total", 11110, [20, 47, 51, 52, 53], 0, undefined, 367, 3058, 1825, [2.9, 7.5, 16.4]];
+  const HC_TOT = ["Total", 37445, [19, 46, 52, 53, 54], 0, undefined, 748, 10958, 5663, [2.8, 6.6, 15.1]];
   function hcSlide() {
     const A = (st, cls, inner) => `<td class="${cls} anim fade" data-step="${st}" data-d="0">${inner}</td>`;
     const blue = v => `background:rgba(0,103,177,${(0.06 + v / 80 * 0.32).toFixed(2)})`;
     const row = (r, tt) => {
       const [mes, ren, pg, im, tr, pp, sp, ct, cp] = r;
       const hm = pg.map((v, i) => { const imm = i >= 4 - im && i < 4; return `<td class="hm${imm ? " im" : ""}${i === 4 ? " hoy" : ""}" style="${tt ? "" : blue(v)}">${v}%</td>`; }).join("");
-      const trTxt = tr === undefined ? "" : tr === null ? "—" : tr === 0 ? "● igual" : `▼ ${Math.abs(tr)} pp`;
+      const trTxt = tr === undefined ? "" : tr === null ? "—" : tr === 0 ? "● igual" : `${tr > 0 ? "▲" : "▼"} ${Math.abs(tr)} pp`;
       return `<tr class="${tt ? "tt" : ""}"><td class="l">${mes}</td><td class="rn">${nf(ren)}</td>${hm}
-        ${A(1, "tr" + (tr ? "" : " eq"), trTxt)}${A(2, "pp", nf(pp))}${A(2, "sp", nf(sp))}
+        ${A(1, "tr" + (tr ? (tr > 0 ? " up" : "") : " eq"), trTxt)}${A(2, "pp", nf(pp))}${A(2, "sp", nf(sp))}
         ${A(3, "ct", nf(ct))}${cp.map(v => A(3, "cp", v.toFixed(1) + "%")).join("")}</tr>`;
     };
     const G = (st, c, span, lb) => `<th colspan="${span}" class="anim fade" data-step="${st}" data-d="0" style="--c:${c}">${lb}</th>`;
@@ -1474,7 +1478,7 @@
         </table>
         <div class="hc-leg anim fade"><span><i style="background:rgba(0,103,177,.3)"></i>% de pólizas renovadas con la 1ra cuota pagada</span><span><i style="background:#f3f6f9;border:1px solid #dde3ea"></i>Período aún no cumplido</span></div>
       </div>
-    </section>`.replace("Daños Propios · Septiembre y Octubre 2026", "Daños Propios · Enero – Noviembre 2026");
+    </section>`.replace("Daños Propios · Septiembre y Octubre 2026", "Daños Propios · Enero – Diciembre 2026");
   }
 
   /* =================== Retención · Principales indicadores · Churn YTD =================== */
