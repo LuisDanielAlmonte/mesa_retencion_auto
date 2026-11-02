@@ -1653,7 +1653,7 @@
     ["Luis Francisco Polanco Infante", "30-35-120040", "precio", "¿Por qué el aumento? No he utilizado el seguro y no tengo de dónde sacar el monto. Voy a pasar por la oficina para pagar en cuotas."],
     ["Ana Cecilia Cruz López", "30-35-119918", "siniestro", "Me chocaron y estoy esperando un reembolso desde hace dos meses; todavía no me han contactado. No voy a renovar."],
     ["Marcel Castillo Salazar", "30-35-73631", "retenido", "Cuestioné por correo el aumento de mi prima. Me hicieron un ajuste en el costo y voy a pagar en cuotas."],
-    ["Michel Ange Méndez Fabián", "30-35-119659", "servicio", "Estoy pensando cancelar por el mal servicio y las atenciones recibidas. Si me quedo, quiero una póliza más económica."],
+    ["Michel Ange Méndez Fabián", "30-35-119659", "siniestro", "Estoy pensando cancelar por el mal servicio y las atenciones recibidas. Si me quedo, quiero una póliza más económica."],
     ["Katherine Cecilia Ramos Pérez", "30-35-93448", "precio", "Voy a enviar un correo pidiendo que revisen el aumento: no he tenido siniestros y el monto está muy elevado."],
     ["Willian Rosario Alonzo", "30-35-120722", "siniestro", "No voy a renovar hasta que me den la cobertura de la reparación de una mica. Me la negaron teniendo un seguro full de alto costo."],
     ["Elena Pilar Santana", "30-35-120545", "precio", "Antes de pagar voy a hablar con mi agente para que me explique por qué la renovación está tan elevada, si no he tenido siniestros."],
@@ -1673,10 +1673,10 @@
   const VOZ_BASE = 42;
   const VOZ_RES = [
     ["Aumento de precio", 15, "#e8590c"],
+    ["Siniestros y reclamaciones", 11, "#e03131"],
     ["Quiere cambiar o bajar de plan", 9, "#00b4e6"],
-    ["Siniestros y reclamaciones", 8, "#e03131"],
     ["Se va a otra aseguradora", 8, "#0b2f5b"],
-    ["Mal servicio", 6, "#7048e8"],
+    ["Mal servicio", 3, "#7048e8"],
   ];
   function vozSlide() {
     const ini = n => n.replace(/,.*$/, "").split(/\s+/).filter(w => /^[A-ZÁÉÍÓÚÑ]/i.test(w) && w.length > 2).slice(0, 2).map(w => w[0]).join("").toUpperCase();
