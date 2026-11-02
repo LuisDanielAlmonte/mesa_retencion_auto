@@ -63,11 +63,11 @@
   .tc-src { margin-top: 18px; font-size: 16px; color: var(--muted); }
 
   /* ---------- Voz del cliente ---------- */
-  .vz-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 560px 1fr; gap: 36px; margin-top: 26px; }
-  .vz-left { display: flex; flex-direction: column; gap: 22px; min-height: 0; }
-  .vz-cloud { position: relative; height: 380px; }
+  .vz-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 560px 1fr; gap: 36px; margin: 26px 0 24px; }
+  .vz-left { display: flex; flex-direction: column; justify-content: center; gap: 22px; min-height: 0; }
+  .vz-cloud { position: relative; height: 440px; }
   .vz-cloud-bg { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 18px 30px rgba(11,47,91,.12)); }
-  .vz-words { position: absolute; inset: 78px 62px 56px 62px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; align-content: center; gap: 4px 16px; }
+  .vz-words { position: absolute; inset: 92px 66px 64px 66px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; align-content: center; gap: 4px 16px; }
   .vz-words span { font-size: calc(13px + var(--s) * 5px); font-weight: calc(400 + var(--s) * 60); color: var(--c); line-height: 1.1; white-space: nowrap; opacity: 0; transform: translateY(10px) scale(.9); }
   .vz-left.in .vz-words span { animation: vzIn .6s var(--ease) forwards, vzFloat 6s ease-in-out infinite; animation-delay: calc(var(--i) * 70ms + .2s), calc(var(--i) * -.7s); }
   @keyframes vzIn { to { opacity: 1; transform: none; } }
@@ -83,9 +83,9 @@
   .vz-wall { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 0; overflow: hidden;
     -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); }
   .vz-col { min-height: 0; overflow: hidden; }
-  .vz-track { display: flex; flex-direction: column; gap: 18px; padding: 18px 4px; animation: vzUp 60s linear infinite; }
-  .vz-col.c1 .vz-track { animation-name: vzDown; animation-duration: 70s; }
-  .vz-col.c2 .vz-track { animation-duration: 54s; }
+  .vz-track { display: flex; flex-direction: column; gap: 18px; padding: 18px 4px; animation: vzUp 95s linear infinite; }
+  .vz-col.c1 .vz-track { animation-name: vzDown; animation-duration: 110s; }
+  .vz-col.c2 .vz-track { animation-duration: 85s; }
   .vz-wall:hover .vz-track { animation-play-state: paused; }
   .slide.vz:not(.active) .vz-track, body.exporting .vz-track { animation: none; }
   @keyframes vzUp { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 9px)); } }
@@ -100,12 +100,6 @@
   .vz-card .who small { font-size: 13.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .vz-card .tg { flex: none; font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 999px; color: var(--c); background: color-mix(in srgb, var(--c) 12%, #fff); }
 
-  .vz-take { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 22px; border-radius: 22px; background: var(--navy); color: #fff; padding: 20px 0; }
-  .vz-take > div { display: flex; align-items: center; gap: 16px; padding: 0 30px; }
-  .vz-take > div + div { border-left: 1px solid rgba(255,255,255,.18); }
-  .vz-take i { font-style: normal; font-size: 30px; }
-  .vz-take p { margin: 0; font-size: 18px; line-height: 1.4; color: rgba(255,255,255,.85); }
-  .vz-take b { color: #fff; }
 
   /* ---------- Deck: lienzo fijo 1920×1080 escalado a la ventana ---------- */
   .viewport { position: fixed; inset: 0; }
@@ -1666,17 +1660,11 @@
               <div class="vz-words">${cloud}</div>
             </div>
             <div class="vz-stats">
-              <div><b>1,136</b><span>pólizas con comentarios de la llamada de renovación</span></div>
               <div class="hl"><b>17</b><span>reclaman por el aumento del precio, varios <em>sin haber tenido siniestros</em></span></div>
               <div class="hl s"><b>18</b><span>mencionan mal servicio o reclamaciones sin resolver</span></div>
             </div>
           </div>
           <div class="vz-wall anim" data-step="1">${cols.map(col).join("")}</div>
-        </div>
-        <div class="vz-take anim" data-step="2">
-          <div><i>💬</i><p><b>El aumento sin siniestros</b> es la queja más repetida: el cliente pide que se le explique antes de pagar.</p></div>
-          <div><i>🛠️</i><p><b>Un siniestro mal resuelto se cobra en la renovación:</b> reembolsos y reclamaciones pendientes frenan el pago.</p></div>
-          <div><i>🤝</i><p><b>Cuando se explica y se ofrece una opción</b> (ajuste, 5% de descuento, cuotas), el cliente se queda.</p></div>
         </div>
       </div>
     </section>`;
