@@ -854,10 +854,11 @@
         Individual: { pct: nums("2.65 2.12 1.89 2.06 2.48 2.43"), an: strs("341.0 316.0 88.6 103.1 129.9 42.8"), ca: strs("1,067.5 1,248.9 1,563.2 1,673.1 1,744.2 1,760.7") },
         Flotilla:   { pct: nums("0.85 1.18 0.63 0.44 0.65 0.42"), an: strs("45.9 64.9 10.1 7.3 11.3 2.6"),         ca: strs("448.6 450.8 524.2 559.9 587.3 603.3") },
       },
-      note: `<p class="sm">La principal causa de cancelación fue la <b>falta de pago</b>: <b>565 certificados</b>, concentrados en:</p>
-             <div class="rank">${[["Seguro de Ley", 343, 61], ["Renovaciones de mayo a agosto 2026", 408, 72], ["Oficina Principal (Distrito Nacional)", 214, 38]]
+      note: `<p class="sm">En octubre se cancelaron <b>2,003 certificados</b>. Las principales causas:</p>
+             <div class="rank">${[["Falta de pago", 811, 40], ["Exclusión", 512, 26], ["A solicitud del asegurado", 490, 24]]
                .map(([n, c, p]) => `<div><span>${n}</span><b>${nf(c)}</b><em>${p}%</em></div>`).join("")}</div>
-             <p class="sm">Además, el churn de Agentes aumentó un <b>23%</b>, liderado por <b>Josefina Abreu Suriel</b> (34 certificados; churn de 7.61%) y <b>Angelita Ondina Benítez</b> (26 certificados; churn de 26.26%), entre otros.</p>` },
+             <p class="sm">Se concentran en <b>Seguro de Ley</b> (52%), <b>Oficina Principal</b> (41%) y pólizas con vigencia de <b>julio a octubre 2026</b> (56%).</p>
+             <p class="sm">El churn de Agentes subió <b>23%</b>, liderado por <b>Josefina Abreu</b> (34 cert.) y <b>Angelita Benítez</b> (26 cert.).</p>` },
     { brand: "Mi Auto Flotilla", objective: 3.07, months: ["Octubre 2026"],
       series: ["Flotilla Overall", "100% Humano + Líder", "Minoritario"],
       cust: {
@@ -893,7 +894,11 @@
         Overall:         { pct: nums("2.12 1.88 1.57 1.65 2.02 1.92"), an: strs("386.8 381.0 98.7 110.5 141.5 45.4"), ca: strs("1,516.1 1,699.8 2,087.4 2,233.1 2,331.6 2,364.1") },
         Ley:             { pct: nums("2.92 2.31 1.89 1.59 2.19 2.27"), an: strs("72.9 62.3 14.9 13.1 18.7 6.6"), ca: strs("208.4 225.3 262.3 273.7 284.8 289.0") },
         "Daños propios": { pct: nums("1.99 1.82 1.53 1.66 2.00 1.87"), an: strs("313.9 318.7 83.9 97.4 122.7 38.8"), ca: strs("1,307.7 1,474.5 1,825.2 1,959.4 2,046.8 2,075.0") },
-      } },
+      },
+      note: `<p class="sm">El churn de <b>Ley</b> subió a <b>2.84%</b> en octubre (Q3: 2.64%), con <b>1,051 certificados</b> cancelados. Las principales causas:</p>
+             <div class="rank">${[["Falta de pago", 488, 46], ["A solicitud del asegurado", 243, 23], ["Exclusión", 207, 20]]
+               .map(([n, c, p]) => `<div><span>${n}</span><b>${nf(c)}</b><em>${p}%</em></div>`).join("")}</div>
+             <p class="sm">Se concentran en <b>Oficina Principal</b> (38%) y pólizas con vigencia de <b>julio a octubre 2026</b> (59%).</p>` },
     { brand: "Mi Auto Ley", objective: 2.54, months: ["Octubre 2026"],
       series: ["Overall", "Individual", "Flotilla"],
       cust: {
