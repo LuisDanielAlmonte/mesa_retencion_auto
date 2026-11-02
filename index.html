@@ -840,12 +840,13 @@
   });
 
   // Causas de cancelación: cantidad, % del total y barra apilada (los % suman 100)
-  const CAUSA_COL = ["#ff6b6b", "#ffa94d", "#74c0fc"];
-  const causas = list => {
+  const CAUSA_COL = { "Falta de pago": "#ff6b6b", "Exclusiones": "#ffa94d", "A solicitud del asegurado": "#74c0fc" };
+  const causas = raw => {
+    const list = [...raw].sort((a, b) => b[1] - a[1]);   // de mayor a menor
     const T = list.reduce((a, [, c]) => a + c, 0);
     const P = list.map(([, c]) => Math.round(c / T * 100)); P[P.length - 1] = 100 - P.slice(0, -1).reduce((a, b) => a + b, 0);
-    return `<div class="causas"><div class="cbar">${list.map((_, i) => `<i style="--w:${P[i]}%;--c:${CAUSA_COL[i]}"></i>`).join("")}</div>
-      ${list.map(([n, c], i) => `<div class="cr" style="--c:${CAUSA_COL[i]}"><i></i><span>${n}</span><b>${nf(c)}</b><em>${P[i]}%</em></div>`).join("")}</div>`;
+    return `<div class="causas"><div class="cbar">${list.map((_, i) => `<i style="--w:${P[i]}%;--c:${CAUSA_COL[list[i][0]]}"></i>`).join("")}</div>
+      ${list.map(([n, c], i) => `<div class="cr" style="--c:${CAUSA_COL[n]}"><i></i><span>${n}</span><b>${nf(c)}</b><em>${P[i]}%</em></div>`).join("")}</div>`;
   };
   /* =================== Datos · Métricas de gestión =================== */
   const PERIODS = ["2024","2025","Q1 2026","Q2 2026","Q3 2026"];   // por defecto; un slide puede sumar meses con `months`
@@ -871,8 +872,8 @@
         Flotilla:   { pct: nums("0.85 1.18 0.63 0.44 0.65 0.42"), an: strs("45.9 64.9 10.1 7.3 11.3 2.6"),         ca: strs("448.6 450.8 524.2 559.9 587.3 603.3") },
       },
       note: `<p class="sm">En octubre se cancelaron <b>2,003 certificados</b>. Las principales causas:</p>
-             ${causas([["Falta de pago", 811], ["Exclusión", 512], ["A solicitud del asegurado", 680]])}
-             <p class="sm">Se concentran en <b>Seguro de Ley</b> (52%), <b>Oficina Principal</b> (41%) y pólizas con vigencia de <b>julio a octubre 2026</b> (56%).</p>` },
+             ${causas([["Falta de pago", 811], ["Exclusiones", 512], ["A solicitud del asegurado", 680]])}
+             <p class="sm">Se concentran en pólizas con vigencia de <b>julio a octubre 2026</b> (56%), en <b>Seguros de Ley</b> (52%) y en el <b>Distrito Nacional</b> (41%).</p>` },
     { brand: "Mi Auto Flotilla", objective: 3.07, months: ["Octubre 2026"],
       series: ["Flotilla Overall", "100% Humano + Líder", "Minoritario"],
       cust: {
@@ -909,9 +910,9 @@
         Ley:             { pct: nums("2.92 2.31 1.89 1.59 2.19 2.27"), an: strs("72.9 62.3 14.9 13.1 18.7 6.6"), ca: strs("208.4 225.3 262.3 273.7 284.8 289.0") },
         "Daños propios": { pct: nums("1.99 1.82 1.53 1.66 2.00 1.87"), an: strs("313.9 318.7 83.9 97.4 122.7 38.8"), ca: strs("1,307.7 1,474.5 1,825.2 1,959.4 2,046.8 2,075.0") },
       },
-      note: `<p class="sm">El churn de <b>Ley</b> subió a <b>2.84%</b> en octubre (Q3: 2.64%), con <b>1,051 certificados</b> cancelados. Las principales causas:</p>
-             ${causas([["Falta de pago", 488], ["Exclusión", 207], ["A solicitud del asegurado", 356]])}
-             <p class="sm">Se concentran en <b>Oficina Principal</b> (38%) y pólizas con vigencia de <b>julio a octubre 2026</b> (59%).</p>` },
+      note: `<p class="sm">El churn de <b>Seguros de Ley</b> subió a <b>2.84%</b> en octubre (Q3: 2.64%), con <b>1,051 certificados</b> cancelados. Las principales causas:</p>
+             ${causas([["Falta de pago", 488], ["Exclusiones", 207], ["A solicitud del asegurado", 356]])}
+             <p class="sm">Se concentran en pólizas con vigencia de <b>julio a octubre 2026</b> (59%) y en el <b>Distrito Nacional</b> (38%).</p>` },
     { brand: "Mi Auto Ley", objective: 2.54, months: ["Octubre 2026"],
       series: ["Overall", "Individual", "Flotilla"],
       cust: {
