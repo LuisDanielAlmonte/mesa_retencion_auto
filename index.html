@@ -1462,8 +1462,9 @@
         <div class="t">${t}</div><div class="n" data-count="${tot(v)}" data-dec="0">${nf(tot(v))}</div>${extra}${comp(v)}</div>`;
     const of = (v, b) => `<div class="of">${pc(tot(v), tot(b))}% de ${nf(tot(b))}</div>`;
     const cell = (v, k) => `<td><b>${nf(v[k])}</b><em>${pc(v[k], tot(v))}%</em></td>`;
-    const tbl = F.ints.map(([nm, v], r) => `<tr style="--r:${r}"><th>${nm}</th>${FN_COLS.map(([k]) => cell(v, k)).join("")}<td class="tt"><b>${nf(tot(v))}</b></td></tr>`).join("")
-      + `<tr class="tot" style="--r:3"><th>Total</th>${FN_COLS.map(([k]) => cell(F.cred, k)).join("")}<td class="tt"><b>${nf(tot(F.cred))}</b></td></tr>`;
+    const ttc = v => `<td class="tt"><b>${nf(tot(v))}</b><em>${pc(tot(v), tot(F.cred))}%</em></td>`;
+    const tbl = F.ints.map(([nm, v], r) => `<tr style="--r:${r}"><th>${nm}</th>${ttc(v)}${FN_COLS.map(([k]) => cell(v, k)).join("")}</tr>`).join("")
+      + `<tr class="tot" style="--r:3"><th>Total</th>${ttc(F.cred)}${FN_COLS.map(([k]) => cell(F.cred, k)).join("")}</tr>`;
     return `<section class="slide rn fn nobr" aria-label="Renovaciones · ${mes} · Funnel">${rnHead(`${mes} <span class="brand">· Funnel de renovaciones</span>`,
         "", "Funnel", `Renovaciones Auto · Certificados renovados en ${mes.toLowerCase()} 2026`)}
         <div class="fn-tree">
@@ -1479,7 +1480,7 @@
           <div class="fn-tbl anim" data-step="5" data-d=".6" data-k="tbl" style="grid-area:tbl">
             <div class="cap">Crédito comercial por tipo de intermediario</div>
             <table class="rt">
-              <thead><tr><th class="blank"></th>${FN_COLS.map(([, lb, c]) => `<th style="--c:var(--${c})">${lb}</th>`).join("")}<th class="tt">Total</th></tr></thead>
+              <thead><tr><th class="blank"></th><th class="tt">Total</th>${FN_COLS.map(([, lb, c]) => `<th style="--c:var(--${c})">${lb}</th>`).join("")}</tr></thead>
               <tbody>${tbl}</tbody>
             </table>
           </div>
