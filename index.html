@@ -82,16 +82,25 @@
   .vz-sum .hd b { font-size: 76px; font-weight: 700; line-height: 1; margin-top: 6px; background: linear-gradient(135deg, var(--cyan), var(--navy)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .vz-sum .ttl { margin-top: 10px; font-size: 30px; font-weight: 700; line-height: 1.2; color: var(--navy); }
   .vz-sum .cap { margin-top: 6px; font-size: 18px; line-height: 1.35; color: var(--ink); }
-  .vz-ring { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
-  .vz-ring svg { filter: drop-shadow(0 10px 16px rgba(11,47,91,.12)); }
-  .vz-ring span { font-size: 15.5px; font-weight: 600; line-height: 1.25; color: var(--ink); }
-  .vz-ring.big { flex-direction: row; gap: 22px; margin: 26px 0 22px; padding: 14px 26px 14px 14px; border-radius: 999px; background: rgba(255,255,255,.75); box-shadow: 0 12px 30px -22px rgba(11,47,91,.5); }
-  .vz-ring.big span { font-size: 24px; font-weight: 700; line-height: 1.15; color: var(--c); text-align: left; }
-  .vz-ring .arc { stroke-dashoffset: var(--L); transition: stroke-dashoffset 1.2s var(--ease); transition-delay: calc(var(--i) * 140ms + .3s); }
-  .vz-left.in .vz-ring .arc, body.exporting .vz-ring .arc { stroke-dashoffset: var(--off); }
-  .vz-rings { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 20px 18px; }
-  .vz-rings .vz-ring { padding: 16px 10px 14px; border-radius: 22px; background: rgba(255,255,255,.7); }
   .vz-sum small { display: block; margin-top: 18px; font-size: 13.5px; color: var(--muted); }
+  .vz-sum.mk { align-items: stretch; }
+  .vz-sum.mk .hd { margin-bottom: 18px; }
+  .vz-sum.mk .ttl { font-size: 27px; }
+  .mk .gbar { display: flex; height: 40px; border-radius: 12px; overflow: hidden; gap: 3px; box-shadow: 0 10px 22px -16px rgba(11,47,91,.6); }
+  .mk .gbar i { width: var(--w); background: var(--c); display: grid; place-items: center; }
+  .mk .gbar b { color: #fff; font-size: 18px; font-weight: 700; }
+  .mk .gleg { display: flex; justify-content: space-between; margin: 8px 2px 18px; font-size: 14px; font-weight: 600; color: var(--ink); }
+  .mk .gleg i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--c); margin-right: 6px; }
+  .mk .lst { display: flex; flex-direction: column; gap: 7px; }
+  .mk .lst div { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; padding: 9px 14px; border-radius: 12px; background: rgba(255,255,255,.8); }
+  .mk .lst i { width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
+  .mk .lst span { font-size: 15.5px; font-weight: 600; color: var(--ink); }
+  .mk .lst b { font-size: 19px; font-weight: 700; color: var(--navy); }
+  .mk .inq { margin-top: 16px; padding: 14px 16px; border-radius: 16px; background: #fff3ea; border: 1px solid #ffd8bf; }
+  .mk .k2 { font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #d9480f; }
+  .mk .inq div { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .mk .inq span { font-size: 13.5px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #fff; color: var(--c); border: 1px solid color-mix(in srgb, var(--c) 30%, #fff); }
+  .mk .inq span b { margin-left: 2px; }
   .vz-wall { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 0; overflow: hidden;
     -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); }
   .vz-col { min-height: 0; overflow: hidden; }
@@ -1669,15 +1678,7 @@
     ["Acamaro Technology Solutions, S.R.L.", "30-35-120533", "siniestro", "Antes de hablar de la renovación, esperamos respuesta sobre la reclamación en curso de nuestro vehículo, que no hemos recibido."],
     ["Janis Altagracia Reyes Genao", "30-35-120233", "precio", "Voy a pagar, pero pienso cotizar otros planes porque el precio de la renovación está muy elevado."],
   ];
-  // Resumen: de los 42 clientes que expresaron una inquietud en la llamada de renovación (un cliente puede mencionar más de un tema)
-  const VOZ_BASE = 42;
-  const VOZ_RES = [
-    ["Aumento de precio", 15, "#e8590c"],
-    ["Siniestros y reclamaciones", 11, "#e03131"],
-    ["Quiere cambiar o bajar de plan", 9, "#00b4e6"],
-    ["Se va a otra aseguradora", 8, "#0b2f5b"],
-    ["Mal servicio", 3, "#7048e8"],
-  ];
+  // Resumen (vozSlide): 340 clientes que comentaron algo sobre su renovación (sin contacto, ya pagaron, sin comentario o "llamar luego" excluidos)
   function vozSlide() {
     const ini = n => n.replace(/,.*$/, "").split(/\s+/).filter(w => /^[A-ZÁÉÍÓÚÑ]/i.test(w) && w.length > 2).slice(0, 2).map(w => w[0]).join("").toUpperCase();
     const card = ([nm, pol, t, txt]) => {
@@ -1689,19 +1690,18 @@
     };
     const cols = [0, 1, 2].map(c => VOZ.filter((_, i) => i % 3 === c));
     const col = (list, k) => `<div class="vz-col c${k}"><div class="vz-track">${list.map(card).join("")}${list.map(card).join("")}</div></div>`;
-    const ring = ([t, n, c], i, big) => {
-      const p = Math.round(n / VOZ_BASE * 100), r = big ? 58 : 40, sw = big ? 13 : 10, L = 2 * Math.PI * r, sz = (r + sw) * 2;
-      return `<div class="vz-ring${big ? " big" : ""}" style="--c:${c};--i:${i}">
-          <svg viewBox="0 0 ${sz} ${sz}" width="${sz}" height="${sz}"><circle cx="${sz / 2}" cy="${sz / 2}" r="${r}" fill="#fff" stroke="#e9eff5" stroke-width="${sw}"/>
-            <circle class="arc" cx="${sz / 2}" cy="${sz / 2}" r="${r}" fill="none" stroke="${c}" stroke-width="${sw}" stroke-linecap="round" stroke-dasharray="${L}" style="--off:${L * (1 - p / 100)};--L:${L}" transform="rotate(-90 ${sz / 2} ${sz / 2})"/>
-            <text x="50%" y="50%" dy=".36em" text-anchor="middle" font-size="${big ? 32 : 22}" font-weight="700" fill="${c}">${p}%</text></svg>
-          <span>${t}</span></div>`;
-    };
-    const cloud = `<div class="vz-sum">
-        <div class="hd"><span class="k">¿Qué nos dicen?</span><span class="ttl">Inquietudes de los clientes<br>sobre su renovación</span></div>
-        ${ring(VOZ_RES[0], 0, true)}
-        <div class="vz-rings">${VOZ_RES.slice(1).map((r, i) => ring(r, i + 1, false)).join("")}</div>
-        <small>Un cliente puede mencionar más de un tema</small></div>`;
+    const GR = [["Renovará", 155, "#12b886"], ["Aún decidiendo", 80, "#ffa94d"], ["No renovará o en riesgo", 105, "#e03131"]];
+    const TOP = [["Realizará el pago", 88, "#12b886"], ["Lo gestiona su intermediario o un familiar", 67, "#12b886"], ["Vendió el vehículo o ya no lo tiene", 59, "#e03131"], ["Está evaluando la propuesta", 46, "#ffa94d"], ["Pidió la propuesta (no la había recibido)", 34, "#ffa94d"], ["No renovará (sin indicar motivo)", 18, "#e03131"]];
+    const INQ = [["Siniestros y reclamaciones", 7, "#e03131"], ["Otra aseguradora", 6, "#0b2f5b"], ["Aumento de precio", 5, "#e8590c"], ["Cambiar o bajar de plan", 5, "#00b4e6"], ["Mal servicio", 3, "#7048e8"]];
+    const B = 340, P = n => (n / B * 100).toFixed(n / B * 100 < 10 ? 1 : 0);
+    const cloud = `<div class="vz-sum mk">
+        <div class="hd"><span class="k">¿Qué nos dicen?</span><span class="ttl">Lo que dicen los clientes<br>sobre su renovación</span></div>
+        <div class="gbar">${GR.map(([t, n, c]) => `<i style="--w:${n / B * 100}%;--c:${c}"><b>${Math.round(n / B * 100)}%</b></i>`).join("")}</div>
+        <div class="gleg">${GR.map(([t, n, c]) => `<span style="--c:${c}"><i></i>${t}</span>`).join("")}</div>
+        <div class="lst">${TOP.map(([t, n, c]) => `<div style="--c:${c}"><i></i><span>${t}</span><b>${P(n)}%</b></div>`).join("")}</div>
+        <div class="inq"><span class="k2">Inquietudes · ${Math.round(26 / B * 100)}% de los clientes</span>
+          <div>${INQ.map(([t, n, c]) => `<span style="--c:${c}">${t} <b>${n}</b></span>`).join("")}</div></div>
+      </div>`;
     return `<section class="slide vz" aria-label="Voz del cliente · Renovaciones">
       <div class="deco tl1"></div><div class="deco tl2"></div>
       <div class="deco br1"></div><div class="deco br2"></div>
