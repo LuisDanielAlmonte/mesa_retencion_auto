@@ -65,20 +65,13 @@
   /* ---------- Voz del cliente ---------- */
   .vz-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 560px 1fr; gap: 36px; margin: 26px 0 24px; }
   .vz-left { display: flex; flex-direction: column; justify-content: center; gap: 22px; min-height: 0; }
-  .vz-cloud { position: relative; height: 440px; }
+  .vz-cloud { position: relative; height: 620px; margin: 0 -10px; }
   .vz-cloud-bg { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 18px 30px rgba(11,47,91,.12)); }
-  .vz-words { position: absolute; inset: 92px 66px 64px 66px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; align-content: center; gap: 4px 16px; }
-  .vz-words span { font-size: calc(13px + var(--s) * 5px); font-weight: calc(400 + var(--s) * 60); color: var(--c); line-height: 1.1; white-space: nowrap; opacity: 0; transform: translateY(10px) scale(.9); }
+  .vz-words { position: absolute; inset: 110px 56px 80px 56px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; align-content: center; gap: 8px 22px; }
+  .vz-words span { font-size: calc(16px + var(--s) * 6px); font-weight: calc(400 + var(--s) * 60); color: var(--c); line-height: 1.1; white-space: nowrap; opacity: 0; transform: translateY(10px) scale(.9); }
   .vz-left.in .vz-words span { animation: vzIn .6s var(--ease) forwards, vzFloat 6s ease-in-out infinite; animation-delay: calc(var(--i) * 70ms + .2s), calc(var(--i) * -.7s); }
   @keyframes vzIn { to { opacity: 1; transform: none; } }
   @keyframes vzFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
-  .vz-stats { display: flex; flex-direction: column; gap: 12px; }
-  .vz-stats > div { display: flex; align-items: center; gap: 18px; padding: 14px 20px; border-radius: 16px; background: #f3f8fc; border: 1px solid var(--line); }
-  .vz-stats b { font-size: 40px; font-weight: 700; color: var(--navy); min-width: 104px; font-variant-numeric: tabular-nums; }
-  .vz-stats span { font-size: 18px; line-height: 1.35; color: var(--ink); }
-  .vz-stats em { font-style: normal; font-weight: 600; color: var(--alert); }
-  .vz-stats .hl b { color: var(--alert); }
-  .vz-stats .hl.s b { color: #7048e8; }
 
   .vz-wall { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 0; overflow: hidden;
     -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); }
@@ -91,7 +84,6 @@
   @keyframes vzUp { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 9px)); } }
   @keyframes vzDown { from { transform: translateY(calc(-50% - 9px)); } to { transform: translateY(0); } }
   .vz-card { position: relative; margin: 14px 0 0; padding: 24px 24px 18px; border-radius: 22px 22px 22px 6px; background: #fff; border: 1px solid var(--line); box-shadow: 0 16px 34px -24px rgba(11,47,91,.45); }
-  .vz-card::before { content: "“"; position: absolute; top: -18px; left: 16px; font-size: 64px; line-height: 1; font-family: Georgia, serif; color: var(--c); background: #fff; padding: 0 6px; height: 34px; overflow: hidden; }
   .vz-card blockquote { margin: 0; font-size: 19px; line-height: 1.45; color: var(--ink); }
   .vz-card figcaption { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line); }
   .vz-card .av { flex: none; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; font-size: 15px; font-weight: 700; color: #fff; background: linear-gradient(135deg, var(--c), color-mix(in srgb, var(--c) 55%, #0b2f5b)); }
@@ -1595,30 +1587,30 @@
   }
 
   /* =================== Voz del cliente · comentarios de las llamadas de renovación =================== */
-  // Comentarios resumidos (no textuales) de las observaciones de las llamadas de renovación.
+  // Lo que expresó cada cliente según la observación de la llamada de renovación (resumido en primera persona, sin agregar nada que no haya dicho).
   // tipo: precio · servicio · siniestro · retenido
   const VOZ_TIPO = { precio: ["Precio", "#e8590c"], servicio: ["Servicio", "#7048e8"], siniestro: ["Siniestro", "#e03131"], retenido: ["Se quedó", "#12b886"] };
   const VOZ = [
-    ["Luis Francisco Polanco Infante", "30-35-120040", "precio", "No he usado el seguro y aun así me subieron la prima. El seguro sube mientras el vehículo se devalúa."],
-    ["Ana Cecilia Cruz López", "30-35-119918", "siniestro", "Me chocaron y llevo dos meses esperando un reembolso. Así no voy a renovar."],
-    ["Marcel Castillo Salazar", "30-35-73631", "retenido", "Cuestioné el aumento por correo, me ajustaron el costo y voy a pagar en cuotas."],
-    ["Michel Ange Méndez Fabián", "30-35-119659", "servicio", "Estoy pensando cancelar por el mal servicio. Si me quedo, quiero una póliza más económica."],
-    ["Katherine Cecilia Ramos Pérez", "30-35-93448", "precio", "No he tenido siniestros y el monto está muy elevado. Pido que revisen el aumento."],
-    ["Willian Rosario Alonzo", "30-35-120722", "siniestro", "Me negaron la reparación de una mica teniendo un seguro full de alto costo. No renuevo hasta que me cubran."],
-    ["Elena Pilar Santana", "30-35-120545", "precio", "Antes de pagar quiero que mi agente me explique por qué subió, si no he tenido siniestros."],
-    ["Máximo de la Cruz", "30-35-123034", "servicio", "Renové con otra aseguradora en Bonao por la mala atención al cliente."],
-    ["Carlos Manuel de la Cruz González", "30-35-39562", "retenido", "Me quejé por el aumento, pero con el 5% adicional de descuento sí voy a pagar."],
-    ["Rafaelina Yafreisi Morel Romero", "30-35-74586", "siniestro", "Con otro vehículo tuve un siniestro: la reclamación tardó un año y no recibí la asistencia."],
-    ["Angel Javier Martínez Méndez", "30-35-73920", "precio", "El monto está muy alto. No me convencen las opciones; voy a cotizar en otra aseguradora."],
-    ["Glenyth Yamila Mejía Báez", "30-35-75009", "servicio", "Me llaman personas distintas por el mismo seguro. Prefiero esperar a mi corredor."],
-    ["Jorge Carlos Pérez Rodríguez", "30-35-93476", "siniestro", "Hice una reclamación y todavía no me entregan el vehículo. Voy a cancelar."],
-    ["Nulfa Lilian Santos Suriel", "30-35-120491", "precio", "La prima está más alta que el año pasado; voy a pedir que la evalúen."],
-    ["Argeni Rafael Parra Santos", "30-35-72954", "retenido", "Cambié de vehículo y ya vino con seguro, pero en la próxima renovación vuelvo con ustedes."],
-    ["Johanna Margarita Samboys Paredes", "30-35-119173", "servicio", "No sé si renovaré: no me siento conforme con el servicio."],
-    ["GIRH & Asociados, S.R.L.", "30-35-94302", "precio", "No renovamos por el gran aumento, aun con el descuento. Ya tenemos seguro con otra compañía."],
-    ["Acamaro Technology Solutions, S.R.L.", "30-35-120533", "siniestro", "Antes de hablar de la renovación, quiero una respuesta sobre mi reclamación en curso."],
-    ["Teófilo Mejía Jiménez", "30-35-118387", "servicio", "Pagué mi renovación, pero no recibí el beneficio 400 Sonrisas que me ofrecieron."],
-    ["Janis Altagracia Reyes Genao", "30-35-120233", "precio", "Voy a pagar, pero cotizaré otros planes: la renovación está muy elevada."],
+    ["Luis Francisco Polanco Infante", "30-35-120040", "precio", "¿Por qué el aumento? No he utilizado el seguro y no tengo de dónde sacar el monto. Voy a pasar por la oficina para pagar en cuotas."],
+    ["Ana Cecilia Cruz López", "30-35-119918", "siniestro", "Me chocaron y estoy esperando un reembolso desde hace dos meses; todavía no me han contactado. No voy a renovar."],
+    ["Marcel Castillo Salazar", "30-35-73631", "retenido", "Cuestioné por correo el aumento de mi prima. Me hicieron un ajuste en el costo y voy a pagar en cuotas."],
+    ["Michel Ange Méndez Fabián", "30-35-119659", "servicio", "Estoy pensando cancelar por el mal servicio y las atenciones recibidas. Si me quedo, quiero una póliza más económica."],
+    ["Katherine Cecilia Ramos Pérez", "30-35-93448", "precio", "Voy a enviar un correo pidiendo que revisen el aumento: no he tenido siniestros y el monto está muy elevado."],
+    ["Willian Rosario Alonzo", "30-35-120722", "siniestro", "No voy a renovar hasta que me den la cobertura de la reparación de una mica. Me la negaron teniendo un seguro full de alto costo."],
+    ["Elena Pilar Santana", "30-35-120545", "precio", "Antes de pagar voy a hablar con mi agente para que me explique por qué la renovación está tan elevada, si no he tenido siniestros."],
+    ["Máximo de la Cruz", "30-35-123034", "servicio", "Renové con otra compañía de seguros de auto en Bonao por la mala atención al cliente."],
+    ["Carlos Manuel de la Cruz González", "30-35-39562", "retenido", "Me quejo por el aumento, pero sí voy a realizar el pago."],
+    ["Rafaelina Yafreisi Morel Romero", "30-35-74586", "siniestro", "No voy a renovar: con otro vehículo tuve un siniestro, no me brindaron la asistencia requerida y la reclamación tardó un año."],
+    ["Angel Javier Martínez Méndez", "30-35-73920", "precio", "El monto está muy alto. No acepto las opciones que me ofrecen; voy a cotizar en otra aseguradora."],
+    ["Glenyth Yamila Mejía Báez", "30-35-75009", "servicio", "Renuevo con mi intermediario, pero nadie se ha puesto en contacto conmigo. No me pueden llamar diferentes personas por mi seguro; esperaré a mi corredor."],
+    ["Jorge Carlos Pérez Rodríguez", "30-35-93476", "siniestro", "Voy a cancelar: hice una solicitud por un siniestro y aún no me entregan el vehículo."],
+    ["Nulfa Lilian Santos Suriel", "30-35-120491", "precio", "La prima está más elevada que la del año anterior. Voy a enviar un correo pidiendo que la revisen."],
+    ["Argeni Rafael Parra Santos", "30-35-72954", "retenido", "Cambié de vehículo y ya me colocaron un seguro, por eso no renuevo ahora. En la próxima renovación sí lo haré."],
+    ["Johanna Margarita Samboys Paredes", "30-35-119173", "servicio", "No sé si voy a renovar porque no me siento conforme con el servicio."],
+    ["GIRH & Asociados, S.R.L.", "30-35-94302", "precio", "No vamos a renovar por el gran aumento; no aceptamos el descuento por aumento. Los precios están muy elevados y ya tenemos seguro con otra compañía."],
+    ["Acamaro Technology Solutions, S.R.L.", "30-35-120533", "siniestro", "Antes de hablar de la renovación, esperamos respuesta sobre la reclamación en curso de nuestro vehículo, que no hemos recibido."],
+    ["Teófilo Mejía Jiménez", "30-35-118387", "servicio", "La persona que me atendió no tenía el conocimiento para orientarme sobre el beneficio 400 Sonrisas, y el trato fue cortante y con poca empatía."],
+    ["Janis Altagracia Reyes Genao", "30-35-120233", "precio", "Voy a pagar, pero pienso cotizar otros planes porque el precio de la renovación está muy elevado."],
   ];
   // Nube de temas: [texto, peso (1–5), color]
   const VOZ_NUBE = [
@@ -1655,13 +1647,13 @@
         <div class="vz-grid">
           <div class="vz-left anim" data-step="0">
             <div class="vz-cloud">
-              <svg class="vz-cloud-bg" viewBox="0 0 520 330" aria-hidden="true"><path d="M110 300 C40 300 10 250 30 205 C0 170 25 110 85 112 C90 55 160 25 215 55 C250 10 340 15 365 72 C430 55 495 100 480 165 C520 195 505 265 445 280 C430 300 400 305 380 300 Z" fill="url(#vzg)"/>
-                <defs><linearGradient id="vzg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#d9f1fb"/><stop offset="1" stop-color="#e3eafa"/></linearGradient></defs></svg>
+              <svg class="vz-cloud-bg" viewBox="0 0 540 620" aria-hidden="true">
+                <defs><linearGradient id="vzg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="540" y2="620"><stop offset="0" stop-color="#d9f1fb"/><stop offset="1" stop-color="#e3eafa"/></linearGradient></defs>
+                <g fill="url(#vzg)"><rect x="40" y="150" width="460" height="390" rx="150"/>
+                  <circle cx="160" cy="175" r="105"/><circle cx="290" cy="130" r="125"/><circle cx="420" cy="190" r="100"/>
+                  <circle cx="80" cy="320" r="80"/><circle cx="465" cy="330" r="75"/>
+                  <circle cx="130" cy="490" r="95"/><circle cx="275" cy="515" r="100"/><circle cx="415" cy="485" r="95"/></g></svg>
               <div class="vz-words">${cloud}</div>
-            </div>
-            <div class="vz-stats">
-              <div class="hl"><b>17</b><span>reclaman por el aumento del precio, varios <em>sin haber tenido siniestros</em></span></div>
-              <div class="hl s"><b>18</b><span>mencionan mal servicio o reclamaciones sin resolver</span></div>
             </div>
           </div>
           <div class="vz-wall anim" data-step="1">${cols.map(col).join("")}</div>
