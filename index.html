@@ -1598,7 +1598,26 @@
     ["Ene 2026", 887, [25, 60, 67, 69, 69], 0, -8, 34, 2, 238, [1.9, 7.8, 26.8]],
   ];
   const HC_TOT = ["Total", 12431, [20, 46, 50, 52, 52], 0, undefined, 436, 3535, 2020, [2.8, 7.3, 16.2]];
-  function hcSlide() {
+  // Mismo histórico sin filtros: todas las renovaciones de Automóvil
+  const HC_ALL = [
+    ["Dic 2026", 4068, [0, 0, 0, 0, 0], 4, null, 59, 3998, 2, [0.0, 0.0, 0.0]],
+    ["Nov 2026", 3396, [4, 4, 4, 4, 4], 4, null, 28, 3215, 14, [0.4, 0.4, 0.4]],
+    ["Oct 2026", 3620, [20, 41, 41, 41, 41], 3, null, 163, 1749, 224, [2.9, 6.2, 6.2]],
+    ["Sep 2026", 3334, [23, 55, 60, 60, 60], 2, -7, 117, 817, 392, [4.1, 10.0, 11.8]],
+    ["Ago 2026", 3189, [23, 58, 66, 68, 68], 1, -7, 73, 472, 485, [3.8, 9.6, 15.2]],
+    ["Jul 2026", 3328, [25, 58, 65, 68, 68], 0, -5, 55, 313, 699, [3.5, 8.8, 21.0]],
+    ["Jun 2026", 3116, [24, 60, 67, 70, 71], 0, -5, 53, 149, 700, [3.7, 8.8, 22.5]],
+    ["May 2026", 2862, [24, 60, 68, 70, 71], 0, -4, 47, 71, 721, [3.3, 8.0, 25.2]],
+    ["Abr 2026", 2476, [26, 61, 69, 72, 73], 0, 0, 43, 43, 591, [3.6, 7.1, 23.9]],
+    ["Mar 2026", 2732, [25, 61, 70, 73, 74], 0, -1, 40, 29, 644, [3.2, 8.6, 23.6]],
+    ["Feb 2026", 2402, [27, 63, 71, 74, 75], 0, 2, 30, 6, 557, [3.2, 7.9, 23.2]],
+    ["Ene 2026", 2923, [22, 56, 73, 75, 76], 0, -2, 46, 7, 634, [3.0, 7.2, 21.7]],
+  ];
+  const HC_ALL_TOT = ["Total", 37446, [19, 46, 52, 53, 54], 0, undefined, 754, 10869, 5663, [2.8, 6.6, 15.1]];
+  function hcSlide(cfg = {}) {
+    const { data = HC, total = HC_TOT, label = "Histórico de pago de la primera cuota",
+      brand = "· Histórico", sub = "Pólizas renovadas · Daños Propios · individual · sin siniestros · % que pagó su primera cuota al día 0, 30, 60 y 90",
+      eyebrow = "Daños Propios · Enero – Diciembre 2026" } = cfg;
     const A = (st, cls, inner) => `<td class="${cls} anim fade" data-step="${st}" data-d="0">${inner}</td>`;
     const blue = v => `background:rgba(0,103,177,${(0.06 + v / 80 * 0.32).toFixed(2)})`;
     const row = (r, tt) => {
@@ -1611,8 +1630,7 @@
     };
     const G = (st, c, span, lb) => `<th colspan="${span}" class="anim fade" data-step="${st}" data-d="0" style="--c:${c}">${lb}</th>`;
     const H = (st, lb) => `<th class="anim fade" data-step="${st}" data-d="0">${lb}</th>`;
-    return `<section class="slide rn nobr" aria-label="Histórico de pago de la primera cuota">${rnHead("Pago de la 1ra cuota <span class=\"brand\">· Histórico</span>",
-        "Pólizas renovadas · Daños Propios · individual · sin siniestros · % que pagó su primera cuota al día 0, 30, 60 y 90", "Histórico")}
+    return `<section class="slide rn nobr" aria-label="${label}">${rnHead(`Pago de la 1ra cuota <span class="brand">${brand}</span>`, sub, "Histórico")}
         <table class="hc anim">
           <thead>
             <tr class="g"><th class="blank" colspan="2"></th><th colspan="5" style="--c:var(--blue)">Pago 1ra cuota · % de renovadas con pago</th>
@@ -1620,11 +1638,11 @@
             <tr><th class="l">Mes de renovación</th><th>Renovadas</th><th style="text-align:center">Día 0</th><th style="text-align:center">Día 30</th><th style="text-align:center">Día 60</th><th style="text-align:center">Día 90</th><th style="text-align:center">Hoy</th>
               ${H(1, "vs mismo mes<br>año anterior")}${H(2, "Pago parcial<br>(activas)")}${H(2, "Sin pago<br>(hoy)")}${H(3, "Total")}${H(3, "% día 0")}${H(3, "% día 30")}${H(3, "% hoy")}</tr>
           </thead>
-          <tbody>${HC.map(r => row(r)).join("")}${row(HC_TOT, true)}</tbody>
+          <tbody>${data.map(r => row(r)).join("")}${row(total, true)}</tbody>
         </table>
         <div class="hc-leg anim fade"><span><i style="background:rgba(0,103,177,.3)"></i>% de pólizas renovadas con la 1ra cuota pagada</span><span><i style="background:#f3f6f9;border:1px solid #dde3ea"></i>Período aún no cumplido</span></div>
       </div>
-    </section>`.replace("Daños Propios · Septiembre y Octubre 2026", "Daños Propios · Enero – Diciembre 2026");
+    </section>`.replace("Daños Propios · Septiembre y Octubre 2026", eyebrow);
   }
 
   /* =================== Voz del cliente · comentarios de las llamadas de renovación =================== */
@@ -1751,7 +1769,7 @@
       </div>
     </section>`;
   }
-  document.getElementById("deck").insertAdjacentHTML("beforeend", ytdSlide() + METRICS.map(metricSlide).join("") + rnResumen() + fnSlide("Septiembre") + rnMesSlide("Septiembre") + fnSlide("Octubre") + rnMesSlide("Octubre") + ibSlide() + hcSlide() + vozSlide());
+  document.getElementById("deck").insertAdjacentHTML("beforeend", ytdSlide() + METRICS.map(metricSlide).join("") + rnResumen() + fnSlide("Septiembre") + rnMesSlide("Septiembre") + fnSlide("Octubre") + rnMesSlide("Octubre") + ibSlide() + hcSlide({ data: HC_ALL, total: HC_ALL_TOT, label: "Histórico de pago de la primera cuota · Automóvil", brand: "· Automóvil", sub: "Todas las pólizas de Automóvil renovadas · % que pagó su primera cuota al día 0, 30, 60 y 90", eyebrow: "Automóvil · Enero – Diciembre 2026" }) + hcSlide() + vozSlide());
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
   fnLayout();
   if (document.fonts) document.fonts.ready.then(fnLayout);
@@ -1778,6 +1796,7 @@
     "Renovaciones · Octubre · Funnel",
     "Renovaciones · Octubre",
     "Voz del cliente · Renovaciones",
+    "Histórico de pago de la primera cuota · Automóvil",
     "Histórico de pago de la primera cuota",
     "Intermediarios con bajo porcentaje de pago",
     "Teléfonos de contratantes · Octubre 2026",
