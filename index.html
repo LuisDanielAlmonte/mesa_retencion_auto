@@ -67,12 +67,20 @@
   .vz-left { display: flex; flex-direction: column; justify-content: center; gap: 22px; min-height: 0; }
   .vz-cloud { position: relative; height: 620px; margin: 0 -10px; }
   .vz-cloud-bg { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 18px 30px rgba(11,47,91,.12)); }
-  .vz-words { position: absolute; inset: 110px 56px 80px 56px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; align-content: center; gap: 8px 22px; }
-  .vz-words span { font-size: calc(16px + var(--s) * 6px); font-weight: calc(400 + var(--s) * 60); color: var(--c); line-height: 1.1; white-space: nowrap; opacity: 0; transform: translateY(10px) scale(.9); }
-  .vz-left.in .vz-words span { animation: vzIn .6s var(--ease) forwards, vzFloat 6s ease-in-out infinite; animation-delay: calc(var(--i) * 70ms + .2s), calc(var(--i) * -.7s); }
-  @keyframes vzIn { to { opacity: 1; transform: none; } }
-  @keyframes vzFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
 
+  .vz-sumwrap { position: absolute; inset: 130px 72px 96px 72px; display: flex; align-items: center; }
+  .vz-sum { width: 100%; }
+  .vz-sum .k { font-size: 15px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); }
+  .vz-sum .big { display: flex; align-items: center; gap: 14px; margin: 8px 0 18px; }
+  .vz-sum .big b { font-size: 64px; font-weight: 700; line-height: 1; color: var(--navy); }
+  .vz-sum .big span { font-size: 18px; line-height: 1.3; color: var(--ink); }
+  .vz-sum .row { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 4px 12px; margin-top: 14px; }
+  .vz-sum .row .t { font-size: 19px; font-weight: 600; color: var(--ink); }
+  .vz-sum .row b { font-size: 26px; font-weight: 700; color: var(--c); font-variant-numeric: tabular-nums; }
+  .vz-sum .row i { grid-column: 1 / -1; display: block; height: 9px; border-radius: 5px; background: rgba(255,255,255,.75); overflow: hidden; }
+  .vz-sum .row em { display: block; height: 100%; width: 0; border-radius: 5px; background: var(--c); transition: width 1s var(--ease); transition-delay: calc(var(--i) * 120ms + .3s); }
+  .vz-left.in .vz-sum .row em { width: var(--w); }
+  .vz-sum small { display: block; margin-top: 16px; font-size: 14px; color: var(--muted); }
   .vz-wall { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 0; overflow: hidden;
     -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); }
   .vz-col { min-height: 0; overflow: hidden; }
@@ -1610,13 +1618,14 @@
     ["Acamaro Technology Solutions, S.R.L.", "30-35-120533", "siniestro", "Antes de hablar de la renovación, esperamos respuesta sobre la reclamación en curso de nuestro vehículo, que no hemos recibido."],
     ["Janis Altagracia Reyes Genao", "30-35-120233", "precio", "Voy a pagar, pero pienso cotizar otros planes porque el precio de la renovación está muy elevado."],
   ];
-  // Nube de temas: [texto, peso (1–5), color]
-  const VOZ_NUBE = [
-    ["Aumento de precio", 5, "#e8590c"], ["Sin siniestros", 3, "#0067b1"], ["Mal servicio", 4, "#7048e8"],
-    ["Reclamaciones", 4, "#e03131"], ["Revisión de prima", 2, "#e8590c"], ["Otra aseguradora", 3, "#0b2f5b"],
-    ["Bajar de plan", 3, "#00b4e6"], ["Reembolso", 2, "#e03131"], ["Corredor", 2, "#6b7c8f"],
-    ["Descuento 5%", 3, "#12b886"], ["Cuotas", 2, "#12b886"], ["Mejor oferta", 2, "#0b2f5b"],
-    ["Respuesta", 2, "#7048e8"], ["Cotizar", 2, "#00b4e6"],
+  // Resumen: de los 42 clientes que expresaron una inquietud en la llamada de renovación (un cliente puede mencionar más de un tema)
+  const VOZ_BASE = 42;
+  const VOZ_RES = [
+    ["Aumento de precio", 15, "#e8590c"],
+    ["Quiere cambiar o bajar de plan", 9, "#00b4e6"],
+    ["Siniestros y reclamaciones", 8, "#e03131"],
+    ["Se va a otra aseguradora", 8, "#0b2f5b"],
+    ["Mal servicio", 6, "#7048e8"],
   ];
   function vozSlide() {
     const ini = n => n.replace(/,.*$/, "").split(/\s+/).filter(w => /^[A-ZÁÉÍÓÚÑ]/i.test(w) && w.length > 2).slice(0, 2).map(w => w[0]).join("").toUpperCase();
@@ -1629,7 +1638,10 @@
     };
     const cols = [0, 1, 2].map(c => VOZ.filter((_, i) => i % 3 === c));
     const col = (list, k) => `<div class="vz-col c${k}"><div class="vz-track">${list.map(card).join("")}${list.map(card).join("")}</div></div>`;
-    const cloud = VOZ_NUBE.map(([w, p, c], i) => `<span style="--s:${p};--c:${c};--i:${i}">${w}</span>`).join("");
+    const cloud = `<div class="vz-sum"><span class="k">¿Qué nos dicen?</span>
+        <div class="big"><b>${VOZ_BASE}</b><span>clientes expresaron una inquietud sobre su renovación</span></div>
+        ${VOZ_RES.map(([t, n, c], i) => { const p = Math.round(n / VOZ_BASE * 100); return `<div class="row" style="--c:${c};--w:${p}%;--i:${i}"><span class="t">${t}</span><b>${p}%</b><i><em></em></i></div>`; }).join("")}
+        <small>Un cliente puede mencionar más de un tema.</small></div>`;
     return `<section class="slide vz" aria-label="Voz del cliente · Renovaciones">
       <div class="deco tl1"></div><div class="deco tl2"></div>
       <div class="deco br1"></div><div class="deco br2"></div>
@@ -1651,7 +1663,7 @@
                   <circle cx="160" cy="175" r="105"/><circle cx="290" cy="130" r="125"/><circle cx="420" cy="190" r="100"/>
                   <circle cx="80" cy="320" r="80"/><circle cx="465" cy="330" r="75"/>
                   <circle cx="130" cy="490" r="95"/><circle cx="275" cy="515" r="100"/><circle cx="415" cy="485" r="95"/></g></svg>
-              <div class="vz-words">${cloud}</div>
+              <div class="vz-sumwrap">${cloud}</div>
             </div>
           </div>
           <div class="vz-wall anim" data-step="1">${cols.map(col).join("")}</div>
