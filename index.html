@@ -80,6 +80,7 @@
   .vz-sum .hd { display: flex; flex-direction: column; align-items: center; text-align: center; }
   .vz-sum .k { font-size: 14px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--blue); }
   .vz-sum .hd b { font-size: 76px; font-weight: 700; line-height: 1; margin-top: 6px; background: linear-gradient(135deg, var(--cyan), var(--navy)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .vz-sum .ttl { margin-top: 10px; font-size: 30px; font-weight: 700; line-height: 1.2; color: var(--navy); }
   .vz-sum .cap { margin-top: 6px; font-size: 18px; line-height: 1.35; color: var(--ink); }
   .vz-ring { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
   .vz-ring svg { filter: drop-shadow(0 10px 16px rgba(11,47,91,.12)); }
@@ -1678,7 +1679,7 @@
           <span>${t}</span></div>`;
     };
     const cloud = `<div class="vz-sum">
-        <div class="hd"><span class="k">¿Qué nos dicen?</span><b>${VOZ_BASE}</b><span class="cap">clientes expresaron una inquietud<br>sobre su renovación</span></div>
+        <div class="hd"><span class="k">¿Qué nos dicen?</span><span class="ttl">Inquietudes de los clientes<br>sobre su renovación</span></div>
         ${ring(VOZ_RES[0], 0, true)}
         <div class="vz-rings">${VOZ_RES.slice(1).map((r, i) => ring(r, i + 1, false)).join("")}</div>
         <small>Un cliente puede mencionar más de un tema</small></div>`;
