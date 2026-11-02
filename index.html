@@ -83,9 +83,9 @@
   .vz-wall { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 0; overflow: hidden;
     -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); }
   .vz-col { min-height: 0; overflow: hidden; }
-  .vz-track { display: flex; flex-direction: column; gap: 18px; padding: 18px 4px; animation: vzUp 60s linear infinite; }
-  .vz-col.c1 .vz-track { animation-name: vzDown; animation-duration: 70s; }
-  .vz-col.c2 .vz-track { animation-duration: 54s; }
+  .vz-track { display: flex; flex-direction: column; gap: 18px; padding: 18px 4px; animation: vzUp 95s linear infinite; }
+  .vz-col.c1 .vz-track { animation-name: vzDown; animation-duration: 110s; }
+  .vz-col.c2 .vz-track { animation-duration: 85s; }
   .vz-wall:hover .vz-track { animation-play-state: paused; }
   .slide.vz:not(.active) .vz-track, body.exporting .vz-track { animation: none; }
   @keyframes vzUp { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 9px)); } }
@@ -1666,7 +1666,6 @@
               <div class="vz-words">${cloud}</div>
             </div>
             <div class="vz-stats">
-              <div><b>1,136</b><span>pólizas con comentarios de la llamada de renovación</span></div>
               <div class="hl"><b>17</b><span>reclaman por el aumento del precio, varios <em>sin haber tenido siniestros</em></span></div>
               <div class="hl s"><b>18</b><span>mencionan mal servicio o reclamaciones sin resolver</span></div>
             </div>
