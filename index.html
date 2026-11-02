@@ -65,14 +65,32 @@
   /* ---------- Voz del cliente ---------- */
   .vz-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 560px 1fr; gap: 36px; margin: 26px 0 24px; }
   .vz-left { display: flex; flex-direction: column; justify-content: center; gap: 22px; min-height: 0; }
-  .vz-cloud { position: relative; height: 620px; margin: 0 -10px; }
-  .vz-cloud-bg { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 18px 30px rgba(11,47,91,.12)); }
-  .vz-words { position: absolute; inset: 110px 56px 80px 56px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; align-content: center; gap: 8px 22px; }
-  .vz-words span { font-size: calc(16px + var(--s) * 6px); font-weight: calc(400 + var(--s) * 60); color: var(--c); line-height: 1.1; white-space: nowrap; opacity: 0; transform: translateY(10px) scale(.9); }
-  .vz-left.in .vz-words span { animation: vzIn .6s var(--ease) forwards, vzFloat 6s ease-in-out infinite; animation-delay: calc(var(--i) * 70ms + .2s), calc(var(--i) * -.7s); }
-  @keyframes vzIn { to { opacity: 1; transform: none; } }
-  @keyframes vzFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
 
+  .vz-card-sum { position: relative; border-radius: 36px; padding: 40px 34px 30px; background: linear-gradient(165deg, #d8effb 0%, #e4edfa 55%, #eef2fb 100%); border: 1px solid #d3e4f3; box-shadow: 0 30px 60px -40px rgba(11,47,91,.45); overflow: hidden; }
+  .vz-cl { position: absolute; pointer-events: none; }
+  .vz-cl svg { display: block; width: 100%; height: auto; fill: #fff; filter: drop-shadow(0 8px 14px rgba(11,47,91,.10)); }
+  .vz-cl.c1 { width: 170px; top: -26px; right: -30px; opacity: .9; }
+  .vz-cl.c2 { width: 120px; top: 120px; left: -44px; opacity: .7; }
+  .vz-cl.c3 { width: 200px; bottom: -48px; right: 40px; opacity: .8; }
+  .vz-left.in .vz-cl { animation: vzDrift 9s ease-in-out infinite; }
+  .vz-left.in .vz-cl.c2 { animation-duration: 11s; animation-delay: -3s; }
+  .vz-left.in .vz-cl.c3 { animation-duration: 13s; animation-delay: -6s; }
+  @keyframes vzDrift { 0%, 100% { translate: 0 0; } 50% { translate: 14px -6px; } }
+  .vz-sum { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+  .vz-sum .hd { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .vz-sum .k { font-size: 14px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--blue); }
+  .vz-sum .hd b { font-size: 76px; font-weight: 700; line-height: 1; margin-top: 6px; background: linear-gradient(135deg, var(--cyan), var(--navy)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .vz-sum .cap { margin-top: 6px; font-size: 18px; line-height: 1.35; color: var(--ink); }
+  .vz-ring { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+  .vz-ring svg { filter: drop-shadow(0 10px 16px rgba(11,47,91,.12)); }
+  .vz-ring span { font-size: 15.5px; font-weight: 600; line-height: 1.25; color: var(--ink); }
+  .vz-ring.big { flex-direction: row; gap: 22px; margin: 26px 0 22px; padding: 14px 26px 14px 14px; border-radius: 999px; background: rgba(255,255,255,.75); box-shadow: 0 12px 30px -22px rgba(11,47,91,.5); }
+  .vz-ring.big span { font-size: 24px; font-weight: 700; line-height: 1.15; color: var(--c); text-align: left; }
+  .vz-ring .arc { stroke-dashoffset: var(--L); transition: stroke-dashoffset 1.2s var(--ease); transition-delay: calc(var(--i) * 140ms + .3s); }
+  .vz-left.in .vz-ring .arc, body.exporting .vz-ring .arc { stroke-dashoffset: var(--off); }
+  .vz-rings { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 20px 18px; }
+  .vz-rings .vz-ring { padding: 16px 10px 14px; border-radius: 22px; background: rgba(255,255,255,.7); }
+  .vz-sum small { display: block; margin-top: 18px; font-size: 13.5px; color: var(--muted); }
   .vz-wall { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 0; overflow: hidden;
     -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); }
   .vz-col { min-height: 0; overflow: hidden; }
@@ -305,6 +323,14 @@
   .note .rank span { font-size: 16px; font-weight: 600; line-height: 1.2; }
   .note .rank b { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
   .note .rank em { font-style: normal; font-size: 16px; font-weight: 700; color: var(--orange); text-align: right; }
+  .note .causas { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 8px; }
+  .note .cbar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; gap: 3px; margin-bottom: 4px; }
+  .note .cbar i { width: var(--w); background: var(--c); }
+  .note .cr { display: grid; grid-template-columns: 12px 1fr auto 52px; gap: 10px; align-items: center; padding: 9px 14px; border-radius: 12px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.16); }
+  .note .cr i { width: 12px; height: 12px; border-radius: 50%; background: var(--c); }
+  .note .cr span { font-size: 16px; font-weight: 600; line-height: 1.2; }
+  .note .cr b { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .note .cr em { font-style: normal; font-size: 17px; font-weight: 700; color: var(--c); text-align: right; }
   .note .split { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .note .split div { padding: 8px 14px; border-radius: 12px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); display: grid; grid-template-columns: auto auto; justify-content: start; column-gap: 8px; align-items: baseline; }
   .note .split div span { grid-column: 1 / -1; }
@@ -813,6 +839,14 @@
     p.fitChurn = linreg(p.churn);      // ene–oct
   });
 
+  // Causas de cancelación: cantidad, % del total y barra apilada (los % suman 100)
+  const CAUSA_COL = ["#ff6b6b", "#ffa94d", "#74c0fc"];
+  const causas = list => {
+    const T = list.reduce((a, [, c]) => a + c, 0);
+    const P = list.map(([, c]) => Math.round(c / T * 100)); P[P.length - 1] = 100 - P.slice(0, -1).reduce((a, b) => a + b, 0);
+    return `<div class="causas"><div class="cbar">${list.map((_, i) => `<i style="--w:${P[i]}%;--c:${CAUSA_COL[i]}"></i>`).join("")}</div>
+      ${list.map(([n, c], i) => `<div class="cr" style="--c:${CAUSA_COL[i]}"><i></i><span>${n}</span><b>${nf(c)}</b><em>${P[i]}%</em></div>`).join("")}</div>`;
+  };
   /* =================== Datos · Métricas de gestión =================== */
   const PERIODS = ["2024","2025","Q1 2026","Q2 2026","Q3 2026"];   // por defecto; un slide puede sumar meses con `months`
   const SERIES_STYLE = [                       // [0] = Overall
@@ -836,8 +870,9 @@
         Individual: { pct: nums("2.65 2.12 1.89 2.06 2.48 2.43"), an: strs("341.0 316.0 88.6 103.1 129.9 42.8"), ca: strs("1,067.5 1,248.9 1,563.2 1,673.1 1,744.2 1,760.7") },
         Flotilla:   { pct: nums("0.85 1.18 0.63 0.44 0.65 0.42"), an: strs("45.9 64.9 10.1 7.3 11.3 2.6"),         ca: strs("448.6 450.8 524.2 559.9 587.3 603.3") },
       },
-      note: `<p class="sm">El churn de Auto se vio impactado por la cancelación de <b>139 certificados</b> de las flotillas de <b>Banco Caribe</b> (88) y <b>Motor Crédito</b> (51), equivalentes al <b>7%</b> de las cancelaciones del ramo.</p>
-             <p class="sm">Además, el churn de Agentes aumentó un <b>23%</b>, liderado por <b>Josefina Abreu Suriel</b> (34 certificados; churn de 7.61%) y <b>Angelita Ondina Benítez</b> (26 certificados; churn de 26.26%), entre otros.</p>` },
+      note: `<p class="sm">En octubre se cancelaron <b>2,003 certificados</b>. Las principales causas:</p>
+             ${causas([["Falta de pago", 811], ["Exclusión", 512], ["A solicitud del asegurado", 680]])}
+             <p class="sm">Se concentran en <b>Seguro de Ley</b> (52%), <b>Oficina Principal</b> (41%) y pólizas con vigencia de <b>julio a octubre 2026</b> (56%).</p>` },
     { brand: "Mi Auto Flotilla", objective: 3.07, months: ["Octubre 2026"],
       series: ["Flotilla Overall", "100% Humano + Líder", "Minoritario"],
       cust: {
@@ -873,7 +908,10 @@
         Overall:         { pct: nums("2.12 1.88 1.57 1.65 2.02 1.92"), an: strs("386.8 381.0 98.7 110.5 141.5 45.4"), ca: strs("1,516.1 1,699.8 2,087.4 2,233.1 2,331.6 2,364.1") },
         Ley:             { pct: nums("2.92 2.31 1.89 1.59 2.19 2.27"), an: strs("72.9 62.3 14.9 13.1 18.7 6.6"), ca: strs("208.4 225.3 262.3 273.7 284.8 289.0") },
         "Daños propios": { pct: nums("1.99 1.82 1.53 1.66 2.00 1.87"), an: strs("313.9 318.7 83.9 97.4 122.7 38.8"), ca: strs("1,307.7 1,474.5 1,825.2 1,959.4 2,046.8 2,075.0") },
-      } },
+      },
+      note: `<p class="sm">El churn de <b>Ley</b> subió a <b>2.84%</b> en octubre (Q3: 2.64%), con <b>1,051 certificados</b> cancelados. Las principales causas:</p>
+             ${causas([["Falta de pago", 488], ["Exclusión", 207], ["A solicitud del asegurado", 356]])}
+             <p class="sm">Se concentran en <b>Oficina Principal</b> (38%) y pólizas con vigencia de <b>julio a octubre 2026</b> (59%).</p>` },
     { brand: "Mi Auto Ley", objective: 2.54, months: ["Octubre 2026"],
       series: ["Overall", "Individual", "Flotilla"],
       cust: {
@@ -1610,13 +1648,14 @@
     ["Acamaro Technology Solutions, S.R.L.", "30-35-120533", "siniestro", "Antes de hablar de la renovación, esperamos respuesta sobre la reclamación en curso de nuestro vehículo, que no hemos recibido."],
     ["Janis Altagracia Reyes Genao", "30-35-120233", "precio", "Voy a pagar, pero pienso cotizar otros planes porque el precio de la renovación está muy elevado."],
   ];
-  // Nube de temas: [texto, peso (1–5), color]
-  const VOZ_NUBE = [
-    ["Aumento de precio", 5, "#e8590c"], ["Sin siniestros", 3, "#0067b1"], ["Mal servicio", 4, "#7048e8"],
-    ["Reclamaciones", 4, "#e03131"], ["Revisión de prima", 2, "#e8590c"], ["Otra aseguradora", 3, "#0b2f5b"],
-    ["Bajar de plan", 3, "#00b4e6"], ["Reembolso", 2, "#e03131"], ["Corredor", 2, "#6b7c8f"],
-    ["Descuento 5%", 3, "#12b886"], ["Cuotas", 2, "#12b886"], ["Mejor oferta", 2, "#0b2f5b"],
-    ["Respuesta", 2, "#7048e8"], ["Cotizar", 2, "#00b4e6"],
+  // Resumen: de los 42 clientes que expresaron una inquietud en la llamada de renovación (un cliente puede mencionar más de un tema)
+  const VOZ_BASE = 42;
+  const VOZ_RES = [
+    ["Aumento de precio", 15, "#e8590c"],
+    ["Quiere cambiar o bajar de plan", 9, "#00b4e6"],
+    ["Siniestros y reclamaciones", 8, "#e03131"],
+    ["Se va a otra aseguradora", 8, "#0b2f5b"],
+    ["Mal servicio", 6, "#7048e8"],
   ];
   function vozSlide() {
     const ini = n => n.replace(/,.*$/, "").split(/\s+/).filter(w => /^[A-ZÁÉÍÓÚÑ]/i.test(w) && w.length > 2).slice(0, 2).map(w => w[0]).join("").toUpperCase();
@@ -1629,7 +1668,19 @@
     };
     const cols = [0, 1, 2].map(c => VOZ.filter((_, i) => i % 3 === c));
     const col = (list, k) => `<div class="vz-col c${k}"><div class="vz-track">${list.map(card).join("")}${list.map(card).join("")}</div></div>`;
-    const cloud = VOZ_NUBE.map(([w, p, c], i) => `<span style="--s:${p};--c:${c};--i:${i}">${w}</span>`).join("");
+    const ring = ([t, n, c], i, big) => {
+      const p = Math.round(n / VOZ_BASE * 100), r = big ? 58 : 40, sw = big ? 13 : 10, L = 2 * Math.PI * r, sz = (r + sw) * 2;
+      return `<div class="vz-ring${big ? " big" : ""}" style="--c:${c};--i:${i}">
+          <svg viewBox="0 0 ${sz} ${sz}" width="${sz}" height="${sz}"><circle cx="${sz / 2}" cy="${sz / 2}" r="${r}" fill="#fff" stroke="#e9eff5" stroke-width="${sw}"/>
+            <circle class="arc" cx="${sz / 2}" cy="${sz / 2}" r="${r}" fill="none" stroke="${c}" stroke-width="${sw}" stroke-linecap="round" stroke-dasharray="${L}" style="--off:${L * (1 - p / 100)};--L:${L}" transform="rotate(-90 ${sz / 2} ${sz / 2})"/>
+            <text x="50%" y="50%" dy=".36em" text-anchor="middle" font-size="${big ? 32 : 22}" font-weight="700" fill="${c}">${p}%</text></svg>
+          <span>${t}</span></div>`;
+    };
+    const cloud = `<div class="vz-sum">
+        <div class="hd"><span class="k">¿Qué nos dicen?</span><b>${VOZ_BASE}</b><span class="cap">clientes expresaron una inquietud<br>sobre su renovación</span></div>
+        ${ring(VOZ_RES[0], 0, true)}
+        <div class="vz-rings">${VOZ_RES.slice(1).map((r, i) => ring(r, i + 1, false)).join("")}</div>
+        <small>Un cliente puede mencionar más de un tema</small></div>`;
     return `<section class="slide vz" aria-label="Voz del cliente · Renovaciones">
       <div class="deco tl1"></div><div class="deco tl2"></div>
       <div class="deco br1"></div><div class="deco br2"></div>
@@ -1644,14 +1695,9 @@
         </div>
         <div class="vz-grid">
           <div class="vz-left anim" data-step="0">
-            <div class="vz-cloud">
-              <svg class="vz-cloud-bg" viewBox="0 0 540 620" aria-hidden="true">
-                <defs><linearGradient id="vzg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="540" y2="620"><stop offset="0" stop-color="#d9f1fb"/><stop offset="1" stop-color="#e3eafa"/></linearGradient></defs>
-                <g fill="url(#vzg)"><rect x="40" y="150" width="460" height="390" rx="150"/>
-                  <circle cx="160" cy="175" r="105"/><circle cx="290" cy="130" r="125"/><circle cx="420" cy="190" r="100"/>
-                  <circle cx="80" cy="320" r="80"/><circle cx="465" cy="330" r="75"/>
-                  <circle cx="130" cy="490" r="95"/><circle cx="275" cy="515" r="100"/><circle cx="415" cy="485" r="95"/></g></svg>
-              <div class="vz-words">${cloud}</div>
+            <div class="vz-card-sum">
+              <span class="vz-cl c1"><svg viewBox="0 0 200 110" aria-hidden="true"><path d="M48 104 C20 104 6 86 12 66 C4 48 20 30 42 34 C46 12 72 2 94 14 C108 0 140 2 150 26 C176 22 196 42 188 66 C200 84 186 104 162 104 Z"/></svg></span><span class="vz-cl c2"><svg viewBox="0 0 200 110" aria-hidden="true"><path d="M48 104 C20 104 6 86 12 66 C4 48 20 30 42 34 C46 12 72 2 94 14 C108 0 140 2 150 26 C176 22 196 42 188 66 C200 84 186 104 162 104 Z"/></svg></span><span class="vz-cl c3"><svg viewBox="0 0 200 110" aria-hidden="true"><path d="M48 104 C20 104 6 86 12 66 C4 48 20 30 42 34 C46 12 72 2 94 14 C108 0 140 2 150 26 C176 22 196 42 188 66 C200 84 186 104 162 104 Z"/></svg></span>
+              ${cloud}
             </div>
           </div>
           <div class="vz-wall anim" data-step="1">${cols.map(col).join("")}</div>
