@@ -65,20 +65,13 @@
   /* ---------- Voz del cliente ---------- */
   .vz-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 560px 1fr; gap: 36px; margin: 26px 0 24px; }
   .vz-left { display: flex; flex-direction: column; justify-content: center; gap: 22px; min-height: 0; }
-  .vz-cloud { position: relative; height: 440px; }
+  .vz-cloud { position: relative; height: 620px; margin: 0 -10px; }
   .vz-cloud-bg { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 18px 30px rgba(11,47,91,.12)); }
-  .vz-words { position: absolute; inset: 92px 66px 64px 66px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; align-content: center; gap: 4px 16px; }
-  .vz-words span { font-size: calc(13px + var(--s) * 5px); font-weight: calc(400 + var(--s) * 60); color: var(--c); line-height: 1.1; white-space: nowrap; opacity: 0; transform: translateY(10px) scale(.9); }
+  .vz-words { position: absolute; inset: 120px 70px 90px 70px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; align-content: center; gap: 8px 22px; }
+  .vz-words span { font-size: calc(16px + var(--s) * 6px); font-weight: calc(400 + var(--s) * 60); color: var(--c); line-height: 1.1; white-space: nowrap; opacity: 0; transform: translateY(10px) scale(.9); }
   .vz-left.in .vz-words span { animation: vzIn .6s var(--ease) forwards, vzFloat 6s ease-in-out infinite; animation-delay: calc(var(--i) * 70ms + .2s), calc(var(--i) * -.7s); }
   @keyframes vzIn { to { opacity: 1; transform: none; } }
   @keyframes vzFloat { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
-  .vz-stats { display: flex; flex-direction: column; gap: 12px; }
-  .vz-stats > div { display: flex; align-items: center; gap: 18px; padding: 14px 20px; border-radius: 16px; background: #f3f8fc; border: 1px solid var(--line); }
-  .vz-stats b { font-size: 40px; font-weight: 700; color: var(--navy); min-width: 104px; font-variant-numeric: tabular-nums; }
-  .vz-stats span { font-size: 18px; line-height: 1.35; color: var(--ink); }
-  .vz-stats em { font-style: normal; font-weight: 600; color: var(--alert); }
-  .vz-stats .hl b { color: var(--alert); }
-  .vz-stats .hl.s b { color: #7048e8; }
 
   .vz-wall { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 0; overflow: hidden;
     -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); }
@@ -1654,13 +1647,9 @@
         <div class="vz-grid">
           <div class="vz-left anim" data-step="0">
             <div class="vz-cloud">
-              <svg class="vz-cloud-bg" viewBox="0 0 520 330" aria-hidden="true"><path d="M110 300 C40 300 10 250 30 205 C0 170 25 110 85 112 C90 55 160 25 215 55 C250 10 340 15 365 72 C430 55 495 100 480 165 C520 195 505 265 445 280 C430 300 400 305 380 300 Z" fill="url(#vzg)"/>
+              <svg class="vz-cloud-bg" viewBox="0 0 520 330" preserveAspectRatio="none" aria-hidden="true"><path d="M110 300 C40 300 10 250 30 205 C0 170 25 110 85 112 C90 55 160 25 215 55 C250 10 340 15 365 72 C430 55 495 100 480 165 C520 195 505 265 445 280 C430 300 400 305 380 300 Z" fill="url(#vzg)"/>
                 <defs><linearGradient id="vzg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#d9f1fb"/><stop offset="1" stop-color="#e3eafa"/></linearGradient></defs></svg>
               <div class="vz-words">${cloud}</div>
-            </div>
-            <div class="vz-stats">
-              <div class="hl"><b>17</b><span>reclaman por el aumento del precio, algunos <em>sin haber tenido siniestros</em></span></div>
-              <div class="hl s"><b>18</b><span>mencionan mal servicio o reclamaciones sin resolver</span></div>
             </div>
           </div>
           <div class="vz-wall anim" data-step="1">${cols.map(col).join("")}</div>
