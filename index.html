@@ -65,22 +65,24 @@
   /* ---------- Voz del cliente ---------- */
   .vz-grid { flex: 1; min-height: 0; display: grid; grid-template-columns: 560px 1fr; gap: 36px; margin: 26px 0 24px; }
   .vz-left { display: flex; flex-direction: column; justify-content: center; gap: 22px; min-height: 0; }
-  .vz-cloud { position: relative; height: 620px; margin: 0 -10px; }
+  .vz-cloud { position: relative; height: 740px; margin: 0 -24px; }
   .vz-cloud-bg { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 18px 30px rgba(11,47,91,.12)); }
 
-  .vz-sumwrap { position: absolute; inset: 130px 72px 96px 72px; display: flex; align-items: center; }
+  .vz-sumwrap { position: absolute; inset: 150px 80px 100px 80px; display: flex; align-items: center; }
   .vz-sum { width: 100%; }
   .vz-sum .k { font-size: 15px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); }
-  .vz-sum .big { display: flex; align-items: center; gap: 14px; margin: 8px 0 18px; }
-  .vz-sum .big b { font-size: 64px; font-weight: 700; line-height: 1; color: var(--navy); }
+  .vz-sum .big { display: flex; align-items: center; gap: 14px; margin: 6px 0 12px; }
+  .vz-sum .big b { font-size: 58px; font-weight: 700; line-height: 1; color: var(--navy); }
   .vz-sum .big span { font-size: 18px; line-height: 1.3; color: var(--ink); }
-  .vz-sum .row { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 4px 12px; margin-top: 14px; }
-  .vz-sum .row .t { font-size: 19px; font-weight: 600; color: var(--ink); }
-  .vz-sum .row b { font-size: 26px; font-weight: 700; color: var(--c); font-variant-numeric: tabular-nums; }
-  .vz-sum .row i { grid-column: 1 / -1; display: block; height: 9px; border-radius: 5px; background: rgba(255,255,255,.75); overflow: hidden; }
-  .vz-sum .row em { display: block; height: 100%; width: 0; border-radius: 5px; background: var(--c); transition: width 1s var(--ease); transition-delay: calc(var(--i) * 120ms + .3s); }
-  .vz-left.in .vz-sum .row em { width: var(--w); }
-  .vz-sum small { display: block; margin-top: 16px; font-size: 14px; color: var(--muted); }
+  .vz-ring { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; }
+  .vz-ring span { font-size: 15.5px; font-weight: 600; line-height: 1.2; color: var(--ink); max-width: 170px; }
+  .vz-ring.big { flex-direction: row; gap: 18px; text-align: left; justify-content: center; margin: 2px 0 10px; }
+  .vz-ring.big span { font-size: 22px; font-weight: 700; color: var(--c); max-width: 200px; }
+  .vz-ring svg { filter: drop-shadow(0 8px 14px rgba(11,47,91,.12)); }
+  .vz-ring .arc { stroke-dashoffset: var(--L); transition: stroke-dashoffset 1.2s var(--ease); transition-delay: calc(var(--i) * 140ms + .3s); }
+  .vz-left.in .vz-ring .arc, body.exporting .vz-ring .arc { stroke-dashoffset: var(--off); }
+  .vz-rings { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 10px; }
+  .vz-sum small { display: block; margin-top: 12px; text-align: center; font-size: 14px; color: var(--muted); }
   .vz-wall { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 0; overflow: hidden;
     -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 91%, transparent); }
   .vz-col { min-height: 0; overflow: hidden; }
@@ -1638,9 +1640,18 @@
     };
     const cols = [0, 1, 2].map(c => VOZ.filter((_, i) => i % 3 === c));
     const col = (list, k) => `<div class="vz-col c${k}"><div class="vz-track">${list.map(card).join("")}${list.map(card).join("")}</div></div>`;
+    const ring = ([t, n, c], i, big) => {
+      const p = Math.round(n / VOZ_BASE * 100), r = big ? 62 : 44, sw = big ? 14 : 11, L = 2 * Math.PI * r, sz = (r + sw) * 2;
+      return `<div class="vz-ring${big ? " big" : ""}" style="--c:${c};--i:${i}">
+          <svg viewBox="0 0 ${sz} ${sz}" width="${sz}" height="${sz}"><circle cx="${sz / 2}" cy="${sz / 2}" r="${r}" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="${sw}"/>
+            <circle class="arc" cx="${sz / 2}" cy="${sz / 2}" r="${r}" fill="none" stroke="${c}" stroke-width="${sw}" stroke-linecap="round" stroke-dasharray="${L}" style="--off:${L * (1 - p / 100)};--L:${L}" transform="rotate(-90 ${sz / 2} ${sz / 2})"/>
+            <text x="50%" y="50%" dy=".35em" text-anchor="middle" font-size="${big ? 34 : 24}" font-weight="700" fill="${c}">${p}%</text></svg>
+          <span>${t}</span></div>`;
+    };
     const cloud = `<div class="vz-sum"><span class="k">¿Qué nos dicen?</span>
         <div class="big"><b>${VOZ_BASE}</b><span>clientes expresaron una inquietud sobre su renovación</span></div>
-        ${VOZ_RES.map(([t, n, c], i) => { const p = Math.round(n / VOZ_BASE * 100); return `<div class="row" style="--c:${c};--w:${p}%;--i:${i}"><span class="t">${t}</span><b>${p}%</b><i><em></em></i></div>`; }).join("")}
+        ${ring(VOZ_RES[0], 0, true)}
+        <div class="vz-rings">${VOZ_RES.slice(1).map((r, i) => ring(r, i + 1, false)).join("")}</div>
         <small>Un cliente puede mencionar más de un tema.</small></div>`;
     return `<section class="slide vz" aria-label="Voz del cliente · Renovaciones">
       <div class="deco tl1"></div><div class="deco tl2"></div>
@@ -1657,7 +1668,7 @@
         <div class="vz-grid">
           <div class="vz-left anim" data-step="0">
             <div class="vz-cloud">
-              <svg class="vz-cloud-bg" viewBox="0 0 540 620" aria-hidden="true">
+              <svg class="vz-cloud-bg" viewBox="0 0 540 620" preserveAspectRatio="none" aria-hidden="true">
                 <defs><linearGradient id="vzg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="540" y2="620"><stop offset="0" stop-color="#d9f1fb"/><stop offset="1" stop-color="#e3eafa"/></linearGradient></defs>
                 <g fill="url(#vzg)"><rect x="40" y="150" width="460" height="390" rx="150"/>
                   <circle cx="160" cy="175" r="105"/><circle cx="290" cy="130" r="125"/><circle cx="420" cy="190" r="100"/>
