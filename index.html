@@ -854,7 +854,9 @@
         Individual: { pct: nums("2.65 2.12 1.89 2.06 2.48 2.43"), an: strs("341.0 316.0 88.6 103.1 129.9 42.8"), ca: strs("1,067.5 1,248.9 1,563.2 1,673.1 1,744.2 1,760.7") },
         Flotilla:   { pct: nums("0.85 1.18 0.63 0.44 0.65 0.42"), an: strs("45.9 64.9 10.1 7.3 11.3 2.6"),         ca: strs("448.6 450.8 524.2 559.9 587.3 603.3") },
       },
-      note: `<p class="sm">El churn de Auto se vio impactado por la cancelación de <b>139 certificados</b> de las flotillas de <b>Banco Caribe</b> (88) y <b>Motor Crédito</b> (51), equivalentes al <b>7%</b> de las cancelaciones del ramo.</p>
+      note: `<p class="sm">La principal causa de cancelación fue la <b>falta de pago</b>: <b>565 certificados</b>, concentrados en:</p>
+             <div class="rank">${[["Seguro de Ley", 343, 61], ["Renovaciones de mayo a agosto 2026", 408, 72], ["Oficina Principal (Distrito Nacional)", 214, 38]]
+               .map(([n, c, p]) => `<div><span>${n}</span><b>${nf(c)}</b><em>${p}%</em></div>`).join("")}</div>
              <p class="sm">Además, el churn de Agentes aumentó un <b>23%</b>, liderado por <b>Josefina Abreu Suriel</b> (34 certificados; churn de 7.61%) y <b>Angelita Ondina Benítez</b> (26 certificados; churn de 26.26%), entre otros.</p>` },
     { brand: "Mi Auto Flotilla", objective: 3.07, months: ["Octubre 2026"],
       series: ["Flotilla Overall", "100% Humano + Líder", "Minoritario"],
