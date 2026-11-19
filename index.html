@@ -1775,7 +1775,9 @@
       </div>
     </section>`;
   }
-  document.getElementById("deck").insertAdjacentHTML("beforeend", ytdSlide() + METRICS.map(metricSlide).join("") + rnResumen() + fnSlide("Septiembre") + rnMesSlide("Septiembre") + fnSlide("Octubre") + rnMesSlide("Octubre") + ibSlide() + hcSlide({ data: HC_ALL, total: HC_ALL_TOT, label: "Histórico de pago de la primera cuota · Automóvil", brand: "· Automóvil", sub: "Todas las pólizas de Automóvil renovadas · % que pagó su primera cuota al día 0, 30, 60 y 90", eyebrow: "Automóvil · Enero – Diciembre 2026" }) + hcSlide() + vozSlide());
+  // Solo los slides de la presentación del 2 nov 2026 (sin Flotilla, Ley, Daños Propios, Renovaciones ni Intermediarios)
+  const SIN_PDF = ["Mi Auto Flotilla", "Mi Auto Ley", "Mi Auto Daños Propios"];
+  document.getElementById("deck").insertAdjacentHTML("beforeend", ytdSlide() + METRICS.filter(m => !SIN_PDF.includes(m.brand)).map(metricSlide).join("") + fnSlide("Septiembre") + fnSlide("Octubre") + hcSlide({ data: HC_ALL, total: HC_ALL_TOT, label: "Histórico de pago de la primera cuota · Automóvil", brand: "· Automóvil", sub: "Todas las pólizas de Automóvil renovadas · % que pagó su primera cuota al día 0, 30, 60 y 90", eyebrow: "Automóvil · Enero – Diciembre 2026" }) + hcSlide() + vozSlide());
   document.querySelectorAll("svg[data-chart]").forEach(svg => CHARTS[svg.dataset.chart](svg));
   fnLayout();
   if (document.fonts) document.fonts.ready.then(fnLayout);
@@ -1788,23 +1790,16 @@
     "Mesa de Retención Auto · Noviembre 2026",
     "Retención · Principales indicadores · Churn YTD",
     "Métricas Gestión · Mi Auto",
-    "Métricas Gestión · Mi Auto Flotilla",
     "Métricas Gestión · Mi Auto Emisión – Renovación",
     "Métricas Gestión · Mi Auto Ley – DP",
-    "Métricas Gestión · Mi Auto Ley",
-    "Métricas Gestión · Mi Auto Daños Propios",
     "Proyección de Churn 2026 · Mi Auto — Certificados",
     "Daños Propios · Tendencia por plan",
     "Seguro de Ley · Tendencia por plan",
-    "Renovaciones · ¿Cómo vamos?",
     "Renovaciones · Septiembre · Funnel",
-    "Renovaciones · Septiembre",
     "Renovaciones · Octubre · Funnel",
-    "Renovaciones · Octubre",
     "Voz del cliente · Renovaciones",
     "Histórico de pago de la primera cuota · Automóvil",
     "Histórico de pago de la primera cuota",
-    "Intermediarios con bajo porcentaje de pago",
     "Teléfonos de contratantes · Octubre 2026",
   ];
   [...deck.querySelectorAll(".slide")]
@@ -1866,15 +1861,7 @@
   const slideKey = s => s.getAttribute("aria-label");
   let hiddenKeys = new Set();
   // Slides ocultos por defecto (hasta que se cambie desde el menú)
-  const HIDDEN_DEFAULT = [
-    "Métricas Gestión · Mi Auto Flotilla",
-    "Métricas Gestión · Mi Auto Ley",
-    "Métricas Gestión · Mi Auto Daños Propios",
-    "Renovaciones · ¿Cómo vamos?",
-    "Renovaciones · Septiembre",
-    "Renovaciones · Octubre",
-    "Intermediarios con bajo porcentaje de pago",
-  ];
+  const HIDDEN_DEFAULT = [];
   hiddenKeys = new Set(HIDDEN_DEFAULT);
   try { const sv = localStorage.getItem(HKEY); if (sv !== null) hiddenKeys = new Set(JSON.parse(sv)); } catch (e) {}
   const isHidden = i => slides[i].classList.contains("skip");
